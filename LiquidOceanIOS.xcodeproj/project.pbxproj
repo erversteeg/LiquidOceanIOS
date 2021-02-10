@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25C625D43FB500CF812E /* AppDelegate.swift */; };
 		07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25C825D43FB500CF812E /* SceneDelegate.swift */; };
-		07BD25CB25D43FB500CF812E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25CA25D43FB500CF812E /* ViewController.swift */; };
+		07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25CA25D43FB500CF812E /* InteractiveCanvasViewController.swift */; };
 		07BD25CE25D43FB500CF812E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07BD25CC25D43FB500CF812E /* Main.storyboard */; };
 		07BD25D125D43FB500CF812E /* LiquidOceanIOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25CF25D43FB500CF812E /* LiquidOceanIOS.xcdatamodeld */; };
 		07BD25D325D43FB700CF812E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07BD25D225D43FB700CF812E /* Assets.xcassets */; };
 		07BD25D625D43FB700CF812E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07BD25D425D43FB700CF812E /* LaunchScreen.storyboard */; };
 		07BD25E125D43FB700CF812E /* LiquidOceanIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25E025D43FB700CF812E /* LiquidOceanIOSTests.swift */; };
+		07BD25ED25D440DD00CF812E /* InteractiveCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25EC25D440DD00CF812E /* InteractiveCanvasView.swift */; };
+		07BD25F025D4461400CF812E /* InteractiveCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25EF25D4461400CF812E /* InteractiveCanvas.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,7 +33,7 @@
 		07BD25C325D43FB500CF812E /* LiquidOceanIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiquidOceanIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07BD25C625D43FB500CF812E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07BD25C825D43FB500CF812E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		07BD25CA25D43FB500CF812E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		07BD25CA25D43FB500CF812E /* InteractiveCanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveCanvasViewController.swift; sourceTree = "<group>"; };
 		07BD25CD25D43FB500CF812E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		07BD25D025D43FB500CF812E /* LiquidOceanIOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LiquidOceanIOS.xcdatamodel; sourceTree = "<group>"; };
 		07BD25D225D43FB700CF812E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -40,6 +42,8 @@
 		07BD25DC25D43FB700CF812E /* LiquidOceanIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiquidOceanIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07BD25E025D43FB700CF812E /* LiquidOceanIOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidOceanIOSTests.swift; sourceTree = "<group>"; };
 		07BD25E225D43FB700CF812E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		07BD25EC25D440DD00CF812E /* InteractiveCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveCanvasView.swift; sourceTree = "<group>"; };
+		07BD25EF25D4461400CF812E /* InteractiveCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveCanvas.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,9 +85,11 @@
 		07BD25C525D43FB500CF812E /* LiquidOceanIOS */ = {
 			isa = PBXGroup;
 			children = (
+				07BD25EE25D445E300CF812E /* Model */,
+				07BD25EB25D440CA00CF812E /* View */,
 				07BD25C625D43FB500CF812E /* AppDelegate.swift */,
 				07BD25C825D43FB500CF812E /* SceneDelegate.swift */,
-				07BD25CA25D43FB500CF812E /* ViewController.swift */,
+				07BD25CA25D43FB500CF812E /* InteractiveCanvasViewController.swift */,
 				07BD25CC25D43FB500CF812E /* Main.storyboard */,
 				07BD25D225D43FB700CF812E /* Assets.xcassets */,
 				07BD25D425D43FB700CF812E /* LaunchScreen.storyboard */,
@@ -100,6 +106,22 @@
 				07BD25E225D43FB700CF812E /* Info.plist */,
 			);
 			path = LiquidOceanIOSTests;
+			sourceTree = "<group>";
+		};
+		07BD25EB25D440CA00CF812E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				07BD25EC25D440DD00CF812E /* InteractiveCanvasView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		07BD25EE25D445E300CF812E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				07BD25EF25D4461400CF812E /* InteractiveCanvas.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,8 +225,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07BD25F025D4461400CF812E /* InteractiveCanvas.swift in Sources */,
+				07BD25ED25D440DD00CF812E /* InteractiveCanvasView.swift in Sources */,
 				07BD25D125D43FB500CF812E /* LiquidOceanIOS.xcdatamodeld in Sources */,
-				07BD25CB25D43FB500CF812E /* ViewController.swift in Sources */,
+				07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */,
 				07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */,
 				07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */,
 			);
