@@ -14,11 +14,24 @@
                     <view key="view" contentMode="scaleToFill" id="ox1-JT-C2l">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading 0/2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXl-z6-hei">
+                                <rect key="frame" x="364.5" y="188" width="167" height="38.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="eXl-z6-hei" firstAttribute="centerY" secondItem="ox1-JT-C2l" secondAttribute="centerY" id="1Jy-85-WnY"/>
+                            <constraint firstItem="eXl-z6-hei" firstAttribute="centerX" secondItem="ox1-JT-C2l" secondAttribute="centerX" id="aHu-d7-9Se"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="IBZ-1L-lqc"/>
                     </view>
                     <navigationItem key="navigationItem" id="2K6-nq-XUp"/>
                     <connections>
+                        <outlet property="statusLabel" destination="eXl-z6-hei" id="3Zx-Jd-gH8"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="ShowInteractiveCanvas" id="28p-wv-bjn"/>
                     </connections>
                 </viewController>
@@ -54,11 +67,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="tRD-5r-Pob">
-                    <connections>
-                        <outlet property="delegate" destination="BYZ-38-t0r" id="SaP-LP-TZ3"/>
-                    </connections>
-                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="138.61607142857142" y="108.69565217391305"/>
         </scene>

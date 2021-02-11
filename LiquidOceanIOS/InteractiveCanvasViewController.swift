@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InteractiveCanvasViewController: UIViewController {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -17,10 +17,22 @@ class InteractiveCanvasViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         SessionSettings.instance.interactiveCanvas = self.surfaceView.interactiveCanvas
+        
+        self.surfaceView.interactiveCanvas.paintDelegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
         self.surfaceView.backgroundColor = UIColor.red
+    }
+    
+    // paint delegate
+    
+    func notifyPaintingStarted() {
+        
+    }
+    
+    func notifyPaintingEnded() {
+        
     }
 }
 

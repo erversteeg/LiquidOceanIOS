@@ -7,12 +7,22 @@
 //
 
 import UIKit
+import SocketIO
 
 protocol InteractiveCanvasDrawCallback: AnyObject {
     func notifyCanvasRedraw()
 }
 
-class InteractiveCanvas: NSObject {
+protocol InteractiveCanvasScaleCallback: AnyObject {
+    func notifyScaleCancelled()
+}
+
+protocol InteractiveCanvasPaintDelegate: AnyObject {
+    func notifyPaintingStarted()
+    func notifyPaintingEnded()
+}
+
+class InteractiveCanvas: NSObject, URLSessionDelegate {
     var rows = 512
     var cols = 512
     
@@ -24,21 +34,83 @@ class InteractiveCanvas: NSObject {
     var deviceViewport: CGRect!
     
     weak var drawCallback: InteractiveCanvasDrawCallback?
+    weak var scaleCallback: InteractiveCanvasScaleCallback?
+    weak var paintDelegate: InteractiveCanvasPaintDelegate?
     
-    var startScaleFactor = 0.2
+    var startScaleFactor = 0.5
+    
+    let minScaleFactor = 0.15
+    let maxScaleFactor = 10.0
+    
+    var manager: SocketManager!
+    var socket: SocketIOClient!
+    
+    var restorePoints =  [RestorePoint]()
+    
+    class RestorePoint {
+        var x: Int
+        var y: Int
+        var color: Int
+        var newColor: Int
+        
+        init(x: Int, y: Int, color: Int, newColor: Int) {
+            self.x = x
+            self.y = y
+            self.color = color
+            self.newColor = newColor
+        }
+    }
     
     override init() {
         super.init()
         
-        ppu = Int(Double(basePpu) * startScaleFactor)
+        ppu = basePpu
         
-        var dataJsonStr = SessionSettings.instance.userDefaults().object(forKey: "arr") as? String
+        let dataJsonStr = SessionSettings.instance.userDefaults().object(forKey: "arr") as? String
         
         if dataJsonStr == nil {
             loadDefault()
         }
         else {
             initPixels(arrJsonStr: dataJsonStr!)
+        }
+        
+        // socket init
+        manager = SocketManager(socketURL: URL(string: "https://192.168.200.69:5010")!, config: [.log(true), .compress, .selfSigned(true), .sessionDelegate(self)])
+        
+        socket = manager.defaultSocket
+        
+        socket.connect()
+        
+        socket.on(clientEvent: .connect) { (data, ack) in
+            print(data)
+        }
+        
+        socket.on(clientEvent: .disconnect) { (data, ack) in
+            print(data)
+        }
+        
+        socket.on(clientEvent: .error) { (data, ack) in
+            print(data)
+        }
+        
+        registerForSocketEvents(socket: socket)
+    }
+    
+    func registerForSocketEvents(socket: SocketIOClient) {
+        socket.on("pixels_commit") { (data, ack) in
+            let pixelsJsonArr = data[0] as! [[String: Any]]
+            
+            for pixelObj in pixelsJsonArr {
+                let unit1DIndex = (pixelObj["id"] as! Int) - 1
+                
+                let y = unit1DIndex / self.cols
+                let x = unit1DIndex % self.cols
+                
+                self.arr[y][x] = pixelObj["color"] as! Int
+            }
+            
+            self.drawCallback?.notifyCanvasRedraw()
         }
     }
     
@@ -86,22 +158,82 @@ class InteractiveCanvas: NSObject {
         }
     }
     
-    func updateDeviceViewport(screenSize: CGSize, canvasCenterX: Float, canvasCenterY: Float) {
+    func paintUnitOrUndo(x: Int, y: Int, mode: Int = 0) {
+        let restorePoint = unitInRestorePoints(x: x, y: y)
+        if mode == 0 {
+            if restorePoint == nil && SessionSettings.instance.dropsAmt > 0 {
+                // paint
+                restorePoints.append(RestorePoint(x: x, y: y, color: arr[y][x], newColor: SessionSettings.instance.paintColor))
+                
+                arr[y][x] = SessionSettings.instance.paintColor
+                
+                SessionSettings.instance.dropsAmt -= 1
+            }
+        }
+        else if mode == 1 {
+            if restorePoint != nil {
+                let index = restorePoints.firstIndex{$0 === restorePoint}
+                
+                if index != nil {
+                    restorePoints.remove(at: index!)
+                    arr[y][x] = restorePoint!.color
+                    
+                    SessionSettings.instance.dropsAmt += 1
+                }
+            }
+        }
+        
+        drawCallback?.notifyCanvasRedraw()
+    }
+    
+    // restore points
+    
+    func undoPendingPaint() {
+        for restorePoint: RestorePoint in restorePoints {
+            arr[restorePoint.y][restorePoint.x] = restorePoint.color
+        }
+    }
+    
+    func clearRestorePoints() {
+        self.restorePoints = [RestorePoint]()
+    }
+    
+    func unitInRestorePoints(x: Int, y: Int) -> RestorePoint? {
+        for restorePoint in self.restorePoints {
+            if restorePoint.x == x && restorePoint.y == y {
+                return restorePoint
+            }
+        }
+        
+        return nil
+    }
+    
+    func updateDeviceViewport(screenSize: CGSize, fromScale: Bool = false) {
+        updateDeviceViewport(screenSize: screenSize, canvasCenterX: deviceViewport.origin.x + deviceViewport.size.width / 2, canvasCenterY: deviceViewport.origin.y + deviceViewport.size.height / 2)
+    }
+    
+    func updateDeviceViewport(screenSize: CGSize, canvasCenterX: CGFloat, canvasCenterY: CGFloat, fromScale: Bool = false) {
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
         
-        let canvasCenterXPx = Int((canvasCenterX * Float(ppu)))
-        let canvasCenterYPx = Int((canvasCenterY * Float(ppu)))
+        let canvasCenterXPx = Int((canvasCenterX * CGFloat(ppu)))
+        let canvasCenterYPx = Int((canvasCenterY * CGFloat(ppu)))
         
         let canvasTop = canvasCenterYPx - Int(screenHeight) / 2
         let canvasBottom = canvasCenterYPx + Int(screenHeight) / 2
         let canvasLeft = canvasCenterXPx - Int(screenWidth) / 2
         let canvasRight = canvasCenterXPx + Int(screenWidth) / 2
         
-        let top = Double(canvasTop) / Double(ppu)
-        let bottom = Double(canvasBottom) / Double(ppu)
-        let left = Double(canvasLeft) / Double(ppu)
-        let right = Double(canvasRight) / Double(ppu)
+        let top = CGFloat(canvasTop) / CGFloat(ppu)
+        let bottom = CGFloat(canvasBottom) / CGFloat(ppu)
+        let left = CGFloat(canvasLeft) / CGFloat(ppu)
+        let right = CGFloat(canvasRight) / CGFloat(ppu)
+        
+        if (top < 0.0 || bottom > CGFloat(rows) || CGFloat(left) > 0.0 || right > CGFloat(cols)) {
+            if (fromScale) {
+                
+            }
+        }
         
         deviceViewport = CGRect(x: left, y: top, width: (right - left), height: (bottom - top))
     }
@@ -111,6 +243,19 @@ class InteractiveCanvas: NSObject {
         let offsetY = (CGFloat(y) - deviceViewport.origin.y) * CGFloat(ppu)
         
         return CGRect(x: max(offsetX, 0.0), y: max(offsetY, 0.0), width: offsetX + CGFloat(ppu), height: offsetY + CGFloat(ppu))
+    }
+    
+    func screenPointForUnit(x: CGFloat, y: CGFloat) -> CGPoint {
+        let topViewportPx = deviceViewport.origin.y * CGFloat(ppu)
+        let leftViewportPx = deviceViewport.origin.x * CGFloat(ppu)
+        
+        let absXPx = leftViewportPx + x
+        let absYPx = topViewportPx + y
+        
+        let absX = absXPx / CGFloat(ppu)
+        let absY = absYPx / CGFloat(ppu)
+        
+        return CGPoint(x: floor(absX), y: floor(absY))
     }
     
     func translateBy(x: CGFloat, y: CGFloat) {
@@ -150,5 +295,9 @@ class InteractiveCanvas: NSObject {
         deviceViewport = CGRect(x: left, y: top, width: right - left, height: bottom - top)
         
         drawCallback?.notifyCanvasRedraw()
+    }
+    
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
     }
 }

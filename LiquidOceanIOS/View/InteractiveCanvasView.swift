@@ -8,8 +8,23 @@
 
 import UIKit
 
-class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback {
+class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveCanvasScaleCallback {
 
+    enum Mode {
+        case exploring
+        case painting
+        case paintSelecting
+    }
+    
+    var mode: Mode = .exploring
+    
+    var scaleFactor = CGFloat(1.0)
+    var oldScaleFactor: CGFloat!
+    
+    var oldPpu: Int!
+    
+    var undo = false
+    
     var interactiveCanvas: InteractiveCanvas!
     
     required init?(coder: NSCoder) {
@@ -17,6 +32,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback {
         
         interactiveCanvas = InteractiveCanvas()
         interactiveCanvas.drawCallback = self
+        interactiveCanvas.scaleCallback = self
         
         interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         
@@ -28,22 +44,109 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback {
         
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(sender:)))
         self.addGestureRecognizer(pinchGestureRecognizer)
+        
+        let longPressGesureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(sender:)))
+        self.addGestureRecognizer(longPressGesureRecognizer)
     }
     
-    func notifyCanvasRedraw() {
-        self.setNeedsDisplay()
+    // press
+    @objc func didLongPress(sender: UILongPressGestureRecognizer) {
+        let point = sender.location(in: self)
+        if sender.state == .began {
+            if mode == .painting {
+                interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+                
+                let unitPoint = interactiveCanvas.screenPointForUnit(x: point.x, y: point.y)
+                
+                self.undo = interactiveCanvas.unitInRestorePoints(x: Int(unitPoint.x), y: Int(unitPoint.y)) != nil
+                
+                if undo {
+                    interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.x), y: Int(unitPoint.y), mode: 1)
+                }
+                else {
+                    interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.x), y: Int(unitPoint.y))
+                }
+                
+                if interactiveCanvas.restorePoints.count == 1 {
+                    interactiveCanvas.paintDelegate?.notifyPaintingStarted()
+                }
+                else if interactiveCanvas.restorePoints.count == 0 {
+                    interactiveCanvas.paintDelegate?.notifyPaintingEnded()
+                }
+            }
+        }
+        else if sender.state == .cancelled || sender.state == .ended || sender.state == .failed {
+            if mode == .painting {
+                
+            }
+        }
     }
     
     // pan
     @objc func didPan(sender: UIPanGestureRecognizer) {
         let velocity = sender.velocity(in: self)
+        let location = sender.location(in: self)
         
-        interactiveCanvas.translateBy(x: -velocity.x, y: -velocity.y)
+        if mode == .exploring {
+            interactiveCanvas.translateBy(x: -velocity.x, y: -velocity.y)
+        }
+        else if mode == .painting {
+            let unitPoint = interactiveCanvas.screenPointForUnit(x: location.x, y: location.y)
+            
+            if undo {
+                // undo
+                interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.x), y: Int(unitPoint.y), mode: 1)
+            }
+            else {
+                // paint
+                interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.y), y: Int(unitPoint.y))
+            }
+            
+            if interactiveCanvas.restorePoints.count == 1 {
+                interactiveCanvas.paintDelegate?.notifyPaintingStarted()
+            }
+            else if interactiveCanvas.restorePoints.count == 0 {
+                interactiveCanvas.paintDelegate?.notifyPaintingEnded()
+            }
+        }
     }
     
     // pinch
     @objc func didPinch(sender: UIPinchGestureRecognizer) {
+        let scale = sender.scale
+        oldScaleFactor = scaleFactor
+        scaleFactor *= scale
         
+        scaleFactor = CGFloat(max(interactiveCanvas.minScaleFactor, min(Double(scaleFactor), interactiveCanvas.maxScaleFactor)))
+        
+        oldPpu = interactiveCanvas.ppu
+        interactiveCanvas.ppu = Int((CGFloat(interactiveCanvas.basePpu) * scaleFactor))
+        
+        interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, fromScale: true)
+        interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+    }
+    
+    // scale callback
+    func notifyScaleCancelled() {
+        scaleFactor = oldScaleFactor
+        interactiveCanvas.ppu = oldPpu
+    }
+    
+    func startPainting() {
+        self.mode = .painting
+    }
+    
+    func endPainting(accept: Bool) {
+        if !accept {
+            interactiveCanvas.undoPendingPaint()
+        }
+        
+        self.mode = .exploring
+    }
+    
+    // draw callback
+    func notifyCanvasRedraw() {
+        self.setNeedsDisplay()
     }
     
     // drawing

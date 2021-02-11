@@ -9,41 +9,81 @@
 import UIKit
 import Alamofire
 
-class LoadingViewController: UIViewController, URLSessionTaskDelegate {
+class LoadingViewController: UIViewController {
 
+    @IBOutlet var statusLabel: UILabel!
+    
+    var doneLoadingPixels = false
+    var doneSyncDevice = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if SessionSettings.instance.sentUniqueId {
+            getDeviceInfo()
+        }
+        else {
+            sendDeviceId()
+        }
+        
         downloadCanvasPixels()
     }
 
     func downloadCanvasPixels() {
         
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/canvas/pixels")!)
-        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
-        request.httpMethod = "GET"
-
-        // var params = ["username":"username", "password":"password"] as Dictionary<String, String>
-
-        // request.HTTPBody = try? JSONSerialization.dataWithJSONObject(params, options: [])
-
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-
-        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
-            print("Response: \(response)")
-            
-            SessionSettings.instance.userDefaults().set(String(data: data!, encoding: .utf8), forKey: "arr")
-            
-            DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "ShowInteractiveCanvas", sender: nil)
+        URLSessionHandler.instance.downloadCanvasPixels { (success) in
+            if success {
+                self.doneLoadingPixels = true
+                
+                self.downloadFinished()
             }
-        })
-
-        task.resume()
+        }
     }
     
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
+    func getDeviceInfo() {
+        URLSessionHandler.instance.getDeviceInfo { (success) -> (Void) in
+            if success {
+                self.doneSyncDevice = true
+                
+                self.downloadFinished()
+            }
+        }
+    }
+    
+    func sendDeviceId() {
+        URLSessionHandler.instance.sendDeviceId { (success) -> (Void) in
+            if success {
+                self.doneSyncDevice = true
+                
+                self.downloadFinished()
+            }
+        }
+    }
+    
+    func downloadFinished() {
+        statusLabel.text = String(format: "Loading %d / 2", getNumLoaded())
+        
+        if loadingDone() {
+            SessionSettings.instance.save()
+            self.performSegue(withIdentifier: "ShowInteractiveCanvas", sender: nil)
+        }
+    }
+    
+    func getNumLoaded() -> Int {
+        var num = 0
+        
+        if doneLoadingPixels {
+            num += 1
+        }
+        
+        if doneSyncDevice {
+            num += 1
+        }
+        
+        return num
+    }
+    
+    func loadingDone() -> Bool {
+        return doneLoadingPixels && doneSyncDevice
     }
 }
