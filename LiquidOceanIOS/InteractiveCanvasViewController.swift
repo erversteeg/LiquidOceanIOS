@@ -15,6 +15,8 @@ class InteractiveCanvasViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        SessionSettings.instance.interactiveCanvas = self.surfaceView.interactiveCanvas
     }
 
     override func viewDidAppear(_ animated: Bool) {

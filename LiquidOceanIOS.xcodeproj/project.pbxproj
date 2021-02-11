@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A246D525D4A83500C73CA6 /* LoadingViewController.swift */; };
+		07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */; };
 		07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25C625D43FB500CF812E /* AppDelegate.swift */; };
 		07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25C825D43FB500CF812E /* SceneDelegate.swift */; };
 		07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25CA25D43FB500CF812E /* InteractiveCanvasViewController.swift */; };
@@ -17,6 +19,10 @@
 		07BD25E125D43FB700CF812E /* LiquidOceanIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25E025D43FB700CF812E /* LiquidOceanIOSTests.swift */; };
 		07BD25ED25D440DD00CF812E /* InteractiveCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25EC25D440DD00CF812E /* InteractiveCanvasView.swift */; };
 		07BD25F025D4461400CF812E /* InteractiveCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25EF25D4461400CF812E /* InteractiveCanvas.swift */; };
+		07BD25F525D44F2A00CF812E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F425D44F2A00CF812E /* Utils.swift */; };
+		07BD25F725D44FE900CF812E /* UIColor+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F625D44FE900CF812E /* UIColor+Conversions.swift */; };
+		07BD25F925D450CF00CF812E /* SessionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F825D450CF00CF812E /* SessionSettings.swift */; };
+		E5CAC4447BA12EDA6329A1E2 /* Pods_LiquidOceanIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07A246D525D4A83500C73CA6 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHandler.swift; sourceTree = "<group>"; };
 		07BD25C325D43FB500CF812E /* LiquidOceanIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiquidOceanIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07BD25C625D43FB500CF812E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07BD25C825D43FB500CF812E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +52,12 @@
 		07BD25E225D43FB700CF812E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		07BD25EC25D440DD00CF812E /* InteractiveCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveCanvasView.swift; sourceTree = "<group>"; };
 		07BD25EF25D4461400CF812E /* InteractiveCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveCanvas.swift; sourceTree = "<group>"; };
+		07BD25F425D44F2A00CF812E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		07BD25F625D44FE900CF812E /* UIColor+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Conversions.swift"; sourceTree = "<group>"; };
+		07BD25F825D450CF00CF812E /* SessionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSettings.swift; sourceTree = "<group>"; };
+		0C929D3F59AAC71054FD1E19 /* Pods-LiquidOceanIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.debug.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.debug.xcconfig"; sourceTree = "<group>"; };
+		42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiquidOceanIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B417FAAF99031F0F81E5A72B /* Pods-LiquidOceanIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.release.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5CAC4447BA12EDA6329A1E2 /* Pods_LiquidOceanIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,9 +82,12 @@
 		07BD25BA25D43FB500CF812E = {
 			isa = PBXGroup;
 			children = (
+				07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */,
 				07BD25C525D43FB500CF812E /* LiquidOceanIOS */,
 				07BD25DF25D43FB700CF812E /* LiquidOceanIOSTests */,
 				07BD25C425D43FB500CF812E /* Products */,
+				7940447D3B0BE8CAF95CF88D /* Pods */,
+				10694157BC2769F4D79F5181 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -85,6 +103,7 @@
 		07BD25C525D43FB500CF812E /* LiquidOceanIOS */ = {
 			isa = PBXGroup;
 			children = (
+				07BD25F325D44F1600CF812E /* Helper */,
 				07BD25EE25D445E300CF812E /* Model */,
 				07BD25EB25D440CA00CF812E /* View */,
 				07BD25C625D43FB500CF812E /* AppDelegate.swift */,
@@ -95,6 +114,7 @@
 				07BD25D425D43FB700CF812E /* LaunchScreen.storyboard */,
 				07BD25D725D43FB700CF812E /* Info.plist */,
 				07BD25CF25D43FB500CF812E /* LiquidOceanIOS.xcdatamodeld */,
+				07A246D525D4A83500C73CA6 /* LoadingViewController.swift */,
 			);
 			path = LiquidOceanIOS;
 			sourceTree = "<group>";
@@ -120,8 +140,35 @@
 			isa = PBXGroup;
 			children = (
 				07BD25EF25D4461400CF812E /* InteractiveCanvas.swift */,
+				07BD25F825D450CF00CF812E /* SessionSettings.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		07BD25F325D44F1600CF812E /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				07BD25F425D44F2A00CF812E /* Utils.swift */,
+				07BD25F625D44FE900CF812E /* UIColor+Conversions.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		10694157BC2769F4D79F5181 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7940447D3B0BE8CAF95CF88D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0C929D3F59AAC71054FD1E19 /* Pods-LiquidOceanIOS.debug.xcconfig */,
+				B417FAAF99031F0F81E5A72B /* Pods-LiquidOceanIOS.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,9 +178,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 07BD25E525D43FB700CF812E /* Build configuration list for PBXNativeTarget "LiquidOceanIOS" */;
 			buildPhases = (
+				0892D1BB2B904D9CC21AB602 /* [CP] Check Pods Manifest.lock */,
 				07BD25BF25D43FB500CF812E /* Sources */,
 				07BD25C025D43FB500CF812E /* Frameworks */,
 				07BD25C125D43FB500CF812E /* Resources */,
+				36D56385962055673D81B0DB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -220,6 +269,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0892D1BB2B904D9CC21AB602 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LiquidOceanIOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		36D56385962055673D81B0DB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		07BD25BF25D43FB500CF812E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -228,9 +319,14 @@
 				07BD25F025D4461400CF812E /* InteractiveCanvas.swift in Sources */,
 				07BD25ED25D440DD00CF812E /* InteractiveCanvasView.swift in Sources */,
 				07BD25D125D43FB500CF812E /* LiquidOceanIOS.xcdatamodeld in Sources */,
+				07BD25F525D44F2A00CF812E /* Utils.swift in Sources */,
 				07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */,
+				07BD25F725D44FE900CF812E /* UIColor+Conversions.swift in Sources */,
 				07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */,
+				07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */,
+				07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */,
 				07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */,
+				07BD25F925D450CF00CF812E /* SessionSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +484,7 @@
 		};
 		07BD25E625D43FB700CF812E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0C929D3F59AAC71054FD1E19 /* Pods-LiquidOceanIOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -405,6 +502,7 @@
 		};
 		07BD25E725D43FB700CF812E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B417FAAF99031F0F81E5A72B /* Pods-LiquidOceanIOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
