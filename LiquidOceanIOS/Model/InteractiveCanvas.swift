@@ -31,6 +31,8 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     var basePpu = 100
     var ppu: Int!
     
+    var gridLineThreshold = 50
+    
     var deviceViewport: CGRect!
     
     weak var drawCallback: InteractiveCanvasDrawCallback?

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A246D525D4A83500C73CA6 /* LoadingViewController.swift */; };
 		07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */; };
+		07A305F125D5B571003A6CEA /* wood_texture_light.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A305F025D5B571003A6CEA /* wood_texture_light.jpg */; };
+		07A305F325D5B6F5003A6CEA /* ActionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A305F225D5B6F5003A6CEA /* ActionButtonView.swift */; };
+		07A305F525D5D348003A6CEA /* PaintColorIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A305F425D5D348003A6CEA /* PaintColorIndicator.swift */; };
 		07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25C625D43FB500CF812E /* AppDelegate.swift */; };
 		07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25C825D43FB500CF812E /* SceneDelegate.swift */; };
 		07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25CA25D43FB500CF812E /* InteractiveCanvasViewController.swift */; };
@@ -38,6 +41,9 @@
 /* Begin PBXFileReference section */
 		07A246D525D4A83500C73CA6 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHandler.swift; sourceTree = "<group>"; };
+		07A305F025D5B571003A6CEA /* wood_texture_light.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = wood_texture_light.jpg; path = ../../../../Desktop/wood_texture_light.jpg; sourceTree = "<group>"; };
+		07A305F225D5B6F5003A6CEA /* ActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonView.swift; sourceTree = "<group>"; };
+		07A305F425D5D348003A6CEA /* PaintColorIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaintColorIndicator.swift; sourceTree = "<group>"; };
 		07BD25C325D43FB500CF812E /* LiquidOceanIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiquidOceanIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07BD25C625D43FB500CF812E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07BD25C825D43FB500CF812E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +85,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07A305EF25D5B55B003A6CEA /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				07A305F025D5B571003A6CEA /* wood_texture_light.jpg */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		07BD25BA25D43FB500CF812E = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +117,7 @@
 		07BD25C525D43FB500CF812E /* LiquidOceanIOS */ = {
 			isa = PBXGroup;
 			children = (
+				07A305EF25D5B55B003A6CEA /* Images */,
 				07BD25F325D44F1600CF812E /* Helper */,
 				07BD25EE25D445E300CF812E /* Model */,
 				07BD25EB25D440CA00CF812E /* View */,
@@ -132,6 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				07BD25EC25D440DD00CF812E /* InteractiveCanvasView.swift */,
+				07A305F225D5B6F5003A6CEA /* ActionButtonView.swift */,
+				07A305F425D5D348003A6CEA /* PaintColorIndicator.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -255,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07BD25D625D43FB700CF812E /* LaunchScreen.storyboard in Resources */,
+				07A305F125D5B571003A6CEA /* wood_texture_light.jpg in Resources */,
 				07BD25D325D43FB700CF812E /* Assets.xcassets in Resources */,
 				07BD25CE25D43FB500CF812E /* Main.storyboard in Resources */,
 			);
@@ -322,6 +340,8 @@
 				07BD25F525D44F2A00CF812E /* Utils.swift in Sources */,
 				07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */,
 				07BD25F725D44FE900CF812E /* UIColor+Conversions.swift in Sources */,
+				07A305F525D5D348003A6CEA /* PaintColorIndicator.swift in Sources */,
+				07A305F325D5B6F5003A6CEA /* ActionButtonView.swift in Sources */,
 				07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */,
 				07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */,
 				07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */,

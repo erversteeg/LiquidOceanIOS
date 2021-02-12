@@ -27,6 +27,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     
     var interactiveCanvas: InteractiveCanvas!
     
+    var longPressGestureRecognizer: UILongPressGestureRecognizer!
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
@@ -45,8 +47,16 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(sender:)))
         self.addGestureRecognizer(pinchGestureRecognizer)
         
-        let longPressGesureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(sender:)))
-        self.addGestureRecognizer(longPressGesureRecognizer)
+        self.longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(sender:)))
+        self.longPressGestureRecognizer.minimumPressDuration = 0
+    }
+    
+    func addLongPress() {
+        self.addGestureRecognizer(self.longPressGestureRecognizer)
+    }
+    
+    func removeLongPress() {
+        self.removeGestureRecognizer(self.longPressGestureRecognizer)
     }
     
     // press
@@ -134,14 +144,26 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     
     func startPainting() {
         self.mode = .painting
+        
+        addLongPress()
     }
     
     func endPainting(accept: Bool) {
         if !accept {
             interactiveCanvas.undoPendingPaint()
+            SessionSettings.instance.dropsAmt += interactiveCanvas.restorePoints.count
+        }
+        else {
+            // commit pixels
         }
         
+        interactiveCanvas.clearRestorePoints()
+        
+        interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+        
         self.mode = .exploring
+        
+        removeLongPress()
     }
     
     // draw callback
@@ -163,9 +185,11 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         let deviceViewport = interactiveCanvas.deviceViewport!
         let ppu = interactiveCanvas.ppu!
         
-        
         drawUnits(ctx: ctx, deviceViewport: deviceViewport, ppu: ppu)
-        drawGridLines(ctx: ctx, deviceViewport: deviceViewport, ppu: ppu)
+        
+        if interactiveCanvas.ppu >= interactiveCanvas.gridLineThreshold {
+            drawGridLines(ctx: ctx, deviceViewport: deviceViewport, ppu: ppu)
+        }
     }
     
     func drawGridLines(ctx: CGContext, deviceViewport: CGRect, ppu: Int) {
