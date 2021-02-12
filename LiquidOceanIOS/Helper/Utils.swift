@@ -30,4 +30,8 @@ class Utils: NSObject {
             alpha: CGFloat((rgbValue & 0xFF0000) >> 8) / 255.0
         )
     }
+    
+    static func int32FromColorHex(hex: String) -> Int32 {
+        return Int32(bitPattern: UInt32(hex.dropFirst(2), radix: 16) ?? 0)
+    }
 }

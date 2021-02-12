@@ -1,24 +1,28 @@
 PODS:
   - Alamofire (5.4.1)
+  - ChromaColorPicker (2.0.2)
   - Socket.IO-Client-Swift (16.0.0):
     - Starscream (~> 4.0)
   - Starscream (4.0.4)
 
 DEPENDENCIES:
   - Alamofire (~> 5.4.1)
+  - ChromaColorPicker
   - Socket.IO-Client-Swift (~> 16.0.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - ChromaColorPicker
     - Socket.IO-Client-Swift
     - Starscream
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  ChromaColorPicker: 307585f2dc23d4d72f24cad320c1e08825cb5c09
   Socket.IO-Client-Swift: ff35cb6e4831f681441ce25bc1078039ca8602ea
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
-PODFILE CHECKSUM: 863afeb4aeb2e7d877506b9253fdaff8af56507e
+PODFILE CHECKSUM: 9ede991fb80b89d4273bda05310f137137e047f6
 
 COCOAPODS: 1.10.1

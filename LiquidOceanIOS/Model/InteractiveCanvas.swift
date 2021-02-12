@@ -20,13 +20,14 @@ protocol InteractiveCanvasScaleCallback: AnyObject {
 protocol InteractiveCanvasPaintDelegate: AnyObject {
     func notifyPaintingStarted()
     func notifyPaintingEnded()
+    func notifyPaintColorUpdate()
 }
 
 class InteractiveCanvas: NSObject, URLSessionDelegate {
     var rows = 512
     var cols = 512
     
-    var arr = [[Int]]()
+    var arr = [[Int32]]()
     
     var basePpu = 100
     var ppu: Int!
@@ -41,7 +42,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     
     var startScaleFactor = 0.5
     
-    let minScaleFactor = 0.15
+    let minScaleFactor = 0.10
     let maxScaleFactor = 10.0
     
     var manager: SocketManager!
@@ -52,10 +53,10 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     class RestorePoint {
         var x: Int
         var y: Int
-        var color: Int
-        var newColor: Int
+        var color: Int32
+        var newColor: Int32
         
-        init(x: Int, y: Int, color: Int, newColor: Int) {
+        init(x: Int, y: Int, color: Int32, newColor: Int32) {
             self.x = x
             self.y = y
             self.color = color
@@ -109,7 +110,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
                 let y = unit1DIndex / self.cols
                 let x = unit1DIndex % self.cols
                 
-                self.arr[y][x] = pixelObj["color"] as! Int
+                self.arr[y][x] = pixelObj["color"] as! Int32
             }
             
             self.drawCallback?.notifyCanvasRedraw()
@@ -121,8 +122,8 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             if let outerArray = try JSONSerialization.jsonObject(with: arrJsonStr.data(using: .utf8)!, options: []) as? [Any] {
                 
                 for i in 0...outerArray.count - 1 {
-                    let innerArr = outerArray[i] as! [Int]
-                    var arrRow = [Int]()
+                    let innerArr = outerArray[i] as! [Int32]
+                    var arrRow = [Int32]()
                     for j in 0...innerArr.count - 1 {
                         arrRow.append(innerArr[j])
                     }
@@ -137,13 +138,13 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     
     func loadDefault() {
         for i in 0...rows - 1 {
-            var innerArr = [Int]()
+            var innerArr = [Int32]()
             for j in 0...cols - 1 {
                 if (i + j) % 2 == 0 {
-                    innerArr.append(0xFF333333)
+                    innerArr.append(Utils.int32FromColorHex(hex: "0xFF333333"))
                 }
                 else {
-                    innerArr.append(0xFF666666)
+                    innerArr.append(Utils.int32FromColorHex(hex: "0xFF666666"))
                 }
             }
             
@@ -162,10 +163,11 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     
     func paintUnitOrUndo(x: Int, y: Int, mode: Int = 0) {
         let restorePoint = unitInRestorePoints(x: x, y: y)
+        
         if mode == 0 {
             if restorePoint == nil && SessionSettings.instance.dropsAmt > 0 {
                 // paint
-                restorePoints.append(RestorePoint(x: x, y: y, color: arr[y][x], newColor: SessionSettings.instance.paintColor))
+                restorePoints.append(RestorePoint(x: x, y: y, color: arr[y][x], newColor: SessionSettings.instance.paintColor!))
                 
                 arr[y][x] = SessionSettings.instance.paintColor
                 
@@ -186,6 +188,29 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         }
         
         drawCallback?.notifyCanvasRedraw()
+    }
+    
+    func commitPixels() {
+        print(SessionSettings.instance.paintColor)
+        
+        var pixelInfoArr = [[String: Int32]]()
+        
+        for restorePoint in self.restorePoints {
+            var map = [String: Int32]()
+            map["id"] = Int32((restorePoint.y * cols + restorePoint.x) + 1)
+            map["color"] = restorePoint.newColor
+            
+            pixelInfoArr.append(map)
+        }
+        
+        var reqObj = [String: Any]()
+        
+        reqObj["uuid"] = SessionSettings.instance.uniqueId
+        reqObj["pixels"] = pixelInfoArr
+        
+        print(reqObj)
+        
+        socket.emit("pixels_event", reqObj)
     }
     
     // restore points

@@ -11,6 +11,8 @@ import Alamofire
 
 class LoadingViewController: UIViewController {
 
+    var showInteractiveCanvas = "ShowInteractiveCanvas"
+    
     @IBOutlet var statusLabel: UILabel!
     
     var doneLoadingPixels = false
@@ -65,7 +67,7 @@ class LoadingViewController: UIViewController {
         
         if loadingDone() {
             SessionSettings.instance.save()
-            self.performSegue(withIdentifier: "ShowInteractiveCanvas", sender: nil)
+            self.performSegue(withIdentifier: self.showInteractiveCanvas, sender: nil)
         }
     }
     

@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol PaintQtyDelegate {
+    func notifyPaintQtyChanged(qty: Int)
+}
+
 class SessionSettings: NSObject {
 
     static var instance = SessionSettings()
@@ -16,11 +20,26 @@ class SessionSettings: NSObject {
     var interactiveCanvas: InteractiveCanvas!
     var uniqueId: String!
     
-    var dropsAmt: Int!
+    private var _dropsAmt: Int!
+    var dropsAmt: Int! {
+        get {
+            return _dropsAmt
+        }
+        set {
+            _dropsAmt = newValue
+            for delegate in self.paintQtyDelegates {
+                delegate.notifyPaintQtyChanged(qty: newValue)
+            }
+        }
+    }
     
     var sentUniqueId: Bool!
     
-    var paintColor: Int!
+    var paintColor: Int32!
+    
+    var maxPaintAmt = 1000
+    
+    var paintQtyDelegates = [PaintQtyDelegate]()
     
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
@@ -34,7 +53,7 @@ class SessionSettings: NSObject {
         
         sentUniqueId = userDefaultsBool(forKey: "sent_unique_id", defaultVal: false)
         
-        paintColor = userDefaultsInt(forKey: "paint_color", defaultVal: 0xFFFFFFFF)
+        paintColor = userDefaultsInt32(forKey: "paint_color", defaultVal: Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
     }
     
     func userDefaults() -> UserDefaults {
@@ -63,9 +82,9 @@ class SessionSettings: NSObject {
         }
     }
     
-    func userDefaultsInt(forKey: String, defaultVal: Int) -> Int {
+    func userDefaultsInt32(forKey: String, defaultVal: Int32) -> Int32 {
         if userDefaultsHasKey(key: forKey) {
-            return userDefaults().integer(forKey: forKey)
+            return userDefaults().object(forKey: forKey) as! Int32
         }
         else {
             return defaultVal

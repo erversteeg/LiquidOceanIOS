@@ -8,12 +8,16 @@
 
 import UIKit
 
+protocol PaintActionDelegate {
+    func notifyPaintActionStarted()
+}
+
 class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveCanvasScaleCallback {
 
     enum Mode {
         case exploring
         case painting
-        case paintSelecting
+        case paintSelection
     }
     
     var mode: Mode = .exploring
@@ -28,6 +32,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     var interactiveCanvas: InteractiveCanvas!
     
     var longPressGestureRecognizer: UILongPressGestureRecognizer!
+    var panGestureRecognizer: UIPanGestureRecognizer!
+    var drawGestureRecognizer: UIDrawGestureRecognizer!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -41,36 +47,27 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, canvasCenterX: 256.0, canvasCenterY: 256.0)
         
         // gestures
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPan(sender:)))
-        self.addGestureRecognizer(panGestureRecognizer)
+        self.panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPan(sender:)))
+        addPan()
         
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(sender:)))
         self.addGestureRecognizer(pinchGestureRecognizer)
         
-        self.longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(sender:)))
-        self.longPressGestureRecognizer.minimumPressDuration = 0
+        self.drawGestureRecognizer = UIDrawGestureRecognizer(target: self, action: #selector(didDraw(sender:)))
     }
     
-    func addLongPress() {
-        self.addGestureRecognizer(self.longPressGestureRecognizer)
-    }
-    
-    func removeLongPress() {
-        self.removeGestureRecognizer(self.longPressGestureRecognizer)
-    }
-    
-    // press
-    @objc func didLongPress(sender: UILongPressGestureRecognizer) {
-        let point = sender.location(in: self)
+    @objc func didDraw(sender: UIDrawGestureRecognizer) {
+        let location = sender.location(in: self)
+        
         if sender.state == .began {
             if mode == .painting {
                 interactiveCanvas.drawCallback?.notifyCanvasRedraw()
                 
-                let unitPoint = interactiveCanvas.screenPointForUnit(x: point.x, y: point.y)
+                let unitPoint = interactiveCanvas.screenPointForUnit(x: location.x, y: location.y)
                 
                 self.undo = interactiveCanvas.unitInRestorePoints(x: Int(unitPoint.x), y: Int(unitPoint.y)) != nil
                 
-                if undo {
+                if self.undo {
                     interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.x), y: Int(unitPoint.y), mode: 1)
                 }
                 else {
@@ -84,32 +81,22 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                     interactiveCanvas.paintDelegate?.notifyPaintingEnded()
                 }
             }
-        }
-        else if sender.state == .cancelled || sender.state == .ended || sender.state == .failed {
-            if mode == .painting {
-                
+            else if mode == .paintSelection {
+                let unitPoint = interactiveCanvas.screenPointForUnit(x: location.x, y: location.y)
+                SessionSettings.instance.paintColor = interactiveCanvas.arr[Int(unitPoint.y)][Int(unitPoint.x)]
+                interactiveCanvas.paintDelegate?.notifyPaintColorUpdate()
             }
         }
-    }
-    
-    // pan
-    @objc func didPan(sender: UIPanGestureRecognizer) {
-        let velocity = sender.velocity(in: self)
-        let location = sender.location(in: self)
-        
-        if mode == .exploring {
-            interactiveCanvas.translateBy(x: -velocity.x, y: -velocity.y)
-        }
-        else if mode == .painting {
+        else if sender.state == .changed {
             let unitPoint = interactiveCanvas.screenPointForUnit(x: location.x, y: location.y)
             
-            if undo {
+            if self.undo {
                 // undo
                 interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.x), y: Int(unitPoint.y), mode: 1)
             }
             else {
                 // paint
-                interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.y), y: Int(unitPoint.y))
+                interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.x), y: Int(unitPoint.y))
             }
             
             if interactiveCanvas.restorePoints.count == 1 {
@@ -118,6 +105,35 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
             else if interactiveCanvas.restorePoints.count == 0 {
                 interactiveCanvas.paintDelegate?.notifyPaintingEnded()
             }
+        }
+    }
+    
+    func addPan() {
+        self.addGestureRecognizer(self.panGestureRecognizer)
+    }
+    
+    func removePan() {
+        self.removeGestureRecognizer(self.panGestureRecognizer)
+    }
+    
+    func addDraw() {
+        self.addGestureRecognizer(self.drawGestureRecognizer)
+    }
+    
+    func removeDraw() {
+        self.removeGestureRecognizer(self.drawGestureRecognizer)
+    }
+    
+    // pan
+    @objc func didPan(sender: UIPanGestureRecognizer) {
+        let velocity = sender.velocity(in: self)
+        
+        
+        if mode == .exploring {
+            interactiveCanvas.translateBy(x: -velocity.x, y: -velocity.y)
+        }
+        else if mode == .painting {
+            
         }
     }
     
@@ -145,7 +161,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     func startPainting() {
         self.mode = .painting
         
-        addLongPress()
+        removePan()
+        addDraw()
     }
     
     func endPainting(accept: Bool) {
@@ -154,7 +171,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
             SessionSettings.instance.dropsAmt += interactiveCanvas.restorePoints.count
         }
         else {
-            // commit pixels
+            interactiveCanvas.commitPixels()
         }
         
         interactiveCanvas.clearRestorePoints()
@@ -163,7 +180,16 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         self.mode = .exploring
         
-        removeLongPress()
+        removeDraw()
+        addPan()
+    }
+    
+    func startPaintSelection() {
+        self.mode = .paintSelection
+    }
+    
+    func endPaintSelection() {
+        self.mode = .painting
     }
     
     // draw callback
@@ -194,7 +220,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     
     func drawGridLines(ctx: CGContext, deviceViewport: CGRect, ppu: Int) {
         if ppu > 0 {
-            ctx.setStrokeColor(UIColor(argb: 0xFFFFFFFF).cgColor)
+            ctx.setStrokeColor(UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFFFFFF")).cgColor)
             ctx.setLineWidth(1.0)
             
             let unitsWide = Int(self.frame.size.width) / ppu

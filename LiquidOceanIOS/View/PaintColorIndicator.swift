@@ -32,7 +32,7 @@ class PaintColorIndicator: UIView {
         
     }
     
-    func setPaintColor(color: Int) {
+    func setPaintColor(color: Int32) {
         SessionSettings.instance.paintColor = color
         setNeedsDisplay()
         

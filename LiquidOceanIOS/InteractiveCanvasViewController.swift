@@ -32,7 +32,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var paintYes: ActionButtonView!
     @IBOutlet weak var paintNo: ActionButtonView!
     
-    var previousColor: Int!
+    @IBOutlet weak var paintQuantityBar: PaintQuantityBar!
+    
+    @IBOutlet weak var backButton: ActionButtonView!
+    
+    var previousColor: Int32!
     
     var colorHandle: ChromaColorHandle!
     
@@ -47,6 +51,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         let backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: self.view.frame.size.height))
         backgroundImage.image = UIImage(named: "wood_texture_light.jpg")
         backgroundImage.contentMode = .scaleToFill
+        
+        self.backButton.type = .back
+        self.backButton.setOnClickListener {
+            self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+        }
         
         self.paintPanelWidth.constant = 0
         
@@ -70,6 +79,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.paintPanel.isHidden = true
         }
         
+        // paint quantity bar
+        SessionSettings.instance.paintQtyDelegates.append(self.paintQuantityBar)
+        
         let paintIndicatorTap = UITapGestureRecognizer(target: self, action: #selector(didTapColorIndicator(sender:)))
         self.paintColorIndicator.addGestureRecognizer(paintIndicatorTap)
         
@@ -81,14 +93,25 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.paintColorAccept.isHidden = true
         self.paintColorCancel.isHidden = true
         
+        // paint selection accept
         self.paintColorAccept.setOnClickListener {
             self.closeColorPicker()
+            
+            self.paintYes.isHidden = false
+            self.paintNo.isHidden = false
+            
+            self.closePaintPanelButton.isHidden = true
+            
+            self.surfaceView.endPaintSelection()
         }
         
+        // paint selection cancel
         self.paintColorCancel.setOnClickListener {
             self.paintColorIndicator.setPaintColor(color: self.previousColor)
             
             self.closeColorPicker()
+            
+            self.surfaceView.endPaintSelection()
         }
         
         self.paintYes.type = .yes
@@ -97,6 +120,17 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.paintYes.isHidden = true
         self.paintNo.isHidden = true
         
+        
+        self.paintYes.setOnClickListener {
+            self.surfaceView.endPainting(accept: true)
+            
+            self.paintYes.isHidden = true
+            self.paintNo.isHidden = true
+            self.closePaintPanelButton.isHidden = false
+            
+            self.paintPanelWidth.constant = 0
+            self.paintPanel.isHidden = true
+        }
         
         self.paintNo.setOnClickListener {
             self.surfaceView.endPainting(accept: false)
@@ -109,6 +143,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
     }
     
+    // paint color indicator
     @objc func didTapColorIndicator(sender: UITapGestureRecognizer) {
         self.previousColor = SessionSettings.instance.paintColor
         
@@ -116,11 +151,16 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.colorPickerFrame.isHidden = false
         
         self.paintColorAccept.isHidden = false
-        self.paintColorCancel.isHidden = false
+        // self.paintColorCancel.isHidden = false
         
         self.closePaintPanelButton.isHidden = true
         
         self.colorHandle.color = UIColor(argb: SessionSettings.instance.paintColor)
+        
+        self.paintYes.isHidden = true
+        self.paintNo.isHidden = true
+        
+        self.surfaceView.startPaintSelection()
     }
     
     @objc func colorPickerValueChange(_ picker: ChromaColorPicker) {
@@ -134,7 +174,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     func setupColorPicker() {
         self.colorPickerFrameWidth.constant = 0
         
-        self.colorPickerFrame.backgroundColor = UIColor(argb: 0xDD111111)
+        self.colorPickerFrame.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xDD111111"))
         
         let colorPicker = ChromaColorPicker(frame: CGRect(x: 50, y: 30, width: 300, height: 300))
         self.colorPickerFrame.addSubview(colorPicker)
@@ -184,6 +224,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.closePaintPanelButton.isHidden = false
         self.paintYes.isHidden = true
         self.paintNo.isHidden = true
+    }
+    
+    func notifyPaintColorUpdate() {
+        self.paintColorIndicator.setPaintColor(color: SessionSettings.instance.paintColor)
     }
 }
 
