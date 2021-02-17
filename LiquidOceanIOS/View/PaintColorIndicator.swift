@@ -56,5 +56,4 @@ class PaintColorIndicator: UIView {
         
         ctx.drawPath(using: .stroke)
     }
-
 }

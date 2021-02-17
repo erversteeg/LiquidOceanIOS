@@ -21,9 +21,13 @@ class ActionButtonView: UIView {
     static var lightGreenColor: Int32!
     static var redColor: Int32!
     static var lightRedColor: Int32!
+    static var semiDarkLightColor: Int32!
+    static var semiColor: Int32!
+    static var lightYellowSemiColor: Int32!
     
     enum ActionType {
         case none
+        case clickable
         case paint
         case yes
         case no
@@ -35,6 +39,10 @@ class ActionButtonView: UIView {
         case stats
         case exit
         case back
+        case export
+        case exportSolid
+        case changeBackground
+        case save
     }
     
     let menuButtonRows = 4
@@ -84,10 +92,16 @@ class ActionButtonView: UIView {
         ActionButtonView.lightGreenColor = Utils.int32FromColorHex(hex: "0xFF62AD6C")
         ActionButtonView.redColor = Utils.int32FromColorHex(hex: "0xFFFA3A47")
         ActionButtonView.lightRedColor = Utils.int32FromColorHex(hex: "0xFFFB7E87")
+        ActionButtonView.semiDarkLightColor = Utils.int32FromColorHex(hex: "0x11000000")
+        ActionButtonView.semiColor = Utils.int32FromColorHex(hex: "0x99FFFFFF")
+        ActionButtonView.lightYellowSemiColor = Utils.int32FromColorHex(hex: "0x99FAE38D")
     }
     
     override func draw(_ rect: CGRect) {
-        if type == .paint {
+        if type == .clickable {
+            drawClickableAction()
+        }
+        else if type == .paint {
             drawPaintAction()
         }
         else if type == .closePaint {
@@ -120,6 +134,18 @@ class ActionButtonView: UIView {
         else if type == .back {
             drawBackAction()
         }
+        else if type == .export {
+            drawExportAction()
+        }
+        else if type == .exportSolid {
+            drawExportSolidAction()
+        }
+        else if type == .save {
+            drawSaveAction()
+        }
+        else if type == .changeBackground {
+            drawChangeBackgroundAction()
+        }
     }
 
     //
@@ -145,6 +171,15 @@ class ActionButtonView: UIView {
     
     func setOnClickListener(handler: @escaping () -> Void) {
         self.clickHandler = handler
+    }
+    
+    func drawClickableAction() {
+        rows = 1
+        cols = 1
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        drawPixel(ctx: context, x: 0, y: 0, color: Utils.int32FromColorHex(hex: "0x00000000"))
     }
     
     func drawClosePaintAction() {
@@ -184,8 +219,13 @@ class ActionButtonView: UIView {
         self.rows = 4
         self.cols = 4
         
-        let primaryColor = ActionButtonView.whiteColor!
+        var primaryColor = ActionButtonView.whiteColor!
         var accentColor = ActionButtonView.altGreenColor!
+        
+        if SessionSettings.instance.darkIcons {
+            primaryColor = ActionButtonView.blackColor!
+        }
+        
         if selected {
             accentColor = ActionButtonView.lightAltGreenColor!
         }
@@ -271,6 +311,10 @@ class ActionButtonView: UIView {
         self.cols = 7
        
         var paint = ActionButtonView.semiLightColor!
+        if SessionSettings.instance.darkIcons {
+            paint = ActionButtonView.semiDarkLightColor!
+        }
+        
         if self.selected {
             paint = ActionButtonView.lightYellowColor!
         }
@@ -298,6 +342,120 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 2, y: 4, color: paint)
     }
     
+    func drawExportAction() {
+        rows = 3
+        cols = 3
+        
+        var paint = ActionButtonView.semiLightColor!
+        if SessionSettings.instance.darkIcons {
+            paint = ActionButtonView.semiDarkLightColor!
+        }
+        
+        if selected {
+            paint = ActionButtonView.lightYellowSemiColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
+    }
+    
+    func drawExportSolidAction() {
+        rows = 3
+        cols = 3
+        
+        var paint = ActionButtonView.semiColor!
+        
+        if selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
+    }
+    
+    func drawSaveAction() {
+        rows = 5
+        cols = 4
+        
+        var paint = ActionButtonView.semiColor!
+        
+        if selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        // row 1
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 0, color: paint)
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        drawPixel(ctx: context, x: 3, y: 0, color: paint)
+        
+        // row 2
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 3, y: 1, color: paint)
+
+        // row 3
+        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
+        drawPixel(ctx: context, x: 3, y: 2, color: paint)
+        
+        // row 4
+        drawPixel(ctx: context, x: 0, y: 3, color: paint)
+        drawPixel(ctx: context, x: 1, y: 3, color: paint)
+        drawPixel(ctx: context, x: 2, y: 3, color: paint)
+        drawPixel(ctx: context, x: 3, y: 3, color: paint)
+        
+        // row 5
+        drawPixel(ctx: context, x: 0, y: 4, color: paint)
+        drawPixel(ctx: context, x: 1, y: 4, color: paint)
+        drawPixel(ctx: context, x: 2, y: 4, color: paint)
+        drawPixel(ctx: context, x: 3, y: 4, color: paint)
+    }
+    
+    func drawChangeBackgroundAction() {
+        rows = 4
+        cols = 3
+        
+        var paint = ActionButtonView.semiLightColor!
+        if SessionSettings.instance.darkIcons {
+            paint = ActionButtonView.semiDarkLightColor!
+        }
+        
+        if selected {
+            paint = ActionButtonView.lightYellowSemiColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        // row 1
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 0, color: paint)
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        
+        // row 2
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 1, y: 1, color: paint)
+        drawPixel(ctx: context, x: 2, y: 1, color: paint)
+
+        // row 3
+        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+        drawPixel(ctx: context, x: 1, y: 2, color: paint)
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
+        
+        // row 4
+        drawPixel(ctx: context, x: 0, y: 3, color: paint)
+        drawPixel(ctx: context, x: 1, y: 3, color: paint)
+        drawPixel(ctx: context, x: 2, y: 3, color: paint)
+    }
+    
+    // menu buttons
     func drawPlayAction() {
         rows = menuButtonRows
         cols = menuButtonCols

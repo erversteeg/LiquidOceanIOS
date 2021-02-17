@@ -104,6 +104,35 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
+    func downloadPixelHistory(pixelId: Int, completionHandler: @escaping (Bool, [AnyObject]) -> Void) {
+        
+        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/canvas/pixels/" + String(pixelId) + "/history")!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "GET"
+
+        // var params = ["username":"username", "password":"password"] as Dictionary<String, String>
+
+        // request.HTTPBody = try? JSONSerialization.dataWithJSONObject(params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: AnyObject]
+                
+                DispatchQueue.main.async {
+                    completionHandler(true, jsonDict["data"] as! [AnyObject])
+                }
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
     }

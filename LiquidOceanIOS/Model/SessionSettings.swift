@@ -39,6 +39,10 @@ class SessionSettings: NSObject {
     
     var maxPaintAmt = 1000
     
+    var darkIcons = false
+    
+    var backgroundColorIndex = 0
+    
     var paintQtyDelegates = [PaintQtyDelegate]()
     
     func save() {        
@@ -46,6 +50,8 @@ class SessionSettings: NSObject {
         userDefaults().set(dropsAmt, forKey: "drops_amt")
         userDefaults().set(sentUniqueId, forKey: "sent_unique_id")
         userDefaults().set(paintColor, forKey: "paint_color")
+        userDefaults().set(darkIcons, forKey: "dark_icons")
+        userDefaults().set(backgroundColorIndex, forKey: "background_color")
     }
     
     func load() {
@@ -54,6 +60,10 @@ class SessionSettings: NSObject {
         sentUniqueId = userDefaultsBool(forKey: "sent_unique_id", defaultVal: false)
         
         paintColor = userDefaultsInt32(forKey: "paint_color", defaultVal: Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
+        
+        darkIcons = userDefaultsBool(forKey: "dark_icons", defaultVal: false)
+        
+        backgroundColorIndex = userDefaultsInt(forKey: "background_color", defaultVal: 0)
     }
     
     func userDefaults() -> UserDefaults {
@@ -76,6 +86,15 @@ class SessionSettings: NSObject {
     func userDefaultsBool(forKey: String, defaultVal: Bool) -> Bool {
         if userDefaultsHasKey(key: forKey) {
             return userDefaults().bool(forKey: forKey)
+        }
+        else {
+            return defaultVal
+        }
+    }
+    
+    func userDefaultsInt(forKey: String, defaultVal: Int) -> Int {
+        if userDefaultsHasKey(key: forKey) {
+            return userDefaults().object(forKey: forKey) as! Int
         }
         else {
             return defaultVal

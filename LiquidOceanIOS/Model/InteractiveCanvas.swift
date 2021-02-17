@@ -23,6 +23,11 @@ protocol InteractiveCanvasPaintDelegate: AnyObject {
     func notifyPaintColorUpdate()
 }
 
+protocol InteractiveCanvasPixelHistoryDelegate: AnyObject {
+    func notifyShowPixelHistory(data: [AnyObject], screenPoint: CGPoint)
+    func notifyHidePixelHistory()
+}
+
 class InteractiveCanvas: NSObject, URLSessionDelegate {
     var rows = 512
     var cols = 512
@@ -39,11 +44,21 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     weak var drawCallback: InteractiveCanvasDrawCallback?
     weak var scaleCallback: InteractiveCanvasScaleCallback?
     weak var paintDelegate: InteractiveCanvasPaintDelegate?
+    weak var pixelHistoryDelegate: InteractiveCanvasPixelHistoryDelegate?
     
-    var startScaleFactor = 0.5
+    var startScaleFactor = CGFloat(0.2)
     
-    let minScaleFactor = 0.10
-    let maxScaleFactor = 10.0
+    let minScaleFactor = CGFloat(0.07)
+    let maxScaleFactor = CGFloat(7)
+    
+    let backgroundBlack = 0
+    let backgroundWhite = 1
+    let backgroundGrayThirds = 2
+    let backgroundPhotoshop = 3
+    let backgroundClassic = 4
+    let backgroundChess = 5
+    
+    let numBackgrounds = 6
     
     var manager: SocketManager!
     var socket: SocketIOClient!
@@ -213,6 +228,46 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         socket.emit("pixels_event", reqObj)
     }
     
+    func getGridLineColor() -> Int32 {
+        let white = Utils.int32FromColorHex(hex: "0xFFFFFFFF")
+        let black = Utils.int32FromColorHex(hex: "0xFF000000")
+        switch SessionSettings.instance.backgroundColorIndex {
+            case backgroundWhite:
+                return black
+            case backgroundPhotoshop:
+                return black
+            default:
+                return white
+        }
+    }
+    
+    func getBackgroundColors(index: Int) -> (primary: Int32, secondary: Int32)? {
+        switch index {
+            case backgroundBlack:
+                return (Utils.int32FromColorHex(hex: "0xFF000000"), Utils.int32FromColorHex(hex: "0xFF000000"))
+            case backgroundWhite:
+                return (Utils.int32FromColorHex(hex: "0xFFFFFFFF"), Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
+            case backgroundGrayThirds:
+                return (Utils.int32FromColorHex(hex: "0xFFAAAAAA"), Utils.int32FromColorHex(hex: "0xFF555555"))
+            case backgroundPhotoshop:
+                return (Utils.int32FromColorHex(hex: "0xFFFFFFFF"), Utils.int32FromColorHex(hex: "0xFFCCCCCC"))
+            case backgroundClassic:
+                return (Utils.int32FromColorHex(hex: "0xFF666666"), Utils.int32FromColorHex(hex: "0xFF333333"))
+            case backgroundChess:
+                return (Utils.int32FromColorHex(hex: "0xFFB59870"), Utils.int32FromColorHex(hex: "0xFF000000"))
+            default:
+                return nil
+        }
+    }
+    
+    func getPixelHistoryForUnitPoint(unitPoint: CGPoint, completionHandler: @escaping (Bool, [AnyObject]) -> Void) {
+        let x = Int(unitPoint.x)
+        let y = Int(unitPoint.y)
+        
+        let pixelId = y * cols + x + 1
+        URLSessionHandler.instance.downloadPixelHistory(pixelId: pixelId, completionHandler: completionHandler)
+    }
+    
     // restore points
     
     func undoPendingPaint() {
@@ -272,7 +327,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         return CGRect(x: max(offsetX, 0.0), y: max(offsetY, 0.0), width: offsetX + CGFloat(ppu), height: offsetY + CGFloat(ppu))
     }
     
-    func screenPointForUnit(x: CGFloat, y: CGFloat) -> CGPoint {
+    func unitForScreenPoint(x: CGFloat, y: CGFloat) -> CGPoint {
         let topViewportPx = deviceViewport.origin.y * CGFloat(ppu)
         let leftViewportPx = deviceViewport.origin.x * CGFloat(ppu)
         

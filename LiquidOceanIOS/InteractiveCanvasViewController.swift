@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import ChromaColorPicker
+import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -36,9 +36,16 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var backButton: ActionButtonView!
     
+    @IBOutlet weak var exportAction: ActionButtonView!
+    @IBOutlet weak var changeBackgroundAction: ActionButtonView!
+    
+    @IBOutlet weak var toolboxButton: ActionButtonView!
+    
+    @IBOutlet weak var pixelHistoryView: UIView!
+    
     var previousColor: Int32!
     
-    var colorHandle: ChromaColorHandle!
+    var pixelHistoryViewController: PixelHistoryViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +54,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         SessionSettings.instance.interactiveCanvas = self.surfaceView.interactiveCanvas
         
         self.surfaceView.interactiveCanvas.paintDelegate = self
+        self.surfaceView.interactiveCanvas.pixelHistoryDelegate = self
         
         let backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: self.view.frame.size.height))
         backgroundImage.image = UIImage(named: "wood_texture_light.jpg")
@@ -58,11 +66,40 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
         
         self.paintPanelWidth.constant = 0
+        self.colorPickerFrameWidth.constant = 0
         
         self.paintPanel.insertSubview(backgroundImage, at: 0)
         
+        toggleToolbox(open: false)
+        
+        // action buttons
         self.paintPanelButton.type = .paint
         self.closePaintPanelButton.type = .closePaint
+        self.exportAction.type = .export
+        self.changeBackgroundAction.type = .changeBackground
+        self.toolboxButton.type = .clickable
+        
+        self.toolboxButton.setOnClickListener {
+            self.toggleToolbox(open: self.exportAction.isHidden)
+        }
+        
+        self.changeBackgroundAction.setOnClickListener {
+            SessionSettings.instance.backgroundColorIndex += 1
+            if SessionSettings.instance.backgroundColorIndex == self.surfaceView.interactiveCanvas.numBackgrounds {
+                SessionSettings.instance.backgroundColorIndex = 0
+            }
+            
+            SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
+            
+            self.exportAction.setNeedsDisplay()
+            self.changeBackgroundAction.setNeedsDisplay()
+            self.paintPanelButton.setNeedsDisplay()
+            self.backButton.setNeedsDisplay()
+            
+            SessionSettings.instance.save()
+            
+            self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+        }
         
         self.paintPanel.isHidden = true
         self.paintPanelButton.setOnClickListener {
@@ -84,8 +121,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         let paintIndicatorTap = UITapGestureRecognizer(target: self, action: #selector(didTapColorIndicator(sender:)))
         self.paintColorIndicator.addGestureRecognizer(paintIndicatorTap)
-        
-        setupColorPicker()
         
         self.paintColorAccept.type = .paintSelectYes
         self.paintColorCancel.type = .paintSelectCancel
@@ -151,51 +186,16 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.colorPickerFrame.isHidden = false
         
         self.paintColorAccept.isHidden = false
-        // self.paintColorCancel.isHidden = false
+        self.paintColorCancel.isHidden = false
         
         self.closePaintPanelButton.isHidden = true
         
-        self.colorHandle.color = UIColor(argb: SessionSettings.instance.paintColor)
+        // self.colorHandle.color = UIColor(argb: SessionSettings.instance.paintColor)
         
         self.paintYes.isHidden = true
         self.paintNo.isHidden = true
         
         self.surfaceView.startPaintSelection()
-    }
-    
-    @objc func colorPickerValueChange(_ picker: ChromaColorPicker) {
-        self.paintColorIndicator.setPaintColor(color: picker.currentHandle!.color.argb()!)
-    }
-    
-    @objc func sliderDidValueChange(_ slider: ChromaBrightnessSlider) {
-        self.paintColorIndicator.setPaintColor(color: slider.currentColor.argb()!)
-    }
-    
-    func setupColorPicker() {
-        self.colorPickerFrameWidth.constant = 0
-        
-        self.colorPickerFrame.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xDD111111"))
-        
-        let colorPicker = ChromaColorPicker(frame: CGRect(x: 50, y: 30, width: 300, height: 300))
-        self.colorPickerFrame.addSubview(colorPicker)
-        
-        colorPicker.borderColor = UIColor.clear
-
-        let brightnessSlider = ChromaBrightnessSlider(frame: CGRect(x: 60, y: 340, width: 280, height: 32))
-        self.colorPickerFrame.addSubview(brightnessSlider)
-
-        colorPicker.connect(brightnessSlider)
-        
-        let handle = ChromaColorHandle()
-        handle.color = UIColor(argb: SessionSettings.instance.paintColor)
-        colorPicker.addHandle(handle)
-        
-        self.colorHandle = handle
-        
-        brightnessSlider.addTarget(self, action: #selector(sliderDidValueChange(_:)), for: .valueChanged)
-        colorPicker.addTarget(self, action: #selector(colorPickerValueChange(_:)), for: .valueChanged)
-        
-        self.colorPickerFrame.isHidden = true
     }
     
     func closeColorPicker() {
@@ -205,6 +205,17 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         if self.surfaceView.interactiveCanvas.restorePoints.count == 0 {
             self.closePaintPanelButton.isHidden = false
+        }
+    }
+    
+    func toggleToolbox(open: Bool) {
+        if open {
+            self.exportAction.isHidden = false
+            self.changeBackgroundAction.isHidden = false
+        }
+        else {
+            self.exportAction.isHidden = true
+            self.changeBackgroundAction.isHidden = true
         }
     }
 
@@ -228,6 +239,58 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func notifyPaintColorUpdate() {
         self.paintColorIndicator.setPaintColor(color: SessionSettings.instance.paintColor)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ColorPickerEmbed" {
+            let colorPickerViewController = segue.destination as! CustomColorPickerViewController
+            colorPickerViewController.delegate = self
+            colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintColor)
+        }
+        else if segue.identifier == "PixelHistoryEmbed" {
+            segue.destination.modalPresentationStyle = .overCurrentContext
+            self.pixelHistoryViewController = segue.destination as! PixelHistoryViewController
+        }
+    }
+    
+    // color picker delegate
+    func colorPicker(_ colorPicker: ColorPickerController, selectedColor: UIColor, usingControl: ColorControl) {
+        SessionSettings.instance.paintColor = selectedColor.argb()
+        self.paintColorIndicator.setNeedsDisplay()
+    }
+    
+    // pixel history delegate
+    func notifyShowPixelHistory(data: [AnyObject], screenPoint: CGPoint) {
+        
+        self.pixelHistoryViewController.data = data
+        self.pixelHistoryViewController.collectionView.reloadData()
+        
+        var x = screenPoint.x + 10
+        var y = screenPoint.y - 130
+        
+        if x < 0 {
+            x = 20
+        }
+        else if x + self.pixelHistoryView.frame.size.width > self.view.frame.size.width {
+            x = self.view.frame.size.width - self.pixelHistoryView.frame.size.width - 20
+        }
+        
+        if y < 0 {
+            y = 20
+        }
+        else if y + self.pixelHistoryView.frame.size.height > self.view.frame.size.height {
+            y = self.view.frame.size.height - self.pixelHistoryView.frame.size.height - 20
+        }
+        
+        self.pixelHistoryView.frame = CGRect(x: CGFloat(x), y: CGFloat(y),
+                                             width: self.pixelHistoryView.frame.size.width,
+                                             height: self.pixelHistoryView.frame.size.height)
+        
+        self.pixelHistoryView.isHidden = false
+    }
+    
+    func notifyHidePixelHistory() {
+        self.pixelHistoryView.isHidden = true
     }
 }
 

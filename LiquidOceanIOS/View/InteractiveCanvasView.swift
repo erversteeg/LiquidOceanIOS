@@ -33,6 +33,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     
     var longPressGestureRecognizer: UILongPressGestureRecognizer!
     var panGestureRecognizer: UIPanGestureRecognizer!
+    var tapGestureRecognizer: UITapGestureRecognizer!
     var drawGestureRecognizer: UIDrawGestureRecognizer!
     
     required init?(coder: NSCoder) {
@@ -44,11 +45,18 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         
+        self.scaleFactor = interactiveCanvas.startScaleFactor
+        self.interactiveCanvas.ppu = Int(CGFloat(interactiveCanvas.basePpu) * self.scaleFactor)
+        
+        
         interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, canvasCenterX: 256.0, canvasCenterY: 256.0)
         
         // gestures
         self.panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPan(sender:)))
         addPan()
+        
+        self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTap(sender:)))
+        addTap()
         
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(sender:)))
         self.addGestureRecognizer(pinchGestureRecognizer)
@@ -63,7 +71,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
             if mode == .painting {
                 interactiveCanvas.drawCallback?.notifyCanvasRedraw()
                 
-                let unitPoint = interactiveCanvas.screenPointForUnit(x: location.x, y: location.y)
+                let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
                 
                 self.undo = interactiveCanvas.unitInRestorePoints(x: Int(unitPoint.x), y: Int(unitPoint.y)) != nil
                 
@@ -82,13 +90,13 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 }
             }
             else if mode == .paintSelection {
-                let unitPoint = interactiveCanvas.screenPointForUnit(x: location.x, y: location.y)
+                let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
                 SessionSettings.instance.paintColor = interactiveCanvas.arr[Int(unitPoint.y)][Int(unitPoint.x)]
                 interactiveCanvas.paintDelegate?.notifyPaintColorUpdate()
             }
         }
         else if sender.state == .changed {
-            let unitPoint = interactiveCanvas.screenPointForUnit(x: location.x, y: location.y)
+            let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
             
             if self.undo {
                 // undo
@@ -112,8 +120,16 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         self.addGestureRecognizer(self.panGestureRecognizer)
     }
     
+    func addTap() {
+        self.addGestureRecognizer(self.tapGestureRecognizer)
+    }
+    
     func removePan() {
         self.removeGestureRecognizer(self.panGestureRecognizer)
+    }
+    
+    func removeTap() {
+        self.removeGestureRecognizer(self.tapGestureRecognizer)
     }
     
     func addDraw() {
@@ -130,10 +146,23 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         
         if mode == .exploring {
+            interactiveCanvas.pixelHistoryDelegate?.notifyHidePixelHistory()
+            
             interactiveCanvas.translateBy(x: -velocity.x, y: -velocity.y)
         }
         else if mode == .painting {
             
+        }
+    }
+    
+    // tap
+    @objc func didTap(sender: UITapGestureRecognizer) {
+        let location = sender.location(in: self)
+        
+        let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
+        
+        self.interactiveCanvas.getPixelHistoryForUnitPoint(unitPoint: unitPoint) { (success, data) in
+            self.interactiveCanvas.pixelHistoryDelegate?.notifyShowPixelHistory(data: data, screenPoint: location)
         }
     }
     
@@ -143,7 +172,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         oldScaleFactor = scaleFactor
         scaleFactor *= scale
         
-        scaleFactor = CGFloat(max(interactiveCanvas.minScaleFactor, min(Double(scaleFactor), interactiveCanvas.maxScaleFactor)))
+        scaleFactor = CGFloat(max(interactiveCanvas.minScaleFactor, min(scaleFactor, interactiveCanvas.maxScaleFactor)))
         
         oldPpu = interactiveCanvas.ppu
         interactiveCanvas.ppu = Int((CGFloat(interactiveCanvas.basePpu) * scaleFactor))
@@ -162,6 +191,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         self.mode = .painting
         
         removePan()
+        removeTap()
+        
         addDraw()
     }
     
@@ -181,7 +212,9 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         self.mode = .exploring
         
         removeDraw()
+        
         addPan()
+        addTap()
     }
     
     func startPaintSelection() {
@@ -219,7 +252,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     }
     
     func drawGridLines(ctx: CGContext, deviceViewport: CGRect, ppu: Int) {
-        if ppu > 0 {
+        if ppu > interactiveCanvas.gridLineThreshold {
             ctx.setStrokeColor(UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFFFFFF")).cgColor)
             ctx.setLineWidth(1.0)
             
@@ -252,6 +285,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         let rangeX = endUnitIndexX - startUnitIndexX
         let rangeY = endUnitIndexY - startUnitIndexY
         
+        let backgroundColors = interactiveCanvas.getBackgroundColors(index: SessionSettings.instance.backgroundColorIndex)!
+        
         for x in 0...rangeX {
             for y in 0...rangeY {
                 let unitX = x + startUnitIndexX
@@ -259,9 +294,23 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 
                 if unitX >= 0 && unitX < interactiveCanvas.cols && unitY >= 0 && unitY < interactiveCanvas.rows {
                     let color = interactiveCanvas.arr[unitY][unitX]
-                    ctx.setFillColor(UIColor(argb: color).cgColor)
-                    ctx.addRect(interactiveCanvas.getScreenSpaceForUnit(x: unitX, y: unitY))
-                    ctx.drawPath(using: .fill)
+                    if color == 0 {
+                        if ((unitX + unitY) % 2 == 0) {
+                            ctx.setFillColor(UIColor(argb: backgroundColors.primary).cgColor)
+                        }
+                        else {
+                            ctx.setFillColor(UIColor(argb: backgroundColors.secondary).cgColor)
+                        }
+                        
+                        ctx.addRect(interactiveCanvas.getScreenSpaceForUnit(x: unitX, y: unitY))
+                        ctx.drawPath(using: .fill)
+                        
+                    }
+                    else {
+                        ctx.setFillColor(UIColor(argb: color).cgColor)
+                        ctx.addRect(interactiveCanvas.getScreenSpaceForUnit(x: unitX, y: unitY))
+                        ctx.drawPath(using: .fill)
+                    }
                 }
             }
         }
