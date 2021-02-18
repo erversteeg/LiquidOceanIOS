@@ -64,6 +64,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         self.drawGestureRecognizer = UIDrawGestureRecognizer(target: self, action: #selector(didDraw(sender:)))
     }
     
+    // draw
     @objc func didDraw(sender: UIDrawGestureRecognizer) {
         let location = sender.location(in: self)
         
@@ -161,8 +162,10 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
         
-        self.interactiveCanvas.getPixelHistoryForUnitPoint(unitPoint: unitPoint) { (success, data) in
-            self.interactiveCanvas.pixelHistoryDelegate?.notifyShowPixelHistory(data: data, screenPoint: location)
+        if !interactiveCanvas.isBackground(unitPoint: unitPoint) {
+            self.interactiveCanvas.getPixelHistoryForUnitPoint(unitPoint: unitPoint) { (success, data) in
+                self.interactiveCanvas.pixelHistoryDelegate?.notifyShowPixelHistory(data: data, screenPoint: location)
+            }
         }
     }
     
@@ -311,6 +314,11 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                         ctx.addRect(interactiveCanvas.getScreenSpaceForUnit(x: unitX, y: unitY))
                         ctx.drawPath(using: .fill)
                     }
+                }
+                else {
+                    ctx.setFillColor(UIColor.black.cgColor)
+                    ctx.addRect(interactiveCanvas.getScreenSpaceForUnit(x: unitX, y: unitY))
+                    ctx.drawPath(using: .fill)
                 }
             }
         }

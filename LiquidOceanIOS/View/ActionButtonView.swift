@@ -23,6 +23,7 @@ class ActionButtonView: UIView {
     static var lightRedColor: Int32!
     static var semiDarkLightColor: Int32!
     static var semiColor: Int32!
+    static var semiDarkColor: Int32!
     static var lightYellowSemiColor: Int32!
     
     enum ActionType {
@@ -43,12 +44,22 @@ class ActionButtonView: UIView {
         case exportSolid
         case changeBackground
         case save
+        case dot
     }
     
     let menuButtonRows = 4
     let menuButtonCols = 26
     
-    var selected = false
+    private var _selected = false
+    var selected: Bool {
+        set {
+            _selected = newValue
+            setNeedsDisplay()
+        }
+        get {
+            return _selected
+        }
+    }
     
     var rows: Int!
     var cols: Int!
@@ -94,6 +105,7 @@ class ActionButtonView: UIView {
         ActionButtonView.lightRedColor = Utils.int32FromColorHex(hex: "0xFFFB7E87")
         ActionButtonView.semiDarkLightColor = Utils.int32FromColorHex(hex: "0x11000000")
         ActionButtonView.semiColor = Utils.int32FromColorHex(hex: "0x99FFFFFF")
+        ActionButtonView.semiDarkColor = Utils.int32FromColorHex(hex: "0x33000000")
         ActionButtonView.lightYellowSemiColor = Utils.int32FromColorHex(hex: "0x99FAE38D")
     }
     
@@ -145,6 +157,9 @@ class ActionButtonView: UIView {
         }
         else if type == .changeBackground {
             drawChangeBackgroundAction()
+        }
+        else if type == .dot {
+            drawDotAction()
         }
     }
 
@@ -346,13 +361,13 @@ class ActionButtonView: UIView {
         rows = 3
         cols = 3
         
-        var paint = ActionButtonView.semiLightColor!
+        var paint = ActionButtonView.semiColor!
         if SessionSettings.instance.darkIcons {
-            paint = ActionButtonView.semiDarkLightColor!
+            paint = ActionButtonView.semiDarkColor!
         }
         
         if selected {
-            paint = ActionButtonView.lightYellowSemiColor!
+            paint = ActionButtonView.lightYellowColor!
         }
         
         let context = UIGraphicsGetCurrentContext()!
@@ -423,13 +438,13 @@ class ActionButtonView: UIView {
         rows = 4
         cols = 3
         
-        var paint = ActionButtonView.semiLightColor!
+        var paint = ActionButtonView.semiColor!
         if SessionSettings.instance.darkIcons {
-            paint = ActionButtonView.semiDarkLightColor!
+            paint = ActionButtonView.semiDarkColor!
         }
         
         if selected {
-            paint = ActionButtonView.lightYellowSemiColor!
+            paint = ActionButtonView.lightYellowColor!
         }
         
         let context = UIGraphicsGetCurrentContext()!
@@ -453,6 +468,24 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 0, y: 3, color: paint)
         drawPixel(ctx: context, x: 1, y: 3, color: paint)
         drawPixel(ctx: context, x: 2, y: 3, color: paint)
+    }
+    
+    func drawDotAction() {
+        rows = 1
+        cols = 1
+        
+        var paint = ActionButtonView.semiLightColor!
+        if SessionSettings.instance.darkIcons {
+            paint = ActionButtonView.semiDarkLightColor!
+        }
+        
+        if selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
     }
     
     // menu buttons

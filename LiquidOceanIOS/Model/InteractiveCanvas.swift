@@ -176,6 +176,10 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         }
     }
     
+    func isBackground(unitPoint: CGPoint) -> Bool {
+        return arr[Int(unitPoint.y)][Int(unitPoint.x)] == 0
+    }
+    
     func paintUnitOrUndo(x: Int, y: Int, mode: Int = 0) {
         let restorePoint = unitInRestorePoints(x: x, y: y)
         
@@ -291,7 +295,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     }
     
     func updateDeviceViewport(screenSize: CGSize, fromScale: Bool = false) {
-        updateDeviceViewport(screenSize: screenSize, canvasCenterX: deviceViewport.origin.x + deviceViewport.size.width / 2, canvasCenterY: deviceViewport.origin.y + deviceViewport.size.height / 2)
+        updateDeviceViewport(screenSize: screenSize, canvasCenterX: deviceViewport.origin.x + deviceViewport.size.width / 2, canvasCenterY: deviceViewport.origin.y + deviceViewport.size.height / 2, fromScale: fromScale)
     }
     
     func updateDeviceViewport(screenSize: CGSize, canvasCenterX: CGFloat, canvasCenterY: CGFloat, fromScale: Bool = false) {
@@ -311,9 +315,10 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         let left = CGFloat(canvasLeft) / CGFloat(ppu)
         let right = CGFloat(canvasRight) / CGFloat(ppu)
         
-        if (top < 0.0 || bottom > CGFloat(rows) || CGFloat(left) > 0.0 || right > CGFloat(cols)) {
+        if (top < 0.0 || bottom > CGFloat(rows) || CGFloat(left) < 0.0 || right > CGFloat(cols)) {
             if (fromScale) {
-                
+                self.scaleCallback?.notifyScaleCancelled()
+                return
             }
         }
         
@@ -341,6 +346,8 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     }
     
     func translateBy(x: CGFloat, y: CGFloat) {
+        let margin = CGFloat(200) / CGFloat(ppu)
+        
         var dX = x / CGFloat(ppu)
         var dY = y / CGFloat(ppu)
         
@@ -349,23 +356,27 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         var right = left + deviceViewport.size.width
         var bottom = top + deviceViewport.size.height
         
-        if left + dX < 0.0 {
-            let diff = left
+        let leftBound = -margin
+        if left + dX < leftBound {
+            let diff = left - leftBound
             dX = diff
         }
         
-        if right + dX > CGFloat(cols) {
-            let diff = CGFloat(cols) - right
+        let rightBound = CGFloat(self.cols) + margin
+        if right + dX > rightBound {
+            let diff = rightBound - right
             dX = diff
         }
         
-        if top + dY < 0 {
-            let diff = top
+        let topBound = -margin
+        if top + dY < topBound {
+            let diff = top - topBound
             dY = diff
         }
         
+        let bottomBound = CGFloat(self.rows) + margin
         if bottom + dY > CGFloat(rows) {
-            let diff = CGFloat(rows) - bottom
+            let diff = bottomBound - bottom
             dY = diff
         }
         

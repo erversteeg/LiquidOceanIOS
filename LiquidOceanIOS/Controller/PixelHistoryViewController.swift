@@ -1,0 +1,147 @@
+//
+//  PixelHistoryViewController.swift
+//  LiquidOceanIOS
+//
+//  Created by Eric Versteeg on 2/16/21.
+//  Copyright © 2021 Eric Versteeg. All rights reserved.
+//
+
+import UIKit
+
+class PixelHistoryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+
+    var data: [AnyObject]?
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+
+    @IBOutlet weak var noDataLabel: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    var selectedIndices = [IndexPath]()
+    
+    func clearSelections() {
+        self.selectedIndices = [IndexPath]()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        var count = 0
+        if data != nil {
+            if data!.count == 0 {
+                self.noDataLabel.isHidden = false
+            }
+            else {
+                self.noDataLabel.isHidden = true
+            }
+            
+            count = data!.count
+        }
+        else {
+            self.noDataLabel.isHidden = false
+        }
+        
+        return count
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PixelHistoryItemCell", for: indexPath) as! PixelHistoryCollectionViewCell
+        
+        let dataObj = data![indexPath.row] as! [String: AnyObject]
+        
+        let color = dataObj["color"] as! Int32
+        let name = dataObj["name"] as! String
+        let level = dataObj["level"] as! Int
+        let timestamp = dataObj["timestamp"] as! Int
+        
+        let date = Date(timeIntervalSince1970: Double(timestamp))
+        let now = Date()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
+        
+        dateFormatter.dateFormat = "MM-dd-yy"
+        
+        if self.selectedIndices.contains(indexPath) {
+            cell.nameLabel.isHidden = true
+            cell.dateLabel.isHidden = true
+            cell.colorView.isHidden = true
+            cell.fullDateLabel.isHidden = false
+            
+            dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
+            cell.fullDateLabel.text = dateFormatter.string(from: date)
+        }
+        else {
+            cell.nameLabel.isHidden = false
+            cell.dateLabel.isHidden = false
+            cell.colorView.isHidden = false
+            cell.fullDateLabel.isHidden = true
+            
+            cell.colorView.backgroundColor = UIColor(argb: color)
+            cell.nameLabel.text = name + " (" + String(level) + ")"
+            
+            let days = Calendar.current.ordinality(of: .day, in: .year, for: now)! - Calendar.current.ordinality(of: .day, in: .year, for: date)!
+            let sameYaer = Calendar.current.component(.year, from: date) == Calendar.current.component(.year, from: now)
+            
+            if days == 0 && sameYaer {
+                dateFormatter.dateFormat = "hh:mm a"
+                cell.dateLabel.text = dateFormatter.string(from: date).lowercased()
+            }
+            else if days == 1 && sameYaer {
+                cell.dateLabel.text = "Yesterday"
+            }
+            else if days > 1 && days < 7 {
+                dateFormatter.dateFormat = "EEEE"
+                cell.dateLabel.text = dateFormatter.string(from: date)
+            }
+            else if days < 14 {
+                cell.dateLabel.text = "Week ago"
+            }
+            else if days < 21 {
+                cell.dateLabel.text = "Two weeks ago"
+            }
+            else if days < 28 {
+                cell.dateLabel.text = "Three weeks ago"
+            }
+            else if days <= 31 {
+                cell.dateLabel.text = "Four weeks ago"
+            }
+            else if sameYaer {
+                dateFormatter.dateFormat = "M"
+                cell.dateLabel.text = dateFormatter.string(from: date)
+            }
+            else {
+                dateFormatter.dateFormat = "MM-dd-yy"
+                cell.dateLabel.text = dateFormatter.string(from: date)
+            }
+        }
+        
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 400, height: 60)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if self.selectedIndices.contains(indexPath) {
+            if let selectedIndexPathIndex = self.selectedIndices.firstIndex(of: indexPath) {
+                self.selectedIndices.remove(at: selectedIndexPathIndex)
+            }
+        }
+        else {
+            self.selectedIndices.append(indexPath)
+        }
+        
+        collectionView.reloadData()
+    }
+}
