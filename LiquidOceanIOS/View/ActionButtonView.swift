@@ -25,7 +25,9 @@ class ActionButtonView: UIView {
     static var semiColor: Int32!
     static var semiDarkColor: Int32!
     static var lightYellowSemiColor: Int32!
-    static var photoshopGray: Int32!
+    static var photoshopGrayColor: Int32!
+    static var lightGrayColor: Int32!
+    static var twoThirdGrayColor: Int32!
     
     enum ActionType {
         case none
@@ -41,6 +43,7 @@ class ActionButtonView: UIView {
         case stats
         case exit
         case back
+        case backSolid
         case export
         case exportSolid
         case changeBackground
@@ -48,6 +51,8 @@ class ActionButtonView: UIView {
         case dot
         case recentColor
         case share
+        case single
+        case world
     }
     
     let menuButtonRows = 4
@@ -114,7 +119,9 @@ class ActionButtonView: UIView {
         ActionButtonView.semiColor = Utils.int32FromColorHex(hex: "0x99FFFFFF")
         ActionButtonView.semiDarkColor = Utils.int32FromColorHex(hex: "0x33000000")
         ActionButtonView.lightYellowSemiColor = Utils.int32FromColorHex(hex: "0x99FAE38D")
-        ActionButtonView.photoshopGray = Utils.int32FromColorHex(hex: "0xFFCCCCCC")
+        ActionButtonView.photoshopGrayColor = Utils.int32FromColorHex(hex: "0xFFCCCCCC")
+        ActionButtonView.lightGrayColor = Utils.int32FromColorHex(hex: "0xFFDDDDDD")
+        ActionButtonView.twoThirdGrayColor = Utils.int32FromColorHex(hex: "0xFF555555")
     }
     
     override func draw(_ rect: CGRect) {
@@ -154,6 +161,9 @@ class ActionButtonView: UIView {
         else if type == .back {
             drawBackAction()
         }
+        else if type == .backSolid {
+            drawBackSolidAction()
+        }
         else if type == .export {
             drawExportAction()
         }
@@ -174,6 +184,12 @@ class ActionButtonView: UIView {
         }
         else if type == .share {
             drawShareAction()
+        }
+        else if type == .single {
+            drawSingleAction()
+        }
+        else if type == .world {
+            drawWorldAction()
         }
     }
     
@@ -341,6 +357,42 @@ class ActionButtonView: UIView {
         var paint = ActionButtonView.semiLightColor!
         if SessionSettings.instance.darkIcons {
             paint = ActionButtonView.semiDarkLightColor!
+        }
+        
+        if self.selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+       
+        let context = UIGraphicsGetCurrentContext()!
+       
+        // row 1
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+       
+        // row 2
+        drawPixel(ctx: context, x: 1, y: 1, color: paint)
+       
+        // row 3
+        drawPixel(ctx: context, x: 6, y: 2, color: paint)
+        drawPixel(ctx: context, x: 5, y: 2, color: paint)
+        drawPixel(ctx: context, x: 4, y: 2, color: paint)
+        drawPixel(ctx: context, x: 3, y: 2, color: paint)
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
+        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+       
+        // row 4
+        drawPixel(ctx: context, x: 1, y: 3, color: paint)
+       
+        // row 5
+        drawPixel(ctx: context, x: 2, y: 4, color: paint)
+    }
+    
+    func drawBackSolidAction() {
+        self.rows = 5
+        self.cols = 7
+       
+        var paint = ActionButtonView.semiColor!
+        if SessionSettings.instance.darkIcons {
+            paint = ActionButtonView.semiDarkColor!
         }
         
         if self.selected {
@@ -562,10 +614,10 @@ class ActionButtonView: UIView {
     
     // menu buttons
     func drawPlayAction() {
-        rows = menuButtonRows
-        cols = menuButtonCols
+        rows = 4
+        cols = 16
         
-        var paint = ActionButtonView.whiteColor!
+        var paint = ActionButtonView.lightGrayColor!
         
         if selected {
             paint = ActionButtonView.altGreenColor!
@@ -610,10 +662,10 @@ class ActionButtonView: UIView {
     }
     
     func drawOptionsAction() {
-        rows = menuButtonRows
-        cols = menuButtonCols
+        rows = 4
+        cols = 26
         
-        var paint = ActionButtonView.whiteColor!
+        var paint = ActionButtonView.lightGrayColor!
         
         if selected {
             paint = ActionButtonView.altGreenColor!
@@ -686,10 +738,10 @@ class ActionButtonView: UIView {
     }
     
     func drawStatsAction() {
-        rows = menuButtonRows
-        cols = menuButtonCols
+        rows = 4
+        cols = 20
         
-        var paint = ActionButtonView.whiteColor!
+        var paint = ActionButtonView.lightGrayColor!
         
         if selected {
             paint = ActionButtonView.altGreenColor!
@@ -743,10 +795,10 @@ class ActionButtonView: UIView {
     }
     
     func drawExitAction() {
-        rows = menuButtonRows
-        cols = menuButtonCols
+        rows = 4
+        cols = 15
         
-        var paint = ActionButtonView.whiteColor!
+        var paint = ActionButtonView.lightGrayColor!
         
         if selected {
             paint = ActionButtonView.altGreenColor!
@@ -792,12 +844,143 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 13, y: 3, color: paint)
     }
     
-    func rectForPixel(x: Int, y: Int) -> CGRect {
-        let pxWidth = self.frame.size.width / CGFloat(self.cols)
-        let pxHeight = self.frame.size.height / CGFloat(self.rows)
+    func drawSingleAction() {
+        rows = 4
+        cols = 22
+       
+        var paint = ActionButtonView.lightGrayColor!
+       
+        if selected {
+            paint = ActionButtonView.altGreenColor!
+        }
+       
+        let context = UIGraphicsGetCurrentContext()!
+       
+        // row 1
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 0, color: paint)
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        drawPixel(ctx: context, x: 4, y: 0, color: paint)
+        drawPixel(ctx: context, x: 6, y: 0, color: paint)
+        drawPixel(ctx: context, x: 9, y: 0, color: paint)
+        drawPixel(ctx: context, x: 11, y: 0, color: paint)
+        drawPixel(ctx: context, x: 12, y: 0, color: paint)
+        drawPixel(ctx: context, x: 13, y: 0, color: paint)
+        drawPixel(ctx: context, x: 15, y: 0, color: paint)
+        drawPixel(ctx: context, x: 19, y: 0, color: paint)
+        drawPixel(ctx: context, x: 20, y: 0, color: paint)
+        drawPixel(ctx: context, x: 21, y: 0, color: paint)
+       
+        // row 2
+        drawPixel(ctx: context, x: 1, y: 1, color: paint)
+        drawPixel(ctx: context, x: 4, y: 1, color: paint)
+        drawPixel(ctx: context, x: 6, y: 1, color: paint)
+        drawPixel(ctx: context, x: 7, y: 1, color: paint)
+        drawPixel(ctx: context, x: 9, y: 1, color: paint)
+        drawPixel(ctx: context, x: 11, y: 1, color: paint)
+        drawPixel(ctx: context, x: 15, y: 1, color: paint)
+        drawPixel(ctx: context, x: 19, y: 1, color: paint)
+        drawPixel(ctx: context, x: 20, y: 1, color: paint)
+       
+        // row 3
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
+        drawPixel(ctx: context, x: 4, y: 2, color: paint)
+        drawPixel(ctx: context, x: 6, y: 2, color: paint)
+        drawPixel(ctx: context, x: 8, y: 2, color: paint)
+        drawPixel(ctx: context, x: 9, y: 2, color: paint)
+        drawPixel(ctx: context, x: 11, y: 2, color: paint)
+        drawPixel(ctx: context, x: 13, y: 2, color: paint)
+        drawPixel(ctx: context, x: 15, y: 2, color: paint)
+        drawPixel(ctx: context, x: 19, y: 2, color: paint)
         
-        let top = CGFloat(y) * pxHeight
-        let left = CGFloat(x) * pxWidth
+        // row 4
+        drawPixel(ctx: context, x: 0, y: 3, color: paint)
+        drawPixel(ctx: context, x: 1, y: 3, color: paint)
+        drawPixel(ctx: context, x: 2, y: 3, color: paint)
+        drawPixel(ctx: context, x: 4, y: 3, color: paint)
+        drawPixel(ctx: context, x: 6, y: 3, color: paint)
+        drawPixel(ctx: context, x: 9, y: 3, color: paint)
+        drawPixel(ctx: context, x: 11, y: 3, color: paint)
+        drawPixel(ctx: context, x: 12, y: 3, color: paint)
+        drawPixel(ctx: context, x: 13, y: 3, color: paint)
+        drawPixel(ctx: context, x: 15, y: 3, color: paint)
+        drawPixel(ctx: context, x: 16, y: 3, color: paint)
+        drawPixel(ctx: context, x: 17, y: 3, color: paint)
+        drawPixel(ctx: context, x: 19, y: 3, color: paint)
+        drawPixel(ctx: context, x: 20, y: 3, color: paint)
+        drawPixel(ctx: context, x: 21, y: 3, color: paint)
+    }
+       
+    func drawWorldAction() {
+        rows = 4
+        cols = 21
+       
+        var paint = ActionButtonView.lightGrayColor!
+       
+        if selected {
+            paint = ActionButtonView.altGreenColor!
+        }
+       
+        let context = UIGraphicsGetCurrentContext()!
+       
+        // row 1
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 4, y: 0, color: paint)
+        drawPixel(ctx: context, x: 6, y: 0, color: paint)
+        drawPixel(ctx: context, x: 7, y: 0, color: paint)
+        drawPixel(ctx: context, x: 8, y: 0, color: paint)
+        drawPixel(ctx: context, x: 10, y: 0, color: paint)
+        drawPixel(ctx: context, x: 11, y: 0, color: paint)
+        drawPixel(ctx: context, x: 14, y: 0, color: paint)
+        drawPixel(ctx: context, x: 18, y: 0, color: paint)
+        drawPixel(ctx: context, x: 19, y: 0, color: paint)
+       
+        // row 2
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 4, y: 1, color: paint)
+        drawPixel(ctx: context, x: 6, y: 1, color: paint)
+        drawPixel(ctx: context, x: 8, y: 1, color: paint)
+        drawPixel(ctx: context, x: 10, y: 1, color: paint)
+        drawPixel(ctx: context, x: 12, y: 1, color: paint)
+        drawPixel(ctx: context, x: 14, y: 1, color: paint)
+        drawPixel(ctx: context, x: 18, y: 1, color: paint)
+        drawPixel(ctx: context, x: 20, y: 1, color: paint)
+        
+        // row 3
+        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+        drawPixel(ctx: context, x: 1, y: 2, color: paint)
+        drawPixel(ctx: context, x: 3, y: 2, color: paint)
+        drawPixel(ctx: context, x: 4, y: 2, color: paint)
+        drawPixel(ctx: context, x: 6, y: 2, color: paint)
+        drawPixel(ctx: context, x: 8, y: 2, color: paint)
+        drawPixel(ctx: context, x: 10, y: 2, color: paint)
+        drawPixel(ctx: context, x: 11, y: 2, color: paint)
+        drawPixel(ctx: context, x: 14, y: 2, color: paint)
+        drawPixel(ctx: context, x: 18, y: 2, color: paint)
+        drawPixel(ctx: context, x: 20, y: 2, color: paint)
+        
+        // row 4
+        drawPixel(ctx: context, x: 0, y: 3, color: paint)
+        drawPixel(ctx: context, x: 2, y: 3, color: paint)
+        drawPixel(ctx: context, x: 4, y: 3, color: paint)
+        drawPixel(ctx: context, x: 6, y: 3, color: paint)
+        drawPixel(ctx: context, x: 7, y: 3, color: paint)
+        drawPixel(ctx: context, x: 8, y: 3, color: paint)
+        drawPixel(ctx: context, x: 10, y: 3, color: paint)
+        drawPixel(ctx: context, x: 12, y: 3, color: paint)
+        drawPixel(ctx: context, x: 14, y: 3, color: paint)
+        drawPixel(ctx: context, x: 15, y: 3, color: paint)
+        drawPixel(ctx: context, x: 16, y: 3, color: paint)
+        drawPixel(ctx: context, x: 18, y: 3, color: paint)
+        drawPixel(ctx: context, x: 19, y: 3, color: paint)
+    }
+    
+    func rectForPixel(x: Int, y: Int) -> CGRect {
+        let pxWidth = round(self.frame.size.width / CGFloat(self.cols))
+        let pxHeight = round(self.frame.size.height / CGFloat(self.rows))
+        
+        let top = round(CGFloat(y) * pxHeight)
+        let left = round(CGFloat(x) * pxWidth)
         
         return CGRect(x: left, y: top, width: pxWidth, height: pxHeight)
     }

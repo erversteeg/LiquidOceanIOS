@@ -20,7 +20,7 @@ class SessionSettings: NSObject {
     var interactiveCanvas: InteractiveCanvas!
     var uniqueId: String!
     
-    private var _dropsAmt: Int!
+    private var _dropsAmt: Int = 0
     var dropsAmt: Int! {
         get {
             return _dropsAmt

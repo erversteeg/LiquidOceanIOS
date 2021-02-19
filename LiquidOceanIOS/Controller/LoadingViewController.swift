@@ -88,4 +88,11 @@ class LoadingViewController: UIViewController {
     func loadingDone() -> Bool {
         return doneLoadingPixels && doneSyncDevice
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == self.showInteractiveCanvas {
+            let vc = segue.destination as! InteractiveCanvasViewController
+            vc.world = true
+        }
+    }
 }

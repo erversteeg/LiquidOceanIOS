@@ -53,6 +53,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var exportContainer: UIView!
     
+    var world = false
+    
     var previousColor: Int32!
     
     var pixelHistoryViewController: PixelHistoryViewController!
@@ -62,8 +64,14 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        surfaceView.interactiveCanvas.world = world
+        paintQuantityBar.world = world
+        
+        surfaceView.setInitalScale()
         
         SessionSettings.instance.interactiveCanvas = self.surfaceView.interactiveCanvas
+        
+        SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
         
         self.surfaceView.interactiveCanvas.paintDelegate = self
         self.surfaceView.interactiveCanvas.pixelHistoryDelegate = self
@@ -78,6 +86,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.backButton.type = .back
         self.backButton.setOnClickListener {
             if !self.surfaceView.isExporting() {
+                self.surfaceView.interactiveCanvas.save()
+                
                  self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
             }
             else {
@@ -365,7 +375,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // pixel history delegate
     func notifyShowPixelHistory(data: [AnyObject], screenPoint: CGPoint) {
         
-        self.pixelHistoryViewController.data = data
+        self.pixelHistoryViewController.data = data.reversed()
         self.pixelHistoryViewController.clearSelections()
         self.pixelHistoryViewController.collectionView.reloadData()
         

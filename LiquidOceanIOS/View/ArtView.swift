@@ -71,7 +71,7 @@ class ArtView: UIView {
         let heightUnits = Int(size.height / gridPpu) + 1
         
         let whiteColor = ActionButtonView.whiteColor!
-        let grayColor = ActionButtonView.photoshopGray!
+        let grayColor = ActionButtonView.photoshopGrayColor!
         
         if background {
             for x in 0...widthUnits - 1 {

@@ -49,6 +49,17 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     
     var deviceViewport: CGRect!
     
+    private var _world: Bool = false
+    var world: Bool {
+        set {
+            _world = newValue
+            initType()
+        }
+        get {
+            return _world
+        }
+    }
+    
     weak var drawCallback: InteractiveCanvasDrawCallback?
     weak var scaleCallback: InteractiveCanvasScaleCallback?
     weak var paintDelegate: InteractiveCanvasPaintDelegate?
@@ -95,37 +106,55 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     override init() {
         super.init()
         
-        ppu = basePpu
-        
-        let dataJsonStr = SessionSettings.instance.userDefaults().object(forKey: "arr") as? String
-        
-        if dataJsonStr == nil {
-            loadDefault()
+    }
+    
+    func initType() {
+        // world
+        if world {
+            let dataJsonStr = SessionSettings.instance.userDefaults().object(forKey: "arr") as? String
+            
+            if dataJsonStr == nil {
+                loadDefault()
+            }
+            else {
+                initPixels(arrJsonStr: dataJsonStr!)
+            }
+            
+            // socket init
+            manager = SocketManager(socketURL: URL(string: "https://192.168.200.69:5010")!, config: [.log(true), .compress, .selfSigned(true), .sessionDelegate(self)])
+            
+            socket = manager.defaultSocket
+            
+            socket.connect()
+            
+            socket.on(clientEvent: .connect) { (data, ack) in
+                print(data)
+            }
+            
+            socket.on(clientEvent: .disconnect) { (data, ack) in
+                print(data)
+            }
+            
+            socket.on(clientEvent: .error) { (data, ack) in
+                print(data)
+            }
+            
+            registerForSocketEvents(socket: socket)
         }
+        // single play
         else {
-            initPixels(arrJsonStr: dataJsonStr!)
+            let dataJsonStr = SessionSettings.instance.userDefaults().object(forKey: "arr_single") as? String
+            
+            if dataJsonStr == nil {
+                loadDefault()
+            }
+            else {
+                initPixels(arrJsonStr: dataJsonStr!)
+            }
         }
         
-        // socket init
-        manager = SocketManager(socketURL: URL(string: "https://192.168.200.69:5010")!, config: [.log(true), .compress, .selfSigned(true), .sessionDelegate(self)])
-        
-        socket = manager.defaultSocket
-        
-        socket.connect()
-        
-        socket.on(clientEvent: .connect) { (data, ack) in
-            print(data)
-        }
-        
-        socket.on(clientEvent: .disconnect) { (data, ack) in
-            print(data)
-        }
-        
-        socket.on(clientEvent: .error) { (data, ack) in
-            print(data)
-        }
-        
-        registerForSocketEvents(socket: socket)
+        // both
+        ppu = basePpu
         
         let recentColorsJsonStr = SessionSettings.instance.userDefaultsString(forKey: "recent_colors", defaultVal: "")
         
@@ -222,10 +251,10 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             var innerArr = [Int32]()
             for j in 0...cols - 1 {
                 if (i + j) % 2 == 0 {
-                    innerArr.append(Utils.int32FromColorHex(hex: "0xFF333333"))
+                    innerArr.append(0)
                 }
                 else {
-                    innerArr.append(Utils.int32FromColorHex(hex: "0xFF666666"))
+                    innerArr.append(0)
                 }
             }
             
@@ -234,11 +263,22 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     }
     
     func save() {
-        do {
-            SessionSettings.instance.userDefaults().set(try JSONSerialization.data(withJSONObject: arr, options: .fragmentsAllowed), forKey: "arr")
+        if world {
+            do {
+                SessionSettings.instance.userDefaults().set(try JSONSerialization.data(withJSONObject: arr, options: .fragmentsAllowed), forKey: "arr")
+            }
+            catch {
+                
+            }
         }
-        catch {
-            
+        else {
+            do {
+                let data = try JSONSerialization.data(withJSONObject: self.arr, options: [])
+                SessionSettings.instance.userDefaults().set(String(data: data, encoding: .utf8), forKey: "arr_single")
+            }
+            catch {
+                
+            }
         }
     }
     
@@ -250,7 +290,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         let restorePoint = unitInRestorePoints(x: x, y: y, restorePointsArr: self.restorePoints)
         
         if mode == 0 {
-            if restorePoint == nil && SessionSettings.instance.dropsAmt > 0 {
+            if restorePoint == nil && (SessionSettings.instance.dropsAmt > 0 || !world) {
                 // paint
                 restorePoints.append(RestorePoint(x: x, y: y, color: arr[y][x], newColor: SessionSettings.instance.paintColor!))
                 
@@ -276,26 +316,28 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     }
     
     func commitPixels() {
-        print(SessionSettings.instance.paintColor)
-        
-        var pixelInfoArr = [[String: Int32]]()
-        
-        for restorePoint in self.restorePoints {
-            var map = [String: Int32]()
-            map["id"] = Int32((restorePoint.y * cols + restorePoint.x) + 1)
-            map["color"] = restorePoint.newColor
+        if world {
+            print(SessionSettings.instance.paintColor)
             
-            pixelInfoArr.append(map)
+            var pixelInfoArr = [[String: Int32]]()
+            
+            for restorePoint in self.restorePoints {
+                var map = [String: Int32]()
+                map["id"] = Int32((restorePoint.y * cols + restorePoint.x) + 1)
+                map["color"] = restorePoint.newColor
+                
+                pixelInfoArr.append(map)
+            }
+            
+            var reqObj = [String: Any]()
+            
+            reqObj["uuid"] = SessionSettings.instance.uniqueId
+            reqObj["pixels"] = pixelInfoArr
+            
+            print(reqObj)
+            
+            socket.emit("pixels_event", reqObj)
         }
-        
-        var reqObj = [String: Any]()
-        
-        reqObj["uuid"] = SessionSettings.instance.uniqueId
-        reqObj["pixels"] = pixelInfoArr
-        
-        print(reqObj)
-        
-        socket.emit("pixels_event", reqObj)
         
         updateRecentColors()
         self.recentColorsDelegate?.notifyNewRecentColors(recentColors: self.recentColors)
@@ -469,7 +511,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         let offsetX = (CGFloat(x) - deviceViewport.origin.x) * CGFloat(ppu)
         let offsetY = (CGFloat(y) - deviceViewport.origin.y) * CGFloat(ppu)
         
-        return CGRect(x: max(offsetX, 0.0), y: max(offsetY, 0.0), width: offsetX + CGFloat(ppu), height: offsetY + CGFloat(ppu))
+        return CGRect(x: round(max(offsetX, 0.0)), y: round(max(offsetY, 0.0)), width: round(offsetX + CGFloat(ppu)), height: round(offsetY + CGFloat(ppu)))
     }
     
     func unitForScreenPoint(x: CGFloat, y: CGFloat) -> CGPoint {

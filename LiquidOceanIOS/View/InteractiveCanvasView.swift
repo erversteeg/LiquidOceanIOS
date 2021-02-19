@@ -46,11 +46,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         
-        self.scaleFactor = interactiveCanvas.startScaleFactor
-        self.interactiveCanvas.ppu = Int(CGFloat(interactiveCanvas.basePpu) * self.scaleFactor)
-        
-        
-        interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, canvasCenterX: 256.0, canvasCenterY: 256.0)
+        setInitalScale()
         
         // gestures
         self.panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPan(sender:)))
@@ -122,6 +118,13 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         }
     }
     
+    func setInitalScale() {
+        self.scaleFactor = interactiveCanvas.startScaleFactor
+        self.interactiveCanvas.ppu = Int(CGFloat(interactiveCanvas.basePpu) * self.scaleFactor)
+        
+        interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, canvasCenterX: 256.0, canvasCenterY: 256.0)
+    }
+    
     func addPan() {
         self.addGestureRecognizer(self.panGestureRecognizer)
     }
@@ -165,11 +168,13 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     @objc func didTap(sender: UITapGestureRecognizer) {
         let location = sender.location(in: self)
         
-        let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
-        
-        if !interactiveCanvas.isBackground(unitPoint: unitPoint) {
-            self.interactiveCanvas.getPixelHistoryForUnitPoint(unitPoint: unitPoint) { (success, data) in
-                self.interactiveCanvas.pixelHistoryDelegate?.notifyShowPixelHistory(data: data, screenPoint: location)
+        if interactiveCanvas.world {
+            let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
+            
+            if !interactiveCanvas.isBackground(unitPoint: unitPoint) {
+                self.interactiveCanvas.getPixelHistoryForUnitPoint(unitPoint: unitPoint) { (success, data) in
+                    self.interactiveCanvas.pixelHistoryDelegate?.notifyShowPixelHistory(data: data, screenPoint: location)
+                }
             }
         }
     }

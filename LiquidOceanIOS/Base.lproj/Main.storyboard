@@ -16,13 +16,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bP3-IR-f5V" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                <rect key="frame" x="30" y="10" width="56" height="40"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="56" id="5qF-f0-ixp"/>
+                                    <constraint firstAttribute="height" constant="40" id="yKF-Hr-OEY"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HgT-su-IqO">
                                 <rect key="frame" x="596" y="97" width="260" height="220"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lxQ-a7-WAQ" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="260" height="40"/>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c6s-X2-qq5" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="220" height="40"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="Gvz-op-3LY"/>
+                                            <constraint firstAttribute="width" constant="220" id="tfI-bI-ZrV"/>
+                                        </constraints>
+                                    </view>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fx7-u2-Ock" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="60" width="210" height="40"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="210" id="ieT-kZ-EF5"/>
+                                            <constraint firstAttribute="height" constant="40" id="z7F-8g-Q8f"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lxQ-a7-WAQ" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="160" height="40"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="160" id="KIb-i0-l8W"/>
                                             <constraint firstAttribute="height" constant="40" id="eAF-sz-2qn"/>
                                         </constraints>
                                     </view>
@@ -31,38 +56,41 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="4Lc-bh-rP7"/>
+                                            <constraint firstAttribute="width" constant="260" id="NuO-gj-EjF"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SAn-rP-NHc" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="120" width="260" height="40"/>
+                                        <rect key="frame" x="0.0" y="120" width="200" height="40"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="ez4-ye-x16"/>
                                             <constraint firstAttribute="height" constant="40" id="zj7-Kc-bTW"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GgY-y3-7g3" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="180" width="260" height="40"/>
+                                        <rect key="frame" x="0.0" y="180" width="150" height="40"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="FN5-j3-MoW"/>
+                                            <constraint firstAttribute="width" constant="150" id="i5h-7b-3JL"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="GgY-y3-7g3" firstAttribute="top" secondItem="SAn-rP-NHc" secondAttribute="bottom" constant="20" id="7RF-yP-Spc"/>
+                                    <constraint firstItem="Fx7-u2-Ock" firstAttribute="leading" secondItem="HgT-su-IqO" secondAttribute="leading" id="92h-6f-l0S"/>
                                     <constraint firstItem="SAn-rP-NHc" firstAttribute="top" secondItem="bXf-om-F2F" secondAttribute="bottom" constant="20" id="9AG-wN-yY4"/>
                                     <constraint firstItem="lxQ-a7-WAQ" firstAttribute="leading" secondItem="HgT-su-IqO" secondAttribute="leading" id="Am5-lV-dAU"/>
                                     <constraint firstItem="SAn-rP-NHc" firstAttribute="leading" secondItem="HgT-su-IqO" secondAttribute="leading" id="CbP-nx-VGf"/>
+                                    <constraint firstItem="c6s-X2-qq5" firstAttribute="leading" secondItem="HgT-su-IqO" secondAttribute="leading" id="Hos-2b-bbl"/>
                                     <constraint firstItem="GgY-y3-7g3" firstAttribute="leading" secondItem="HgT-su-IqO" secondAttribute="leading" id="Jq6-Vs-vn1"/>
-                                    <constraint firstAttribute="trailing" secondItem="lxQ-a7-WAQ" secondAttribute="trailing" id="LHT-ES-tmh"/>
                                     <constraint firstAttribute="width" constant="260" id="NLP-ad-Ve9"/>
+                                    <constraint firstItem="Fx7-u2-Ock" firstAttribute="top" secondItem="c6s-X2-qq5" secondAttribute="bottom" constant="20" id="bBe-nX-qxl"/>
                                     <constraint firstAttribute="height" constant="220" id="dJm-sz-GaJ"/>
                                     <constraint firstItem="lxQ-a7-WAQ" firstAttribute="top" secondItem="HgT-su-IqO" secondAttribute="top" id="dve-ud-ouA"/>
-                                    <constraint firstAttribute="trailing" secondItem="SAn-rP-NHc" secondAttribute="trailing" id="eMa-CN-0Jf"/>
-                                    <constraint firstAttribute="trailing" secondItem="bXf-om-F2F" secondAttribute="trailing" id="k4s-0I-E8Q"/>
+                                    <constraint firstItem="c6s-X2-qq5" firstAttribute="top" secondItem="HgT-su-IqO" secondAttribute="top" id="lMo-bd-cL9"/>
                                     <constraint firstItem="bXf-om-F2F" firstAttribute="leading" secondItem="HgT-su-IqO" secondAttribute="leading" id="ngu-jL-t1t"/>
-                                    <constraint firstAttribute="trailing" secondItem="GgY-y3-7g3" secondAttribute="trailing" id="qWR-OB-sdF"/>
                                     <constraint firstItem="bXf-om-F2F" firstAttribute="top" secondItem="lxQ-a7-WAQ" secondAttribute="bottom" constant="20" id="t7S-uc-yZ1"/>
                                 </constraints>
                             </view>
@@ -70,16 +98,22 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="HgT-su-IqO" secondAttribute="trailing" constant="40" id="Eb8-QY-KiJ"/>
+                            <constraint firstItem="bP3-IR-f5V" firstAttribute="leading" secondItem="Z4r-xF-cLC" secondAttribute="leadingMargin" constant="-30" id="cf9-1J-U2y"/>
+                            <constraint firstItem="bP3-IR-f5V" firstAttribute="top" secondItem="Z4r-xF-cLC" secondAttribute="topMargin" constant="10" id="tdO-qg-5gj"/>
                             <constraint firstItem="HgT-su-IqO" firstAttribute="centerY" secondItem="Z4r-xF-cLC" secondAttribute="centerY" id="wOy-Lu-2sA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wKI-L3-Tc5"/>
                     </view>
                     <connections>
+                        <outlet property="backAction" destination="bP3-IR-f5V" id="Z3J-eW-c5c"/>
                         <outlet property="exitButton" destination="GgY-y3-7g3" id="EE6-eS-ciN"/>
                         <outlet property="optionsButton" destination="bXf-om-F2F" id="3o9-qU-7HC"/>
                         <outlet property="playButton" destination="lxQ-a7-WAQ" id="mYL-vu-pLz"/>
+                        <outlet property="singleAction" destination="c6s-X2-qq5" id="LHc-tm-24R"/>
                         <outlet property="statsButton" destination="SAn-rP-NHc" id="Qfk-kQ-L7r"/>
+                        <outlet property="worldAction" destination="Fx7-u2-Ock" id="L6K-S7-DvK"/>
                         <segue destination="J7C-7P-Zxh" kind="show" identifier="ShowLoading" animates="NO" id="pK7-f3-2ih"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="ShowSinglePlay" animates="NO" id="jzH-A0-0Va"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dj7-Gk-d20" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -712,4 +746,7 @@
             <point key="canvasLocation" x="970.98214285714278" y="576.81159420289862"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="jzH-A0-0Va"/>
+    </inferredMetricsTieBreakers>
 </document>

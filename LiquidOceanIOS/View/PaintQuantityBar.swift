@@ -24,6 +24,8 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     
     var flashingError = false
     
+    var world = false
+    
     required override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -79,7 +81,11 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
         let pxWidth = self.frame.size.width / CGFloat(cols)
         let pxHeight = self.frame.size.height / CGFloat(rows)
         
-        let relQty = CGFloat(SessionSettings.instance.dropsAmt) / CGFloat(SessionSettings.instance.maxPaintAmt)
+        var relQty = CGFloat(SessionSettings.instance.dropsAmt) / CGFloat(SessionSettings.instance.maxPaintAmt)
+        
+        if !world {
+            relQty = CGFloat(1)
+        }
         
         let numPixels = cols - 2
         let qtyPer = 1.0 / CGFloat(numPixels)
@@ -87,7 +93,12 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
         
         for x in 1...cols - 2 {
             if relQty > curProg {
-                drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: blueColor)
+                if world {
+                    drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: blueColor)
+                }
+                else {
+                    drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: ActionButtonView.twoThirdGrayColor)
+                }
             }
             else {
                 if flashingError {
@@ -107,11 +118,11 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     }
 
     func rectForPixel(x: Int, y: Int) -> CGRect {
-        let pxWidth = self.frame.size.width / CGFloat(self.cols)
-        let pxHeight = self.frame.size.height / CGFloat(self.rows)
+        let pxWidth = round(self.frame.size.width / CGFloat(self.cols))
+        let pxHeight = round(self.frame.size.height / CGFloat(self.rows))
         
-        let top = CGFloat(y) * pxHeight
-        let left = CGFloat(x) * pxWidth
+        let top = round(CGFloat(y) * pxHeight)
+        let left = round(CGFloat(x) * pxWidth)
         
         return CGRect(x: left, y: top, width: pxWidth, height: pxHeight)
     }
