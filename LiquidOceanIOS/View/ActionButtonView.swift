@@ -25,6 +25,7 @@ class ActionButtonView: UIView {
     static var semiColor: Int32!
     static var semiDarkColor: Int32!
     static var lightYellowSemiColor: Int32!
+    static var photoshopGray: Int32!
     
     enum ActionType {
         case none
@@ -45,6 +46,8 @@ class ActionButtonView: UIView {
         case changeBackground
         case save
         case dot
+        case recentColor
+        case share
     }
     
     let menuButtonRows = 4
@@ -58,6 +61,17 @@ class ActionButtonView: UIView {
         }
         get {
             return _selected
+        }
+    }
+    
+    private var _representingColor: Int32 = 0
+    var representingColor: Int32 {
+        set {
+            _representingColor = newValue
+            setNeedsDisplay()
+        }
+        get {
+            return _representingColor
         }
     }
     
@@ -83,13 +97,6 @@ class ActionButtonView: UIView {
     func commonInit() {
         self.backgroundColor = UIColor.clear
         
-        //let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTap(sender:)))
-        //addGestureRecognizer(tapGestureRecognizer)
-        
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(sender:)))
-        longPressGestureRecognizer.minimumPressDuration = 0
-        addGestureRecognizer(longPressGestureRecognizer)
-        
         // colors
         
         ActionButtonView.altGreenColor = Utils.int32FromColorHex(hex: "0xFF42FF7B")
@@ -107,6 +114,7 @@ class ActionButtonView: UIView {
         ActionButtonView.semiColor = Utils.int32FromColorHex(hex: "0x99FFFFFF")
         ActionButtonView.semiDarkColor = Utils.int32FromColorHex(hex: "0x33000000")
         ActionButtonView.lightYellowSemiColor = Utils.int32FromColorHex(hex: "0x99FAE38D")
+        ActionButtonView.photoshopGray = Utils.int32FromColorHex(hex: "0xFFCCCCCC")
     }
     
     override func draw(_ rect: CGRect) {
@@ -161,30 +169,35 @@ class ActionButtonView: UIView {
         else if type == .dot {
             drawDotAction()
         }
-    }
-
-    //
-    @objc func didTap(sender: UITapGestureRecognizer) {
-        self.selected = false
-        setNeedsDisplay()
+        else if type == .recentColor {
+            drawRecentColorAction()
+        }
+        else if type == .share {
+            drawShareAction()
+        }
     }
     
-    @objc func didLongPress(sender: UILongPressGestureRecognizer) {
+    @objc func onTouchAction(sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
             self.selected = true
             setNeedsDisplay()
         }
-        else if sender.state == .cancelled || sender.state == .failed || sender.state == .ended {
+        else if sender.state == .changed  {
             self.selected = false
             setNeedsDisplay()
         }
         
         if sender.state == .ended {
+            self.selected = false
+            setNeedsDisplay()
             self.clickHandler?()
         }
     }
     
     func setOnClickListener(handler: @escaping () -> Void) {
+        let dgr = UIDrawGestureRecognizer(target: self, action: #selector(onTouchAction(sender:)))
+        addGestureRecognizer(dgr)
+        
         self.clickHandler = handler
     }
     
@@ -357,6 +370,48 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 2, y: 4, color: paint)
     }
     
+    func drawRecentColorAction() {
+        self.rows = 4
+        self.cols = 4
+        
+        var paint = ActionButtonView.whiteColor!
+        if SessionSettings.instance.darkIcons {
+            paint = ActionButtonView.blackColor
+        }
+        
+        if selected {
+            paint = ActionButtonView.lightAltGreenColor!
+        }
+        
+        let colorPaint = representingColor
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        // row 1
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 0, color: paint)
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        drawPixel(ctx: context, x: 3, y: 0, color: paint)
+        
+        // row 2
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 1, y: 1, color: colorPaint)
+        drawPixel(ctx: context, x: 2, y: 1, color: colorPaint)
+        drawPixel(ctx: context, x: 3, y: 1, color: paint)
+        
+        // row 3
+        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+        drawPixel(ctx: context, x: 1, y: 2, color: colorPaint)
+        drawPixel(ctx: context, x: 2, y: 2, color: colorPaint)
+        drawPixel(ctx: context, x: 3, y: 2, color: paint)
+        
+        // row 4
+        drawPixel(ctx: context, x: 0, y: 3, color: paint)
+        drawPixel(ctx: context, x: 1, y: 3, color: paint)
+        drawPixel(ctx: context, x: 2, y: 3, color: paint)
+        drawPixel(ctx: context, x: 3, y: 3, color: paint)
+    }
+    
     func drawExportAction() {
         rows = 3
         cols = 3
@@ -365,6 +420,23 @@ class ActionButtonView: UIView {
         if SessionSettings.instance.darkIcons {
             paint = ActionButtonView.semiDarkColor!
         }
+        
+        if selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
+    }
+    
+    func drawShareAction() {
+        rows = 3
+        cols = 3
+        
+        var paint = ActionButtonView.semiColor!
         
         if selected {
             paint = ActionButtonView.lightYellowColor!

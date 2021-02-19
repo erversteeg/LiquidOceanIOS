@@ -13,6 +13,8 @@
 		07006C4225DCB6D400DF9A64 /* PixelHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07006C4125DCB6D400DF9A64 /* PixelHistoryViewController.swift */; };
 		07006C4425DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07006C4325DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift */; };
 		0712053625DEDF1100AE0F52 /* ActionButtonFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */; };
+		0712053825DF2D5100AE0F52 /* RecentColorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053725DF2D5100AE0F52 /* RecentColorsViewController.swift */; };
+		0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */; };
 		07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A246D525D4A83500C73CA6 /* LoadingViewController.swift */; };
 		07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */; };
 		07A305F125D5B571003A6CEA /* wood_texture_light.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A305F025D5B571003A6CEA /* wood_texture_light.jpg */; };
@@ -31,6 +33,8 @@
 		07BD25F525D44F2A00CF812E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F425D44F2A00CF812E /* Utils.swift */; };
 		07BD25F725D44FE900CF812E /* UIColor+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F625D44FE900CF812E /* UIColor+Conversions.swift */; };
 		07BD25F925D450CF00CF812E /* SessionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F825D450CF00CF812E /* SessionSettings.swift */; };
+		07FF5EFF25DF5833003E19AE /* ArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5EFE25DF5833003E19AE /* ArtView.swift */; };
+		07FF5F0125DF616A003E19AE /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0025DF616A003E19AE /* ExportViewController.swift */; };
 		E5CAC4447BA12EDA6329A1E2 /* Pods_LiquidOceanIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +55,8 @@
 		07006C4125DCB6D400DF9A64 /* PixelHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelHistoryViewController.swift; sourceTree = "<group>"; };
 		07006C4325DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonFrame.swift; sourceTree = "<group>"; };
+		0712053725DF2D5100AE0F52 /* RecentColorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentColorsViewController.swift; sourceTree = "<group>"; };
+		0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		07A246D525D4A83500C73CA6 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHandler.swift; sourceTree = "<group>"; };
 		07A305F025D5B571003A6CEA /* wood_texture_light.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = wood_texture_light.jpg; path = ../../../../Desktop/wood_texture_light.jpg; sourceTree = "<group>"; };
@@ -74,6 +80,8 @@
 		07BD25F425D44F2A00CF812E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		07BD25F625D44FE900CF812E /* UIColor+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Conversions.swift"; sourceTree = "<group>"; };
 		07BD25F825D450CF00CF812E /* SessionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSettings.swift; sourceTree = "<group>"; };
+		07FF5EFE25DF5833003E19AE /* ArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtView.swift; sourceTree = "<group>"; };
+		07FF5F0025DF616A003E19AE /* ExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
 		0C929D3F59AAC71054FD1E19 /* Pods-LiquidOceanIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.debug.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.debug.xcconfig"; sourceTree = "<group>"; };
 		42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiquidOceanIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B417FAAF99031F0F81E5A72B /* Pods-LiquidOceanIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.release.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -105,6 +113,8 @@
 				07A246D525D4A83500C73CA6 /* LoadingViewController.swift */,
 				07006C4125DCB6D400DF9A64 /* PixelHistoryViewController.swift */,
 				07BD25CA25D43FB500CF812E /* InteractiveCanvasViewController.swift */,
+				0712053725DF2D5100AE0F52 /* RecentColorsViewController.swift */,
+				07FF5F0025DF616A003E19AE /* ExportViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -174,6 +184,8 @@
 				07A305F425D5D348003A6CEA /* PaintColorIndicator.swift */,
 				07006C3D25D6C2D500DF9A64 /* PaintQuantityBar.swift */,
 				0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */,
+				0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */,
+				07FF5EFE25DF5833003E19AE /* ArtView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -364,9 +376,11 @@
 			files = (
 				07BD25F025D4461400CF812E /* InteractiveCanvas.swift in Sources */,
 				0712053625DEDF1100AE0F52 /* ActionButtonFrame.swift in Sources */,
+				0712053825DF2D5100AE0F52 /* RecentColorsViewController.swift in Sources */,
 				07BD25ED25D440DD00CF812E /* InteractiveCanvasView.swift in Sources */,
 				07006C4425DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift in Sources */,
 				07006C4225DCB6D400DF9A64 /* PixelHistoryViewController.swift in Sources */,
+				07FF5F0125DF616A003E19AE /* ExportViewController.swift in Sources */,
 				07BD25D125D43FB500CF812E /* LiquidOceanIOS.xcdatamodeld in Sources */,
 				07BD25F525D44F2A00CF812E /* Utils.swift in Sources */,
 				07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */,
@@ -375,11 +389,13 @@
 				07006C4025D6CEF200DF9A64 /* MenuViewController.swift in Sources */,
 				07A305F325D5B6F5003A6CEA /* ActionButtonView.swift in Sources */,
 				07006C3C25D607D500DF9A64 /* UIDrawGestureRecognizer.swift in Sources */,
+				0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */,
 				07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */,
 				07006C3E25D6C2D500DF9A64 /* PaintQuantityBar.swift in Sources */,
 				07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */,
 				07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */,
 				07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */,
+				07FF5EFF25DF5833003E19AE /* ArtView.swift in Sources */,
 				07BD25F925D450CF00CF812E /* SessionSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -42,11 +42,22 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var toolboxButton: ActionButtonFrame!
     @IBOutlet weak var toolboxActionView: ActionButtonView!
     
+    @IBOutlet weak var recentColorsButton: ActionButtonFrame!
+    @IBOutlet weak var recentColorsActionView: ActionButtonView!
+    @IBOutlet weak var recentColorsContainer: UIView!
+    
     @IBOutlet weak var pixelHistoryView: UIView!
+    
+    @IBOutlet weak var recentColorsContainerWidth: NSLayoutConstraint!
+    @IBOutlet weak var recentColorsContainerHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var exportContainer: UIView!
     
     var previousColor: Int32!
     
     var pixelHistoryViewController: PixelHistoryViewController!
+    weak var recentColorsViewController: RecentColorsViewController!
+    weak var exportViewController: ExportViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,14 +67,23 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         self.surfaceView.interactiveCanvas.paintDelegate = self
         self.surfaceView.interactiveCanvas.pixelHistoryDelegate = self
+        self.surfaceView.interactiveCanvas.recentColorsDelegate = self
+        self.surfaceView.interactiveCanvas.artExportDelegate = self
         
         let backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: self.view.frame.size.height))
         backgroundImage.image = UIImage(named: "wood_texture_light.jpg")
         backgroundImage.contentMode = .scaleToFill
         
+        // back button
         self.backButton.type = .back
         self.backButton.setOnClickListener {
-            self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+            if !self.surfaceView.isExporting() {
+                 self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+            }
+            else {
+                self.exportAction.selected = false
+                self.surfaceView.endExporting()
+            }
         }
         
         self.paintPanelWidth.constant = 0
@@ -79,7 +99,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.exportAction.type = .export
         self.changeBackgroundAction.type = .changeBackground
         
-        
+        // toolbox
         self.toolboxActionView.type = .dot
         self.toolboxButton.actionButtonView = self.toolboxActionView
         
@@ -87,6 +107,23 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.toggleToolbox(open: self.exportAction.isHidden)
         }
         
+        // recent colors
+        self.recentColorsActionView.type = .dot
+        self.recentColorsButton.actionButtonView = self.recentColorsActionView
+        
+        self.recentColorsButton.setOnClickListener {
+            self.toggleRecentColors(open: self.recentColorsContainer.isHidden)
+        }
+        
+        self.setupRecentColors(recentColors: self.surfaceView.interactiveCanvas.recentColors)
+        
+        // export
+        self.exportAction.setOnClickListener {
+            self.surfaceView.startExporting()
+            self.exportAction.selected = true
+        }
+        
+        // change background
         self.changeBackgroundAction.setOnClickListener {
             SessionSettings.instance.backgroundColorIndex += 1
             if SessionSettings.instance.backgroundColorIndex == self.surfaceView.interactiveCanvas.numBackgrounds {
@@ -114,6 +151,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.pixelHistoryView.isHidden = true
             
             self.backButton.isHidden = true
+            self.recentColorsButton.isHidden = false
             
             self.surfaceView.startPainting()
         }
@@ -126,6 +164,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.paintPanel.isHidden = true
             
             self.backButton.isHidden = false
+            
+            self.recentColorsButton.isHidden = true
+            
+            self.toggleRecentColors(open: false)
         }
         
         // paint quantity bar
@@ -144,10 +186,20 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.paintColorAccept.setOnClickListener {
             self.closeColorPicker()
             
-            self.paintYes.isHidden = false
-            self.paintNo.isHidden = false
+            if self.surfaceView.interactiveCanvas.restorePoints.count == 0 {
+                self.closePaintPanelButton.isHidden = false
+                
+                self.paintYes.isHidden = true
+                self.paintNo.isHidden = true
+            }
+            else {
+                self.closePaintPanelButton.isHidden = true
+                
+                self.paintYes.isHidden = false
+                self.paintNo.isHidden = false
+            }
             
-            self.closePaintPanelButton.isHidden = true
+            self.recentColorsButton.isHidden = false
             
             self.surfaceView.endPaintSelection()
         }
@@ -156,7 +208,22 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.paintColorCancel.setOnClickListener {
             self.paintColorIndicator.setPaintColor(color: self.previousColor)
             
+            if self.surfaceView.interactiveCanvas.restorePoints.count == 0 {
+                self.closePaintPanelButton.isHidden = false
+                
+                self.paintYes.isHidden = true
+                self.paintNo.isHidden = true
+            }
+            else {
+                self.closePaintPanelButton.isHidden = true
+                
+                self.paintYes.isHidden = false
+                self.paintNo.isHidden = false
+            }
+            
             self.closeColorPicker()
+            
+            self.recentColorsButton.isHidden = false
             
             self.surfaceView.endPaintSelection()
         }
@@ -167,7 +234,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.paintYes.isHidden = true
         self.paintNo.isHidden = true
         
-        
+        // paint yes
         self.paintYes.setOnClickListener {
             self.surfaceView.endPainting(accept: true)
             
@@ -175,10 +242,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.paintNo.isHidden = true
             self.closePaintPanelButton.isHidden = false
             
-            self.paintPanelWidth.constant = 0
-            self.paintPanel.isHidden = true
+            self.surfaceView.startPainting()
         }
         
+        // paint no
         self.paintNo.setOnClickListener {
             self.surfaceView.endPainting(accept: false)
             
@@ -187,6 +254,28 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.closePaintPanelButton.isHidden = false
             
             self.surfaceView.startPainting()
+        }
+    }
+    
+    // embeds
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ColorPickerEmbed" {
+            let colorPickerViewController = segue.destination as! CustomColorPickerViewController
+            colorPickerViewController.delegate = self
+            colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintColor)
+            colorPickerViewController.view.backgroundColor = UIColor.clear
+        }
+        else if segue.identifier == "PixelHistoryEmbed" {
+            segue.destination.modalPresentationStyle = .overCurrentContext
+            self.pixelHistoryViewController = segue.destination as? PixelHistoryViewController
+        }
+        else if segue.identifier == "RecentColorsEmbed" {
+            self.recentColorsViewController = segue.destination as? RecentColorsViewController
+            self.recentColorsViewController.delegate = self
+        }
+        else if segue.identifier == "ExportEmbed" {
+            self.exportViewController = segue.destination as? ExportViewController
+            self.exportViewController.delegate = self
         }
     }
     
@@ -206,6 +295,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         self.paintYes.isHidden = true
         self.paintNo.isHidden = true
+        
+        self.toggleRecentColors(open: false)
+        self.recentColorsButton.isHidden = true
         
         self.surfaceView.startPaintSelection()
     }
@@ -230,6 +322,17 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.changeBackgroundAction.isHidden = true
         }
     }
+    
+    func toggleRecentColors(open: Bool) {
+        if open {
+            self.recentColorsActionView.isHidden = true
+            self.recentColorsContainer.isHidden = false
+        }
+        else {
+            self.recentColorsActionView.isHidden = false
+            self.recentColorsContainer.isHidden = true
+        }
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         self.surfaceView.backgroundColor = UIColor.red
@@ -251,19 +354,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func notifyPaintColorUpdate() {
         self.paintColorIndicator.setPaintColor(color: SessionSettings.instance.paintColor)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ColorPickerEmbed" {
-            let colorPickerViewController = segue.destination as! CustomColorPickerViewController
-            colorPickerViewController.delegate = self
-            colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintColor)
-            colorPickerViewController.view.backgroundColor = UIColor.clear
-        }
-        else if segue.identifier == "PixelHistoryEmbed" {
-            segue.destination.modalPresentationStyle = .overCurrentContext
-            self.pixelHistoryViewController = segue.destination as! PixelHistoryViewController
-        }
     }
     
     // color picker delegate
@@ -303,8 +393,48 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.pixelHistoryView.isHidden = false
     }
     
+    
     func notifyHidePixelHistory() {
         self.pixelHistoryView.isHidden = true
     }
+    
+    // recent colors delegate
+    func notifyNewRecentColors(recentColors: [Int32]) {
+        self.setupRecentColors(recentColors: recentColors)
+    }
+    
+    func setupRecentColors(recentColors: [Int32]) {
+        let itemWidth = self.recentColorsViewController.itemWidth
+        let itemHeight = self.recentColorsViewController.itemWidth
+        let margin = self.recentColorsViewController.itemMargin
+        
+        self.recentColorsContainerWidth.constant = itemWidth * 4 + margin * 3
+        
+        let numRows = SessionSettings.instance.numRecentColors / 4
+        self.recentColorsContainerHeight.constant = itemHeight * CGFloat(numRows) + margin * CGFloat(numRows - 1)
+        
+        self.recentColorsViewController.data = recentColors.reversed()
+        self.recentColorsViewController.collectionView.reloadData()
+    }
+    
+    // recent colors delegate
+    func notifyRecentColorSelected(color: Int32) {
+        self.notifyPaintColorUpdate()
+    }
+    
+    // export view controller delegate
+    func notifyExportViewControllerBackPressed() {
+        exportContainer.isHidden = true
+        
+        self.exportAction.selected = false
+        surfaceView.endExporting()
+    }
+    
+    // art export delegate
+    func notifyArtExported(art: [InteractiveCanvas.RestorePoint]) {
+        exportViewController.art = art
+        exportContainer.isHidden = false
+    }
 }
+
 

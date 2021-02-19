@@ -18,6 +18,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         case exploring
         case painting
         case paintSelection
+        case exporting
     }
     
     var mode: Mode = .exploring
@@ -74,7 +75,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 
                 let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
                 
-                self.undo = interactiveCanvas.unitInRestorePoints(x: Int(unitPoint.x), y: Int(unitPoint.y)) != nil
+                self.undo = interactiveCanvas.unitInRestorePoints(x: Int(unitPoint.x), y: Int(unitPoint.y), restorePointsArr: interactiveCanvas.restorePoints) != nil
                 
                 if self.undo {
                     interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.x), y: Int(unitPoint.y), mode: 1)
@@ -94,6 +95,10 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
                 SessionSettings.instance.paintColor = interactiveCanvas.arr[Int(unitPoint.y)][Int(unitPoint.x)]
                 interactiveCanvas.paintDelegate?.notifyPaintColorUpdate()
+            }
+            else if mode == .exporting {
+                let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
+                interactiveCanvas.exportSelection(unitPoint: unitPoint)
             }
         }
         else if sender.state == .changed {
@@ -226,6 +231,28 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     
     func endPaintSelection() {
         self.mode = .painting
+    }
+    
+    func startExporting() {
+        self.mode = .exporting
+        
+        removePan()
+        removeTap()
+        
+        addDraw()
+    }
+    
+    func endExporting() {
+        self.mode = .exploring
+        
+        addPan()
+        addTap()
+        
+        removeDraw()
+    }
+    
+    func isExporting() -> Bool {
+        return mode == .exporting
     }
     
     // draw callback

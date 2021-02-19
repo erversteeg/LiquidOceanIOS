@@ -28,6 +28,14 @@ protocol InteractiveCanvasPixelHistoryDelegate: AnyObject {
     func notifyHidePixelHistory()
 }
 
+protocol InteractiveCanvasRecentColorsDelegate: AnyObject {
+    func notifyNewRecentColors(recentColors: [Int32])
+}
+
+protocol InteractiveCanvasArtExportDelegate: AnyObject {
+    func notifyArtExported(art: [InteractiveCanvas.RestorePoint])
+}
+
 class InteractiveCanvas: NSObject, URLSessionDelegate {
     var rows = 512
     var cols = 512
@@ -45,11 +53,15 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     weak var scaleCallback: InteractiveCanvasScaleCallback?
     weak var paintDelegate: InteractiveCanvasPaintDelegate?
     weak var pixelHistoryDelegate: InteractiveCanvasPixelHistoryDelegate?
+    weak var recentColorsDelegate: InteractiveCanvasRecentColorsDelegate?
+    weak var artExportDelegate: InteractiveCanvasArtExportDelegate?
     
     var startScaleFactor = CGFloat(0.2)
     
     let minScaleFactor = CGFloat(0.07)
     let maxScaleFactor = CGFloat(7)
+    
+    var recentColors = [Int32]()
     
     let backgroundBlack = 0
     let backgroundWhite = 1
@@ -64,6 +76,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     var socket: SocketIOClient!
     
     var restorePoints =  [RestorePoint]()
+    var pixelsOut: [RestorePoint]!
     
     class RestorePoint {
         var x: Int
@@ -113,6 +126,59 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         }
         
         registerForSocketEvents(socket: socket)
+        
+        let recentColorsJsonStr = SessionSettings.instance.userDefaultsString(forKey: "recent_colors", defaultVal: "")
+        
+        do {
+            if recentColorsJsonStr != "" {
+                let recentColorsArr = try JSONSerialization.jsonObject(with: recentColorsJsonStr.data(using: .utf8)!, options: []) as! [AnyObject]
+                let sizeDiff = SessionSettings.instance.numRecentColors - recentColorsArr.count
+                
+                if sizeDiff < 0 {
+                    for i in 0...SessionSettings.instance.numRecentColors - 1 {
+                        self.recentColors.append(recentColorsArr[-sizeDiff + i] as! Int32)
+                    }
+                }
+                else {
+                    for i in 0...recentColorsArr.count - 1 {
+                        self.recentColors.append(recentColorsArr[i] as! Int32)
+                    }
+                    
+                    if sizeDiff > 0 {
+                        let gridLineColor = self.getGridLineColor()
+                        for _ in 0...sizeDiff - 1 {
+                            self.recentColors.insert(gridLineColor, at: 0)
+                        }
+                    }
+                }
+            }
+            else {
+                let gridLineColor = self.getGridLineColor()
+                for i in 0...SessionSettings.instance.numRecentColors - 1 {
+                    // default to size - 1 of the grid line color
+                    if i < SessionSettings.instance.numRecentColors - 1 {
+                        if gridLineColor == ActionButtonView.blackColor {
+                            self.recentColors.append(ActionButtonView.blackColor)
+                        }
+                        else {
+                            self.recentColors.append(ActionButtonView.whiteColor)
+                        }
+                    }
+                    // and 1 of the opposite color
+                    else {
+                        if gridLineColor == ActionButtonView.blackColor {
+                            self.recentColors.append(ActionButtonView.whiteColor)
+                        }
+                        else {
+                            self.recentColors.append(ActionButtonView.blackColor)
+                        }
+                    }
+                }
+            }
+        }
+        catch {
+            
+        }
     }
     
     func registerForSocketEvents(socket: SocketIOClient) {
@@ -181,7 +247,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     }
     
     func paintUnitOrUndo(x: Int, y: Int, mode: Int = 0) {
-        let restorePoint = unitInRestorePoints(x: x, y: y)
+        let restorePoint = unitInRestorePoints(x: x, y: y, restorePointsArr: self.restorePoints)
         
         if mode == 0 {
             if restorePoint == nil && SessionSettings.instance.dropsAmt > 0 {
@@ -230,6 +296,39 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         print(reqObj)
         
         socket.emit("pixels_event", reqObj)
+        
+        updateRecentColors()
+        self.recentColorsDelegate?.notifyNewRecentColors(recentColors: self.recentColors)
+    }
+    
+    private func updateRecentColors() {
+        for restorePoint in self.restorePoints {
+            var contains = false
+            for i in 0...recentColors.count - 1 {
+                if restorePoint.newColor == self.recentColors[i] {
+                    self.recentColors.remove(at: i)
+                    self.recentColors.append(restorePoint.newColor)
+                    
+                    contains = true
+                }
+            }
+            if !contains {
+                if self.recentColors.count == SessionSettings.instance.numRecentColors {
+                    recentColors.remove(at: 0)
+                }
+                self.recentColors.append(restorePoint.newColor)
+            }
+        }
+        
+        do {
+            let data = try JSONSerialization.data(withJSONObject: self.recentColors, options: [])
+            let str = String(data: data, encoding: .utf8)
+            
+            SessionSettings.instance.userDefaults().set(str, forKey: "recent_colors")
+        }
+        catch {
+            
+        }
     }
     
     func getGridLineColor() -> Int32 {
@@ -284,14 +383,55 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         self.restorePoints = [RestorePoint]()
     }
     
-    func unitInRestorePoints(x: Int, y: Int) -> RestorePoint? {
-        for restorePoint in self.restorePoints {
+    func unitInRestorePoints(x: Int, y: Int, restorePointsArr: [RestorePoint]) -> RestorePoint? {
+        for restorePoint in restorePointsArr {
             if restorePoint.x == x && restorePoint.y == y {
                 return restorePoint
             }
         }
         
         return nil
+    }
+    
+    func exportSelection(unitPoint: CGPoint) {
+        self.artExportDelegate?.notifyArtExported(art: getPixelsInForm(unitPoint: unitPoint))
+    }
+    
+    private func getPixelsInForm(unitPoint: CGPoint) -> [RestorePoint] {
+        pixelsOut = [RestorePoint]()
+        stepPixelsInForm(x: Int(unitPoint.x), y: Int(unitPoint.y), depth: 0)
+        
+        return pixelsOut
+    }
+    
+    private func stepPixelsInForm(x: Int, y: Int, depth: Int) {
+        // a background color
+        // or already in list
+        // or out of bounds
+        if x < 0 || x > cols - 1 || y < 0 || y > rows - 1 || arr[y][x] == 0 || unitInRestorePoints(x: x, y: y, restorePointsArr: pixelsOut) != nil || depth > 10000 {
+            return
+        }
+        else {
+            pixelsOut.append(RestorePoint(x: x, y: y, color: arr[y][x], newColor: arr[y][x]))
+        }
+        
+        // left
+        stepPixelsInForm(x: x - 1, y: y, depth: depth + 1)
+        // top
+        stepPixelsInForm(x: x, y: y - 1, depth: depth + 1)
+        // right
+        stepPixelsInForm(x: x + 1, y: y, depth: depth + 1)
+        // bottom
+        stepPixelsInForm(x: x, y: y + 1, depth: depth + 1)
+        // top-left
+        stepPixelsInForm(x: x - 1, y: y - 1, depth: depth + 1)
+        // top-right
+        stepPixelsInForm(x: x + 1, y: y - 1, depth: depth + 1)
+        // bottom-left
+        stepPixelsInForm(x: x - 1, y: y + 1, depth: depth + 1)
+        // bottom-right
+        stepPixelsInForm(x: x + 1, y: y + 1, depth: depth + 1)
+        
     }
     
     func updateDeviceViewport(screenSize: CGSize, fromScale: Bool = false) {

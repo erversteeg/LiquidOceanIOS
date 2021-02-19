@@ -45,6 +45,8 @@ class SessionSettings: NSObject {
     
     var paintQtyDelegates = [PaintQtyDelegate]()
     
+    var numRecentColors = 8
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -52,6 +54,7 @@ class SessionSettings: NSObject {
         userDefaults().set(paintColor, forKey: "paint_color")
         userDefaults().set(darkIcons, forKey: "dark_icons")
         userDefaults().set(backgroundColorIndex, forKey: "background_color")
+        userDefaults().set(numRecentColors, forKey: "num_recent_colors")
     }
     
     func load() {
@@ -64,6 +67,8 @@ class SessionSettings: NSObject {
         darkIcons = userDefaultsBool(forKey: "dark_icons", defaultVal: false)
         
         backgroundColorIndex = userDefaultsInt(forKey: "background_color", defaultVal: 0)
+        
+        numRecentColors = userDefaultsInt(forKey: "num_recent_colors", defaultVal: 8)
     }
     
     func userDefaults() -> UserDefaults {
