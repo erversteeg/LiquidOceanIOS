@@ -47,6 +47,10 @@ class SessionSettings: NSObject {
     
     var numRecentColors = 8
     
+    var xp = 0
+    
+    var displayName = ""
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -55,6 +59,8 @@ class SessionSettings: NSObject {
         userDefaults().set(darkIcons, forKey: "dark_icons")
         userDefaults().set(backgroundColorIndex, forKey: "background_color")
         userDefaults().set(numRecentColors, forKey: "num_recent_colors")
+        userDefaults().set(xp, forKey: "xp")
+        userDefaults().set(displayName, forKey: "display_name")
     }
     
     func load() {
@@ -69,6 +75,10 @@ class SessionSettings: NSObject {
         backgroundColorIndex = userDefaultsInt(forKey: "background_color", defaultVal: 0)
         
         numRecentColors = userDefaultsInt(forKey: "num_recent_colors", defaultVal: 8)
+        
+        xp = userDefaultsInt(forKey: "xp", defaultVal: 0)
+        
+        displayName = userDefaultsString(forKey: "display_name", defaultVal: "")
     }
     
     func userDefaults() -> UserDefaults {

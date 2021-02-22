@@ -83,7 +83,17 @@ class ActionButtonView: UIView {
     var rows: Int!
     var cols: Int!
     
-    var type = ActionType.none
+    private var _type = ActionType.none
+    var type: ActionType {
+        set {
+            _type = newValue
+            setNeedsDisplay()
+        }
+        get {
+            return _type
+        }
+    }
+    
     
     var clickHandler: (() -> Void)?
     

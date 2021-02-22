@@ -35,6 +35,10 @@
 		07BD25F925D450CF00CF812E /* SessionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F825D450CF00CF812E /* SessionSettings.swift */; };
 		07FF5EFF25DF5833003E19AE /* ArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5EFE25DF5833003E19AE /* ArtView.swift */; };
 		07FF5F0125DF616A003E19AE /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0025DF616A003E19AE /* ExportViewController.swift */; };
+		07FF5F0325E41EF9003E19AE /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0225E41EF9003E19AE /* StatsViewController.swift */; };
+		07FF5F0525E421A9003E19AE /* StatAchievementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0425E421A9003E19AE /* StatAchievementCollectionViewCell.swift */; };
+		07FF5F0725E42C1C003E19AE /* ActionButtonReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0625E42C1C003E19AE /* ActionButtonReusableView.swift */; };
+		07FF5F0925E4354B003E19AE /* StatTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0825E4354B003E19AE /* StatTracker.swift */; };
 		E5CAC4447BA12EDA6329A1E2 /* Pods_LiquidOceanIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +86,10 @@
 		07BD25F825D450CF00CF812E /* SessionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSettings.swift; sourceTree = "<group>"; };
 		07FF5EFE25DF5833003E19AE /* ArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtView.swift; sourceTree = "<group>"; };
 		07FF5F0025DF616A003E19AE /* ExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
+		07FF5F0225E41EF9003E19AE /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+		07FF5F0425E421A9003E19AE /* StatAchievementCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatAchievementCollectionViewCell.swift; sourceTree = "<group>"; };
+		07FF5F0625E42C1C003E19AE /* ActionButtonReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonReusableView.swift; sourceTree = "<group>"; };
+		07FF5F0825E4354B003E19AE /* StatTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatTracker.swift; sourceTree = "<group>"; };
 		0C929D3F59AAC71054FD1E19 /* Pods-LiquidOceanIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.debug.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.debug.xcconfig"; sourceTree = "<group>"; };
 		42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiquidOceanIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B417FAAF99031F0F81E5A72B /* Pods-LiquidOceanIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.release.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -115,6 +123,7 @@
 				07BD25CA25D43FB500CF812E /* InteractiveCanvasViewController.swift */,
 				0712053725DF2D5100AE0F52 /* RecentColorsViewController.swift */,
 				07FF5F0025DF616A003E19AE /* ExportViewController.swift */,
+				07FF5F0225E41EF9003E19AE /* StatsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -186,6 +195,8 @@
 				0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */,
 				0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */,
 				07FF5EFE25DF5833003E19AE /* ArtView.swift */,
+				07FF5F0425E421A9003E19AE /* StatAchievementCollectionViewCell.swift */,
+				07FF5F0625E42C1C003E19AE /* ActionButtonReusableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -195,6 +206,7 @@
 			children = (
 				07BD25EF25D4461400CF812E /* InteractiveCanvas.swift */,
 				07BD25F825D450CF00CF812E /* SessionSettings.swift */,
+				07FF5F0825E4354B003E19AE /* StatTracker.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -381,9 +393,12 @@
 				07006C4425DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift in Sources */,
 				07006C4225DCB6D400DF9A64 /* PixelHistoryViewController.swift in Sources */,
 				07FF5F0125DF616A003E19AE /* ExportViewController.swift in Sources */,
+				07FF5F0925E4354B003E19AE /* StatTracker.swift in Sources */,
 				07BD25D125D43FB500CF812E /* LiquidOceanIOS.xcdatamodeld in Sources */,
 				07BD25F525D44F2A00CF812E /* Utils.swift in Sources */,
 				07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */,
+				07FF5F0525E421A9003E19AE /* StatAchievementCollectionViewCell.swift in Sources */,
+				07FF5F0325E41EF9003E19AE /* StatsViewController.swift in Sources */,
 				07BD25F725D44FE900CF812E /* UIColor+Conversions.swift in Sources */,
 				07A305F525D5D348003A6CEA /* PaintColorIndicator.swift in Sources */,
 				07006C4025D6CEF200DF9A64 /* MenuViewController.swift in Sources */,
@@ -391,6 +406,7 @@
 				07006C3C25D607D500DF9A64 /* UIDrawGestureRecognizer.swift in Sources */,
 				0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */,
 				07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */,
+				07FF5F0725E42C1C003E19AE /* ActionButtonReusableView.swift in Sources */,
 				07006C3E25D6C2D500DF9A64 /* PaintQuantityBar.swift in Sources */,
 				07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */,
 				07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */,

@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -53,6 +53,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var exportContainer: UIView!
     
+    @IBOutlet weak var achievementBanner: UIView!
+    
+    @IBOutlet weak var achievementIcon: UIView!
+    @IBOutlet weak var achievementName: UILabel!
+    @IBOutlet weak var achievementDesc: UILabel!
+    
     var world = false
     
     var previousColor: Int32!
@@ -63,7 +69,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         surfaceView.interactiveCanvas.world = world
         paintQuantityBar.world = world
         
@@ -265,6 +271,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.surfaceView.startPainting()
         }
+        
+        StatTracker.instance.achievementListener = self
     }
     
     // embeds
@@ -286,6 +294,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         else if segue.identifier == "ExportEmbed" {
             self.exportViewController = segue.destination as? ExportViewController
             self.exportViewController.delegate = self
+        }
+        else if segue.identifier == "UnwindToMenu" {
+            StatTracker.instance.achievementListener = nil
         }
     }
     
@@ -444,6 +455,41 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     func notifyArtExported(art: [InteractiveCanvas.RestorePoint]) {
         exportViewController.art = art
         exportContainer.isHidden = false
+    }
+    
+    // achievement listener
+    func notifyDisplayAchievement(nextAchievement: [StatTracker.EventType : Int], displayInterval: Int) {
+        achievementBanner.layer.borderWidth = 2
+        achievementBanner.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFF7819")).cgColor
+        
+        let eventType = nextAchievement.keys.first!
+        let val = nextAchievement[eventType]!
+        
+        if eventType == .paintReceived {
+            achievementName.text = "Total Paint Accrued"
+        }
+        else if eventType == .pixelOverwriteIn {
+            achievementName.text = "Pixels Overwritten By Others"
+        }
+        else if eventType == .pixelOverwriteOut {
+            achievementName.text = "Pixels Overwritten By Me"
+        }
+        else if eventType == .pixelPaintedWorld {
+            achievementName.text = "Pixels painted world"
+        }
+        else if eventType == .pixelPaintedSingle {
+            achievementName.text = "Pixels painted single"
+        }
+        
+        achievementDesc.text = "Passed the " + String(val) + " threshold"
+        
+        achievementBanner.isHidden = false
+        
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (tmr) in
+            DispatchQueue.main.async {
+                self.achievementBanner.isHidden = true
+            }
+        }
     }
 }
 

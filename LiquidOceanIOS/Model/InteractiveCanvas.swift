@@ -337,6 +337,11 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             print(reqObj)
             
             socket.emit("pixels_event", reqObj)
+            
+            StatTracker.instance.reportEvent(eventType: .pixelPaintedWorld, amt: restorePoints.count)
+        }
+        else {
+            StatTracker.instance.reportEvent(eventType: .pixelPaintedSingle, amt: restorePoints.count)
         }
         
         updateRecentColors()

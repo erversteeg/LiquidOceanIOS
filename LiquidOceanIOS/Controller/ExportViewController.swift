@@ -31,7 +31,6 @@ class ExportViewController: UIViewController {
         }
     }
     
-    
     var delegate: ExportViewControllerDelegate?
     
     @IBOutlet weak var backButton: ActionButtonView!

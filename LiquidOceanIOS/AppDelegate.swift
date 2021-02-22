@@ -16,6 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         SessionSettings.instance.load()
         
+        URLSessionHandler.instance.getDeviceInfo { (success) -> (Void) in
+            if success {
+                
+            }
+        }
+        
         return true
     }
 
