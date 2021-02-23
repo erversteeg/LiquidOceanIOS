@@ -145,23 +145,87 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
             do {
                 let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
             
-                SessionSettings.instance.dropsAmt = jsonDict["paint_qty"] as? Int
                 SessionSettings.instance.sentUniqueId = true
                 
+                SessionSettings.instance.dropsAmt = jsonDict["paint_qty"] as? Int
                 SessionSettings.instance.xp = jsonDict["xp"] as! Int
                 SessionSettings.instance.displayName = jsonDict["name"] as! String
                 
-                StatTracker.instance.numPixelsPaintedWorld = jsonDict["wt"] as! Int
-                StatTracker.instance.numPixelsPaintedSingle = jsonDict["st"] as! Int
-                
-                let paintReceived = jsonDict["st"] as! Int
+                let pixelsWorld = jsonDict["wt"] as! Int
+                let pixelsSingle = jsonDict["st"] as! Int
+                let paintReceived = jsonDict["tp"] as! Int
                 let overwritesIn = jsonDict["oi"] as! Int
                 let overwritesOut = jsonDict["oo"] as! Int
                 
                 DispatchQueue.main.async {
-                    StatTracker.instance.reportEvent(eventType: .paintReceived, amt: 10000)
-                    StatTracker.instance.reportEvent(eventType: .pixelOverwriteIn, amt: 2000)
-                    StatTracker.instance.reportEvent(eventType: .pixelOverwriteOut, amt: 2000)
+                    StatTracker.instance.syncStatFromServer(eventType: .pixelPaintedWorld, total: pixelsWorld)
+                    StatTracker.instance.syncStatFromServer(eventType: .pixelPaintedSingle, total: pixelsSingle)
+                    StatTracker.instance.syncStatFromServer(eventType: .paintReceived, total: paintReceived)
+                    StatTracker.instance.syncStatFromServer(eventType: .pixelOverwriteIn, total: overwritesIn)
+                    StatTracker.instance.syncStatFromServer(eventType: .pixelOverwriteOut, total: overwritesOut)
+                    
+                    StatTracker.instance.save()
+                    
+                    completionHandler(true)
+                }
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
+    func sendGoogleToken(token: String, completionHandler: @escaping (Bool) -> (Void)) {
+        let uniqueId = SessionSettings.instance.uniqueId!
+        
+        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/devices/" + uniqueId + "/google/auth")!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "POST"
+
+        let params = ["token_id": token] as Dictionary<String, String>
+
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false)
+                    }
+                }
+                
+                let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
+                
+                SessionSettings.instance.sentUniqueId = true
+                
+                SessionSettings.instance.dropsAmt = jsonDict["paint_qty"] as? Int
+                SessionSettings.instance.xp = jsonDict["xp"] as! Int
+                SessionSettings.instance.displayName = jsonDict["name"] as! String
+                
+                SessionSettings.instance.googleAuth = true
+                SessionSettings.instance.uniqueId = token
+                
+                SessionSettings.instance.save()
+                
+                let pixelsWorld = jsonDict["wt"] as! Int
+                let pixelsSingle = jsonDict["st"] as! Int
+                let paintReceived = jsonDict["tp"] as! Int
+                let overwritesIn = jsonDict["oi"] as! Int
+                let overwritesOut = jsonDict["oo"] as! Int
+                
+                DispatchQueue.main.async {
+                    StatTracker.instance.syncStatFromServer(eventType: .pixelPaintedWorld, total: pixelsWorld)
+                    StatTracker.instance.syncStatFromServer(eventType: .pixelPaintedSingle, total: pixelsSingle)
+                    StatTracker.instance.syncStatFromServer(eventType: .paintReceived, total: paintReceived)
+                    StatTracker.instance.syncStatFromServer(eventType: .pixelOverwriteIn, total: overwritesIn)
+                    StatTracker.instance.syncStatFromServer(eventType: .pixelOverwriteOut, total: overwritesOut)
+                    
+                    StatTracker.instance.save()
                     
                     completionHandler(true)
                 }

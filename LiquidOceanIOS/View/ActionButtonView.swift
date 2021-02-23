@@ -53,6 +53,7 @@ class ActionButtonView: UIView {
         case share
         case single
         case world
+        case achievements
     }
     
     let menuButtonRows = 4
@@ -200,6 +201,9 @@ class ActionButtonView: UIView {
         }
         else if type == .world {
             drawWorldAction()
+        }
+        else if type == .achievements {
+            drawAchievementAction()
         }
     }
     
@@ -983,6 +987,140 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 16, y: 3, color: paint)
         drawPixel(ctx: context, x: 18, y: 3, color: paint)
         drawPixel(ctx: context, x: 19, y: 3, color: paint)
+    }
+    
+    func drawAchievementAction() {
+        rows = 4
+        cols = 51
+       
+        var paint = ActionButtonView.lightGrayColor!
+       
+        if selected {
+            paint = ActionButtonView.altGreenColor!
+        }
+       
+        let context = UIGraphicsGetCurrentContext()!
+       
+        // A
+        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+        drawPixel(ctx: context, x: 0, y: 3, color: paint)
+        drawPixel(ctx: context, x: 1, y: 1, color: paint)
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
+        drawPixel(ctx: context, x: 3, y: 1, color: paint)
+        drawPixel(ctx: context, x: 3, y: 2, color: paint)
+        drawPixel(ctx: context, x: 3, y: 3, color: paint)
+       
+        // C
+        drawPixel(ctx: context, x: 5, y: 1, color: paint)
+        drawPixel(ctx: context, x: 5, y: 2, color: paint)
+        drawPixel(ctx: context, x: 6, y: 0, color: paint)
+        drawPixel(ctx: context, x: 6, y: 3, color: paint)
+        drawPixel(ctx: context, x: 7, y: 0, color: paint)
+        drawPixel(ctx: context, x: 7, y: 3, color: paint)
+        
+        // H
+        drawPixel(ctx: context, x: 9, y: 0, color: paint)
+        drawPixel(ctx: context, x: 9, y: 1, color: paint)
+        drawPixel(ctx: context, x: 9, y: 2, color: paint)
+        drawPixel(ctx: context, x: 9, y: 3, color: paint)
+        drawPixel(ctx: context, x: 10, y: 1, color: paint)
+        drawPixel(ctx: context, x: 11, y: 1, color: paint)
+        drawPixel(ctx: context, x: 12, y: 0, color: paint)
+        drawPixel(ctx: context, x: 12, y: 1, color: paint)
+        drawPixel(ctx: context, x: 12, y: 2, color: paint)
+        drawPixel(ctx: context, x: 12, y: 3, color: paint)
+        
+        // I
+        drawPixel(ctx: context, x: 14, y: 0, color: paint)
+        drawPixel(ctx: context, x: 14, y: 1, color: paint)
+        drawPixel(ctx: context, x: 14, y: 2, color: paint)
+        drawPixel(ctx: context, x: 14, y: 3, color: paint)
+        
+        // E
+        drawPixel(ctx: context, x: 16, y: 0, color: paint)
+        drawPixel(ctx: context, x: 16, y: 1, color: paint)
+        drawPixel(ctx: context, x: 16, y: 2, color: paint)
+        drawPixel(ctx: context, x: 16, y: 3, color: paint)
+        drawPixel(ctx: context, x: 17, y: 0, color: paint)
+        drawPixel(ctx: context, x: 17, y: 1, color: paint)
+        drawPixel(ctx: context, x: 17, y: 3, color: paint)
+        drawPixel(ctx: context, x: 18, y: 0, color: paint)
+        drawPixel(ctx: context, x: 18, y: 3, color: paint)
+        
+        // V
+        drawPixel(ctx: context, x: 20, y: 0, color: paint)
+        drawPixel(ctx: context, x: 20, y: 1, color: paint)
+        drawPixel(ctx: context, x: 20, y: 2, color: paint)
+        drawPixel(ctx: context, x: 21, y: 3, color: paint)
+        drawPixel(ctx: context, x: 22, y: 2, color: paint)
+        drawPixel(ctx: context, x: 23, y: 0, color: paint)
+        drawPixel(ctx: context, x: 23, y: 1, color: paint)
+        
+        // E
+        drawPixel(ctx: context, x: 25, y: 0, color: paint)
+        drawPixel(ctx: context, x: 25, y: 1, color: paint)
+        drawPixel(ctx: context, x: 25, y: 2, color: paint)
+        drawPixel(ctx: context, x: 25, y: 3, color: paint)
+        drawPixel(ctx: context, x: 26, y: 0, color: paint)
+        drawPixel(ctx: context, x: 26, y: 1, color: paint)
+        drawPixel(ctx: context, x: 26, y: 3, color: paint)
+        drawPixel(ctx: context, x: 27, y: 0, color: paint)
+        drawPixel(ctx: context, x: 27, y: 3, color: paint)
+        
+        // M
+        drawPixel(ctx: context, x: 29, y: 0, color: paint)
+        drawPixel(ctx: context, x: 29, y: 1, color: paint)
+        drawPixel(ctx: context, x: 29, y: 2, color: paint)
+        drawPixel(ctx: context, x: 29, y: 3, color: paint)
+        drawPixel(ctx: context, x: 30, y: 1, color: paint)
+        drawPixel(ctx: context, x: 31, y: 0, color: paint)
+        drawPixel(ctx: context, x: 32, y: 1, color: paint)
+        drawPixel(ctx: context, x: 33, y: 0, color: paint)
+        drawPixel(ctx: context, x: 33, y: 1, color: paint)
+        drawPixel(ctx: context, x: 33, y: 2, color: paint)
+        drawPixel(ctx: context, x: 33, y: 3, color: paint)
+        
+        // E
+        drawPixel(ctx: context, x: 35, y: 0, color: paint)
+        drawPixel(ctx: context, x: 35, y: 1, color: paint)
+        drawPixel(ctx: context, x: 35, y: 2, color: paint)
+        drawPixel(ctx: context, x: 35, y: 3, color: paint)
+        drawPixel(ctx: context, x: 36, y: 0, color: paint)
+        drawPixel(ctx: context, x: 36, y: 1, color: paint)
+        drawPixel(ctx: context, x: 36, y: 3, color: paint)
+        drawPixel(ctx: context, x: 37, y: 0, color: paint)
+        drawPixel(ctx: context, x: 37, y: 3, color: paint)
+        
+        // N
+        drawPixel(ctx: context, x: 39, y: 0, color: paint)
+        drawPixel(ctx: context, x: 39, y: 1, color: paint)
+        drawPixel(ctx: context, x: 39, y: 2, color: paint)
+        drawPixel(ctx: context, x: 39, y: 3, color: paint)
+        drawPixel(ctx: context, x: 40, y: 1, color: paint)
+        drawPixel(ctx: context, x: 41, y: 2, color: paint)
+        drawPixel(ctx: context, x: 42, y: 0, color: paint)
+        drawPixel(ctx: context, x: 42, y: 1, color: paint)
+        drawPixel(ctx: context, x: 42, y: 2, color: paint)
+        drawPixel(ctx: context, x: 42, y: 3, color: paint)
+        
+        // T
+        drawPixel(ctx: context, x: 44, y: 0, color: paint)
+        drawPixel(ctx: context, x: 45, y: 0, color: paint)
+        drawPixel(ctx: context, x: 45, y: 1, color: paint)
+        drawPixel(ctx: context, x: 45, y: 2, color: paint)
+        drawPixel(ctx: context, x: 45, y: 3, color: paint)
+        drawPixel(ctx: context, x: 46, y: 0, color: paint)
+        
+        // S
+        drawPixel(ctx: context, x: 48, y: 0, color: paint)
+        drawPixel(ctx: context, x: 48, y: 3, color: paint)
+        drawPixel(ctx: context, x: 49, y: 0, color: paint)
+        drawPixel(ctx: context, x: 49, y: 1, color: paint)
+        drawPixel(ctx: context, x: 49, y: 3, color: paint)
+        drawPixel(ctx: context, x: 50, y: 0, color: paint)
+        drawPixel(ctx: context, x: 50, y: 2, color: paint)
+        drawPixel(ctx: context, x: 50, y: 3, color: paint)
     }
     
     func rectForPixel(x: Int, y: Int) -> CGRect {

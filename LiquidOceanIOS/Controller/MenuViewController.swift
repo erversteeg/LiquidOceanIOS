@@ -13,6 +13,7 @@ class MenuViewController: UIViewController, AchievementListener {
     let showSinglePlay = "ShowSinglePlay"
     let showLoadingScreen = "ShowLoading"
     let showStats = "ShowStats"
+    let showOptions = "ShowOptions"
     
     @IBOutlet weak var playButton: ActionButtonView!
     @IBOutlet weak var optionsButton: ActionButtonView!
@@ -29,6 +30,13 @@ class MenuViewController: UIViewController, AchievementListener {
     @IBOutlet weak var achievementIcon: UIView!
     @IBOutlet weak var achievementName: UILabel!
     @IBOutlet weak var achievementDesc: UILabel!
+    
+    @IBOutlet weak var artView: ArtView!
+    @IBOutlet weak var menuContainer: UIView!
+    
+    var showcaseTimer: Timer!
+    
+    var pixels = [UIView]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +69,10 @@ class MenuViewController: UIViewController, AchievementListener {
             self.backAction.isHidden = false
         }
         
+        self.optionsButton.setOnClickListener {
+            self.performSegue(withIdentifier: self.showOptions, sender: nil)
+        }
+        
         self.statsButton.setOnClickListener {
             self.performSegue(withIdentifier: self.showStats, sender: nil)
         }
@@ -80,6 +92,16 @@ class MenuViewController: UIViewController, AchievementListener {
         SessionSettings.instance.numRecentColors = 12
         
         StatTracker.instance.achievementListener = self
+        
+        startShowcase()
+        
+        startPixels()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.exitButton], moveOut: false)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -92,6 +114,9 @@ class MenuViewController: UIViewController, AchievementListener {
         else if segue.identifier == self.showStats  {
             let _ = segue.destination as! StatsViewController
         }
+        
+        showcaseTimer.invalidate()
+        stopPixels()
     }
     
     @IBAction func unwindToViewController(segue: UIStoryboardSegue) {
@@ -99,6 +124,10 @@ class MenuViewController: UIViewController, AchievementListener {
         self.toggleMenuButtons(show: false, depth: 1)
         
         self.backAction.isHidden = true
+        
+        startShowcase()
+        
+        startPixels()
     }
     
     func toggleMenuButtons(show: Bool, depth: Int) {
@@ -112,6 +141,52 @@ class MenuViewController: UIViewController, AchievementListener {
             self.singleAction.isHidden = !show
             self.worldAction.isHidden = !show
         }
+    }
+    
+    func startShowcase() {
+        showcaseTimer = Timer.scheduledTimer(withTimeInterval: 7, repeats: true, block: { (tmr) in
+            DispatchQueue.main.async {
+                if SessionSettings.instance.artShowcase != nil {
+                    self.artView.alpha = 0
+                    
+                    self.artView.showBackground = false
+                    self.artView.art = self.getNextArtShowcase()
+                    
+                    UIView.animate(withDuration: 2.5, animations: {
+                        self.artView.alpha = 1
+                    }) { (success) in
+                        if success {
+                            Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { (tmr) in
+                                UIView.animate(withDuration: 1.5, animations: {
+                                    self.artView.alpha = 0
+                                })
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        showcaseTimer.fire()
+    }
+    
+    func startPixels() {
+        Animator.context = self
+        
+        if self.pixels.count == 0 {
+            for _ in 0...6 {
+                let newView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
+                self.pixels.append(newView)
+                self.view.addSubview(newView)
+            }
+        }
+        
+        for i in 0...6 {
+            Animator.animatePixelColorEffect(view:self.pixels[i], parent: self.view, safeViews: [artView, menuContainer])
+        }
+    }
+    
+    func stopPixels() {
+        Animator.context = nil
     }
     
     // achievement listener
@@ -141,5 +216,22 @@ class MenuViewController: UIViewController, AchievementListener {
                 self.achievementBanner.isHidden = true
             }
         }
+    }
+    
+    func getNextArtShowcase() -> [InteractiveCanvas.RestorePoint]? {
+        if let artShowcase = SessionSettings.instance.artShowcase {
+            if SessionSettings.instance.showcaseIndex == artShowcase.count {
+                SessionSettings.instance.showcaseIndex = 0
+            }
+            
+            if artShowcase.count > 0 {
+                let nextArt = artShowcase[SessionSettings.instance.showcaseIndex]
+                SessionSettings.instance.showcaseIndex += 1
+                
+                return nextArt
+            }
+        }
+        
+        return nil
     }
 }

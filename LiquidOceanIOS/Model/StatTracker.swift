@@ -38,7 +38,16 @@ class StatTracker: NSObject {
     var totalPaintAccrued = 0
     var totalPaintAccruedKey = "total_paint_accrued"
     
-    var numPixelsPaintedWorld = 0
+    var _numPixelsPaintedWorld: Int = 0
+    var numPixelsPaintedWorld: Int {
+        set {
+            _numPixelsPaintedWorld = newValue
+            worldXp = newValue * 20
+        }
+        get {
+            return _numPixelsPaintedWorld
+        }
+    }
     var numPixelsPaintedWorldKey = "num_pixels_painted_world"
     
     var numPixelOverwritesOut = 0
@@ -72,9 +81,6 @@ class StatTracker: NSObject {
     func reportEvent(eventType: EventType, amt: Int) {
         let numPixelsPaintedWorldOld = numPixelsPaintedWorld
         let numPixelsPaintedSingleOld = numPixelsPaintedSingle
-        let totalPaintAccruedOld = totalPaintAccrued
-        let numPixelOverwritesInOld = numPixelOverwritesIn
-        let numPixelOverwritesOutOld = numPixelOverwritesOut
         
         if eventType == .pixelPaintedWorld {
             numPixelsPaintedWorld += amt
@@ -86,16 +92,33 @@ class StatTracker: NSObject {
             checkAchievements(eventType: eventType, oldVal: numPixelsPaintedSingleOld, newVal: numPixelsPaintedSingle)
             sendDeviceStats(eventType: eventType, amt: numPixelsPaintedWorld)
         }
-        else if eventType == .paintReceived {
-            totalPaintAccrued += amt
+    }
+    
+    func syncStatFromServer(eventType: EventType, total: Int) {
+        let numPixelsPaintedWorldOld = numPixelsPaintedWorld
+        let numPixelsPaintedSingleOld = numPixelsPaintedSingle
+        let totalPaintAccruedOld = totalPaintAccrued
+        let numPixelOverwritesInOld = numPixelOverwritesIn
+        let numPixelOverwritesOutOld = numPixelOverwritesOut
+        
+        if eventType == .pixelPaintedWorld {
+            numPixelsPaintedWorld = total
+            checkAchievements(eventType: eventType, oldVal: numPixelsPaintedWorldOld, newVal: numPixelsPaintedWorld)
+        }
+        else if eventType == .pixelPaintedSingle {
+            numPixelsPaintedSingle = total
+            checkAchievements(eventType: eventType, oldVal: numPixelsPaintedSingleOld, newVal: numPixelsPaintedSingle)
+        }
+        if eventType == .paintReceived {
+            totalPaintAccrued = total
             checkAchievements(eventType: eventType, oldVal: totalPaintAccruedOld, newVal: totalPaintAccrued)
         }
         else if eventType == .pixelOverwriteIn {
-            numPixelOverwritesIn += amt
+            numPixelOverwritesIn = total
             checkAchievements(eventType: eventType, oldVal: numPixelOverwritesInOld, newVal: numPixelOverwritesIn)
         }
         else if eventType == .pixelOverwriteOut {
-            numPixelOverwritesOut += amt
+            numPixelOverwritesOut = total
             checkAchievements(eventType: eventType, oldVal: numPixelOverwritesOutOld, newVal: numPixelOverwritesOut)
         }
     }

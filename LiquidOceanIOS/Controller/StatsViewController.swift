@@ -16,6 +16,10 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     var data: [[String: String]]?
     
+    let statKeys = ["Pixels Single", "Pixels World", "Pixel Overwrites In", "Pixel Overwrites Out", "Paint Accrued", "World Level"]
+    
+    let achKeys = ["Pixels Single", "Pixels World", "Pixel Overwrites In", "Pixel Overwrites Out", "Paint Accrued"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,10 +70,24 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StatAchievementCell", for: indexPath) as! StatAchievementCollectionViewCell
         
-        let key = Array(data![indexPath.section].keys)[indexPath.item]
+        var key = ""
+        if indexPath.section == 0 {
+            key = statKeys[indexPath.item]
+        }
+        else if indexPath.section == 1 {
+            key = achKeys[indexPath.item]
+        }
         
         cell.statName.text = key
+        
         cell.statAmt.text = data![indexPath.section][key]
+        
+        if indexPath.section == 0 {
+            let val = Int(data![indexPath.section][key]!)!
+            let formatted = String(format: "%ld", locale: Locale.current, val)
+            
+            cell.statAmt.text = formatted
+        }
         
         cell.contentView.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
         
@@ -89,7 +107,7 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width, height: 60)
+        return CGSize(width: collectionView.frame.size.width, height: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -102,8 +120,8 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
             view.actionViewWidth.constant = 200
         }
         else {
-            view.actionView.type = .play
-            view.actionViewWidth.constant = 160
+            view.actionView.type = .achievements
+            view.actionViewWidth.constant = 510
         }
         
         return view

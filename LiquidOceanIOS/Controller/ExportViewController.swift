@@ -25,6 +25,13 @@ class ExportViewController: UIViewController {
         set {
             _art = newValue
             artView.art = _art
+            
+            if let art = art {
+                if art.count > 0 {
+                    SessionSettings.instance.addToShowcase(art: art)
+                    SessionSettings.instance.save()
+                }
+            }
         }
         get {
             return _art

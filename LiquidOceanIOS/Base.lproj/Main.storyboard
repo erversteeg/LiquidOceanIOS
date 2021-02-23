@@ -94,6 +94,14 @@
                                     <constraint firstItem="bXf-om-F2F" firstAttribute="top" secondItem="lxQ-a7-WAQ" secondAttribute="bottom" constant="20" id="t7S-uc-yZ1"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJ4-0j-Gbk" customClass="ArtView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                <rect key="frame" x="50" y="57" width="400" height="300"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="WQr-LQ-tuL"/>
+                                    <constraint firstAttribute="width" constant="400" id="jwa-pg-Kr3"/>
+                                </constraints>
+                            </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6km-e7-nf8">
                                 <rect key="frame" x="198" y="20" width="500" height="100"/>
                                 <subviews>
@@ -153,7 +161,9 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="AJ4-0j-Gbk" firstAttribute="centerY" secondItem="Z4r-xF-cLC" secondAttribute="centerY" id="3ue-dI-eh7"/>
                             <constraint firstItem="6km-e7-nf8" firstAttribute="top" secondItem="Z4r-xF-cLC" secondAttribute="topMargin" constant="20" id="5yN-Nu-uix"/>
+                            <constraint firstItem="AJ4-0j-Gbk" firstAttribute="leading" secondItem="Z4r-xF-cLC" secondAttribute="leading" constant="50" id="8Ce-2j-bnd"/>
                             <constraint firstAttribute="trailing" secondItem="HgT-su-IqO" secondAttribute="trailing" constant="40" id="Eb8-QY-KiJ"/>
                             <constraint firstItem="6km-e7-nf8" firstAttribute="centerX" secondItem="Z4r-xF-cLC" secondAttribute="centerX" id="Sc4-7i-YZC"/>
                             <constraint firstItem="bP3-IR-f5V" firstAttribute="leading" secondItem="Z4r-xF-cLC" secondAttribute="leadingMargin" constant="-30" id="cf9-1J-U2y"/>
@@ -168,8 +178,10 @@
                         <outlet property="achievementDesc" destination="zwP-t1-PyA" id="xgc-jH-aZq"/>
                         <outlet property="achievementIcon" destination="rbr-2U-QK9" id="RCx-uJ-6Dm"/>
                         <outlet property="achievementName" destination="cUe-wc-7Z5" id="cNq-oW-bIg"/>
+                        <outlet property="artView" destination="AJ4-0j-Gbk" id="wXQ-cD-Mrm"/>
                         <outlet property="backAction" destination="bP3-IR-f5V" id="Z3J-eW-c5c"/>
                         <outlet property="exitButton" destination="GgY-y3-7g3" id="EE6-eS-ciN"/>
+                        <outlet property="menuContainer" destination="HgT-su-IqO" id="FOW-TQ-p5D"/>
                         <outlet property="optionsButton" destination="bXf-om-F2F" id="3o9-qU-7HC"/>
                         <outlet property="playButton" destination="lxQ-a7-WAQ" id="mYL-vu-pLz"/>
                         <outlet property="singleAction" destination="c6s-X2-qq5" id="LHc-tm-24R"/>
@@ -178,11 +190,120 @@
                         <segue destination="J7C-7P-Zxh" kind="show" identifier="ShowLoading" animates="NO" id="pK7-f3-2ih"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="ShowSinglePlay" animates="NO" id="jzH-A0-0Va"/>
                         <segue destination="jsN-na-INd" kind="show" identifier="ShowStats" animates="NO" id="8JS-PC-Hfp"/>
+                        <segue destination="PmP-As-lpW" kind="show" identifier="ShowOptions" animates="NO" id="1QF-V5-Kp9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dj7-Gk-d20" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-926.11607142857133" y="-1504.3478260869567"/>
+        </scene>
+        <!--Options View Controller-->
+        <scene sceneID="yCs-ib-1z8">
+            <objects>
+                <viewController id="PmP-As-lpW" customClass="OptionsViewController" customModule="LiquidOceanIOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jfd-Fq-IO7">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vro-QW-3jp" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                <rect key="frame" x="318" y="20" width="260" height="40"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="260" id="Qel-dD-ARr"/>
+                                    <constraint firstAttribute="height" constant="40" id="vtf-3I-xtO"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="kPV-gl-lW5"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hlu-iY-hzq" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                <rect key="frame" x="30" y="10" width="56" height="40"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="56" id="Bh9-cU-AH0"/>
+                                    <constraint firstAttribute="height" constant="40" id="Cq8-mT-3R1"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9a2-Ln-eCh">
+                                <rect key="frame" x="64" y="80" width="768" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="FLk-Vf-r8q"/>
+                                </constraints>
+                                <state key="normal" title="Sign-in"/>
+                                <connections>
+                                    <action selector="signInPressed:" destination="PmP-As-lpW" eventType="touchUpInside" id="BYW-t4-Bth"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="9a2-Ln-eCh" firstAttribute="leading" secondItem="jfd-Fq-IO7" secondAttribute="leadingMargin" id="06J-s6-ydj"/>
+                            <constraint firstItem="Hlu-iY-hzq" firstAttribute="top" secondItem="jfd-Fq-IO7" secondAttribute="top" constant="10" id="BR2-mD-2Xc"/>
+                            <constraint firstItem="Vro-QW-3jp" firstAttribute="centerX" secondItem="jfd-Fq-IO7" secondAttribute="centerX" id="JcN-c4-8V9"/>
+                            <constraint firstItem="Vro-QW-3jp" firstAttribute="top" secondItem="jfd-Fq-IO7" secondAttribute="topMargin" constant="20" id="QG5-Bg-Es1"/>
+                            <constraint firstItem="9a2-Ln-eCh" firstAttribute="trailing" secondItem="jfd-Fq-IO7" secondAttribute="trailingMargin" id="bgO-4W-Byr"/>
+                            <constraint firstItem="9a2-Ln-eCh" firstAttribute="top" secondItem="jfd-Fq-IO7" secondAttribute="topMargin" constant="80" id="em0-gU-TSn"/>
+                            <constraint firstItem="Hlu-iY-hzq" firstAttribute="leading" secondItem="jfd-Fq-IO7" secondAttribute="leading" constant="30" id="uA0-G2-8zo"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="VLU-JE-bGC"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="04F-ku-Q7T"/>
+                    <connections>
+                        <outlet property="backAction" destination="Hlu-iY-hzq" id="x8z-f5-Way"/>
+                        <outlet property="optionsTitleAction" destination="Vro-QW-3jp" id="hhP-L7-qIm"/>
+                        <outlet property="signInButton" destination="9a2-Ln-eCh" id="7ra-PK-evL"/>
+                        <segue destination="DRi-oG-a07" kind="unwind" identifier="UnwindToMenu" animates="NO" unwindAction="unwindToViewControllerWithSegue:" id="4s8-aK-9Hz"/>
+                        <segue destination="pIu-HE-FkQ" kind="show" identifier="ShowSignIn" animates="NO" id="KJW-n8-blF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zyv-sj-fPJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="DRi-oG-a07" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-685.04464285714278" y="-2688.4057971014495"/>
+        </scene>
+        <!--Sign In View Controller-->
+        <scene sceneID="q8o-IM-R48">
+            <objects>
+                <viewController id="pIu-HE-FkQ" customClass="SignInViewController" customModule="LiquidOceanIOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="u9m-DR-Vds">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bkp-Zi-oIf" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                <rect key="frame" x="30" y="10" width="56" height="40"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="863-VN-Bjn"/>
+                                    <constraint firstAttribute="width" constant="56" id="DUB-54-frv"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a95-WG-fSX" customClass="GIDSignInButton">
+                                <rect key="frame" x="64" y="74" width="768" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="iY1-Z7-nYf"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="bkp-Zi-oIf" firstAttribute="leading" secondItem="u9m-DR-Vds" secondAttribute="leading" constant="30" id="Gds-Uy-hx6"/>
+                            <constraint firstItem="a95-WG-fSX" firstAttribute="leading" secondItem="WYb-i9-iwZ" secondAttribute="leading" constant="20" id="IC6-VF-hVj"/>
+                            <constraint firstItem="bkp-Zi-oIf" firstAttribute="top" secondItem="u9m-DR-Vds" secondAttribute="top" constant="10" id="qe4-h2-X3f"/>
+                            <constraint firstItem="WYb-i9-iwZ" firstAttribute="trailing" secondItem="a95-WG-fSX" secondAttribute="trailing" constant="20" id="uQA-33-mZd"/>
+                            <constraint firstItem="a95-WG-fSX" firstAttribute="top" secondItem="u9m-DR-Vds" secondAttribute="topMargin" constant="74" id="zBy-dx-MqL"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="WYb-i9-iwZ"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="6OV-Eb-Rtg"/>
+                    <connections>
+                        <outlet property="backAction" destination="bkp-Zi-oIf" id="pjF-M0-IQd"/>
+                        <outlet property="signInButton" destination="a95-WG-fSX" id="2jE-Ca-8wb"/>
+                        <segue destination="hUI-m4-vwM" kind="unwind" identifier="UnwindToOptions" animates="NO" unwindAction="unwindToViewControllerWithSegue:" id="hER-PO-JQz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iLy-eC-Z6c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="hUI-m4-vwM" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-9.375" y="-2862.3188405797105"/>
         </scene>
         <!--Stats View Controller-->
         <scene sceneID="6QE-xy-zu4">
@@ -249,8 +370,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="896" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tsO-tQ-5Zt" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                            <rect key="frame" x="373" y="10" width="200" height="40"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tsO-tQ-5Zt" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                            <rect key="frame" x="348" y="20" width="200" height="40"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="200" id="qBt-U2-hGa"/>
@@ -262,7 +383,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="tsO-tQ-5Zt" firstAttribute="centerX" secondItem="2An-fT-bY7" secondAttribute="centerX" id="Ebt-io-184"/>
-                                        <constraint firstItem="tsO-tQ-5Zt" firstAttribute="centerY" secondItem="2An-fT-bY7" secondAttribute="centerY" id="vj4-cc-I2l"/>
+                                        <constraint firstItem="tsO-tQ-5Zt" firstAttribute="top" secondItem="2An-fT-bY7" secondAttribute="top" constant="20" id="aiB-gd-Peu"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="actionView" destination="tsO-tQ-5Zt" id="LJV-g9-Wxv"/>

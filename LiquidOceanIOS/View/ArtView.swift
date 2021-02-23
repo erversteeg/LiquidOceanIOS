@@ -21,7 +21,7 @@ class ArtView: UIView {
         }
     }
     
-    var showBackground = false
+    var showBackground = true
     
     var ppu = CGFloat(10)
     
@@ -47,7 +47,7 @@ class ArtView: UIView {
         super.draw(rect)
         
         let ctx = UIGraphicsGetCurrentContext()!
-        drawArt(ctx: ctx, size: self.frame.size, background: true)
+        drawArt(ctx: ctx, size: self.frame.size, background: showBackground)
     }
     
     @objc func onImageSavedToPhotos(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
