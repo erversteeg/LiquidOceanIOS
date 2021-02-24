@@ -4,4 +4,5 @@ target 'LiquidOceanIOS' do
   pod 'Socket.IO-Client-Swift', '~> 16.0.0'
   pod 'FlexColorPicker'
   pod 'GoogleSignIn'
+  pod 'ReachabilitySwift'
 end

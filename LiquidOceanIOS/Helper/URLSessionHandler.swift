@@ -177,6 +177,89 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
+    func sendApiStatusCheck(completionHandler: @escaping (Bool) -> (Void)) {
+        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/status")!)
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 10
+        config.timeoutIntervalForResource = 10
+        
+        let session = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "GET"
+
+        // let params = ["uuid": uniqueId] as Dictionary<String, String>
+
+        // request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                if error != nil || response == nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false)
+                        return
+                    }
+                }
+                else {
+                    DispatchQueue.main.async {
+                        completionHandler(true)
+                    }
+                }
+                
+                // let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
+                
+                
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
+    func getPaintTimerInfo(completionHandler: @escaping (Bool, Double) -> (Void)) {
+        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/paint/time/sync")!)
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 10
+        config.timeoutIntervalForResource = 10
+        
+        let session = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "GET"
+
+        // let params = ["uuid": uniqueId] as Dictionary<String, String>
+
+        // request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                if error != nil || response == nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false, 0)
+                        return
+                    }
+                }
+                else {
+                    let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
+                    
+                    DispatchQueue.main.async {
+                        completionHandler(true, jsonDict["s"] as! Double)
+                    }
+                }
+                
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
     func sendGoogleToken(token: String, completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         

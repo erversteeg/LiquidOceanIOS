@@ -36,6 +36,10 @@ protocol InteractiveCanvasArtExportDelegate: AnyObject {
     func notifyArtExported(art: [InteractiveCanvas.RestorePoint])
 }
 
+protocol InteractiveCanvasSocketStatusDelegate: AnyObject {
+    func notifySocketError()
+}
+
 class InteractiveCanvas: NSObject, URLSessionDelegate {
     var rows = 512
     var cols = 512
@@ -66,6 +70,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     weak var pixelHistoryDelegate: InteractiveCanvasPixelHistoryDelegate?
     weak var recentColorsDelegate: InteractiveCanvasRecentColorsDelegate?
     weak var artExportDelegate: InteractiveCanvasArtExportDelegate?
+    weak var socketStatusDelegate: InteractiveCanvasSocketStatusDelegate?
     
     var startScaleFactor = CGFloat(0.2)
     
@@ -88,6 +93,11 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     
     var restorePoints =  [RestorePoint]()
     var pixelsOut: [RestorePoint]!
+    
+    var checkStatusReceived = false
+    var checkEventTimeout = 20.0
+    
+    var receivedPaintRecently = false
     
     class RestorePoint {
         var x: Int
@@ -129,6 +139,8 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             
             socket.on(clientEvent: .connect) { (data, ack) in
                 print(data)
+                
+                self.sendSocketStatusCheck()
             }
             
             socket.on(clientEvent: .disconnect) { (data, ack) in
@@ -224,6 +236,32 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             }
             
             self.drawCallback?.notifyCanvasRedraw()
+        }
+        
+        socket.on("add_paint_canvas_setup") { (data, ack) in
+            if !self.receivedPaintRecently {
+                SessionSettings.instance.dropsAmt = Int(fmin(Double(SessionSettings.instance.dropsAmt + 50), 1000.0))
+                
+                self.receivedPaintRecently = true
+                Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { (tmr) in
+                    self.receivedPaintRecently = false
+                }
+            }
+        }
+        
+        socket.on("check_success") { (data, ack) in
+            self.checkStatusReceived = true
+        }
+    }
+    
+    func sendSocketStatusCheck() {
+        socket.emit("check_event")
+        
+        self.checkStatusReceived = false
+        Timer.scheduledTimer(withTimeInterval: checkEventTimeout, repeats: false) { (tmr) in
+            if !self.checkStatusReceived {
+                self.socketStatusDelegate?.notifySocketError()
+            }
         }
     }
     

@@ -17,7 +17,6 @@
 		0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */; };
 		07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A246D525D4A83500C73CA6 /* LoadingViewController.swift */; };
 		07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */; };
-		07A305F125D5B571003A6CEA /* wood_texture_light.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A305F025D5B571003A6CEA /* wood_texture_light.jpg */; };
 		07A305F325D5B6F5003A6CEA /* ActionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A305F225D5B6F5003A6CEA /* ActionButtonView.swift */; };
 		07A305F525D5D348003A6CEA /* PaintColorIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A305F425D5D348003A6CEA /* PaintColorIndicator.swift */; };
 		07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25C625D43FB500CF812E /* AppDelegate.swift */; };
@@ -42,6 +41,27 @@
 		07FF5F0B25E481BB003E19AE /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0A25E481BB003E19AE /* Animator.swift */; };
 		07FF5F0D25E54DCF003E19AE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0C25E54DCF003E19AE /* SignInViewController.swift */; };
 		07FF5F0F25E54EE7003E19AE /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0E25E54EE7003E19AE /* OptionsViewController.swift */; };
+		07FF5F1125E5BA4F003E19AE /* PanelBackgroundCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F1025E5BA4F003E19AE /* PanelBackgroundCollectionViewCell.swift */; };
+		07FF5F2625E5BDF6003E19AE /* marble_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1225E5BDF3003E19AE /* marble_2.jpg */; };
+		07FF5F2725E5BDF6003E19AE /* crystal_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1325E5BDF3003E19AE /* crystal_3.jpg */; };
+		07FF5F2825E5BDF6003E19AE /* crystal_7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1425E5BDF3003E19AE /* crystal_7.jpg */; };
+		07FF5F2925E5BDF6003E19AE /* crystal_5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1525E5BDF3003E19AE /* crystal_5.jpg */; };
+		07FF5F2A25E5BDF6003E19AE /* crystal_8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1625E5BDF3003E19AE /* crystal_8.jpg */; };
+		07FF5F2B25E5BDF6003E19AE /* metal_floor_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1725E5BDF4003E19AE /* metal_floor_2.jpg */; };
+		07FF5F2C25E5BDF6003E19AE /* space_texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1825E5BDF4003E19AE /* space_texture.jpg */; };
+		07FF5F2D25E5BDF6003E19AE /* foil.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1925E5BDF4003E19AE /* foil.jpg */; };
+		07FF5F2E25E5BDF6003E19AE /* crystal_6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1A25E5BDF4003E19AE /* crystal_6.jpg */; };
+		07FF5F2F25E5BDF6003E19AE /* wood_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1B25E5BDF4003E19AE /* wood_texture.png */; };
+		07FF5F3025E5BDF6003E19AE /* crystal_10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1C25E5BDF5003E19AE /* crystal_10.jpg */; };
+		07FF5F3125E5BDF6003E19AE /* crystal_9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1D25E5BDF5003E19AE /* crystal_9.jpg */; };
+		07FF5F3225E5BDF6003E19AE /* crystal_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1E25E5BDF5003E19AE /* crystal_4.jpg */; };
+		07FF5F3325E5BDF6003E19AE /* rainbow_foil.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F1F25E5BDF5003E19AE /* rainbow_foil.jpg */; };
+		07FF5F3425E5BDF6003E19AE /* metal_floor_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F2025E5BDF5003E19AE /* metal_floor_1.jpg */; };
+		07FF5F3525E5BDF6003E19AE /* crystal_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F2125E5BDF6003E19AE /* crystal_1.jpg */; };
+		07FF5F3625E5BDF6003E19AE /* wood_texture_light.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F2225E5BDF6003E19AE /* wood_texture_light.jpg */; };
+		07FF5F3725E5BDF6003E19AE /* crystal_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F2325E5BDF6003E19AE /* crystal_2.jpg */; };
+		07FF5F3825E5BDF6003E19AE /* water_texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F2425E5BDF6003E19AE /* water_texture.jpg */; };
+		07FF5F3925E5BDF6003E19AE /* fall_leaves.png in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F2525E5BDF6003E19AE /* fall_leaves.png */; };
 		E5CAC4447BA12EDA6329A1E2 /* Pods_LiquidOceanIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,7 +86,6 @@
 		0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		07A246D525D4A83500C73CA6 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHandler.swift; sourceTree = "<group>"; };
-		07A305F025D5B571003A6CEA /* wood_texture_light.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = wood_texture_light.jpg; path = ../../../../Desktop/wood_texture_light.jpg; sourceTree = "<group>"; };
 		07A305F225D5B6F5003A6CEA /* ActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonView.swift; sourceTree = "<group>"; };
 		07A305F425D5D348003A6CEA /* PaintColorIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaintColorIndicator.swift; sourceTree = "<group>"; };
 		07A3060225D5FFBD003A6CEA /* ChromaColorPicker */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ChromaColorPicker; path = ../ChromaColorPicker; sourceTree = "<group>"; };
@@ -96,6 +115,27 @@
 		07FF5F0A25E481BB003E19AE /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		07FF5F0C25E54DCF003E19AE /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		07FF5F0E25E54EE7003E19AE /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
+		07FF5F1025E5BA4F003E19AE /* PanelBackgroundCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelBackgroundCollectionViewCell.swift; sourceTree = "<group>"; };
+		07FF5F1225E5BDF3003E19AE /* marble_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = marble_2.jpg; sourceTree = "<group>"; };
+		07FF5F1325E5BDF3003E19AE /* crystal_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crystal_3.jpg; sourceTree = "<group>"; };
+		07FF5F1425E5BDF3003E19AE /* crystal_7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crystal_7.jpg; sourceTree = "<group>"; };
+		07FF5F1525E5BDF3003E19AE /* crystal_5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crystal_5.jpg; sourceTree = "<group>"; };
+		07FF5F1625E5BDF3003E19AE /* crystal_8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crystal_8.jpg; sourceTree = "<group>"; };
+		07FF5F1725E5BDF4003E19AE /* metal_floor_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = metal_floor_2.jpg; sourceTree = "<group>"; };
+		07FF5F1825E5BDF4003E19AE /* space_texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = space_texture.jpg; sourceTree = "<group>"; };
+		07FF5F1925E5BDF4003E19AE /* foil.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = foil.jpg; sourceTree = "<group>"; };
+		07FF5F1A25E5BDF4003E19AE /* crystal_6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crystal_6.jpg; sourceTree = "<group>"; };
+		07FF5F1B25E5BDF4003E19AE /* wood_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_texture.png; sourceTree = "<group>"; };
+		07FF5F1C25E5BDF5003E19AE /* crystal_10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crystal_10.jpg; sourceTree = "<group>"; };
+		07FF5F1D25E5BDF5003E19AE /* crystal_9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crystal_9.jpg; sourceTree = "<group>"; };
+		07FF5F1E25E5BDF5003E19AE /* crystal_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crystal_4.jpg; sourceTree = "<group>"; };
+		07FF5F1F25E5BDF5003E19AE /* rainbow_foil.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rainbow_foil.jpg; sourceTree = "<group>"; };
+		07FF5F2025E5BDF5003E19AE /* metal_floor_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = metal_floor_1.jpg; sourceTree = "<group>"; };
+		07FF5F2125E5BDF6003E19AE /* crystal_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crystal_1.jpg; sourceTree = "<group>"; };
+		07FF5F2225E5BDF6003E19AE /* wood_texture_light.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wood_texture_light.jpg; sourceTree = "<group>"; };
+		07FF5F2325E5BDF6003E19AE /* crystal_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crystal_2.jpg; sourceTree = "<group>"; };
+		07FF5F2425E5BDF6003E19AE /* water_texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = water_texture.jpg; sourceTree = "<group>"; };
+		07FF5F2525E5BDF6003E19AE /* fall_leaves.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fall_leaves.png; sourceTree = "<group>"; };
 		0C929D3F59AAC71054FD1E19 /* Pods-LiquidOceanIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.debug.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.debug.xcconfig"; sourceTree = "<group>"; };
 		42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiquidOceanIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B417FAAF99031F0F81E5A72B /* Pods-LiquidOceanIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.release.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -139,7 +179,26 @@
 		07A305EF25D5B55B003A6CEA /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				07A305F025D5B571003A6CEA /* wood_texture_light.jpg */,
+				07FF5F2125E5BDF6003E19AE /* crystal_1.jpg */,
+				07FF5F2325E5BDF6003E19AE /* crystal_2.jpg */,
+				07FF5F1325E5BDF3003E19AE /* crystal_3.jpg */,
+				07FF5F1E25E5BDF5003E19AE /* crystal_4.jpg */,
+				07FF5F1525E5BDF3003E19AE /* crystal_5.jpg */,
+				07FF5F1A25E5BDF4003E19AE /* crystal_6.jpg */,
+				07FF5F1425E5BDF3003E19AE /* crystal_7.jpg */,
+				07FF5F1625E5BDF3003E19AE /* crystal_8.jpg */,
+				07FF5F1D25E5BDF5003E19AE /* crystal_9.jpg */,
+				07FF5F1C25E5BDF5003E19AE /* crystal_10.jpg */,
+				07FF5F2525E5BDF6003E19AE /* fall_leaves.png */,
+				07FF5F1925E5BDF4003E19AE /* foil.jpg */,
+				07FF5F1225E5BDF3003E19AE /* marble_2.jpg */,
+				07FF5F2025E5BDF5003E19AE /* metal_floor_1.jpg */,
+				07FF5F1725E5BDF4003E19AE /* metal_floor_2.jpg */,
+				07FF5F1F25E5BDF5003E19AE /* rainbow_foil.jpg */,
+				07FF5F1825E5BDF4003E19AE /* space_texture.jpg */,
+				07FF5F2425E5BDF6003E19AE /* water_texture.jpg */,
+				07FF5F2225E5BDF6003E19AE /* wood_texture_light.jpg */,
+				07FF5F1B25E5BDF4003E19AE /* wood_texture.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -205,6 +264,7 @@
 				07FF5EFE25DF5833003E19AE /* ArtView.swift */,
 				07FF5F0425E421A9003E19AE /* StatAchievementCollectionViewCell.swift */,
 				07FF5F0625E42C1C003E19AE /* ActionButtonReusableView.swift */,
+				07FF5F1025E5BA4F003E19AE /* PanelBackgroundCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -333,9 +393,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07FF5F3925E5BDF6003E19AE /* fall_leaves.png in Resources */,
 				07BD25D625D43FB700CF812E /* LaunchScreen.storyboard in Resources */,
-				07A305F125D5B571003A6CEA /* wood_texture_light.jpg in Resources */,
+				07FF5F2D25E5BDF6003E19AE /* foil.jpg in Resources */,
+				07FF5F2625E5BDF6003E19AE /* marble_2.jpg in Resources */,
+				07FF5F2925E5BDF6003E19AE /* crystal_5.jpg in Resources */,
+				07FF5F3825E5BDF6003E19AE /* water_texture.jpg in Resources */,
+				07FF5F2C25E5BDF6003E19AE /* space_texture.jpg in Resources */,
+				07FF5F3725E5BDF6003E19AE /* crystal_2.jpg in Resources */,
+				07FF5F3125E5BDF6003E19AE /* crystal_9.jpg in Resources */,
+				07FF5F3225E5BDF6003E19AE /* crystal_4.jpg in Resources */,
+				07FF5F3325E5BDF6003E19AE /* rainbow_foil.jpg in Resources */,
+				07FF5F3625E5BDF6003E19AE /* wood_texture_light.jpg in Resources */,
+				07FF5F2825E5BDF6003E19AE /* crystal_7.jpg in Resources */,
+				07FF5F3425E5BDF6003E19AE /* metal_floor_1.jpg in Resources */,
+				07FF5F2B25E5BDF6003E19AE /* metal_floor_2.jpg in Resources */,
 				07BD25D325D43FB700CF812E /* Assets.xcassets in Resources */,
+				07FF5F2E25E5BDF6003E19AE /* crystal_6.jpg in Resources */,
+				07FF5F2725E5BDF6003E19AE /* crystal_3.jpg in Resources */,
+				07FF5F2A25E5BDF6003E19AE /* crystal_8.jpg in Resources */,
+				07FF5F3025E5BDF6003E19AE /* crystal_10.jpg in Resources */,
+				07FF5F2F25E5BDF6003E19AE /* wood_texture.png in Resources */,
+				07FF5F3525E5BDF6003E19AE /* crystal_1.jpg in Resources */,
 				07BD25CE25D43FB500CF812E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -440,6 +519,7 @@
 				07006C3E25D6C2D500DF9A64 /* PaintQuantityBar.swift in Sources */,
 				07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */,
 				07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */,
+				07FF5F1125E5BA4F003E19AE /* PanelBackgroundCollectionViewCell.swift in Sources */,
 				07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */,
 				07FF5EFF25DF5833003E19AE /* ArtView.swift in Sources */,
 				07BD25F925D450CF00CF812E /* SessionSettings.swift in Sources */,

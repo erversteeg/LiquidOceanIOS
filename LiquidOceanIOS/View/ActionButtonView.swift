@@ -34,6 +34,7 @@ class ActionButtonView: UIView {
         case clickable
         case paint
         case yes
+        case yesLight
         case no
         case closePaint
         case paintSelectYes
@@ -153,6 +154,9 @@ class ActionButtonView: UIView {
         }
         else if type == .yes {
             drawYesAction(color: true)
+        }
+        else if type == .yesLight {
+            drawYesAction(color: false)
         }
         else if type == .no {
             drawNoAction(color: true)

@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -59,7 +59,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var achievementName: UILabel!
     @IBOutlet weak var achievementDesc: UILabel!
     
+    @IBOutlet weak var paintEventInfoContainer: UIView!
+    @IBOutlet weak var paintEventTimeLabel: UILabel!
+    
+    
     var world = false
+    
+    var statusCheckTimer: Timer!
     
     var previousColor: Int32!
     
@@ -85,7 +91,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.interactiveCanvas.artExportDelegate = self
         
         let backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: self.view.frame.size.height))
-        backgroundImage.image = UIImage(named: "wood_texture_light.jpg")
+        if SessionSettings.instance.panelBackgroundName == "" {
+            backgroundImage.image = UIImage(named: "wood_texture_light.jpg")
+        }
+        else {
+            backgroundImage.image = UIImage(named: SessionSettings.instance.panelBackgroundName)
+        }
+        
         backgroundImage.contentMode = .scaleToFill
         
         // back button
@@ -272,7 +284,76 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.surfaceView.startPainting()
         }
         
+        // paint event time toggle
+        let tgr = UITapGestureRecognizer(target: self, action: #selector(didTapPaintQuantityBar))
+        self.paintQuantityBar.addGestureRecognizer(tgr)
+        
         StatTracker.instance.achievementListener = self
+        
+        surfaceView.interactiveCanvas.socketStatusDelegate = self
+        startServerStatusChecks()
+        
+        getPaintTimerInfo()
+    }
+    
+    @objc func didTapPaintQuantityBar() {
+        paintEventInfoContainer.isHidden = !paintEventInfoContainer.isHidden
+    }
+    
+    func startServerStatusChecks() {
+        statusCheckTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (tmr) in
+            let connected = Utils.isNetworkAvailable()
+            if !connected {
+                DispatchQueue.main.async {
+                    self.showDisconnectedMessage(type: 0)
+                }
+            }
+            else {
+                URLSessionHandler.instance.sendApiStatusCheck { (success) -> (Void) in
+                    if !success {
+                        self.showDisconnectedMessage(type: 1)
+                    }
+                    else {
+                        self.surfaceView.interactiveCanvas.sendSocketStatusCheck()
+                    }
+                }
+            }
+        })
+    }
+    
+    func showDisconnectedMessage(type: Int) {
+        // create the alert
+        let alert = UIAlertController(title: nil, message: "Lost connection to world server (code=" + String(type) + ")", preferredStyle: UIAlertController.Style.alert)
+        // add the actions (buttons)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
+            self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+        }))
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func getPaintTimerInfo() {
+        self.paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF303030"))
+        self.paintEventInfoContainer.layer.cornerRadius = 20
+        
+        URLSessionHandler.instance.getPaintTimerInfo { (success, nextPaintTime) -> (Void) in
+            if success {
+                var ts = Int(nextPaintTime)
+                let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (tmr) in
+                    ts -= 1
+                    
+                    if ts == 0 {
+                        ts = 300
+                    }
+                    
+                    let m = ts / 60
+                    let s = ts % 60
+                    
+                    self.paintEventTimeLabel.text = String(format: "%d:%d", m, s)
+                }
+                timer.fire()
+            }
+        }
     }
     
     // embeds
@@ -490,6 +571,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 self.achievementBanner.isHidden = true
             }
         }
+    }
+    
+    // socket status delegate
+    func notifySocketError() {
+        self.showDisconnectedMessage(type: 2)
     }
 }
 

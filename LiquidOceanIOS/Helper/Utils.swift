@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class Utils: NSObject {
     static func hexStringToUIColor (hex:String) -> UIColor {
@@ -33,5 +34,10 @@ class Utils: NSObject {
     
     static func int32FromColorHex(hex: String) -> Int32 {
         return Int32(bitPattern: UInt32(hex.dropFirst(2), radix: 16) ?? 0)
+    }
+    
+    static func isNetworkAvailable() -> Bool {
+        let reachability = NetworkReachabilityManager()!
+        return reachability.isReachable
     }
 }

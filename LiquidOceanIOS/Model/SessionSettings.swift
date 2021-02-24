@@ -57,6 +57,19 @@ class SessionSettings: NSObject {
     
     var googleAuth = false
     
+    var nextPaintTime: Double!
+    
+    var timeSync: Double {
+        set {
+            nextPaintTime = Date().timeIntervalSince1970 + newValue
+        }
+        get {
+            return 0
+        }
+    }
+    
+    var panelBackgroundName = ""
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -69,6 +82,7 @@ class SessionSettings: NSObject {
         userDefaults().set(displayName, forKey: "display_name")
         userDefaults().set(artShowcaseJsonString(), forKey: "art_showcase_json")
         userDefaults().set(googleAuth, forKey: "google_auth")
+        userDefaults().set(panelBackgroundName, forKey: "panel_background")
     }
     
     func load() {
@@ -91,6 +105,8 @@ class SessionSettings: NSObject {
         artShowcase = loadArtShowcase(jsonStr: userDefaultsString(forKey: "art_showcase_json", defaultVal: ""))
         
         googleAuth = userDefaultsBool(forKey: "google_auth", defaultVal: false)
+        
+        panelBackgroundName = userDefaultsString(forKey: "panel_background", defaultVal: "")
     }
     
     func userDefaults() -> UserDefaults {
