@@ -58,6 +58,8 @@ class MenuViewController: UIViewController, AchievementListener {
                 self.toggleMenuButtons(show: true, depth: 0)
                 self.toggleMenuButtons(show: false, depth: 1)
                 
+                Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.exitButton], initial: false, moveOut: false)
+                
                 self.backAction.isHidden = true
             }
         }
@@ -65,6 +67,8 @@ class MenuViewController: UIViewController, AchievementListener {
         self.playButton.setOnClickListener {
             self.toggleMenuButtons(show: false, depth: 0)
             self.toggleMenuButtons(show: true, depth: 1)
+            
+            Animator.animateMenuButtons(views: [self.singleAction, self.worldAction], initial: false, moveOut: false)
             
             self.backAction.isHidden = false
         }
@@ -98,10 +102,10 @@ class MenuViewController: UIViewController, AchievementListener {
         startPixels()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.exitButton], moveOut: false)
+        Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.exitButton], initial: true, moveOut: false)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

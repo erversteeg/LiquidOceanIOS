@@ -72,8 +72,11 @@ class Animator: NSObject {
         return CGFloat(arc4random() % 1000000) / CGFloat(1000000)
     }
     
-    static func animateMenuButtons(views: [UIView], moveOut: Bool) {
-        let delays = [CGFloat(0), CGFloat(50) / CGFloat(1000), CGFloat(80) / CGFloat(1000), CGFloat(100) / CGFloat(1000)]
+    static func animateMenuButtons(views: [UIView], initial: Bool, moveOut: Bool) {
+        var delays = [0, 0.05, 0.08, 0.1]
+        if initial {
+            delays = [0.2, 0.25, 0.28, 0.3]
+        }
         
         if !moveOut {
             var index = 0
@@ -82,14 +85,11 @@ class Animator: NSObject {
                 
                 view.alpha = 0
                 
-                Timer.scheduledTimer(withTimeInterval: Double(delays[index]), repeats: false) { (tmr) in
-                    DispatchQueue.main.async {
-                        UIView.animate(withDuration: 0.15) {
-                            view.alpha = 1
-                            view.frame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y, width: view.frame.size.width, height: view.frame.size.height)
-                        }
-                    }
-                }
+                UIView.animate(withDuration: 0.15, delay: delays[index], options: .allowAnimatedContent, animations: {
+                    view.alpha = 1
+                    
+                    view.frame = CGRect(x: view.frame.origin.x - 500, y: view.frame.origin.y, width: view.frame.size.width, height: view.frame.size.height)
+                }, completion: nil)
                 
                 index += 1
             }
@@ -103,7 +103,7 @@ class Animator: NSObject {
                 
                 Timer.scheduledTimer(withTimeInterval: Double(delays[index]), repeats: false) { (tmr) in
                     UIView.animate(withDuration: 0.15) {
-                        view.frame = CGRect(x: view.frame.origin.x + 500, y: view.frame.origin.y, width: view.frame.size.width, height: view.frame.size.height)
+                        view.frame = CGRect(x: view.frame.origin.x - 500, y: view.frame.origin.y, width: view.frame.size.width, height: view.frame.size.height)
                     }
                 }
                 

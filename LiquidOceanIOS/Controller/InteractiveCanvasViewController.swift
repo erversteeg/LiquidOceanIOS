@@ -72,6 +72,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     var pixelHistoryViewController: PixelHistoryViewController!
     weak var recentColorsViewController: RecentColorsViewController!
     weak var exportViewController: ExportViewController!
+    weak var colorPickerViewController: CustomColorPickerViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -235,6 +236,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         // paint selection cancel
         self.paintColorCancel.setOnClickListener {
             self.paintColorIndicator.setPaintColor(color: self.previousColor)
+            self.colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintColor)
             
             if self.surfaceView.interactiveCanvas.restorePoints.count == 0 {
                 self.closePaintPanelButton.isHidden = false
@@ -349,7 +351,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                     let m = ts / 60
                     let s = ts % 60
                     
-                    self.paintEventTimeLabel.text = String(format: "%d:%d", m, s)
+                    self.paintEventTimeLabel.text = String(format: "%02d:%02d", m, s)
                 }
                 timer.fire()
             }
@@ -359,7 +361,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // embeds
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ColorPickerEmbed" {
-            let colorPickerViewController = segue.destination as! CustomColorPickerViewController
+            colorPickerViewController = segue.destination as! CustomColorPickerViewController
             colorPickerViewController.delegate = self
             colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintColor)
             colorPickerViewController.view.backgroundColor = UIColor.clear
@@ -522,6 +524,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // recent colors delegate
     func notifyRecentColorSelected(color: Int32) {
         self.notifyPaintColorUpdate()
+        self.colorPickerViewController.selectedColor = UIColor(argb: color)
     }
     
     // export view controller delegate

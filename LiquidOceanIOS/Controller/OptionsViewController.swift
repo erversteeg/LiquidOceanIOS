@@ -8,12 +8,15 @@
 
 import UIKit
 
-class OptionsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class OptionsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
 
     @IBOutlet weak var optionsTitleAction: ActionButtonView!
     @IBOutlet weak var backAction: ActionButtonView!
     
     @IBOutlet weak var signInButton: UIButton!
+    
+    @IBOutlet weak var changeNameButton: UIButton!
+    @IBOutlet weak var changeNameTextField: UITextField!
     
     var showSignIn = "ShowSignIn"
     
@@ -23,6 +26,10 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     "crystal_8.jpg", "crystal_9.jpg", "crystal_10.jpg"]
     
     var images = [UIImage]()
+    
+    var alertTextField: UITextField!
+    
+    var checkedName: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +50,46 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         for panel in panels {
             images.append(resizeImage(image: UIImage(named: panel)!, newHeight: 200))
         }
+        
+        checkedName = SessionSettings.instance.displayName
+        changeNameTextField.text = SessionSettings.instance.displayName
     }
     
     @IBAction func signInPressed(_ sender: Any) {
         self.performSegue(withIdentifier: showSignIn, sender: nil)
     }
+    
+    @IBAction func singlePlayReset(_ sender: Any) {
+        let alert = UIAlertController(title: nil, message: "Resetting your single play will permanently erase your single play canvas. To proceed please type PROCEED", preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            self.alertTextField = textField
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { (action) in
+            if self.alertTextField.text != nil && self.alertTextField.text == "PROCEED" {
+                UserDefaults.standard.removeObject(forKey: "arr_single")
+            }
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func changeNamePressed(_ sender: Any) {
+        URLSessionHandler.instance.updateDisplayName(name: self.checkedName) { (success) -> (Void) in
+            if success {
+                SessionSettings.instance.displayName = self.checkedName
+                
+                self.changeNameButton.isEnabled = false
+                self.changeNameButton.setTitle("Updated", for: .disabled)
+                
+                self.changeNameTextField.isEnabled = false
+                self.changeNameTextField.layer.borderWidth = 0
+            }
+        }
+    }
+    
     
     @IBAction func unwindToViewController(segue: UIStoryboardSegue) {
         if SessionSettings.instance.googleAuth {
@@ -97,5 +139,38 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         UIGraphicsEndImageContext()
 
         return newImage!
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        self.changeNameButton.isEnabled = false
+        textField.layer.borderWidth = 0
+        return true
+    }
+    
+    // ui textfield delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        let name = textField.text
+        if (name != nil) {
+            URLSessionHandler.instance.sendNameCheck(name: name!.trimmingCharacters(in: .whitespacesAndNewlines)) { (success) -> (Void) in
+                if success {
+                    self.changeNameButton.isEnabled = true
+                    self.checkedName = name!.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    textField.layer.borderWidth = 2
+                    textField.layer.borderColor = UIColor(argb: ActionButtonView.greenColor).cgColor
+                }
+                else {
+                    self.changeNameButton.isEnabled = false
+                    
+                    textField.layer.borderWidth = 2
+                    textField.layer.borderColor = UIColor(argb: ActionButtonView.redColor).cgColor
+                }
+            }
+        }
+        
+        
+        return false
     }
 }

@@ -127,6 +127,43 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
+    func updateDisplayName(name: String, completionHandler: @escaping (Bool) -> (Void)) {
+        let uniqueId = SessionSettings.instance.uniqueId!
+        
+        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/devices/" + uniqueId)!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "POST"
+
+        var params = [String: String]()
+        params["name"] = name
+        
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                if error != nil || response == nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false)
+                        return
+                    }
+                }
+                else {
+                    DispatchQueue.main.async {
+                        completionHandler(true)
+                    }
+                }
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
     func getDeviceInfo(completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
@@ -213,6 +250,49 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
             }
             catch {
                 
+            }
+        })
+
+        task.resume()
+    }
+    
+    func sendNameCheck(name: String, completionHandler: @escaping (Bool) -> (Void)) {
+        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/devices/checkname/" + name)!)
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 10
+        config.timeoutIntervalForResource = 10
+        
+        let session = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "GET"
+
+        // let params = ["uuid": uniqueId] as Dictionary<String, String>
+
+        // request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            
+            if error != nil || response == nil {
+                DispatchQueue.main.async {
+                    completionHandler(false)
+                    return
+                }
+            }
+            else {
+                DispatchQueue.main.async {
+                    do {
+                        let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Bool]
+                        
+                        DispatchQueue.main.async {
+                            completionHandler(jsonDict["a"]!)
+                        }
+                    }
+                    catch {
+                        
+                    }
+                }
             }
         })
 
