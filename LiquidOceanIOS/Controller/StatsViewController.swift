@@ -32,6 +32,8 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
             self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
         }
         
+        
+        
         data = [[String: String]]()
         
         data!.append([String: String]())
@@ -116,12 +118,14 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
         view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
         
         if indexPath.section == 0 {
+            view.actionView.selectable = false
             view.actionView.type = .stats
-            view.actionViewWidth.constant = 200
+            view.actionViewWidth.constant = 160
         }
         else {
+            view.actionView.selectable = false
             view.actionView.type = .achievements
-            view.actionViewWidth.constant = 510
+            view.actionViewWidth.constant = 408
         }
         
         return view

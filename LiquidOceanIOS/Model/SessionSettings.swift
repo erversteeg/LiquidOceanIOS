@@ -20,6 +20,11 @@ class SessionSettings: NSObject {
     var interactiveCanvas: InteractiveCanvas!
     var uniqueId: String!
     
+    var chunk1: [[Int32]]!
+    var chunk2: [[Int32]]!
+    var chunk3: [[Int32]]!
+    var chunk4: [[Int32]]!
+    
     private var _dropsAmt: Int = 0
     var dropsAmt: Int! {
         get {
@@ -70,6 +75,12 @@ class SessionSettings: NSObject {
     
     var panelBackgroundName = ""
     
+    var showGridLines = true
+    
+    var firstContributorName = ""
+    var secondContributorName = ""
+    var thirdContributorName = ""
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -83,6 +94,7 @@ class SessionSettings: NSObject {
         userDefaults().set(artShowcaseJsonString(), forKey: "art_showcase_json")
         userDefaults().set(googleAuth, forKey: "google_auth")
         userDefaults().set(panelBackgroundName, forKey: "panel_background")
+        userDefaults().set(showGridLines, forKey: "show_grid_lines")
     }
     
     func load() {
@@ -107,6 +119,8 @@ class SessionSettings: NSObject {
         googleAuth = userDefaultsBool(forKey: "google_auth", defaultVal: false)
         
         panelBackgroundName = userDefaultsString(forKey: "panel_background", defaultVal: "")
+        
+        showGridLines = userDefaultsBool(forKey: "show_grid_lines", defaultVal: true)
     }
     
     func userDefaults() -> UserDefaults {
@@ -238,5 +252,17 @@ class SessionSettings: NSObject {
                 artShowcase.insert(art, at: rIndex)
             }
         }
+    }
+    
+    func defaultArtShowcase() {
+        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "leaf_json")!)
+        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "water_drop_json")!)
+        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "doughnut_json")!)
+        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "bird_json")!)
+        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "rainbow_badge")!)
+        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "hfs_json")!)
+        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "paint_bucket_json")!)
+        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "fire_badge_json")!)
+        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "fries_json")!)
     }
 }

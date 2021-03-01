@@ -36,6 +36,10 @@ class Utils: NSObject {
         return Int32(bitPattern: UInt32(hex.dropFirst(2), radix: 16) ?? 0)
     }
     
+    static func UIColorFromColorHex(hex: String) -> UIColor {
+        return UIColor(argb: int32FromColorHex(hex: hex))
+    }
+    
     static func isNetworkAvailable() -> Bool {
         let reachability = NetworkReachabilityManager()!
         return reachability.isReachable

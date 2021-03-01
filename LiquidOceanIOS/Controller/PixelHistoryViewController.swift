@@ -69,6 +69,7 @@ class PixelHistoryViewController: UIViewController, UICollectionViewDataSource, 
         
         if self.selectedIndices.contains(indexPath) {
             cell.nameLabel.isHidden = true
+            cell.levelLabel.isHidden = true
             cell.dateLabel.isHidden = true
             cell.colorView.isHidden = true
             cell.fullDateLabel.isHidden = false
@@ -78,12 +79,30 @@ class PixelHistoryViewController: UIViewController, UICollectionViewDataSource, 
         }
         else {
             cell.nameLabel.isHidden = false
+            cell.levelLabel.isHidden = false
             cell.dateLabel.isHidden = false
             cell.colorView.isHidden = false
             cell.fullDateLabel.isHidden = true
             
             cell.colorView.backgroundColor = UIColor(argb: color)
-            cell.nameLabel.text = name + " (" + String(level) + ")"
+            
+            cell.nameLabel.text = name
+            cell.nameLabelWidth.constant = name.size(withAttributes: [.font: UIFont.boldSystemFont(ofSize: 24.0)]).width + 5
+            
+            if name == SessionSettings.instance.firstContributorName {
+                cell.nameLabel.textColor = Utils.UIColorFromColorHex(hex: "0xffdecb52")
+            }
+            else if name == SessionSettings.instance.secondContributorName {
+                cell.nameLabel.textColor = Utils.UIColorFromColorHex(hex: "0xffafb3b1")
+            }
+            else if name == SessionSettings.instance.thirdContributorName {
+                cell.nameLabel.textColor = Utils.UIColorFromColorHex(hex: "0xffbd927b")
+            }
+            else {
+                cell.nameLabel.textColor = UIColor.white
+            }
+            
+            cell.levelLabel.text = " (" + String(level) + ")"
             
             let days = Calendar.current.ordinality(of: .day, in: .year, for: now)! - Calendar.current.ordinality(of: .day, in: .year, for: date)!
             let sameYaer = Calendar.current.component(.year, from: date) == Calendar.current.component(.year, from: now)

@@ -36,7 +36,9 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         self.view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
 
+        optionsTitleAction.selectable = false
         optionsTitleAction.type = .options
+        
         backAction.type = .backSolid
         
         backAction.setOnClickListener {

@@ -13,6 +13,10 @@ class PixelHistoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var colorView: UIView!
     
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameLabelWidth: NSLayoutConstraint!
+    
+    @IBOutlet weak var levelLabel: UILabel!
+    
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var fullDateLabel: UILabel!
 }

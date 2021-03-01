@@ -38,6 +38,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var exportAction: ActionButtonView!
     @IBOutlet weak var changeBackgroundAction: ActionButtonView!
+    @IBOutlet weak var gridLinesAction: ActionButtonView!
     
     @IBOutlet weak var toolboxButton: ActionButtonFrame!
     @IBOutlet weak var toolboxActionView: ActionButtonView!
@@ -64,6 +65,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     
     var world = false
+    var realmId = 0
     
     var statusCheckTimer: Timer!
     
@@ -77,7 +79,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        surfaceView.interactiveCanvas.realmId = realmId
         surfaceView.interactiveCanvas.world = world
+        
         paintQuantityBar.world = world
         
         surfaceView.setInitalScale()
@@ -123,10 +127,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         toggleToolbox(open: false)
         
         // action buttons
-        self.paintPanelButton.type = .paint
-        self.closePaintPanelButton.type = .closePaint
-        self.exportAction.type = .export
-        self.changeBackgroundAction.type = .changeBackground
+        paintPanelButton.type = .paint
+        closePaintPanelButton.type = .closePaint
+        exportAction.type = .export
+        changeBackgroundAction.type = .changeBackground
+        gridLinesAction.type = .gridLines
         
         // toolbox
         self.toolboxActionView.type = .dot
@@ -163,10 +168,18 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.exportAction.setNeedsDisplay()
             self.changeBackgroundAction.setNeedsDisplay()
+            self.gridLinesAction.setNeedsDisplay()
             self.paintPanelButton.setNeedsDisplay()
             self.backButton.setNeedsDisplay()
             
             SessionSettings.instance.save()
+            
+            self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+        }
+        
+        // grid lines
+        gridLinesAction.setOnClickListener {
+            SessionSettings.instance.showGridLines = !SessionSettings.instance.showGridLines
             
             self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         }
@@ -380,6 +393,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
         else if segue.identifier == "UnwindToMenu" {
             StatTracker.instance.achievementListener = nil
+            surfaceView.interactiveCanvas.socket?.disconnect()
         }
     }
     
@@ -418,12 +432,14 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func toggleToolbox(open: Bool) {
         if open {
-            self.exportAction.isHidden = false
-            self.changeBackgroundAction.isHidden = false
+            exportAction.isHidden = false
+            changeBackgroundAction.isHidden = false
+            gridLinesAction.isHidden = false
         }
         else {
-            self.exportAction.isHidden = true
-            self.changeBackgroundAction.isHidden = true
+            exportAction.isHidden = true
+            changeBackgroundAction.isHidden = true
+            gridLinesAction.isHidden = true
         }
     }
     

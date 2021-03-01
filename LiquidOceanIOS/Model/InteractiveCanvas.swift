@@ -64,6 +64,8 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         }
     }
     
+    var realmId = 0
+    
     weak var drawCallback: InteractiveCanvasDrawCallback?
     weak var scaleCallback: InteractiveCanvasScaleCallback?
     weak var paintDelegate: InteractiveCanvasPaintDelegate?
@@ -89,7 +91,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     let numBackgrounds = 6
     
     var manager: SocketManager!
-    var socket: SocketIOClient!
+    var socket: SocketIOClient?
     
     var restorePoints =  [RestorePoint]()
     var pixelsOut: [RestorePoint]!
@@ -119,14 +121,16 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     }
     
     func initType() {
-        // world
         if world {
-            let dataJsonStr = SessionSettings.instance.userDefaults().object(forKey: "arr") as? String
-            
-            if dataJsonStr == nil {
-                loadDefault()
+            // world
+            if realmId == 1 {
+                rows = 1024
+                cols = 1024
+                initChunkPixelsFromMemory()
             }
+            // dev
             else {
+                let dataJsonStr = SessionSettings.instance.userDefaults().object(forKey: "arr") as? String
                 initPixels(arrJsonStr: dataJsonStr!)
             }
             
@@ -135,23 +139,23 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             
             socket = manager.defaultSocket
             
-            socket.connect()
+            socket?.connect()
             
-            socket.on(clientEvent: .connect) { (data, ack) in
+            socket?.on(clientEvent: .connect) { (data, ack) in
                 print(data)
                 
                 self.sendSocketStatusCheck()
             }
             
-            socket.on(clientEvent: .disconnect) { (data, ack) in
+            socket?.on(clientEvent: .disconnect) { (data, ack) in
                 print(data)
             }
             
-            socket.on(clientEvent: .error) { (data, ack) in
+            socket?.on(clientEvent: .error) { (data, ack) in
                 print(data)
             }
             
-            registerForSocketEvents(socket: socket)
+            registerForSocketEvents(socket: socket!)
         }
         // single play
         else {
@@ -227,7 +231,10 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             let pixelsJsonArr = data[0] as! [[String: Any]]
             
             for pixelObj in pixelsJsonArr {
-                let unit1DIndex = (pixelObj["id"] as! Int) - 1
+                var unit1DIndex = (pixelObj["id"] as! Int) - 1
+                if self.realmId == 1 {
+                    unit1DIndex -= (512 * 512)
+                }
                 
                 let y = unit1DIndex / self.cols
                 let x = unit1DIndex % self.cols
@@ -255,7 +262,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     }
     
     func sendSocketStatusCheck() {
-        socket.emit("check_event")
+        socket?.emit("check_event")
         
         self.checkStatusReceived = false
         Timer.scheduledTimer(withTimeInterval: checkEventTimeout, repeats: false) { (tmr) in
@@ -281,6 +288,31 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         }
         catch {
             
+        }
+    }
+    
+    func initChunkPixelsFromMemory() {
+        var chunk = [[Int32]]()
+        for i in 0...cols - 1 {
+            var innerArr = [Int32]()
+            if i < rows / 4 {
+                chunk = SessionSettings.instance.chunk1
+            }
+            else if i < rows / 2 {
+                chunk = SessionSettings.instance.chunk2
+            }
+            else if i < rows - (rows / 4) {
+                chunk = SessionSettings.instance.chunk3
+            }
+            else {
+                chunk = SessionSettings.instance.chunk4
+            }
+            
+            for j in 0...rows - 1 {
+                innerArr.append(chunk[i % 256][j])
+            }
+            
+            arr.append(innerArr)
         }
     }
     
@@ -361,7 +393,13 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             
             for restorePoint in self.restorePoints {
                 var map = [String: Int32]()
-                map["id"] = Int32((restorePoint.y * cols + restorePoint.x) + 1)
+                
+                if realmId == 1 {
+                    map["id"] = Int32((restorePoint.y * cols + restorePoint.x) + 1 + (512 * 512))
+                }
+                else {
+                    map["id"] = Int32((restorePoint.y * cols + restorePoint.x) + 1)
+                }
                 map["color"] = restorePoint.newColor
                 
                 pixelInfoArr.append(map)
@@ -374,7 +412,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             
             print(reqObj)
             
-            socket.emit("pixels_event", reqObj)
+            socket?.emit("pixels_event", reqObj)
             
             StatTracker.instance.reportEvent(eventType: .pixelPaintedWorld, amt: restorePoints.count)
         }
@@ -452,7 +490,11 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         let x = Int(unitPoint.x)
         let y = Int(unitPoint.y)
         
-        let pixelId = y * cols + x + 1
+        var pixelId = y * cols + x + 1
+        if realmId == 1 {
+            pixelId += (512 * 512)
+        }
+        
         URLSessionHandler.instance.downloadPixelHistory(pixelId: pixelId, completionHandler: completionHandler)
     }
     

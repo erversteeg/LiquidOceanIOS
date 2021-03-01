@@ -21,6 +21,18 @@ class ArtView: UIView {
         }
     }
     
+    var _jsonFile = ""
+    var jsonFile: String {
+        set {
+            _jsonFile = newValue
+            
+            art = ArtView.artFromJsonFile(named: newValue)
+        }
+        get {
+            return _jsonFile
+        }
+    }
+    
     var showBackground = true
     
     var ppu = CGFloat(10)
@@ -213,5 +225,35 @@ class ArtView: UIView {
         
         // Return modified image
         return image
+    }
+    
+    static func artFromJsonFile(named: String) -> [InteractiveCanvas.RestorePoint]? {
+        let path = Bundle.main.path(forResource: named, ofType: "json")!
+        
+        var contents = "{}"
+        
+        do {
+            contents = try String(contentsOfFile: path, encoding: .utf8)
+            
+            let jsonObj = try JSONSerialization.jsonObject(with: contents.data(using: .utf8)!, options: []) as! [String: AnyObject]
+            
+            let artJsonArray = jsonObj["pixels"] as! [[String: AnyObject]]
+            
+            var art = [InteractiveCanvas.RestorePoint]()
+            
+            for j in artJsonArray.indices {
+                let jsonObj = artJsonArray[j]
+                
+                art.append(InteractiveCanvas.RestorePoint(x: Int(jsonObj["x"] as! Int), y: Int(jsonObj["y"] as! Int), color: jsonObj["color"] as! Int32, newColor: jsonObj["color"] as! Int32))
+            }
+            
+            return art
+        }
+        
+        catch {
+            
+        }
+        
+        return nil
     }
 }

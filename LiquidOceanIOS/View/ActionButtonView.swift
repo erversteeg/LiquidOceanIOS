@@ -43,19 +43,24 @@ class ActionButtonView: UIView {
         case options
         case stats
         case exit
+        case howto
         case back
         case backSolid
         case export
         case exportSolid
         case changeBackground
+        case gridLines
         case save
         case dot
         case recentColor
         case share
         case single
         case world
+        case dev
         case achievements
     }
+    
+    var selectable = true
     
     let menuButtonRows = 4
     let menuButtonCols = 26
@@ -173,6 +178,9 @@ class ActionButtonView: UIView {
         else if type == .exit {
             drawExitAction()
         }
+        else if type == .howto {
+            drawHowtoAction()
+        }
         else if type == .back {
             drawBackAction()
         }
@@ -191,6 +199,9 @@ class ActionButtonView: UIView {
         else if type == .changeBackground {
             drawChangeBackgroundAction()
         }
+        else if type == .gridLines {
+            drawGridLinesAction()
+        }
         else if type == .dot {
             drawDotAction()
         }
@@ -205,6 +216,9 @@ class ActionButtonView: UIView {
         }
         else if type == .world {
             drawWorldAction()
+        }
+        else if type == .dev {
+            drawDevAction()
         }
         else if type == .achievements {
             drawAchievementAction()
@@ -288,7 +302,7 @@ class ActionButtonView: UIView {
             primaryColor = ActionButtonView.blackColor!
         }
         
-        if selected {
+        if selected && selectable {
             accentColor = ActionButtonView.lightAltGreenColor!
         }
         
@@ -612,6 +626,26 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 2, y: 3, color: paint)
     }
     
+    func drawGridLinesAction() {
+        rows = 1
+        cols = 3
+        
+        var paint = ActionButtonView.semiColor!
+        if SessionSettings.instance.darkIcons {
+            paint = ActionButtonView.semiDarkColor!
+        }
+        
+        if selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 0, color: paint)
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+    }
+    
     func drawDotAction() {
         rows = 1
         cols = 1
@@ -685,7 +719,7 @@ class ActionButtonView: UIView {
         
         var paint = ActionButtonView.lightGrayColor!
         
-        if selected {
+        if selected && selectable {
             paint = ActionButtonView.altGreenColor!
         }
         
@@ -761,7 +795,7 @@ class ActionButtonView: UIView {
         
         var paint = ActionButtonView.lightGrayColor!
         
-        if selected {
+        if selected && selectable {
             paint = ActionButtonView.altGreenColor!
         }
         
@@ -860,6 +894,76 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 9, y: 3, color: paint)
         drawPixel(ctx: context, x: 10, y: 3, color: paint)
         drawPixel(ctx: context, x: 13, y: 3, color: paint)
+    }
+    
+    func drawHowtoAction() {
+        rows = 4
+        cols = 21
+        
+        var paint = ActionButtonView.lightGrayColor!
+        
+        if selected {
+            paint = ActionButtonView.altGreenColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        // H
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+        drawPixel(ctx: context, x: 0, y: 3, color: paint)
+        drawPixel(ctx: context, x: 1, y: 1, color: paint)
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        drawPixel(ctx: context, x: 2, y: 1, color: paint)
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
+        drawPixel(ctx: context, x: 2, y: 3, color: paint)
+        
+        
+        // O
+        drawPixel(ctx: context, x: 4, y: 0, color: paint)
+        drawPixel(ctx: context, x: 4, y: 1, color: paint)
+        drawPixel(ctx: context, x: 4, y: 2, color: paint)
+        drawPixel(ctx: context, x: 4, y: 3, color: paint)
+        drawPixel(ctx: context, x: 5, y: 0, color: paint)
+        drawPixel(ctx: context, x: 5, y: 3, color: paint)
+        drawPixel(ctx: context, x: 6, y: 0, color: paint)
+        drawPixel(ctx: context, x: 6, y: 1, color: paint)
+        drawPixel(ctx: context, x: 6, y: 2, color: paint)
+        drawPixel(ctx: context, x: 6, y: 3, color: paint)
+        
+        // W
+        drawPixel(ctx: context, x: 8, y: 0, color: paint)
+        drawPixel(ctx: context, x: 8, y: 1, color: paint)
+        drawPixel(ctx: context, x: 8, y: 2, color: paint)
+        drawPixel(ctx: context, x: 8, y: 3, color: paint)
+        drawPixel(ctx: context, x: 9, y: 2, color: paint)
+        drawPixel(ctx: context, x: 10, y: 3, color: paint)
+        drawPixel(ctx: context, x: 11, y: 2, color: paint)
+        drawPixel(ctx: context, x: 12, y: 0, color: paint)
+        drawPixel(ctx: context, x: 12, y: 1, color: paint)
+        drawPixel(ctx: context, x: 12, y: 2, color: paint)
+        drawPixel(ctx: context, x: 12, y: 3, color: paint)
+        
+        // T
+        drawPixel(ctx: context, x: 14, y: 0, color: paint)
+        drawPixel(ctx: context, x: 15, y: 0, color: paint)
+        drawPixel(ctx: context, x: 15, y: 1, color: paint)
+        drawPixel(ctx: context, x: 15, y: 2, color: paint)
+        drawPixel(ctx: context, x: 15, y: 3, color: paint)
+        drawPixel(ctx: context, x: 16, y: 0, color: paint)
+        
+        // O
+        drawPixel(ctx: context, x: 18, y: 0, color: paint)
+        drawPixel(ctx: context, x: 18, y: 1, color: paint)
+        drawPixel(ctx: context, x: 18, y: 2, color: paint)
+        drawPixel(ctx: context, x: 18, y: 3, color: paint)
+        drawPixel(ctx: context, x: 19, y: 0, color: paint)
+        drawPixel(ctx: context, x: 19, y: 3, color: paint)
+        drawPixel(ctx: context, x: 20, y: 0, color: paint)
+        drawPixel(ctx: context, x: 20, y: 1, color: paint)
+        drawPixel(ctx: context, x: 20, y: 2, color: paint)
+        drawPixel(ctx: context, x: 20, y: 3, color: paint)
     }
     
     func drawSingleAction() {
@@ -993,13 +1097,70 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 19, y: 3, color: paint)
     }
     
+    func drawDevAction() {
+        rows = 4
+        cols = 12
+       
+        var paint = ActionButtonView.lightGrayColor!
+       
+        if selected {
+            paint = ActionButtonView.altGreenColor!
+        }
+       
+        let context = UIGraphicsGetCurrentContext()!
+       
+        // col 1
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+        drawPixel(ctx: context, x: 0, y: 3, color: paint)
+        
+        // col 2
+        drawPixel(ctx: context, x: 1, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 3, color: paint)
+        
+        // col 3
+        drawPixel(ctx: context, x: 2, y: 1, color: paint)
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
+        
+        // col 5
+        drawPixel(ctx: context, x: 4, y: 0, color: paint)
+        drawPixel(ctx: context, x: 4, y: 1, color: paint)
+        drawPixel(ctx: context, x: 4, y: 2, color: paint)
+        drawPixel(ctx: context, x: 4, y: 3, color: paint)
+        
+        // col 6
+        drawPixel(ctx: context, x: 5, y: 0, color: paint)
+        drawPixel(ctx: context, x: 5, y: 1, color: paint)
+        drawPixel(ctx: context, x: 5, y: 3, color: paint)
+        
+        // col 7
+        drawPixel(ctx: context, x: 6, y: 0, color: paint)
+        drawPixel(ctx: context, x: 6, y: 3, color: paint)
+        
+        // col 9
+        drawPixel(ctx: context, x: 8, y: 0, color: paint)
+        drawPixel(ctx: context, x: 8, y: 1, color: paint)
+        drawPixel(ctx: context, x: 8, y: 2, color: paint)
+        
+        // col 10
+        drawPixel(ctx: context, x: 9, y: 3, color: paint)
+        
+        // col 11
+        drawPixel(ctx: context, x: 10, y: 2, color: paint)
+        
+        // col 12
+        drawPixel(ctx: context, x: 11, y: 0, color: paint)
+        drawPixel(ctx: context, x: 11, y: 1, color: paint)
+    }
+    
     func drawAchievementAction() {
         rows = 4
         cols = 51
        
         var paint = ActionButtonView.lightGrayColor!
        
-        if selected {
+        if selected && selectable {
             paint = ActionButtonView.altGreenColor!
         }
        

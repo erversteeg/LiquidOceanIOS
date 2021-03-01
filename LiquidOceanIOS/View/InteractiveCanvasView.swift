@@ -46,8 +46,6 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         
-        setInitalScale()
-        
         // gestures
         self.panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPan(sender:)))
         addPan()
@@ -122,7 +120,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         self.scaleFactor = interactiveCanvas.startScaleFactor
         self.interactiveCanvas.ppu = Int(CGFloat(interactiveCanvas.basePpu) * self.scaleFactor)
         
-        interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, canvasCenterX: 256.0, canvasCenterY: 256.0)
+        interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, canvasCenterX: CGFloat(interactiveCanvas.cols / 2), canvasCenterY: CGFloat(interactiveCanvas.rows / 2))
     }
     
     func addPan() {
@@ -287,8 +285,9 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     }
     
     func drawGridLines(ctx: CGContext, deviceViewport: CGRect, ppu: Int) {
-        if ppu > interactiveCanvas.gridLineThreshold {
-            ctx.setStrokeColor(UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFFFFFF")).cgColor)
+        if ppu > interactiveCanvas.gridLineThreshold && SessionSettings.instance.showGridLines {
+            let gridLineColor = interactiveCanvas.getGridLineColor()
+            ctx.setStrokeColor(UIColor(argb: gridLineColor).cgColor)
             ctx.setLineWidth(1.0)
             
             let unitsWide = Int(self.frame.size.width) / ppu

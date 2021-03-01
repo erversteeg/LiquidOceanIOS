@@ -16,7 +16,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     
     func downloadCanvasPixels(completionHandler: @escaping (Bool) -> Void) {
         
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/canvas/pixels")!)
+        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/canvas/2/pixels")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -32,6 +32,82 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
             
             DispatchQueue.main.async {
                 completionHandler(true)
+            }
+        })
+
+        task.resume()
+    }
+    
+    func downloadCanvasChunkPixels(chunk: Int, completionHandler: @escaping (Bool) -> Void) {
+        
+        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/canvas/1/pixels/" + String(chunk))!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "GET"
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                let jsonArr = try JSONSerialization.jsonObject(with: data!, options: []) as! [[Int32]]
+                
+                var arr = [[Int32]]()
+                
+                for i in 0...jsonArr.count - 1 {
+                    let innerJsonArr = jsonArr[i]
+                    var innerArr = [Int32]()
+                    for j in 0...innerJsonArr.count - 1 {
+                        innerArr.append(innerJsonArr[j])
+                    }
+                    arr.append(innerArr)
+                }
+                
+                if chunk == 1 {
+                    SessionSettings.instance.chunk1 = arr
+                }
+                else if chunk == 2 {
+                    SessionSettings.instance.chunk2 = arr
+                }
+                else if chunk == 3 {
+                    SessionSettings.instance.chunk3 = arr
+                }
+                else if chunk == 4 {
+                    SessionSettings.instance.chunk4 = arr
+                }
+            }
+            catch {
+                
+            }
+            
+            DispatchQueue.main.async {
+                completionHandler(true)
+            }
+        })
+
+        task.resume()
+    }
+    
+    func downloadTopContributors(completionHandler: @escaping ([[String: Any]]) -> Void) {
+        
+        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/top/contributors")!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "GET"
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                let jsonObj = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
+                
+                let jsonArr = jsonObj["data"] as! [[String: Any]]
+                
+                DispatchQueue.main.async {
+                    completionHandler(jsonArr)
+                }
+            }
+            catch {
+                
             }
         })
 

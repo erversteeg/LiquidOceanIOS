@@ -14,14 +14,16 @@ class MenuViewController: UIViewController, AchievementListener {
     let showLoadingScreen = "ShowLoading"
     let showStats = "ShowStats"
     let showOptions = "ShowOptions"
+    let showHowto = "ShowHowto"
     
     @IBOutlet weak var playButton: ActionButtonView!
     @IBOutlet weak var optionsButton: ActionButtonView!
     @IBOutlet weak var statsButton: ActionButtonView!
-    @IBOutlet weak var exitButton: ActionButtonView!
+    @IBOutlet weak var howtoAction: ActionButtonView!
     
     @IBOutlet weak var singleAction: ActionButtonView!
     @IBOutlet weak var worldAction: ActionButtonView!
+    @IBOutlet weak var devAction: ActionButtonView!
     
     @IBOutlet weak var backAction: ActionButtonView!
     
@@ -34,31 +36,47 @@ class MenuViewController: UIViewController, AchievementListener {
     @IBOutlet weak var artView: ArtView!
     @IBOutlet weak var menuContainer: UIView!
     
+    var realmId = 0
+    
     var showcaseTimer: Timer!
     
     var pixels = [UIView]()
     
+    let backgrounds: [(gradient1: Int32, gradient2: Int32)] = [
+        (gradient1: Utils.int32FromColorHex(hex: "0xff290a59"), gradient2: Utils.int32FromColorHex(hex: "0xffff7c00")),
+        (gradient1: Utils.int32FromColorHex(hex: "0xff942210"), gradient2: Utils.int32FromColorHex(hex: "0xff1f945e")),
+        (gradient1: Utils.int32FromColorHex(hex: "0xff0803fa"), gradient2: Utils.int32FromColorHex(hex: "0xfffacf02")),
+        (gradient1: Utils.int32FromColorHex(hex: "0xfffa8202"), gradient2: Utils.int32FromColorHex(hex: "0xff18bdfa")),
+        (gradient1: Utils.int32FromColorHex(hex: "0xff821794"), gradient2: Utils.int32FromColorHex(hex: "0xff99e046")),
+        (gradient1: Utils.int32FromColorHex(hex: "0xff6f46e0"), gradient2: Utils.int32FromColorHex(hex: "0xffe0d121")),
+        (gradient1: Utils.int32FromColorHex(hex: "0xffe02819"), gradient2: Utils.int32FromColorHex(hex: "0xffe026d1")),
+        (gradient1: Utils.int32FromColorHex(hex: "0xff3b943f"), gradient2: Utils.int32FromColorHex(hex: "0xff4f1fe0")),
+        (gradient1: Utils.int32FromColorHex(hex: "0xff242e8f"), gradient2: Utils.int32FromColorHex(hex: "0xff8f3234")),
+        (gradient1: Utils.int32FromColorHex(hex: "0xff898f1d"), gradient2: Utils.int32FromColorHex(hex: "0xff158f86"))]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
-
-        self.playButton.type = .play
-        self.optionsButton.type = .options
-        self.statsButton.type = .stats
-        self.exitButton.type = .exit
+        // self.view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
+        randomGradientBackground()
         
-        self.singleAction.type = .single
-        self.worldAction.type = .world
+        playButton.type = .play
+        optionsButton.type = .options
+        statsButton.type = .stats
+        howtoAction.type = .howto
         
-        self.backAction.type = .backSolid
+        singleAction.type = .single
+        worldAction.type = .world
+        devAction.type = .dev
+        
+        backAction.type = .backSolid
         
         self.backAction.setOnClickListener {
             if !self.singleAction.isHidden {
                 self.toggleMenuButtons(show: true, depth: 0)
                 self.toggleMenuButtons(show: false, depth: 1)
                 
-                Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.exitButton], initial: false, moveOut: false)
+                Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.howtoAction], initial: false, moveOut: false)
                 
                 self.backAction.isHidden = true
             }
@@ -68,7 +86,7 @@ class MenuViewController: UIViewController, AchievementListener {
             self.toggleMenuButtons(show: false, depth: 0)
             self.toggleMenuButtons(show: true, depth: 1)
             
-            Animator.animateMenuButtons(views: [self.singleAction, self.worldAction], initial: false, moveOut: false)
+            Animator.animateMenuButtons(views: [self.singleAction, self.worldAction, self.devAction], initial: false, moveOut: false)
             
             self.backAction.isHidden = false
         }
@@ -81,8 +99,8 @@ class MenuViewController: UIViewController, AchievementListener {
             self.performSegue(withIdentifier: self.showStats, sender: nil)
         }
         
-        self.exitButton.setOnClickListener {
-            exit(-1)
+        self.howtoAction.setOnClickListener {
+            self.performSegue(withIdentifier: self.showHowto, sender: nil)
         }
         
         self.singleAction.setOnClickListener {
@@ -90,6 +108,12 @@ class MenuViewController: UIViewController, AchievementListener {
         }
         
         self.worldAction.setOnClickListener {
+            self.realmId = 1
+            self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
+        }
+        
+        self.devAction.setOnClickListener {
+            self.realmId = 2
             self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
         }
         
@@ -105,7 +129,7 @@ class MenuViewController: UIViewController, AchievementListener {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.exitButton], initial: true, moveOut: false)
+        Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.howtoAction], initial: true, moveOut: false)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -118,6 +142,10 @@ class MenuViewController: UIViewController, AchievementListener {
         else if segue.identifier == self.showStats  {
             let _ = segue.destination as! StatsViewController
         }
+        else if segue.identifier == self.showLoadingScreen {
+            let vc = segue.destination as! LoadingViewController
+            vc.realmId = realmId
+        }
         
         showcaseTimer.invalidate()
         stopPixels()
@@ -127,6 +155,8 @@ class MenuViewController: UIViewController, AchievementListener {
         self.toggleMenuButtons(show: true, depth: 0)
         self.toggleMenuButtons(show: false, depth: 1)
         
+        Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.howtoAction], initial: true, moveOut: false)
+        
         self.backAction.isHidden = true
         
         startShowcase()
@@ -134,20 +164,40 @@ class MenuViewController: UIViewController, AchievementListener {
         startPixels()
     }
     
+    func randomGradientBackground() {
+        let rIndex = Int(arc4random() % UInt32(backgrounds.count))
+        let randBackground = backgrounds[rIndex]
+        
+        let gradient = CAGradientLayer()
+
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor(argb: randBackground.gradient1).cgColor, UIColor(argb: randBackground.gradient2).cgColor]
+        
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
+
+        view.layer.insertSublayer(gradient, at: 0)
+    }
+    
     func toggleMenuButtons(show: Bool, depth: Int) {
         if depth == 0 {
             self.playButton.isHidden = !show
             self.optionsButton.isHidden = !show
             self.statsButton.isHidden = !show
-            self.exitButton.isHidden = !show
+            self.howtoAction.isHidden = !show
         }
         else if depth == 1 {
             self.singleAction.isHidden = !show
             self.worldAction.isHidden = !show
+            self.devAction.isHidden = !show
         }
     }
     
     func startShowcase() {
+        if (SessionSettings.instance.artShowcase == nil) {
+            SessionSettings.instance.defaultArtShowcase()
+        }
+        
         showcaseTimer = Timer.scheduledTimer(withTimeInterval: 7, repeats: true, block: { (tmr) in
             DispatchQueue.main.async {
                 if SessionSettings.instance.artShowcase != nil {
