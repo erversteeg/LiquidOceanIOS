@@ -22,6 +22,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var paintColorIndicator: PaintColorIndicator!
     
+    @IBOutlet weak var paintPanelTrailing: NSLayoutConstraint!
     
     @IBOutlet weak var paintPanelWidth: NSLayoutConstraint!
     @IBOutlet weak var colorPickerFrameWidth: NSLayoutConstraint!
@@ -63,6 +64,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var paintEventInfoContainer: UIView!
     @IBOutlet weak var paintEventTimeLabel: UILabel!
     @IBOutlet weak var paintEventInfoContainerWidth: NSLayoutConstraint!
+    
+    @IBOutlet weak var canvasLockView: UIView!
     
     var panelThemeConfig: PanelThemeConfig!
     
@@ -128,12 +131,18 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             }
         }
         
-        self.paintPanelWidth.constant = 0
+        if !SessionSettings.instance.showPaintBar {
+            paintQuantityBar.isHidden = true
+        }
+        
+        //self.paintPanelWidth.constant = 0
         self.colorPickerFrameWidth.constant = 0
         
         self.paintPanel.insertSubview(backgroundImage, at: 0)
         
         toggleToolbox(open: false)
+        
+        self.paintPanel.isHidden = true
         
         // action buttons
         paintPanelButton.type = .paint
@@ -198,13 +207,28 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         // paint panel
         self.paintPanel.isHidden = true
         self.paintPanelButton.setOnClickListener {
-            self.paintPanelWidth.constant = 200
             self.paintPanel.isHidden = false
             
             self.pixelHistoryView.isHidden = true
             
             self.backButton.isHidden = true
             self.recentColorsButton.isHidden = false
+            
+            if SessionSettings.instance.canvasLockBorder {
+                self.canvasLockView.isHidden = false
+            }
+            
+            //self.paintPanelWidth.constant = 200
+            
+            /*UIView.animate(withDuration: 0.5, animations: {
+                self.paintPanelTrailing.constant = 0
+            }) { (done) in
+                if done {
+                    if SessionSettings.instance.canvasLockBorder {
+                        self.canvasLockView.isHidden = false
+                    }
+                }
+            }*/
             
             self.surfaceView.startPainting()
         }
@@ -213,14 +237,28 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.closePaintPanelButton.setOnClickListener {
             self.surfaceView.endPainting(accept: false)
             
-            self.paintPanelWidth.constant = 0
-            self.paintPanel.isHidden = true
-            
             self.backButton.isHidden = false
             
             self.recentColorsButton.isHidden = true
             
             self.toggleRecentColors(open: false)
+            
+            self.paintPanel.isHidden = true
+            if SessionSettings.instance.canvasLockBorder {
+                self.canvasLockView.isHidden = true
+            }
+            
+            /*UIView.animate(withDuration: 0.5, animations: {
+                self.paintPanelTrailing.constant = -200
+            }) { (done) in
+                if done {
+                    if SessionSettings.instance.canvasLockBorder {
+                        if SessionSettings.instance.canvasLockBorder {
+                            self.canvasLockView.isHidden = true
+                        }
+                    }
+                }
+            }*/
         }
         
         // paint quantity bar
@@ -308,6 +346,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.closePaintPanelButton.isHidden = false
             
             self.surfaceView.startPainting()
+        }
+        
+        // bocker lock
+        if SessionSettings.instance.canvasLockBorder {
+            canvasLockView.layer.borderWidth = 4
+            canvasLockView.layer.borderColor = UIColor(argb: SessionSettings.instance.canvasLockColor).cgColor
         }
         
         // panel theme config

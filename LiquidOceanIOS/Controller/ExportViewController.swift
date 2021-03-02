@@ -24,6 +24,7 @@ class ExportViewController: UIViewController {
     var art: [InteractiveCanvas.RestorePoint]? {
         set {
             _art = newValue
+            artView.showBackground = true
             artView.art = _art
             
             if let art = art {

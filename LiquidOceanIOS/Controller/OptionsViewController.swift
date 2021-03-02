@@ -22,8 +22,18 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     
     @IBOutlet weak var signInButton: UIButton!
     
+    @IBOutlet weak var showPaintBarContainer: UIView!
+    @IBOutlet weak var showPaintBarSwitch: UISwitch!
+    
     @IBOutlet weak var changeNameButton: UIButton!
     @IBOutlet weak var changeNameTextField: UITextField!
+    
+    @IBOutlet weak var canvasLockBorderContainer: UIView!
+    @IBOutlet weak var canvasLockBorderSwitch: UISwitch!
+   
+    @IBOutlet weak var canvasLockColorContainer: UIView!
+    @IBOutlet weak var canvasLockColorColorView: UIView!
+    @IBOutlet weak var canvasLockColorResetButton: UIButton!
     
     @IBOutlet weak var gridLineColorContainer: UIView!
     @IBOutlet weak var gridLineColorColorView: UIView!
@@ -71,6 +81,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     var panels = PanelThemeConfig.panels
     
     var selectingGridLineColor = false
+    var selectingCanvasLockColor = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,12 +114,30 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         panelsCollectionView.backgroundColor = Utils.UIColorFromColorHex(hex: "0xFF333333")
         
+        // show paint bar
+        showPaintBarContainer.layer.borderColor = UIColor.white.cgColor
+        showPaintBarContainer.layer.borderWidth = 2
+        showPaintBarSwitch.isOn = SessionSettings.instance.showPaintBar
+        
+        // canvas lock border
+        canvasLockBorderContainer.layer.borderColor = UIColor.white.cgColor
+        canvasLockBorderContainer.layer.borderWidth = 2
+        canvasLockBorderSwitch.isOn = SessionSettings.instance.canvasLockBorder
+        
+        // canvas lock color
+        canvasLockColorContainer.layer.borderColor = UIColor.white.cgColor
+        canvasLockColorContainer.layer.borderWidth = 2
+        canvasLockColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.canvasLockColor)
+        
         // grid line color
         gridLineColorContainer.layer.borderColor = UIColor.white.cgColor
         gridLineColorContainer.layer.borderWidth = 2
         
-        let tgr = UITapGestureRecognizer(target: self, action: #selector(tappedGridLineColorView(sender:)))
+        var tgr = UITapGestureRecognizer(target: self, action: #selector(tappedGridLineColorView(sender:)))
         gridLineColorColorView.addGestureRecognizer(tgr)
+        
+        tgr = UITapGestureRecognizer(target: self, action: #selector(tappedCanvasLockColorView(sender:)))
+        canvasLockColorColorView.addGestureRecognizer(tgr)
         
         if SessionSettings.instance.gridLineColor != 0 {
             gridLineColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.gridLineColor)
@@ -198,12 +227,22 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         else if sender == promptBackSwitch {
             SessionSettings.instance.promptBack = sender.isOn
         }
+        else if sender == canvasLockBorderSwitch {
+            SessionSettings.instance.canvasLockBorder = sender.isOn
+        }
+        else if sender == showPaintBarSwitch {
+            SessionSettings.instance.showPaintBar = sender.isOn
+        }
     }
     
     @IBAction func resetButtonPressed(_ sender: UIButton) {
         if sender == gridLineColorResetButton {
             SessionSettings.instance.gridLineColor = 0
             gridLineColorColorView.backgroundColor = UIColor.white
+        }
+        else if sender == canvasLockColorResetButton {
+            SessionSettings.instance.canvasLockColor = Utils.int32FromColorHex(hex: "0x66ff0000")
+            canvasLockColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.canvasLockColor)
         }
     }
     
@@ -224,6 +263,25 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
         
         selectingGridLineColor = true
+    }
+    
+    @objc func tappedCanvasLockColorView(sender: UIView) {
+        colorPickerContainerView.isHidden = false
+        colorPickerContainerView.alpha = 0
+        
+        colorPickerCancelButton.isHidden = false
+        colorPickerCancelButton.alpha = 0
+        
+        colorPickerDoneButton.isHidden = false
+        colorPickerDoneButton.alpha = 0
+        
+        UIView.animate(withDuration: 0.2) {
+            self.colorPickerContainerView.alpha = 1
+            self.colorPickerCancelButton.alpha = 1
+            self.colorPickerDoneButton.alpha = 1
+        }
+        
+        selectingCanvasLockColor = true
     }
     
     @objc func tappedRecentColorLabel1(sender: UITapGestureRecognizer) {
@@ -283,15 +341,24 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     @IBAction func colorPickerCancelPressed(_ sender: Any) {
-        if SessionSettings.instance.gridLineColor == 0 {
-            gridLineColorColorView.backgroundColor = UIColor.white
-            colorPickerViewController.selectedColor = UIColor.white
-        }
-        else {
-            gridLineColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.gridLineColor)
+        if selectingCanvasLockColor {
+            canvasLockColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.gridLineColor)
             colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.gridLineColor)
+            
+            selectingCanvasLockColor = false
         }
-        
+        else if selectingGridLineColor {
+            if SessionSettings.instance.gridLineColor == 0 {
+                gridLineColorColorView.backgroundColor = UIColor.white
+                colorPickerViewController.selectedColor = UIColor.white
+            }
+            else {
+                gridLineColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.gridLineColor)
+                colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.gridLineColor)
+            }
+            
+            selectingGridLineColor = false
+        }
         
         UIView.animate(withDuration: 0.2, animations: {
             self.colorPickerContainerView.alpha = 0
@@ -304,14 +371,21 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
                 self.colorPickerDoneButton.isHidden = true
             }
         }
-        
-        selectingGridLineColor = false
     }
     
     @IBAction func colorSelectDonePressed(_ sender: Any) {
         let color = self.colorPickerViewController.selectedColor
     
-        SessionSettings.instance.gridLineColor = color.argb()!
+        if selectingGridLineColor {
+            SessionSettings.instance.gridLineColor = color.argb()!
+            
+            selectingGridLineColor = false
+        }
+        else if selectingCanvasLockColor {
+            SessionSettings.instance.canvasLockColor = color.argb()!
+            
+            selectingCanvasLockColor = false
+        }
         
         UIView.animate(withDuration: 0.2) {
             self.colorPickerContainerView.alpha = 0
@@ -328,8 +402,6 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
                 self.colorPickerDoneButton.isHidden = true
             }
         }
-        
-        selectingGridLineColor = false
     }
     
     func selectRecentColorLabel(amt: Int) {
@@ -495,6 +567,9 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     func colorPicker(_ colorPicker: ColorPickerController, selectedColor: UIColor, usingControl: ColorControl) {
         if selectingGridLineColor {
             gridLineColorColorView.backgroundColor = selectedColor
+        }
+        else if selectingCanvasLockColor {
+            canvasLockColorColorView.backgroundColor = selectedColor
         }
     }
 }
