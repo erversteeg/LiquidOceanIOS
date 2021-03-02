@@ -33,6 +33,26 @@
 		07A9B16B25EC8790009A47DF /* leaf_json.json in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B15E25EC878F009A47DF /* leaf_json.json */; };
 		07A9B16C25EC8790009A47DF /* contra_json.json in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B15F25EC8790009A47DF /* contra_json.json */; };
 		07A9B16E25ED2941009A47DF /* HowtoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A9B16D25ED2941009A47DF /* HowtoViewController.swift */; };
+		07A9B17025ED611C009A47DF /* PanelThemeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A9B16F25ED611C009A47DF /* PanelThemeConfig.swift */; };
+		07A9B18325ED6CCD009A47DF /* amb_12.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17125ED6CCB009A47DF /* amb_12.jpg */; };
+		07A9B18425ED6CCD009A47DF /* amb_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17225ED6CCB009A47DF /* amb_4.jpg */; };
+		07A9B18525ED6CCD009A47DF /* amb_7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17325ED6CCB009A47DF /* amb_7.jpg */; };
+		07A9B18625ED6CCD009A47DF /* amb_6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17425ED6CCC009A47DF /* amb_6.jpg */; };
+		07A9B18725ED6CCD009A47DF /* amb_10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17525ED6CCC009A47DF /* amb_10.jpg */; };
+		07A9B18825ED6CCD009A47DF /* amb_9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17625ED6CCC009A47DF /* amb_9.jpg */; };
+		07A9B18925ED6CCD009A47DF /* amb_8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17725ED6CCC009A47DF /* amb_8.jpg */; };
+		07A9B18A25ED6CCD009A47DF /* amb_5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17825ED6CCC009A47DF /* amb_5.jpg */; };
+		07A9B18B25ED6CCD009A47DF /* amb_14.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17925ED6CCC009A47DF /* amb_14.jpg */; };
+		07A9B18C25ED6CCD009A47DF /* amb_15.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17A25ED6CCC009A47DF /* amb_15.jpg */; };
+		07A9B18D25ED6CCD009A47DF /* amb_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17B25ED6CCC009A47DF /* amb_2.jpg */; };
+		07A9B18E25ED6CCD009A47DF /* sf_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17C25ED6CCC009A47DF /* sf_3.jpg */; };
+		07A9B18F25ED6CCD009A47DF /* amb_11.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17D25ED6CCD009A47DF /* amb_11.jpg */; };
+		07A9B19025ED6CCD009A47DF /* grass_dry.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17E25ED6CCD009A47DF /* grass_dry.jpg */; };
+		07A9B19125ED6CCD009A47DF /* amb_13.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B17F25ED6CCD009A47DF /* amb_13.jpg */; };
+		07A9B19225ED6CCD009A47DF /* grass.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B18025ED6CCD009A47DF /* grass.jpg */; };
+		07A9B19325ED6CCD009A47DF /* sf_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B18125ED6CCD009A47DF /* sf_1.jpg */; };
+		07A9B19425ED6CCD009A47DF /* amb_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B18225ED6CCD009A47DF /* amb_3.jpg */; };
+		07A9B19625EDAB8F009A47DF /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A9B19525EDAB8F009A47DF /* ColorPickerViewController.swift */; };
 		07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25C625D43FB500CF812E /* AppDelegate.swift */; };
 		07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25C825D43FB500CF812E /* SceneDelegate.swift */; };
 		07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25CA25D43FB500CF812E /* InteractiveCanvasViewController.swift */; };
@@ -117,6 +137,26 @@
 		07A9B15E25EC878F009A47DF /* leaf_json.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = leaf_json.json; sourceTree = "<group>"; };
 		07A9B15F25EC8790009A47DF /* contra_json.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = contra_json.json; sourceTree = "<group>"; };
 		07A9B16D25ED2941009A47DF /* HowtoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowtoViewController.swift; sourceTree = "<group>"; };
+		07A9B16F25ED611C009A47DF /* PanelThemeConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelThemeConfig.swift; sourceTree = "<group>"; };
+		07A9B17125ED6CCB009A47DF /* amb_12.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_12.jpg; sourceTree = "<group>"; };
+		07A9B17225ED6CCB009A47DF /* amb_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_4.jpg; sourceTree = "<group>"; };
+		07A9B17325ED6CCB009A47DF /* amb_7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_7.jpg; sourceTree = "<group>"; };
+		07A9B17425ED6CCC009A47DF /* amb_6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_6.jpg; sourceTree = "<group>"; };
+		07A9B17525ED6CCC009A47DF /* amb_10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_10.jpg; sourceTree = "<group>"; };
+		07A9B17625ED6CCC009A47DF /* amb_9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_9.jpg; sourceTree = "<group>"; };
+		07A9B17725ED6CCC009A47DF /* amb_8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_8.jpg; sourceTree = "<group>"; };
+		07A9B17825ED6CCC009A47DF /* amb_5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_5.jpg; sourceTree = "<group>"; };
+		07A9B17925ED6CCC009A47DF /* amb_14.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_14.jpg; sourceTree = "<group>"; };
+		07A9B17A25ED6CCC009A47DF /* amb_15.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_15.jpg; sourceTree = "<group>"; };
+		07A9B17B25ED6CCC009A47DF /* amb_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_2.jpg; sourceTree = "<group>"; };
+		07A9B17C25ED6CCC009A47DF /* sf_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sf_3.jpg; sourceTree = "<group>"; };
+		07A9B17D25ED6CCD009A47DF /* amb_11.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_11.jpg; sourceTree = "<group>"; };
+		07A9B17E25ED6CCD009A47DF /* grass_dry.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = grass_dry.jpg; sourceTree = "<group>"; };
+		07A9B17F25ED6CCD009A47DF /* amb_13.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_13.jpg; sourceTree = "<group>"; };
+		07A9B18025ED6CCD009A47DF /* grass.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = grass.jpg; sourceTree = "<group>"; };
+		07A9B18125ED6CCD009A47DF /* sf_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sf_1.jpg; sourceTree = "<group>"; };
+		07A9B18225ED6CCD009A47DF /* amb_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_3.jpg; sourceTree = "<group>"; };
+		07A9B19525EDAB8F009A47DF /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		07BD25C325D43FB500CF812E /* LiquidOceanIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiquidOceanIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07BD25C625D43FB500CF812E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07BD25C825D43FB500CF812E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -201,6 +241,7 @@
 				07FF5F0C25E54DCF003E19AE /* SignInViewController.swift */,
 				07FF5F0E25E54EE7003E19AE /* OptionsViewController.swift */,
 				07A9B16D25ED2941009A47DF /* HowtoViewController.swift */,
+				07A9B19525EDAB8F009A47DF /* ColorPickerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -208,6 +249,24 @@
 		07A305EF25D5B55B003A6CEA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				07A9B17B25ED6CCC009A47DF /* amb_2.jpg */,
+				07A9B18225ED6CCD009A47DF /* amb_3.jpg */,
+				07A9B17225ED6CCB009A47DF /* amb_4.jpg */,
+				07A9B17825ED6CCC009A47DF /* amb_5.jpg */,
+				07A9B17425ED6CCC009A47DF /* amb_6.jpg */,
+				07A9B17325ED6CCB009A47DF /* amb_7.jpg */,
+				07A9B17725ED6CCC009A47DF /* amb_8.jpg */,
+				07A9B17625ED6CCC009A47DF /* amb_9.jpg */,
+				07A9B17525ED6CCC009A47DF /* amb_10.jpg */,
+				07A9B17D25ED6CCD009A47DF /* amb_11.jpg */,
+				07A9B17125ED6CCB009A47DF /* amb_12.jpg */,
+				07A9B17F25ED6CCD009A47DF /* amb_13.jpg */,
+				07A9B17925ED6CCC009A47DF /* amb_14.jpg */,
+				07A9B17A25ED6CCC009A47DF /* amb_15.jpg */,
+				07A9B17E25ED6CCD009A47DF /* grass_dry.jpg */,
+				07A9B18025ED6CCD009A47DF /* grass.jpg */,
+				07A9B18125ED6CCD009A47DF /* sf_1.jpg */,
+				07A9B17C25ED6CCC009A47DF /* sf_3.jpg */,
 				07FF5F2125E5BDF6003E19AE /* crystal_1.jpg */,
 				07FF5F2325E5BDF6003E19AE /* crystal_2.jpg */,
 				07FF5F1325E5BDF3003E19AE /* crystal_3.jpg */,
@@ -337,6 +396,7 @@
 				07BD25F625D44FE900CF812E /* UIColor+Conversions.swift */,
 				07006C3B25D607D500DF9A64 /* UIDrawGestureRecognizer.swift */,
 				07FF5F0A25E481BB003E19AE /* Animator.swift */,
+				07A9B16F25ED611C009A47DF /* PanelThemeConfig.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -447,34 +507,52 @@
 				07BD25D625D43FB700CF812E /* LaunchScreen.storyboard in Resources */,
 				07FF5F2D25E5BDF6003E19AE /* foil.jpg in Resources */,
 				07FF5F2625E5BDF6003E19AE /* marble_2.jpg in Resources */,
+				07A9B18925ED6CCD009A47DF /* amb_8.jpg in Resources */,
+				07A9B19325ED6CCD009A47DF /* sf_1.jpg in Resources */,
 				07FF5F2925E5BDF6003E19AE /* crystal_5.jpg in Resources */,
+				07A9B18C25ED6CCD009A47DF /* amb_15.jpg in Resources */,
 				07FF5F3825E5BDF6003E19AE /* water_texture.jpg in Resources */,
 				07FF5F2C25E5BDF6003E19AE /* space_texture.jpg in Resources */,
 				07FF5F3725E5BDF6003E19AE /* crystal_2.jpg in Resources */,
+				07A9B18325ED6CCD009A47DF /* amb_12.jpg in Resources */,
 				07A9B16325EC8790009A47DF /* fries_json.json in Resources */,
+				07A9B19225ED6CCD009A47DF /* grass.jpg in Resources */,
 				07FF5F3125E5BDF6003E19AE /* crystal_9.jpg in Resources */,
 				07FF5F3225E5BDF6003E19AE /* crystal_4.jpg in Resources */,
+				07A9B19025ED6CCD009A47DF /* grass_dry.jpg in Resources */,
 				07A9B16725EC8790009A47DF /* bird_json.json in Resources */,
 				07A9B16C25EC8790009A47DF /* contra_json.json in Resources */,
+				07A9B18825ED6CCD009A47DF /* amb_9.jpg in Resources */,
+				07A9B19425ED6CCD009A47DF /* amb_3.jpg in Resources */,
 				07FF5F3325E5BDF6003E19AE /* rainbow_foil.jpg in Resources */,
 				07A9B16225EC8790009A47DF /* mushroom_json.json in Resources */,
 				07FF5F3625E5BDF6003E19AE /* wood_texture_light.jpg in Resources */,
+				07A9B18525ED6CCD009A47DF /* amb_7.jpg in Resources */,
+				07A9B18D25ED6CCD009A47DF /* amb_2.jpg in Resources */,
 				07A9B16825EC8790009A47DF /* hfs_json.json in Resources */,
 				07FF5F2825E5BDF6003E19AE /* crystal_7.jpg in Resources */,
 				07FF5F3425E5BDF6003E19AE /* metal_floor_1.jpg in Resources */,
 				07A9B16625EC8790009A47DF /* water_drop_json.json in Resources */,
 				07FF5F2B25E5BDF6003E19AE /* metal_floor_2.jpg in Resources */,
 				07A9B16525EC8790009A47DF /* doughnut_json.json in Resources */,
+				07A9B19125ED6CCD009A47DF /* amb_13.jpg in Resources */,
 				07BD25D325D43FB700CF812E /* Assets.xcassets in Resources */,
 				07A9B16A25EC8790009A47DF /* paint_bucket_json.json in Resources */,
+				07A9B18B25ED6CCD009A47DF /* amb_14.jpg in Resources */,
 				07FF5F2E25E5BDF6003E19AE /* crystal_6.jpg in Resources */,
 				07A9B16125EC8790009A47DF /* mc_tool_json.json in Resources */,
 				07FF5F2725E5BDF6003E19AE /* crystal_3.jpg in Resources */,
+				07A9B18E25ED6CCD009A47DF /* sf_3.jpg in Resources */,
+				07A9B18625ED6CCD009A47DF /* amb_6.jpg in Resources */,
+				07A9B18A25ED6CCD009A47DF /* amb_5.jpg in Resources */,
 				07A9B16925EC8790009A47DF /* rainbow_badge.json in Resources */,
 				07A9B16425EC8790009A47DF /* globe_json.json in Resources */,
 				07A9B16B25EC8790009A47DF /* leaf_json.json in Resources */,
+				07A9B18725ED6CCD009A47DF /* amb_10.jpg in Resources */,
 				07FF5F2A25E5BDF6003E19AE /* crystal_8.jpg in Resources */,
+				07A9B18F25ED6CCD009A47DF /* amb_11.jpg in Resources */,
 				07FF5F3025E5BDF6003E19AE /* crystal_10.jpg in Resources */,
+				07A9B18425ED6CCD009A47DF /* amb_4.jpg in Resources */,
 				07FF5F2F25E5BDF6003E19AE /* wood_texture.png in Resources */,
 				07A9B16025EC8790009A47DF /* fire_badge_json.json in Resources */,
 				07FF5F3525E5BDF6003E19AE /* crystal_1.jpg in Resources */,
@@ -581,10 +659,12 @@
 				07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */,
 				07FF5F0725E42C1C003E19AE /* ActionButtonReusableView.swift in Sources */,
 				07006C3E25D6C2D500DF9A64 /* PaintQuantityBar.swift in Sources */,
+				07A9B19625EDAB8F009A47DF /* ColorPickerViewController.swift in Sources */,
 				07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */,
 				07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */,
 				07FF5F1125E5BA4F003E19AE /* PanelBackgroundCollectionViewCell.swift in Sources */,
 				07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */,
+				07A9B17025ED611C009A47DF /* PanelThemeConfig.swift in Sources */,
 				07FF5EFF25DF5833003E19AE /* ArtView.swift in Sources */,
 				07BD25F925D450CF00CF812E /* SessionSettings.swift in Sources */,
 			);

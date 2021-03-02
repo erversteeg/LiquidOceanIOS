@@ -7,9 +7,16 @@
 //
 
 import UIKit
+import FlexColorPicker
 
-class OptionsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
+class OptionsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, ColorPickerDelegate {
+    
+    @IBOutlet weak var colorPickerContainerView: UIView!
+    @IBOutlet weak var colorPickerDoneButton: UIButton!
+    @IBOutlet weak var colorPickerCancelButton: UIButton!
 
+    @IBOutlet weak var panelsCollectionView: UICollectionView!
+    
     @IBOutlet weak var optionsTitleAction: ActionButtonView!
     @IBOutlet weak var backAction: ActionButtonView!
     
@@ -18,18 +25,52 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet weak var changeNameButton: UIButton!
     @IBOutlet weak var changeNameTextField: UITextField!
     
-    var showSignIn = "ShowSignIn"
+    @IBOutlet weak var gridLineColorContainer: UIView!
+    @IBOutlet weak var gridLineColorColorView: UIView!
+    @IBOutlet weak var gridLineColorResetButton: UIButton!
     
-    let panels = ["wood_texture_light.jpg", "wood_texture.png", "marble_2.jpg", "fall_leaves.png", "water_texture.jpg",
-    "space_texture.jpg", "metal_floor_1.jpg", "metal_floor_2.jpg", "foil.jpg", "rainbow_foil.jpg", "crystal_1.jpg",
-    "crystal_2.jpg", "crystal_3.jpg", "crystal_4.jpg", "crystal_5.jpg", "crystal_6.jpg", "crystal_7.jpg",
-    "crystal_8.jpg", "crystal_9.jpg", "crystal_10.jpg"]
+    @IBOutlet weak var circlePaletteContainer: UIView!
+    @IBOutlet weak var circlePaletteSwitch: UISwitch!
+    
+    @IBOutlet weak var squarePaletteContainer: UIView!
+    @IBOutlet weak var squarePaletteSwitch: UISwitch!
+    
+    @IBOutlet weak var paletteOutlineContainer: UIView!
+    @IBOutlet weak var paletteOutlineSwitch: UISwitch!
+    
+    @IBOutlet weak var paletteSizeContainer: UIView!
+    @IBOutlet weak var paletteSizeLabel: UILabel!
+    @IBOutlet weak var paletteSizeMinusAction: ActionButtonView!
+    @IBOutlet weak var paletteSizeMinusFrame: ActionButtonFrame!
+    @IBOutlet weak var paletteSizePlusAction: ActionButtonView!
+    @IBOutlet weak var paletteSizePlusFrame: ActionButtonFrame!
+    
+    @IBOutlet weak var promptBackContainer: UIView!
+    @IBOutlet weak var promptBackSwitch: UISwitch!
+    
+    @IBOutlet weak var recentColorsContainer: UIView!
+    @IBOutlet weak var recentColorsAmtLabel1: UILabel!
+    @IBOutlet weak var recentColorsAmtLabel2: UILabel!
+    @IBOutlet weak var recentColorsAmtLabel3: UILabel!
+    @IBOutlet weak var recentColorsAmtLabel4: UILabel!
+    @IBOutlet weak var recentColorsAmtLabel5: UILabel!
+    @IBOutlet weak var recentColorsAmtLabel6: UILabel!
+    @IBOutlet weak var recentColorsAmtLabel7: UILabel!
+    @IBOutlet weak var recentColorsAmtLabel8: UILabel!
+    
+    weak var colorPickerViewController: CustomColorPickerViewController!
+    
+    var showSignIn = "ShowSignIn"
     
     var images = [UIImage]()
     
     var alertTextField: UITextField!
     
     var checkedName: String!
+    
+    var panels = PanelThemeConfig.panels
+    
+    var selectingGridLineColor = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,13 +91,263 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
         
         for panel in panels {
-            images.append(resizeImage(image: UIImage(named: panel)!, newHeight: 200))
+            images.append(UIImage(named: panel)!)
         }
         
         checkedName = SessionSettings.instance.displayName
         changeNameTextField.text = SessionSettings.instance.displayName
+        
+        if SessionSettings.instance.panelBackgroundName != "" {
+            panelsCollectionView.scrollToItem(at: IndexPath(item: panels.firstIndex(of: SessionSettings.instance.panelBackgroundName)!, section: 0), at: .centeredHorizontally, animated: true)
+        }
+        
+        panelsCollectionView.backgroundColor = Utils.UIColorFromColorHex(hex: "0xFF333333")
+        
+        // grid line color
+        gridLineColorContainer.layer.borderColor = UIColor.white.cgColor
+        gridLineColorContainer.layer.borderWidth = 2
+        
+        let tgr = UITapGestureRecognizer(target: self, action: #selector(tappedGridLineColorView(sender:)))
+        gridLineColorColorView.addGestureRecognizer(tgr)
+        
+        if SessionSettings.instance.gridLineColor != 0 {
+            gridLineColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.gridLineColor)
+        }
+        
+        // circle palette
+        circlePaletteContainer.layer.borderColor = UIColor.white.cgColor
+        circlePaletteContainer.layer.borderWidth = 2
+        circlePaletteSwitch.isOn = SessionSettings.instance.paintIndicatorFill
+        
+        // square palette
+        squarePaletteContainer.layer.borderColor = UIColor.white.cgColor
+        squarePaletteContainer.layer.borderWidth = 2
+        squarePaletteSwitch.isOn = SessionSettings.instance.paintIndicatorSquare
+        
+        // palette outline
+        paletteOutlineContainer.layer.borderColor = UIColor.white.cgColor
+        paletteOutlineContainer.layer.borderWidth = 2
+        paletteOutlineSwitch.isOn = SessionSettings.instance.paintIndicatorOutline
+        
+        // palette size
+        paletteSizeContainer.layer.borderColor = UIColor.white.cgColor
+        paletteSizeContainer.layer.borderWidth = 2
+        paletteSizeLabel.text = String(SessionSettings.instance.paintIndicatorWidth)
+        
+        paletteSizeMinusFrame.actionButtonView = paletteSizeMinusAction
+        paletteSizePlusFrame.actionButtonView = paletteSizePlusAction
+        
+        paletteSizeMinusAction.type = .dot
+        paletteSizePlusAction.type = .dot
+        
+        // prompt back
+        promptBackContainer.layer.borderColor = UIColor.white.cgColor
+        promptBackContainer.layer.borderWidth = 2
+        promptBackSwitch.isOn = SessionSettings.instance.promptBack
+        
+        // recent colors
+        recentColorsContainer.layer.borderColor = UIColor.white.cgColor
+        recentColorsContainer.layer.borderWidth = 2
+    
+        selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
+        
+        self.recentColorsAmtLabel1.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel1(sender:))))
+        self.recentColorsAmtLabel2.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel2(sender:))))
+        self.recentColorsAmtLabel3.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel3(sender:))))
+        self.recentColorsAmtLabel4.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel4(sender:))))
+        self.recentColorsAmtLabel5.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel5(sender:))))
+        self.recentColorsAmtLabel6.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel6(sender:))))
+        self.recentColorsAmtLabel7.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel7(sender:))))
+        self.recentColorsAmtLabel8.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel8(sender:))))
+        
+        paletteSizeMinusFrame.setOnClickListener {
+            var value = Int(self.paletteSizeLabel.text!)! - 1
+            if value == 0 { value = 1 }
+            
+            self.paletteSizeLabel.text = String(value)
+            SessionSettings.instance.paintIndicatorWidth = value
+        }
+        
+        paletteSizePlusFrame.setOnClickListener {
+            var value = Int(self.paletteSizeLabel.text!)! + 1
+            if value == 6 { value = 5 }
+            
+            self.paletteSizeLabel.text = String(value)
+            SessionSettings.instance.paintIndicatorWidth = value
+        }
     }
     
+    @IBAction func switchChanged(_ sender: UISwitch) {
+        if sender == circlePaletteSwitch {
+            SessionSettings.instance.paintIndicatorFill = sender.isOn
+            if sender.isOn && squarePaletteSwitch.isOn {
+                squarePaletteSwitch.setOn(false, animated: true)
+                SessionSettings.instance.paintIndicatorSquare = false
+            }
+        }
+        else if sender == squarePaletteSwitch {
+            SessionSettings.instance.paintIndicatorSquare = sender.isOn
+            if sender.isOn && circlePaletteSwitch.isOn {
+                circlePaletteSwitch.setOn(false, animated: true)
+                SessionSettings.instance.paintIndicatorFill = false
+            }
+        }
+        else if sender == paletteOutlineSwitch {
+            SessionSettings.instance.paintIndicatorOutline = sender.isOn
+        }
+        else if sender == promptBackSwitch {
+            SessionSettings.instance.promptBack = sender.isOn
+        }
+    }
+    
+    @IBAction func resetButtonPressed(_ sender: UIButton) {
+        if sender == gridLineColorResetButton {
+            SessionSettings.instance.gridLineColor = 0
+            gridLineColorColorView.backgroundColor = UIColor.white
+        }
+    }
+    
+    @objc func tappedGridLineColorView(sender: UIView) {
+        colorPickerContainerView.isHidden = false
+        colorPickerContainerView.alpha = 0
+        
+        colorPickerCancelButton.isHidden = false
+        colorPickerCancelButton.alpha = 0
+        
+        colorPickerDoneButton.isHidden = false
+        colorPickerDoneButton.alpha = 0
+        
+        UIView.animate(withDuration: 0.2) {
+            self.colorPickerContainerView.alpha = 1
+            self.colorPickerCancelButton.alpha = 1
+            self.colorPickerDoneButton.alpha = 1
+        }
+        
+        selectingGridLineColor = true
+    }
+    
+    @objc func tappedRecentColorLabel1(sender: UITapGestureRecognizer) {
+        let view = sender.view!
+        SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
+        
+        selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
+    }
+    
+    @objc func tappedRecentColorLabel2(sender: UITapGestureRecognizer) {
+        let view = sender.view!
+        SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
+           
+        selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
+    }
+    
+    @objc func tappedRecentColorLabel3(sender: UITapGestureRecognizer) {
+        let view = sender.view!
+        SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
+           
+        selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
+    }
+    
+    @objc func tappedRecentColorLabel4(sender: UITapGestureRecognizer) {
+        let view = sender.view!
+        SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
+           
+        selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
+    }
+    
+    @objc func tappedRecentColorLabel5(sender: UITapGestureRecognizer) {
+        let view = sender.view!
+        SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
+           
+        selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
+    }
+    
+    @objc func tappedRecentColorLabel6(sender: UITapGestureRecognizer) {
+        let view = sender.view!
+        SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
+           
+        selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
+    }
+    
+    @objc func tappedRecentColorLabel7(sender: UITapGestureRecognizer) {
+        let view = sender.view!
+        SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
+           
+        selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
+    }
+    
+    @objc func tappedRecentColorLabel8(sender: UITapGestureRecognizer) {
+        let view = sender.view!
+        SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
+           
+        selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
+    }
+    
+    @IBAction func colorPickerCancelPressed(_ sender: Any) {
+        if SessionSettings.instance.gridLineColor == 0 {
+            gridLineColorColorView.backgroundColor = UIColor.white
+            colorPickerViewController.selectedColor = UIColor.white
+        }
+        else {
+            gridLineColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.gridLineColor)
+            colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.gridLineColor)
+        }
+        
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.colorPickerContainerView.alpha = 0
+            self.colorPickerCancelButton.alpha = 0
+            self.colorPickerDoneButton.alpha = 0
+        }) { (success) in
+            if success {
+                self.colorPickerContainerView.isHidden = true
+                self.colorPickerCancelButton.isHidden = true
+                self.colorPickerDoneButton.isHidden = true
+            }
+        }
+        
+        selectingGridLineColor = false
+    }
+    
+    @IBAction func colorSelectDonePressed(_ sender: Any) {
+        let color = self.colorPickerViewController.selectedColor
+    
+        SessionSettings.instance.gridLineColor = color.argb()!
+        
+        UIView.animate(withDuration: 0.2) {
+            self.colorPickerContainerView.alpha = 0
+        }
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.colorPickerContainerView.alpha = 0
+            self.colorPickerCancelButton.alpha = 0
+            self.colorPickerDoneButton.alpha = 0
+        }) { (success) in
+            if success {
+                self.colorPickerContainerView.isHidden = true
+                self.colorPickerCancelButton.isHidden = true
+                self.colorPickerDoneButton.isHidden = true
+            }
+        }
+        
+        selectingGridLineColor = false
+    }
+    
+    func selectRecentColorLabel(amt: Int) {
+        let labels = [recentColorsAmtLabel1, recentColorsAmtLabel2, recentColorsAmtLabel3, recentColorsAmtLabel4,
+        recentColorsAmtLabel5, recentColorsAmtLabel6, recentColorsAmtLabel7, recentColorsAmtLabel8]
+        
+        for label in labels {
+            let labelAmt = Int(label!.text!)
+            if amt == labelAmt {
+                label!.textColor = UIColor(argb: ActionButtonView.altGreenColor)
+            }
+            else {
+                label!.textColor = UIColor(argb: ActionButtonView.whiteColor)
+            }
+        }
+    }
+    
+    // sign-in
     @IBAction func signInPressed(_ sender: Any) {
         self.performSegue(withIdentifier: showSignIn, sender: nil)
     }
@@ -92,30 +383,41 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
     }
     
-    
     @IBAction func unwindToViewController(segue: UIStoryboardSegue) {
         if SessionSettings.instance.googleAuth {
             signInButton.isEnabled = false
         }
+        
+        changeNameTextField.text = SessionSettings.instance.displayName
     }
     
+    // panel collection view
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return panels.count
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PanelBackgroundCell", for: indexPath) as! PanelBackgroundCollectionViewCell
         
+        let backgroundName = self.panels[indexPath.item]
+        
         cell.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
         
-        cell.imageView.contentMode = .scaleToFill
-        cell.selectAction.type = .yesLight
+        cell.imageView.contentMode = .scaleAspectFit
         
-        cell.selectAction.isHidden = SessionSettings.instance.panelBackgroundName != self.panels[indexPath.item]
+        cell.selectAction.colorMode = .white
+        cell.selectAction.type = .yes
+        
+        if SessionSettings.instance.panelBackgroundName != backgroundName {
+            cell.selectAction.isHidden = true
+        }
+        else {
+            cell.selectAction.isHidden = false
+        }
         
         cell.imageView.image = images[indexPath.item]
         
@@ -123,13 +425,16 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 230, height: 200)
+        return CGSize(width: 150, height: 200)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // let offsetX = collectionView.contentOffset.x
         SessionSettings.instance.panelBackgroundName = self.panels[indexPath.item]
+        SessionSettings.instance.save()
         
         collectionView.reloadData()
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
     func resizeImage(image: UIImage, newHeight: CGFloat) -> UIImage {
@@ -174,5 +479,22 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         
         return false
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "UnwindToMenu" {
+            SessionSettings.instance.save()
+        }
+        else if segue.identifier == "ColorPickerEmbed" {
+            colorPickerViewController = segue.destination as! CustomColorPickerViewController
+            colorPickerViewController.delegate = self
+        }
+    }
+    
+    // color picker delegate
+    func colorPicker(_ colorPicker: ColorPickerController, selectedColor: UIColor, usingControl: ColorControl) {
+        if selectingGridLineColor {
+            gridLineColorColorView.backgroundColor = selectedColor
+        }
     }
 }

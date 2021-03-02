@@ -117,8 +117,6 @@ class MenuViewController: UIViewController, AchievementListener {
             self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
         }
         
-        SessionSettings.instance.numRecentColors = 12
-        
         StatTracker.instance.achievementListener = self
         
         startShowcase()
@@ -260,10 +258,26 @@ class MenuViewController: UIViewController, AchievementListener {
         else if eventType == .pixelOverwriteOut {
             achievementName.text = "Pixels Overwritten By Me"
         }
+        else if eventType == .pixelPaintedWorld {
+            achievementName.text = "Pixels Painted World"
+        }
+        else if eventType == .pixelPaintedSingle {
+            achievementName.text = "Pixels Painted Single"
+        }
+        else if eventType == .worldXp {
+            achievementName.text = "World XP"
+        }
         
-        achievementDesc.text = "Passed the " + String(val) + " threshold"
+        if eventType != .worldXp {
+            achievementDesc.text = "Passed the " + String(val) + " threshold"
+        }
+        else {
+            achievementDesc.text = "Congrats on reaching level " + String(StatTracker.instance.getWorldLevel())
+        }
         
         achievementBanner.isHidden = false
+        achievementBanner.layer.borderWidth = 1
+        achievementBanner.layer.borderColor = UIColor.black.cgColor
         
         let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (tmr) in
             DispatchQueue.main.async {

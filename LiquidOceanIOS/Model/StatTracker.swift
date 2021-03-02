@@ -66,7 +66,7 @@ class StatTracker: NSObject {
     150000, 200000, 250000, 300000, 350000, 400000, 450000, 500000, 550000, 600000,
     650000, 700000, 750000, 800000, 850000, 900000, 950000, 1000000]
     
-    let pixelSingleThresholds = [1, 10, 20, 50, 100, 250, 500, 1000, 2500, 10000]
+    let pixelSingleThresholds = [100, 250, 500, 1000, 1500, 2500, 5000, 10000]
     
     let paintAccruedThresholds = [10000, 50000, 100000, 250000, 500000, 1000000, 5000000]
     
@@ -81,6 +81,9 @@ class StatTracker: NSObject {
     func reportEvent(eventType: EventType, amt: Int) {
         let numPixelsPaintedWorldOld = numPixelsPaintedWorld
         let numPixelsPaintedSingleOld = numPixelsPaintedSingle
+        let totalPaintAccruedOld = totalPaintAccrued
+        let numPixelOverwritesInOld = numPixelOverwritesIn
+        let numPixelOverwritesOutOld = numPixelOverwritesOut
         
         if eventType == .pixelPaintedWorld {
             numPixelsPaintedWorld += amt
@@ -90,7 +93,19 @@ class StatTracker: NSObject {
         else if eventType == .pixelPaintedSingle {
             numPixelsPaintedSingle += amt
             checkAchievements(eventType: eventType, oldVal: numPixelsPaintedSingleOld, newVal: numPixelsPaintedSingle)
-            sendDeviceStats(eventType: eventType, amt: numPixelsPaintedWorld)
+            sendDeviceStats(eventType: eventType, amt: numPixelsPaintedSingle)
+        }
+        else if eventType == .paintReceived {
+            totalPaintAccrued += amt
+            checkAchievements(eventType: eventType, oldVal: totalPaintAccruedOld, newVal: totalPaintAccrued)
+        }
+        else if eventType == .pixelOverwriteIn {
+            numPixelOverwritesIn += amt
+            checkAchievements(eventType: eventType, oldVal: numPixelOverwritesInOld, newVal: numPixelOverwritesIn)
+        }
+        else if eventType == .pixelOverwriteOut {
+            numPixelOverwritesOut += amt
+            checkAchievements(eventType: eventType, oldVal: numPixelOverwritesOutOld, newVal: numPixelOverwritesOut)
         }
     }
     

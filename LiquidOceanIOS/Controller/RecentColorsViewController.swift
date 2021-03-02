@@ -18,7 +18,7 @@ class RecentColorsViewController: UIViewController, UICollectionViewDataSource, 
     
     var itemMargin = CGFloat(10)
     
-    var itemWidth = CGFloat(30)
+    var itemWidth = CGFloat(32)
     
     weak var delegate: RecentColorsDelegate?
     

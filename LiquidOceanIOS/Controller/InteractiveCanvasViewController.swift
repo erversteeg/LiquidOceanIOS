@@ -62,7 +62,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var paintEventInfoContainer: UIView!
     @IBOutlet weak var paintEventTimeLabel: UILabel!
+    @IBOutlet weak var paintEventInfoContainerWidth: NSLayoutConstraint!
     
+    var panelThemeConfig: PanelThemeConfig!
     
     var world = false
     var realmId = 0
@@ -98,9 +100,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         let backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: self.view.frame.size.height))
         if SessionSettings.instance.panelBackgroundName == "" {
             backgroundImage.image = UIImage(named: "wood_texture_light.jpg")
+            panelThemeConfig = PanelThemeConfig.defaultDarkTheme()
         }
         else {
             backgroundImage.image = UIImage(named: SessionSettings.instance.panelBackgroundName)
+            panelThemeConfig = PanelThemeConfig.buildConfig(imageName: SessionSettings.instance.panelBackgroundName)
         }
         
         backgroundImage.contentMode = .scaleToFill
@@ -109,9 +113,14 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.backButton.type = .back
         self.backButton.setOnClickListener {
             if !self.surfaceView.isExporting() {
-                self.surfaceView.interactiveCanvas.save()
-                
-                 self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+                if SessionSettings.instance.promptBack {
+                    self.promptBack()
+                }
+                else {
+                    self.surfaceView.interactiveCanvas.save()
+                    
+                    self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+                }
             }
             else {
                 self.exportAction.selected = false
@@ -171,6 +180,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.gridLinesAction.setNeedsDisplay()
             self.paintPanelButton.setNeedsDisplay()
             self.backButton.setNeedsDisplay()
+            
+            self.recentColorsViewController.collectionView.reloadData()
             
             SessionSettings.instance.save()
             
@@ -299,6 +310,21 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.surfaceView.startPainting()
         }
         
+        // panel theme config
+        if panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
+            self.paintColorAccept.colorMode = .black
+            self.paintColorCancel.colorMode = .black
+            self.closePaintPanelButton.colorMode = .black
+        }
+        else {
+            self.paintColorAccept.colorMode = .white
+            self.paintColorCancel.colorMode = .white
+            self.closePaintPanelButton.colorMode = .white
+        }
+        
+        self.paintQuantityBar.panelThemeConfig = panelThemeConfig
+        self.paintColorIndicator.panelThemeConfig = panelThemeConfig
+        
         // paint event time toggle
         let tgr = UITapGestureRecognizer(target: self, action: #selector(didTapPaintQuantityBar))
         self.paintQuantityBar.addGestureRecognizer(tgr)
@@ -306,9 +332,15 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         StatTracker.instance.achievementListener = self
         
         surfaceView.interactiveCanvas.socketStatusDelegate = self
-        startServerStatusChecks()
         
-        getPaintTimerInfo()
+        if world {
+            startServerStatusChecks()
+            
+            getPaintTimerInfo()
+        }
+        else {
+            self.paintQuantityBar.removeGestureRecognizer(tgr)
+        }
     }
     
     @objc func didTapPaintQuantityBar() {
@@ -348,25 +380,39 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     }
     
     func getPaintTimerInfo() {
-        self.paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF303030"))
+        if panelThemeConfig.inversePaintEventInfo {
+            self.paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
+            self.paintEventTimeLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF303030"))
+        }
+        else {
+            self.paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF303030"))
+            self.paintEventTimeLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
+        }
+        
         self.paintEventInfoContainer.layer.cornerRadius = 20
         
         URLSessionHandler.instance.getPaintTimerInfo { (success, nextPaintTime) -> (Void) in
             if success {
-                var ts = Int(nextPaintTime)
-                let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (tmr) in
-                    ts -= 1
-                    
-                    if ts == 0 {
-                        ts = 300
+                if nextPaintTime >= 0 {
+                    var ts = Int(nextPaintTime)
+                    let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (tmr) in
+                        ts -= 1
+                        
+                        if ts == 0 {
+                            ts = 300
+                        }
+                        
+                        let m = ts / 60
+                        let s = ts % 60
+                        
+                        self.paintEventTimeLabel.text = String(format: "%02d:%02d", m, s)
+                        self.paintEventInfoContainerWidth.constant = self.paintEventTimeLabel.text!.size(withAttributes: [.font: UIFont.boldSystemFont(ofSize: self.paintEventTimeLabel.font.pointSize)]).width + 20
                     }
-                    
-                    let m = ts / 60
-                    let s = ts % 60
-                    
-                    self.paintEventTimeLabel.text = String(format: "%02d:%02d", m, s)
+                    timer.fire()
                 }
-                timer.fire()
+                else {
+                    self.paintEventTimeLabel.text = "???"
+                }
             }
         }
     }
@@ -560,7 +606,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // achievement listener
     func notifyDisplayAchievement(nextAchievement: [StatTracker.EventType : Int], displayInterval: Int) {
         achievementBanner.layer.borderWidth = 2
-        achievementBanner.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFF7819")).cgColor
+        achievementBanner.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF7819")).cgColor
         
         let eventType = nextAchievement.keys.first!
         let val = nextAchievement[eventType]!
@@ -575,17 +621,27 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             achievementName.text = "Pixels Overwritten By Me"
         }
         else if eventType == .pixelPaintedWorld {
-            achievementName.text = "Pixels painted world"
+            achievementName.text = "Pixels Painted World"
         }
         else if eventType == .pixelPaintedSingle {
-            achievementName.text = "Pixels painted single"
+            achievementName.text = "Pixels Painted Single"
+        }
+        else if eventType == .worldXp {
+            achievementName.text = "World XP"
         }
         
-        achievementDesc.text = "Passed the " + String(val) + " threshold"
+        if eventType != .worldXp {
+            achievementDesc.text = "Passed the " + String(val) + " threshold"
+        }
+        else {
+            achievementDesc.text = "Congrats on reaching level " + String(StatTracker.instance.getWorldLevel())
+        }
         
         achievementBanner.isHidden = false
+        achievementBanner.layer.borderWidth = 1
+        achievementBanner.layer.borderColor = UIColor.black.cgColor
         
-        Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (tmr) in
+        let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (tmr) in
             DispatchQueue.main.async {
                 self.achievementBanner.isHidden = true
             }
@@ -595,6 +651,22 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // socket status delegate
     func notifySocketError() {
         self.showDisconnectedMessage(type: 2)
+    }
+    
+    func promptBack() {
+        let alert = UIAlertController(title: nil, message: "Are you sure you would like to go back?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.surfaceView.interactiveCanvas.save()
+            
+            self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

@@ -455,15 +455,20 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     }
     
     func getGridLineColor() -> Int32 {
-        let white = Utils.int32FromColorHex(hex: "0xFFFFFFFF")
-        let black = Utils.int32FromColorHex(hex: "0xFF000000")
-        switch SessionSettings.instance.backgroundColorIndex {
-            case backgroundWhite:
-                return black
-            case backgroundPhotoshop:
-                return black
-            default:
-                return white
+        if SessionSettings.instance.gridLineColor != 0 {
+            return SessionSettings.instance.gridLineColor
+        }
+        else {
+            let white = Utils.int32FromColorHex(hex: "0xFFFFFFFF")
+            let black = Utils.int32FromColorHex(hex: "0xFF000000")
+            switch SessionSettings.instance.backgroundColorIndex {
+                case backgroundWhite:
+                    return black
+                case backgroundPhotoshop:
+                    return black
+                default:
+                    return white
+            }
         }
     }
     

@@ -28,6 +28,7 @@ class ActionButtonView: UIView {
     static var photoshopGrayColor: Int32!
     static var lightGrayColor: Int32!
     static var twoThirdGrayColor: Int32!
+    static var thirdGrayColor: Int32!
     
     enum ActionType {
         case none
@@ -101,6 +102,13 @@ class ActionButtonView: UIView {
         }
     }
     
+    enum ColorMode {
+        case color
+        case black
+        case white
+    }
+    
+    var colorMode = ColorMode.color
     
     var clickHandler: (() -> Void)?
     
@@ -139,6 +147,7 @@ class ActionButtonView: UIView {
         ActionButtonView.photoshopGrayColor = Utils.int32FromColorHex(hex: "0xFFCCCCCC")
         ActionButtonView.lightGrayColor = Utils.int32FromColorHex(hex: "0xFFDDDDDD")
         ActionButtonView.twoThirdGrayColor = Utils.int32FromColorHex(hex: "0xFF555555")
+        ActionButtonView.thirdGrayColor = Utils.int32FromColorHex(hex: "0xFFAAAAAA")
     }
     
     override func draw(_ rect: CGRect) {
@@ -152,19 +161,19 @@ class ActionButtonView: UIView {
             drawClosePaintAction()
         }
         else if type == .paintSelectYes {
-            drawYesAction(color: false)
+            drawYesAction()
         }
         else if type == .paintSelectCancel {
-            drawNoAction(color: false)
+            drawNoAction()
         }
         else if type == .yes {
-            drawYesAction(color: true)
+            drawYesAction()
         }
         else if type == .yesLight {
-            drawYesAction(color: false)
+            drawYesAction()
         }
         else if type == .no {
-            drawNoAction(color: true)
+            drawNoAction()
         }
         else if type == .play {
             drawPlayAction()
@@ -264,8 +273,25 @@ class ActionButtonView: UIView {
         
         var paint = ActionButtonView.yellowColor!
         
+        if colorMode != .color {
+            if colorMode == .black {
+                paint = ActionButtonView.blackColor
+            }
+            else if colorMode == .white {
+                paint = ActionButtonView.whiteColor
+            }
+        }
+        
         if selected {
-            paint = ActionButtonView.lightYellowColor!
+            if colorMode == .color {
+                paint = ActionButtonView.lightYellowColor!
+            }
+            else  if colorMode == .black {
+                   paint = ActionButtonView.thirdGrayColor!
+            }
+            else if colorMode == .white {
+                paint = ActionButtonView.twoThirdGrayColor!
+            }
         }
         
         let context = UIGraphicsGetCurrentContext()!
@@ -314,17 +340,31 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 0, y: 3, color: primaryColor)
     }
     
-    func drawYesAction(color: Bool) {
+    func drawYesAction() {
         self.rows = 5
         self.cols = 7
         
         var paint = ActionButtonView.greenColor!
-        if self.selected {
-            paint = ActionButtonView.lightGreenColor!
+        
+        if colorMode != .color {
+            if colorMode == .black {
+                paint = ActionButtonView.blackColor
+            }
+            else if colorMode == .white {
+                paint = ActionButtonView.whiteColor
+            }
         }
         
-        if !color {
-            paint = ActionButtonView.whiteColor!
+        if selected {
+            if colorMode == .color {
+                paint = ActionButtonView.lightGreenColor!
+            }
+            else  if colorMode == .black {
+                   paint = ActionButtonView.thirdGrayColor!
+            }
+            else if colorMode == .white {
+                paint = ActionButtonView.twoThirdGrayColor!
+            }
         }
         
         let context = UIGraphicsGetCurrentContext()!
@@ -347,17 +387,31 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 2, y: 4, color: paint)
     }
     
-    func drawNoAction(color: Bool) {
+    func drawNoAction() {
         self.rows = 5
         self.cols = 5
         
         var paint = ActionButtonView.redColor!
-        if self.selected {
-            paint = ActionButtonView.lightRedColor!
+        
+        if colorMode != .color {
+            if colorMode == .black {
+                paint = ActionButtonView.blackColor
+            }
+            else if colorMode == .white {
+                paint = ActionButtonView.whiteColor
+            }
         }
         
-        if !color {
-            paint = ActionButtonView.whiteColor!
+        if selected {
+            if colorMode == .color {
+                paint = ActionButtonView.lightRedColor!
+            }
+            else  if colorMode == .black {
+                   paint = ActionButtonView.thirdGrayColor!
+            }
+            else if colorMode == .white {
+                paint = ActionButtonView.twoThirdGrayColor!
+            }
         }
         
         let context = UIGraphicsGetCurrentContext()!

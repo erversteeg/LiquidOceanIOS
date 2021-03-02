@@ -81,6 +81,15 @@ class SessionSettings: NSObject {
     var secondContributorName = ""
     var thirdContributorName = ""
     
+    var paintIndicatorFill = false
+    var paintIndicatorSquare = true
+    var paintIndicatorOutline = true
+    var paintIndicatorWidth = 4
+    
+    var gridLineColor: Int32 = 0
+    
+    var promptBack = false
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -95,6 +104,12 @@ class SessionSettings: NSObject {
         userDefaults().set(googleAuth, forKey: "google_auth")
         userDefaults().set(panelBackgroundName, forKey: "panel_background")
         userDefaults().set(showGridLines, forKey: "show_grid_lines")
+        userDefaults().set(paintIndicatorFill, forKey: "paint_indicator_fill")
+        userDefaults().set(paintIndicatorSquare, forKey: "paint_indicator_square")
+        userDefaults().set(paintIndicatorOutline, forKey: "paint_indicator_outline")
+        userDefaults().set(paintIndicatorWidth, forKey: "paint_indicator_width")
+        userDefaults().set(gridLineColor, forKey: "grid_line_color")
+        userDefaults().set(promptBack, forKey: "prompt_back")
     }
     
     func load() {
@@ -121,6 +136,18 @@ class SessionSettings: NSObject {
         panelBackgroundName = userDefaultsString(forKey: "panel_background", defaultVal: "")
         
         showGridLines = userDefaultsBool(forKey: "show_grid_lines", defaultVal: true)
+        
+        paintIndicatorFill = userDefaultsBool(forKey: "paint_indicator_fill", defaultVal: false)
+        
+        paintIndicatorSquare = userDefaultsBool(forKey: "paint_indicator_square", defaultVal: true)
+        
+        paintIndicatorOutline = userDefaultsBool(forKey: "paint_indicator_outline", defaultVal: false)
+        
+        paintIndicatorWidth = userDefaultsInt(forKey: "paint_indicator_width", defaultVal: 3)
+        
+        gridLineColor = userDefaultsInt32(forKey: "grid_line_color", defaultVal: 0)
+        
+        promptBack = userDefaultsBool(forKey: "prompt_back", defaultVal: false)
     }
     
     func userDefaults() -> UserDefaults {

@@ -19,12 +19,17 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     var brownColor: Int32!
     var lightGrayColor: Int32!
     var lineColor: Int32!
+    var darkGrayColor: Int32!
+    var grayAccentColor: Int32!
+    var darkLineColor: Int32!
 
     var lineWidth: CGFloat = 1.0
     
     var flashingError = false
     
     var world = false
+    
+    var panelThemeConfig: PanelThemeConfig!
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,11 +44,18 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     }
     
     func commonInit() {
+        panelThemeConfig = PanelThemeConfig.defaultLightTheme()
+        
         greenColor = Utils.int32FromColorHex(hex: "0xFF42FF7B")
         whiteColor = Utils.int32FromColorHex(hex: "0xFFFFFFFF")
         blueColor = Utils.int32FromColorHex(hex: "0xFF84BAFF")
         brownColor = Utils.int32FromColorHex(hex: "0xFF633D21")
         lightGrayColor = Utils.int32FromColorHex(hex: "0xFFE6EBE6")
+        
+        darkGrayColor = Utils.int32FromColorHex(hex: "0xff2f2f2f")
+        grayAccentColor = Utils.int32FromColorHex(hex: "0xff484948")
+        
+        darkLineColor = darkGrayColor
         
         lineColor = Utils.int32FromColorHex(hex: "0xFFFFFFFF")
         
@@ -60,21 +72,40 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     }
     
     func drawPixelBorder(ctx: CGContext) {
-        for x in 1...cols - 2 {
-            drawPixel(ctx: ctx, x: x, y: 0, color: whiteColor)
+        if panelThemeConfig.darkPaintQtyBar {
+            for x in 1...cols - 2 {
+                drawPixel(ctx: ctx, x: x, y: 0, color: darkGrayColor)
+            }
+            for x in 1...cols - 2 {
+                drawPixel(ctx: ctx, x: x, y: 2, color: darkGrayColor)
+            }
+            
+            // decor
+            drawPixel(ctx: ctx, x: 6, y: 0, color: grayAccentColor)
+            drawPixel(ctx: ctx, x: 2, y: 2, color: grayAccentColor)
+            drawPixel(ctx: ctx, x: 8, y: 2, color: grayAccentColor)
+            
+            // ends
+            drawPixel(ctx: ctx, x: 0, y: 1, color: greenColor)
+            drawPixel(ctx: ctx, x: cols - 1, y: 1, color: darkGrayColor)
         }
-        for x in 1...cols - 2 {
-            drawPixel(ctx: ctx, x: x, y: 2, color: whiteColor)
+        else {
+            for x in 1...cols - 2 {
+                drawPixel(ctx: ctx, x: x, y: 0, color: whiteColor)
+            }
+            for x in 1...cols - 2 {
+                drawPixel(ctx: ctx, x: x, y: 2, color: whiteColor)
+            }
+            
+            // decor
+            drawPixel(ctx: ctx, x: 6, y: 0, color: lightGrayColor)
+            drawPixel(ctx: ctx, x: 2, y: 2, color: lightGrayColor)
+            drawPixel(ctx: ctx, x: 8, y: 2, color: lightGrayColor)
+            
+            // ends
+            drawPixel(ctx: ctx, x: 0, y: 1, color: greenColor)
+            drawPixel(ctx: ctx, x: cols - 1, y: 1, color: whiteColor)
         }
-        
-        // decor
-        drawPixel(ctx: ctx, x: 6, y: 0, color: lightGrayColor)
-        drawPixel(ctx: ctx, x: 2, y: 2, color: lightGrayColor)
-        drawPixel(ctx: ctx, x: 8, y: 2, color: lightGrayColor)
-        
-        // ends
-        drawPixel(ctx: ctx, x: 0, y: 1, color: greenColor)
-        drawPixel(ctx: ctx, x: cols - 1, y: 1, color: whiteColor)
     }
     
     func drawQuantity(ctx: CGContext) {
@@ -97,7 +128,13 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
                     drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: blueColor)
                 }
                 else {
-                    drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: ActionButtonView.twoThirdGrayColor)
+                    if panelThemeConfig.darkPaintQtyBar {
+                        drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: ActionButtonView.thirdGrayColor)
+                    }
+                    else {
+                        drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: ActionButtonView.twoThirdGrayColor)
+                    }
+                    
                 }
             }
             else {
@@ -110,7 +147,12 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
             }
             
             if x < cols - 2 {
-                drawLine(ctx: ctx, start: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight), end: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight * 2), color: lineColor)
+                if panelThemeConfig.darkPaintQtyBar {
+                    drawLine(ctx: ctx, start: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight), end: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight * 2), color: darkLineColor)
+                }
+                else {
+                    drawLine(ctx: ctx, start: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight), end: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight * 2), color: lineColor)
+                }
             }
             
             curProg += qtyPer
