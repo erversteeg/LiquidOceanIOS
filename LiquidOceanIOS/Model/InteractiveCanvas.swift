@@ -49,7 +49,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     var basePpu = 100
     var ppu: Int!
     
-    var gridLineThreshold = 50
+    var gridLineThreshold = 25
     
     var deviceViewport: CGRect!
     

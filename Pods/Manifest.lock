@@ -1,0 +1,58 @@
+PODS:
+  - Alamofire (5.4.1)
+  - AppAuth (1.4.0):
+    - AppAuth/Core (= 1.4.0)
+    - AppAuth/ExternalUserAgent (= 1.4.0)
+  - AppAuth/Core (1.4.0)
+  - AppAuth/ExternalUserAgent (1.4.0)
+  - FlexColorPicker (1.4.2)
+  - GoogleSignIn (5.0.2):
+    - AppAuth (~> 1.2)
+    - GTMAppAuth (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GTMAppAuth (1.1.0):
+    - AppAuth/Core (~> 1.4)
+    - GTMSessionFetcher (~> 1.4)
+  - GTMSessionFetcher (1.5.0):
+    - GTMSessionFetcher/Full (= 1.5.0)
+  - GTMSessionFetcher/Core (1.5.0)
+  - GTMSessionFetcher/Full (1.5.0):
+    - GTMSessionFetcher/Core (= 1.5.0)
+  - ReachabilitySwift (5.0.0)
+  - Socket.IO-Client-Swift (16.0.0):
+    - Starscream (~> 4.0)
+  - Starscream (4.0.4)
+
+DEPENDENCIES:
+  - Alamofire (~> 5.4.1)
+  - FlexColorPicker
+  - GoogleSignIn
+  - ReachabilitySwift
+  - Socket.IO-Client-Swift (~> 16.0.0)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - AppAuth
+    - FlexColorPicker
+    - GoogleSignIn
+    - GTMAppAuth
+    - GTMSessionFetcher
+    - ReachabilitySwift
+    - Socket.IO-Client-Swift
+    - Starscream
+
+SPEC CHECKSUMS:
+  Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  FlexColorPicker: d7ed5cfd8ceb936f2930e4e30629f9448967a5f8
+  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
+  GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
+  GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  Socket.IO-Client-Swift: ff35cb6e4831f681441ce25bc1078039ca8602ea
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
+
+PODFILE CHECKSUM: 39dcd022719f80bf47713a70c48bb5a55879ab44
+
+COCOAPODS: 1.10.1

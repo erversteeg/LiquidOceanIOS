@@ -90,6 +90,11 @@ class SessionSettings: NSObject {
     
     var promptBack = false
     
+    var canvasLockBorder = false
+    var canvasLockColor: Int32 = 0
+    
+    var showPaintBar = true
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -110,6 +115,9 @@ class SessionSettings: NSObject {
         userDefaults().set(paintIndicatorWidth, forKey: "paint_indicator_width")
         userDefaults().set(gridLineColor, forKey: "grid_line_color")
         userDefaults().set(promptBack, forKey: "prompt_back")
+        userDefaults().set(canvasLockBorder, forKey: "canvas_lock_border")
+        userDefaults().set(canvasLockColor, forKey: "canvas_lock_color")
+        userDefaults().set(showPaintBar, forKey: "show_paint_bar")
     }
     
     func load() {
@@ -123,7 +131,7 @@ class SessionSettings: NSObject {
         
         backgroundColorIndex = userDefaultsInt(forKey: "background_color", defaultVal: 0)
         
-        numRecentColors = userDefaultsInt(forKey: "num_recent_colors", defaultVal: 8)
+        numRecentColors = userDefaultsInt(forKey: "num_recent_colors", defaultVal: 16)
         
         xp = userDefaultsInt(forKey: "xp", defaultVal: 0)
         
@@ -133,7 +141,7 @@ class SessionSettings: NSObject {
         
         googleAuth = userDefaultsBool(forKey: "google_auth", defaultVal: false)
         
-        panelBackgroundName = userDefaultsString(forKey: "panel_background", defaultVal: "")
+        panelBackgroundName = userDefaultsString(forKey: "panel_background", defaultVal: "amb_15.jpg")
         
         showGridLines = userDefaultsBool(forKey: "show_grid_lines", defaultVal: true)
         
@@ -148,6 +156,12 @@ class SessionSettings: NSObject {
         gridLineColor = userDefaultsInt32(forKey: "grid_line_color", defaultVal: 0)
         
         promptBack = userDefaultsBool(forKey: "prompt_back", defaultVal: false)
+        
+        canvasLockBorder = userDefaultsBool(forKey: "canvas_lock_border", defaultVal: false)
+        
+        canvasLockColor = userDefaultsInt32(forKey: "canvas_lock_color", defaultVal: Utils.int32FromColorHex(hex: "0x66FF0000"))
+        
+        showPaintBar = userDefaultsBool(forKey: "show_paint_bar", defaultVal: true)
     }
     
     func userDefaults() -> UserDefaults {

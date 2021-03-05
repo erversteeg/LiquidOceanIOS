@@ -12,6 +12,7 @@ class HowtoViewController: UIViewController {
 
     @IBOutlet weak var backAction: ActionButtonView!
     @IBOutlet weak var howtoTitleAction: ActionButtonView!
+    @IBOutlet weak var step1Text: UILabel!
     
     @IBOutlet weak var paintAction: ActionButtonView!
     @IBOutlet weak var paintQtyBar: PaintQuantityBar!
@@ -21,7 +22,9 @@ class HowtoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        backAction.type = .backSolid
+        setBackground()
+        
+        backAction.type = .back
         backAction.setOnClickListener {
             self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
         }
@@ -33,17 +36,33 @@ class HowtoViewController: UIViewController {
         
         artView.showBackground = false
         artView.jsonFile = "mushroom_json"
+        
+        howtoTitleAction.isHidden = true
+        
+        step1Text.isHidden = true
+        paintAction.isHidden = true
+        paintQtyBar.isHidden = true
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Animator.animateTitleFromTop(titleView: howtoTitleAction)
+        
+        Animator.animateHorizontalViewEnter(view: step1Text, left: true)
+        Animator.animateHorizontalViewEnter(view: paintAction, left: true)
+        Animator.animateHorizontalViewEnter(view: paintQtyBar, left: true)
     }
-    */
 
+    func setBackground() {
+        let gradient = CAGradientLayer()
+
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff7755d4")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff5576d4")).cgColor]
+        
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 0, y: 1)
+
+        view.layer.insertSublayer(gradient, at: 0)
+    }
 }

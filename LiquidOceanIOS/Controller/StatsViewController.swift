@@ -14,6 +14,8 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     @IBOutlet weak var backAction: ActionButtonView!
     
+    var initial = true
+    
     var data: [[String: String]]?
     
     let statKeys = ["Pixels Single", "Pixels World", "Pixel Overwrites In", "Pixel Overwrites Out", "Paint Accrued", "World Level"]
@@ -23,16 +25,13 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
-        collectionView.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
+        setBackground()
         
-        backAction.type = .backSolid
+        backAction.type = .back
         
         backAction.setOnClickListener {
             self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
         }
-        
-        
         
         data = [[String: String]]()
         
@@ -54,6 +53,20 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
         data![1]["Paint Accrued"] = StatTracker.instance.getAchievementProgressString(eventType: .paintReceived)
         
         self.collectionView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let headerView = collectionView.visibleSupplementaryViews(ofKind: UICollectionView.elementKindSectionHeader)[0]
+        Animator.animateTitleFromTop(titleView: headerView)
+        
+        var i = 0
+        for visibleCell in collectionView.visibleCells {
+            Animator.animateHorizontalViewEnter(view: visibleCell, left: i % 2 == 0)
+            i += 1
+        }
+        initial = false
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -91,7 +104,9 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
             cell.statAmt.text = formatted
         }
         
-        cell.contentView.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
+        if indexPath.item < 6 && initial {
+            cell.isHidden = true
+        }
         
         return cell
     }
@@ -115,9 +130,11 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "StatHeaderView", for: indexPath) as! ActionViewReusableView
         
-        view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
-        
         if indexPath.section == 0 {
+            if initial {
+                view.isHidden = true
+            }
+            
             view.actionView.selectable = false
             view.actionView.type = .stats
             view.actionViewWidth.constant = 160
@@ -129,5 +146,17 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
         }
         
         return view
+    }
+    
+    func setBackground() {
+        let gradient = CAGradientLayer()
+
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff000000")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff333333")).cgColor]
+        
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 0, y: 1)
+
+        view.layer.insertSublayer(gradient, at: 0)
     }
 }

@@ -1,0 +1,6 @@
+framework module Pods_LiquidOceanIOS {
+  umbrella header "Pods-LiquidOceanIOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
