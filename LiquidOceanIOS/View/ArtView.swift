@@ -33,7 +33,7 @@ class ArtView: UIView {
         }
     }
     
-    var showBackground = true
+    var showBackground = false
     
     var ppu = CGFloat(10)
     

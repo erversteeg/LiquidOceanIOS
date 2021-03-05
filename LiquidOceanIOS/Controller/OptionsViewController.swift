@@ -15,6 +15,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet weak var colorPickerDoneButton: UIButton!
     @IBOutlet weak var colorPickerCancelButton: UIButton!
 
+    @IBOutlet weak var panelTextureTitle: UILabel!
     @IBOutlet weak var panelsCollectionView: UICollectionView!
     
     @IBOutlet weak var optionsTitleAction: ActionButtonView!
@@ -86,12 +87,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
+        setBackground()
 
         optionsTitleAction.selectable = false
         optionsTitleAction.type = .options
         
-        backAction.type = .backSolid
+        backAction.type = .back
         
         backAction.setOnClickListener {
             self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
@@ -111,8 +112,6 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         if SessionSettings.instance.panelBackgroundName != "" {
             panelsCollectionView.scrollToItem(at: IndexPath(item: panels.firstIndex(of: SessionSettings.instance.panelBackgroundName)!, section: 0), at: .centeredHorizontally, animated: true)
         }
-        
-        panelsCollectionView.backgroundColor = Utils.UIColorFromColorHex(hex: "0xFF333333")
         
         // show paint bar
         showPaintBarContainer.layer.borderColor = UIColor.white.cgColor
@@ -204,6 +203,24 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             self.paletteSizeLabel.text = String(value)
             SessionSettings.instance.paintIndicatorWidth = value
         }
+        
+        optionsTitleAction.isHidden = true
+        
+        panelTextureTitle.isHidden = true
+        panelsCollectionView.isHidden = true
+        canvasLockBorderContainer.isHidden = true
+        canvasLockColorContainer.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Animator.animateTitleFromTop(titleView: optionsTitleAction)
+        
+        Animator.animateHorizontalViewEnter(view: panelTextureTitle, left: false)
+        Animator.animateHorizontalViewEnter(view: panelsCollectionView, left: true)
+        Animator.animateHorizontalViewEnter(view: canvasLockBorderContainer, left: false)
+        Animator.animateHorizontalViewEnter(view: canvasLockColorContainer, left: true)
     }
     
     @IBAction func switchChanged(_ sender: UISwitch) {
@@ -477,8 +494,6 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         let backgroundName = self.panels[indexPath.item]
         
-        cell.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
-        
         cell.imageView.contentMode = .scaleAspectFit
         
         cell.selectAction.colorMode = .white
@@ -571,5 +586,17 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         else if selectingCanvasLockColor {
             canvasLockColorColorView.backgroundColor = selectedColor
         }
+    }
+    
+    func setBackground() {
+        let gradient = CAGradientLayer()
+
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff000000")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff333333")).cgColor]
+        
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 0, y: 1)
+
+        view.layer.insertSublayer(gradient, at: 0)
     }
 }

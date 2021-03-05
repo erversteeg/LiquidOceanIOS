@@ -27,6 +27,31 @@ class Animator: NSObject {
         return CGPoint(x: x, y: y)
     }
     
+    static func animateHorizontalViewEnter(view: UIView, left: Bool) {
+        var offset = CGFloat(2000)
+        if !left {
+            offset = -offset
+        }
+        
+        view.isHidden = false
+        
+        view.transform = view.transform.translatedBy(x: offset, y: 0)
+        
+        UIView.animate(withDuration: 0.15, delay: 0, options: .allowAnimatedContent, animations: {
+            view.transform = view.transform.translatedBy(x: -offset, y: 0)
+        }, completion: nil)
+    }
+    
+    static func animateTitleFromTop(titleView: UIView) {
+        titleView.isHidden = false
+        
+        titleView.frame = CGRect(x: titleView.frame.origin.x, y: titleView.frame.origin.y - 300, width: titleView.frame.size.width, height: titleView.frame.size.height)
+        
+        UIView.animate(withDuration: 0.15, delay: 0, options: .allowAnimatedContent, animations: {
+            titleView.frame = CGRect(x: titleView.frame.origin.x, y: titleView.frame.origin.y + 300, width: titleView.frame.size.width, height: titleView.frame.size.height)
+        }, completion: nil)
+    }
+    
     static func animatePixelColorEffect(view: UIView, parent: UIView, safeViews: [UIView]) {
         let point = getSafePoint(view: view, parent: parent, safeViews: safeViews)
         
