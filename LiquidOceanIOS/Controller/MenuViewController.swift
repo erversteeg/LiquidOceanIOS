@@ -16,16 +16,29 @@ class MenuViewController: UIViewController, AchievementListener {
     let showOptions = "ShowOptions"
     let showHowto = "ShowHowto"
     
+    @IBOutlet weak var playButtonBottomLayer: ActionButtonView!
     @IBOutlet weak var playButton: ActionButtonView!
-    @IBOutlet weak var optionsButton: ActionButtonView!
-    @IBOutlet weak var statsButton: ActionButtonView!
-    @IBOutlet weak var howtoAction: ActionButtonView!
     
-    @IBOutlet weak var singleAction: ActionButtonView!
-    @IBOutlet weak var worldAction: ActionButtonView!
-    @IBOutlet weak var devAction: ActionButtonView!
+    @IBOutlet weak var optionsButtonBottomLayer: ActionButtonView!
+    @IBOutlet weak var optionsButton: ActionButtonView!
+    
+    @IBOutlet weak var statsButtonBottomLayer: ActionButtonView!
+    @IBOutlet weak var statsButton: ActionButtonView!
+    
+    @IBOutlet weak var howtoButtonBottomLayer: ActionButtonView!
+    @IBOutlet weak var howtoButton: ActionButtonView!
+    
+    @IBOutlet weak var singleButtonBottomLayer: ActionButtonView!
+    @IBOutlet weak var singleButton: ActionButtonView!
+    
+    @IBOutlet weak var worldButtonBottomLayer: ActionButtonView!
+    @IBOutlet weak var worldButton: ActionButtonView!
+    
+    @IBOutlet weak var devButtonBottomLayer: ActionButtonView!
+    @IBOutlet weak var devButton: ActionButtonView!
     
     @IBOutlet weak var backAction: ActionButtonView!
+    @IBOutlet weak var backActionLeading: NSLayoutConstraint!
     
     @IBOutlet weak var achievementBanner: UIView!
     
@@ -60,23 +73,60 @@ class MenuViewController: UIViewController, AchievementListener {
         // self.view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
         randomGradientBackground()
         
-        playButton.type = .play
-        optionsButton.type = .options
-        statsButton.type = .stats
-        howtoAction.type = .howto
+        menuContainer.layer.cornerRadius = 10
+        menuContainer.layer.borderWidth = 1
+        menuContainer.layer.borderColor = Utils.UIColorFromColorHex(hex: "0xFF333333").cgColor
         
-        singleAction.type = .single
-        worldAction.type = .world
-        devAction.type = .dev
+        playButtonBottomLayer.type = .play
+        playButtonBottomLayer.selectable = false
+        
+        playButton.type = .play
+        playButton.topLayer = true
+        
+        optionsButtonBottomLayer.type = .options
+        optionsButtonBottomLayer.selectable = false
+        
+        optionsButton.type = .options
+        optionsButton.topLayer = true
+        
+        statsButtonBottomLayer.type = .stats
+        statsButtonBottomLayer.selectable = false
+        
+        statsButton.type = .stats
+        statsButton.topLayer = true
+        
+        howtoButtonBottomLayer.type = .howto
+        howtoButtonBottomLayer.selectable = false
+        
+        howtoButton.type = .howto
+        howtoButton.topLayer = true
+        
+        singleButtonBottomLayer.type = .single
+        singleButtonBottomLayer.selectable = false
+        
+        singleButton.type = .single
+        singleButton.topLayer = true
+        
+        worldButtonBottomLayer.type = .world
+        worldButtonBottomLayer.selectable = false
+        
+        worldButton.type = .world
+        worldButton.topLayer = true
+        
+        devButtonBottomLayer.type = .dev
+        devButtonBottomLayer.selectable = false
+        
+        devButton.type = .dev
+        devButton.topLayer = true
         
         backAction.type = .backSolid
         
         self.backAction.setOnClickListener {
-            if !self.singleAction.isHidden {
+            if !self.singleButton.isHidden {
                 self.toggleMenuButtons(show: true, depth: 0)
                 self.toggleMenuButtons(show: false, depth: 1)
                 
-                Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.howtoAction], initial: false, moveOut: false)
+                Animator.animateMenuButtons(views: [[self.playButtonBottomLayer, self.playButton], [self.optionsButtonBottomLayer, self.optionsButton], [self.statsButtonBottomLayer, self.statsButton], [self.howtoButtonBottomLayer, self.howtoButton]], cascade: true, moveOut: false)
                 
                 self.backAction.isHidden = true
             }
@@ -86,7 +136,7 @@ class MenuViewController: UIViewController, AchievementListener {
             self.toggleMenuButtons(show: false, depth: 0)
             self.toggleMenuButtons(show: true, depth: 1)
             
-            Animator.animateMenuButtons(views: [self.singleAction, self.worldAction, self.devAction], initial: false, moveOut: false)
+            Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false)
             
             self.backAction.isHidden = false
         }
@@ -99,20 +149,20 @@ class MenuViewController: UIViewController, AchievementListener {
             self.performSegue(withIdentifier: self.showStats, sender: nil)
         }
         
-        self.howtoAction.setOnClickListener {
+        self.howtoButton.setOnClickListener {
             self.performSegue(withIdentifier: self.showHowto, sender: nil)
         }
         
-        self.singleAction.setOnClickListener {
+        self.singleButton.setOnClickListener {
             self.performSegue(withIdentifier: self.showSinglePlay, sender: nil)
         }
         
-        self.worldAction.setOnClickListener {
+        self.worldButton.setOnClickListener {
             self.realmId = 1
             self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
         }
         
-        self.devAction.setOnClickListener {
+        self.devButton.setOnClickListener {
             self.realmId = 2
             self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
         }
@@ -124,10 +174,18 @@ class MenuViewController: UIViewController, AchievementListener {
         startPixels()
     }
     
+    override func viewDidLayoutSubviews() {
+        let backX = self.backAction.frame.origin.x
+        
+        if backX < 0 {
+            backActionLeading.constant += 30
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.howtoAction], initial: true, moveOut: false)
+        Animator.animateMenuButtons(views: [[self.playButtonBottomLayer, self.playButton], [self.optionsButtonBottomLayer, self.optionsButton], [self.statsButtonBottomLayer, self.statsButton], [self.howtoButtonBottomLayer, self.howtoButton]], cascade: true, moveOut: false)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -153,7 +211,7 @@ class MenuViewController: UIViewController, AchievementListener {
         self.toggleMenuButtons(show: true, depth: 0)
         self.toggleMenuButtons(show: false, depth: 1)
         
-        Animator.animateMenuButtons(views: [self.playButton, self.optionsButton, self.statsButton, self.howtoAction], initial: true, moveOut: false)
+        Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false)
         
         self.backAction.isHidden = true
         
@@ -179,15 +237,27 @@ class MenuViewController: UIViewController, AchievementListener {
     
     func toggleMenuButtons(show: Bool, depth: Int) {
         if depth == 0 {
+            self.playButtonBottomLayer.isHidden = !show
             self.playButton.isHidden = !show
+            
+            self.optionsButtonBottomLayer.isHidden = !show
             self.optionsButton.isHidden = !show
+            
+            self.statsButtonBottomLayer.isHidden = !show
             self.statsButton.isHidden = !show
-            self.howtoAction.isHidden = !show
+            
+            self.howtoButtonBottomLayer.isHidden = !show
+            self.howtoButton.isHidden = !show
         }
         else if depth == 1 {
-            self.singleAction.isHidden = !show
-            self.worldAction.isHidden = !show
-            self.devAction.isHidden = !show
+            self.singleButtonBottomLayer.isHidden = !show
+            self.singleButton.isHidden = !show
+            
+            self.worldButtonBottomLayer.isHidden = !show
+            self.worldButton.isHidden = !show
+            
+            self.devButtonBottomLayer.isHidden = !show
+            self.devButton.isHidden = !show
         }
     }
     
@@ -301,5 +371,22 @@ class MenuViewController: UIViewController, AchievementListener {
         }
         
         return nil
+    }
+    
+    func deviceName() -> String {
+
+        var systemInfo = utsname()
+        uname(&systemInfo)
+
+        guard let iOSDeviceModelsPath = Bundle.main.path(forResource: "iOSDeviceModelMapping", ofType: "plist") else { return "" }
+        guard let iOSDevices = NSDictionary(contentsOfFile: iOSDeviceModelsPath) else { return "" }
+
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+
+        return iOSDevices.value(forKey: identifier) as! String
     }
 }

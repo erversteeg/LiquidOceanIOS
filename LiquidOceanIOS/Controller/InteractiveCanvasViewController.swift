@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -37,8 +37,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var backButton: ActionButtonView!
     
+    @IBOutlet weak var exportButton: ActionButtonFrame!
     @IBOutlet weak var exportAction: ActionButtonView!
+    
+    @IBOutlet weak var changeBackgroundButton: ActionButtonFrame!
     @IBOutlet weak var changeBackgroundAction: ActionButtonView!
+    
+    @IBOutlet weak var gridLinesButton: ActionButtonFrame!
     @IBOutlet weak var gridLinesAction: ActionButtonView!
     
     @IBOutlet weak var toolboxButton: ActionButtonFrame!
@@ -67,6 +72,19 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var canvasLockView: UIView!
     
+    @IBOutlet weak var backButtonLeading: NSLayoutConstraint!
+    @IBOutlet weak var paintPanelButtonTrailing: NSLayoutConstraint!
+    
+    @IBOutlet weak var exportButtonTrailing: NSLayoutConstraint!
+    @IBOutlet weak var changeBackgroundButtonTrailing: NSLayoutConstraint!
+    @IBOutlet weak var gridLinesButtonTrailing: NSLayoutConstraint!
+    @IBOutlet weak var toolboxButtonTrailing: NSLayoutConstraint!
+    
+    @IBOutlet weak var recentColorsButtonLeading: NSLayoutConstraint!
+    
+    @IBOutlet weak var recentColorsContainerLeading: NSLayoutConstraint!
+    @IBOutlet weak var recentColorsContainerBottom: NSLayoutConstraint!
+    
     var panelThemeConfig: PanelThemeConfig!
     
     var world = false
@@ -94,6 +112,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         SessionSettings.instance.interactiveCanvas = self.surfaceView.interactiveCanvas
         
         SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
+        
+        self.surfaceView.paintActionDelegate = self
         
         self.surfaceView.interactiveCanvas.paintDelegate = self
         self.surfaceView.interactiveCanvas.pixelHistoryDelegate = self
@@ -140,15 +160,22 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         self.paintPanel.insertSubview(backgroundImage, at: 0)
         
-        toggleToolbox(open: false)
+        // toolbox
+        //self.toggleToolbox(open: false)
         
         self.paintPanel.isHidden = true
         
         // action buttons
         paintPanelButton.type = .paint
         closePaintPanelButton.type = .closePaint
+        
+        exportButton.actionButtonView = exportAction
         exportAction.type = .export
+        
+        changeBackgroundButton.actionButtonView = changeBackgroundAction
         changeBackgroundAction.type = .changeBackground
+        
+        gridLinesButton.actionButtonView = gridLinesAction
         gridLinesAction.type = .gridLines
         
         // toolbox
@@ -156,8 +183,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.toolboxButton.actionButtonView = self.toolboxActionView
         
         self.toolboxButton.setOnClickListener {
-            self.toggleToolbox(open: self.exportAction.isHidden)
+            self.toggleToolbox(open: self.exportButton.isHidden)
         }
+        
+        exportButton.isHidden = true
+        changeBackgroundButton.isHidden = true
+        gridLinesButton.isHidden = true
         
         // recent colors
         self.recentColorsActionView.type = .dot
@@ -170,13 +201,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.setupRecentColors(recentColors: self.surfaceView.interactiveCanvas.recentColors)
         
         // export
-        self.exportAction.setOnClickListener {
+        self.exportButton.setOnClickListener {
             self.surfaceView.startExporting()
             self.exportAction.selected = true
         }
         
         // change background
-        self.changeBackgroundAction.setOnClickListener {
+        self.changeBackgroundButton.setOnClickListener {
             SessionSettings.instance.backgroundColorIndex += 1
             if SessionSettings.instance.backgroundColorIndex == self.surfaceView.interactiveCanvas.numBackgrounds {
                 SessionSettings.instance.backgroundColorIndex = 0
@@ -198,7 +229,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
         
         // grid lines
-        gridLinesAction.setOnClickListener {
+        gridLinesButton.setOnClickListener {
             SessionSettings.instance.showGridLines = !SessionSettings.instance.showGridLines
             
             self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
@@ -366,6 +397,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.closePaintPanelButton.colorMode = .white
         }
         
+        self.paintColorAccept.touchDelegate = self.paintColorIndicator
+        
         self.paintQuantityBar.panelThemeConfig = panelThemeConfig
         self.paintColorIndicator.panelThemeConfig = panelThemeConfig
         
@@ -384,6 +417,54 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
         else {
             self.paintQuantityBar.removeGestureRecognizer(tgr)
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        let backX = self.backButton.frame.origin.x
+        let paintPanelButtonX = self.paintPanelButton.frame.origin.x + self.paintPanelButton.frame.size.width
+        
+        let exportButtonX = self.exportButton.frame.origin.x + self.exportButton.frame.size.width
+        let changeBackgroundButtonX = self.changeBackgroundButton.frame.origin.x + self.changeBackgroundButton.frame.size.width
+        let gridLinesButtonX = self.gridLinesButton.frame.origin.x + self.gridLinesButton.frame.size.width
+        
+        let toolboxButtonX = self.toolboxButton.frame.origin.x + self.toolboxButton.frame.size.width
+        
+        let recentColorsButtonX = self.recentColorsButton.frame.origin.x
+        
+        let recentColorsX = self.recentColorsContainer.frame.origin.x
+        
+        if paintPanelButtonX > self.view.frame.size.width {
+            paintPanelButtonTrailing.constant += 30
+        }
+        
+        if exportButtonX > self.view.frame.size.width {
+            exportButtonTrailing.constant += 30
+        }
+        
+        if changeBackgroundButtonX > self.view.frame.size.width {
+            changeBackgroundButtonTrailing.constant += 30
+        }
+        
+        if gridLinesButtonX > self.view.frame.size.width {
+            gridLinesButtonTrailing.constant += 30
+        }
+        
+        if toolboxButtonX > self.view.frame.size.width {
+            toolboxButtonTrailing.constant += 30
+        }
+        
+        if backX < 0 {
+            backButtonLeading.constant += 30
+        }
+        
+        if recentColorsButtonX < 0 {
+            recentColorsButtonLeading.constant += 30
+        }
+        
+        if recentColorsX < 20 {
+            recentColorsContainerLeading.constant = 20
+            recentColorsContainerBottom.constant = 20
         }
     }
     
@@ -491,7 +572,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @objc func didTapColorIndicator(sender: UITapGestureRecognizer) {
         self.previousColor = SessionSettings.instance.paintColor
         
-        self.colorPickerFrameWidth.constant = 370
+        self.colorPickerFrameWidth.constant = 330
         self.colorPickerFrame.isHidden = false
         
         self.paintColorAccept.isHidden = false
@@ -522,14 +603,14 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func toggleToolbox(open: Bool) {
         if open {
-            exportAction.isHidden = false
-            changeBackgroundAction.isHidden = false
-            gridLinesAction.isHidden = false
+            exportButton.isHidden = false
+            changeBackgroundButton.isHidden = false
+            gridLinesButton.isHidden = false
+            
+            Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: false)
         }
         else {
-            exportAction.isHidden = true
-            changeBackgroundAction.isHidden = true
-            gridLinesAction.isHidden = true
+            Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: true)
         }
     }
     
@@ -631,6 +712,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     func notifyRecentColorSelected(color: Int32) {
         self.notifyPaintColorUpdate()
         self.colorPickerViewController.selectedColor = UIColor(argb: color)
+        
+        self.recentColorsContainer.isHidden = true
     }
     
     // export view controller delegate
@@ -712,6 +795,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    // paint action delegate
+    func notifyPaintActionStarted() {
+        toggleRecentColors(open: false)
+    }
+    
 }
 
 

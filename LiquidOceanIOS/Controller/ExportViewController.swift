@@ -20,6 +20,8 @@ class ExportViewController: UIViewController {
     @IBOutlet weak var shareButton: ActionButtonFrame!
     @IBOutlet weak var shareActionView: ActionButtonView!
     
+    @IBOutlet weak var artViewHeight: NSLayoutConstraint!
+    
     var _art: [InteractiveCanvas.RestorePoint]?
     var art: [InteractiveCanvas.RestorePoint]? {
         set {
@@ -42,12 +44,14 @@ class ExportViewController: UIViewController {
     var delegate: ExportViewControllerDelegate?
     
     @IBOutlet weak var backButton: ActionButtonView!
+    @IBOutlet weak var backButtonLeading: NSLayoutConstraint!
+    
     @IBOutlet weak var artView: ArtView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        backButton.type = .back
+        backButton.type = .backSolid
         
         backButton.setOnClickListener {
             self.delegate?.notifyExportViewControllerBackPressed()
@@ -77,6 +81,16 @@ class ExportViewController: UIViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        if artView.frame.origin.y < (saveButton.frame.origin.y + saveButton.frame.size.height) {
+            artViewHeight.constant -= (saveButton.frame.origin.y + saveButton.frame.size.height) - artView.frame.origin.y + 10
+        }
+        
+        let backX = self.backButton.frame.origin.x
+        if backX < 0 {
+            backButtonLeading.constant += 30
+        }
+    }
 
     /*
     // MARK: - Navigation

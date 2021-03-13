@@ -97,41 +97,52 @@ class Animator: NSObject {
         return CGFloat(arc4random() % 1000000) / CGFloat(1000000)
     }
     
-    static func animateMenuButtons(views: [UIView], initial: Bool, moveOut: Bool) {
-        var delays = [0, 0.05, 0.08, 0.1]
-        if initial {
-            delays = [0.2, 0.25, 0.28, 0.3]
-        }
+    static func animateMenuButtons(views: [[UIView]], cascade: Bool, moveOut: Bool) {
+        let delays = [0, 0.05, 0.08, 0.1]
         
         if !moveOut {
             var index = 0
-            for view in views {
-                view.frame = CGRect(x: view.frame.origin.x + 500, y: view.frame.origin.y, width: view.frame.size.width, height: view.frame.size.height)
-                
-                view.alpha = 0
-                
-                UIView.animate(withDuration: 0.15, delay: delays[index], options: .allowAnimatedContent, animations: {
-                    view.alpha = 1
+            for viewLayers in views {
+                for layer in viewLayers {
+                    // layer.isHidden = false
                     
-                    view.frame = CGRect(x: view.frame.origin.x - 500, y: view.frame.origin.y, width: view.frame.size.width, height: view.frame.size.height)
-                }, completion: nil)
-                
+                    var delay = delays[index]
+                    
+                    layer.transform = layer.transform.translatedBy(x: 500, y: 0)
+                    
+                    layer.alpha = 0
+                    
+                    if !cascade {
+                        delay = 0
+                    }
+                    UIView.animate(withDuration: 0.15, delay: delay, options: .allowAnimatedContent, animations: {
+                        layer.alpha = 1
+                        
+                        layer.transform = layer.transform.translatedBy(x: -500, y: 0)
+                    }, completion: nil)
+                }
                 index += 1
             }
         }
         else {
             var index = 0
-            for view in views {
-                view.frame = CGRect(x: view.frame.origin.x + 500, y: view.frame.origin.y, width: view.frame.size.width, height: view.frame.size.height)
-                
-                view.alpha = 0
-                
-                Timer.scheduledTimer(withTimeInterval: Double(delays[index]), repeats: false) { (tmr) in
-                    UIView.animate(withDuration: 0.15) {
-                        view.frame = CGRect(x: view.frame.origin.x - 500, y: view.frame.origin.y, width: view.frame.size.width, height: view.frame.size.height)
+            for viewLayers in views {
+                for layer in viewLayers {
+                    var delay = delays[index]
+                    
+                    if !cascade {
+                        delay = 0
+                    }
+                    
+                    UIView.animate(withDuration: 0.15, delay: delay, options: .allowAnimatedContent, animations: {
+                        layer.transform = layer.transform.translatedBy(x: 500, y: 0)
+                    }) { (done) in
+                        if done {
+                            layer.isHidden = true
+                            layer.transform = layer.transform.translatedBy(x: -500, y: 0)
+                        }
                     }
                 }
-                
                 index += 1
             }
         }

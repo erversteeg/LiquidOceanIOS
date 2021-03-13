@@ -69,6 +69,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet weak var recentColorsAmtLabel7: UILabel!
     @IBOutlet weak var recentColorsAmtLabel8: UILabel!
     
+    @IBOutlet weak var backActionLeading: NSLayoutConstraint!
+    
     weak var colorPickerViewController: CustomColorPickerViewController!
     
     var showSignIn = "ShowSignIn"
@@ -92,7 +94,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         optionsTitleAction.selectable = false
         optionsTitleAction.type = .options
         
-        backAction.type = .back
+        backAction.type = .backSolid
         
         backAction.setOnClickListener {
             self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
@@ -210,6 +212,13 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         panelsCollectionView.isHidden = true
         canvasLockBorderContainer.isHidden = true
         canvasLockColorContainer.isHidden = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        let backX = self.backAction.frame.origin.x
+        if backX < 0 {
+            backActionLeading.constant += 30
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -13,18 +13,21 @@ class HowtoViewController: UIViewController {
     @IBOutlet weak var backAction: ActionButtonView!
     @IBOutlet weak var howtoTitleAction: ActionButtonView!
     @IBOutlet weak var step1Text: UILabel!
+    @IBOutlet weak var step2Text: UILabel!
     
     @IBOutlet weak var paintAction: ActionButtonView!
     @IBOutlet weak var paintQtyBar: PaintQuantityBar!
     
     @IBOutlet weak var artView: ArtView!
     
+    @IBOutlet weak var backActionLeading: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setBackground()
         
-        backAction.type = .back
+        backAction.type = .backSolid
         backAction.setOnClickListener {
             self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
         }
@@ -64,5 +67,17 @@ class HowtoViewController: UIViewController {
         gradient.endPoint = CGPoint(x: 0, y: 1)
 
         view.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if step1Text.font.pointSize < step2Text.font.pointSize {
+            step2Text.font = UIFont.systemFont(ofSize: step1Text.font.pointSize)
+        }
+        
+        let backX = self.backAction.frame.origin.x
+        
+        if backX < 0 {
+            backActionLeading.constant += 30
+        }
     }
 }

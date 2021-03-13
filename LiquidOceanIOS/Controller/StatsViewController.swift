@@ -13,6 +13,7 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var backAction: ActionButtonView!
+    @IBOutlet weak var backActionLeading: NSLayoutConstraint!
     
     var initial = true
     
@@ -27,7 +28,7 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
         
         setBackground()
         
-        backAction.type = .back
+        backAction.type = .backSolid
         
         backAction.setOnClickListener {
             self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
@@ -53,6 +54,12 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
         data![1]["Paint Accrued"] = StatTracker.instance.getAchievementProgressString(eventType: .paintReceived)
         
         self.collectionView.reloadData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if backAction.frame.origin.x < 0 {
+            backActionLeading.constant += 20
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

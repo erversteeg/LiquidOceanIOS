@@ -32,6 +32,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     
     var interactiveCanvas: InteractiveCanvas!
     
+    var paintActionDelegate: PaintActionDelegate?
+    
     var longPressGestureRecognizer: UILongPressGestureRecognizer!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var tapGestureRecognizer: UITapGestureRecognizer!
@@ -66,6 +68,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         if sender.state == .began {
             if mode == .painting {
                 interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+                
+                paintActionDelegate?.notifyPaintActionStarted()
                 
                 let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
                 

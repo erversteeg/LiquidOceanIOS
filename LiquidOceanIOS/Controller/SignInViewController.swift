@@ -14,6 +14,8 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
     @IBOutlet weak var backAction: ActionButtonView!
     @IBOutlet weak var signInButton: GIDSignInButton!
     
+    @IBOutlet weak var backActionLeading: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +39,13 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
         
         if SessionSettings.instance.googleAuth {
             signInButton.isEnabled = false
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        let backX = self.backAction.frame.origin.x
+        if backX < 0 {
+            backActionLeading.constant += 30
         }
     }
     

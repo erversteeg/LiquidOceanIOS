@@ -12,11 +12,13 @@ protocol PaintColorSelectionDelegate: AnyObject {
     func notifyPaintColorSelected(color: Int)
 }
 
-class PaintColorIndicator: UIView {
+class PaintColorIndicator: UIView, ActionButtonViewTouchDelegate {
     
     weak var paintColorSelectionDelegate: PaintColorSelectionDelegate?
     
     var panelThemeConfig: PanelThemeConfig!
+    
+    var selectedOutline = false
 
     required override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,6 +46,8 @@ class PaintColorIndicator: UIView {
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
         let ctx = UIGraphicsGetCurrentContext()!
         
         var fillAndStroke = false
@@ -65,7 +69,7 @@ class PaintColorIndicator: UIView {
         }
         else if SessionSettings.instance.paintIndicatorFill {
             let width = circleSizeFromOption(widthVal: SessionSettings.instance.paintIndicatorWidth)
-            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: width, startAngle: 0, endAngle: 6.28319, clockwise: true)
+            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: width, startAngle: 0, endAngle: 6.3, clockwise: true)
             ctx.drawPath(using: .fill)
         }
         else {
@@ -83,7 +87,7 @@ class PaintColorIndicator: UIView {
                 radius = frame.size.width * 0.43
             }
             
-            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: radius, startAngle: 0, endAngle: 6.28319, clockwise: true)
+            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: radius, startAngle: 0, endAngle: 6.3, clockwise: true)
             
             ctx.drawPath(using: .stroke)
         }
@@ -105,10 +109,20 @@ class PaintColorIndicator: UIView {
             ctx.setLineWidth(borderStrokeWidth)
             
             if panelThemeConfig.paintColorIndicatorLineColor == ActionButtonView.blackColor {
-                ctx.setStrokeColor(UIColor.black.cgColor)
+                if selectedOutline {
+                    ctx.setStrokeColor(UIColor(argb: ActionButtonView.twoThirdGrayColor).cgColor)
+                }
+                else {
+                    ctx.setStrokeColor(UIColor.black.cgColor)
+                }
             }
             else {
-                ctx.setStrokeColor(UIColor.white.cgColor)
+                if selectedOutline {
+                    ctx.setStrokeColor(UIColor(argb: ActionButtonView.thirdGrayColor).cgColor)
+                }
+                else {
+                    ctx.setStrokeColor(UIColor.white.cgColor)
+                }
             }
             
             ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: radius - (indicatorStrokeWidth / 2  + borderStrokeWidth / 2), startAngle: 0, endAngle: 6.28319, clockwise: true)
@@ -169,6 +183,18 @@ class PaintColorIndicator: UIView {
                 return frame.size.width * 0.5
             default:
                 return 0
+        }
+    }
+    
+    // action button view touch delegate
+    func notifyTouchStateChanged(state: UIGestureRecognizer.State) {
+        if state == .began {
+            selectedOutline = true
+            setNeedsDisplay()
+        }
+        else if state == .ended {
+            selectedOutline = false
+            setNeedsDisplay()
         }
     }
 }

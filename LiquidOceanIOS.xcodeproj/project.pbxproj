@@ -15,6 +15,8 @@
 		0712053625DEDF1100AE0F52 /* ActionButtonFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */; };
 		0712053825DF2D5100AE0F52 /* RecentColorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053725DF2D5100AE0F52 /* RecentColorsViewController.swift */; };
 		0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */; };
+		0788E47D25FBD1D8004FC782 /* iOSDeviceModelMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */; };
+		0788E47F25FBD3F5004FC782 /* UIView+SafeAnchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0788E47E25FBD3F5004FC782 /* UIView+SafeAnchors.swift */; };
 		07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A246D525D4A83500C73CA6 /* LoadingViewController.swift */; };
 		07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */; };
 		07A305F325D5B6F5003A6CEA /* ActionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A305F225D5B6F5003A6CEA /* ActionButtonView.swift */; };
@@ -118,6 +120,8 @@
 		0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonFrame.swift; sourceTree = "<group>"; };
 		0712053725DF2D5100AE0F52 /* RecentColorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentColorsViewController.swift; sourceTree = "<group>"; };
 		0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentColorCollectionViewCell.swift; sourceTree = "<group>"; };
+		0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iOSDeviceModelMapping.plist; sourceTree = "<group>"; };
+		0788E47E25FBD3F5004FC782 /* UIView+SafeAnchors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SafeAnchors.swift"; sourceTree = "<group>"; };
 		07A246D525D4A83500C73CA6 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHandler.swift; sourceTree = "<group>"; };
 		07A305F225D5B6F5003A6CEA /* ActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonView.swift; sourceTree = "<group>"; };
@@ -347,6 +351,7 @@
 				07BD25D425D43FB700CF812E /* LaunchScreen.storyboard */,
 				07BD25D725D43FB700CF812E /* Info.plist */,
 				07BD25CF25D43FB500CF812E /* LiquidOceanIOS.xcdatamodeld */,
+				0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */,
 			);
 			path = LiquidOceanIOS;
 			sourceTree = "<group>";
@@ -397,6 +402,7 @@
 				07006C3B25D607D500DF9A64 /* UIDrawGestureRecognizer.swift */,
 				07FF5F0A25E481BB003E19AE /* Animator.swift */,
 				07A9B16F25ED611C009A47DF /* PanelThemeConfig.swift */,
+				0788E47E25FBD3F5004FC782 /* UIView+SafeAnchors.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -506,6 +512,7 @@
 				07FF5F3925E5BDF6003E19AE /* fall_leaves.png in Resources */,
 				07BD25D625D43FB700CF812E /* LaunchScreen.storyboard in Resources */,
 				07FF5F2D25E5BDF6003E19AE /* foil.jpg in Resources */,
+				0788E47D25FBD1D8004FC782 /* iOSDeviceModelMapping.plist in Resources */,
 				07FF5F2625E5BDF6003E19AE /* marble_2.jpg in Resources */,
 				07A9B18925ED6CCD009A47DF /* amb_8.jpg in Resources */,
 				07A9B19325ED6CCD009A47DF /* sf_1.jpg in Resources */,
@@ -648,6 +655,7 @@
 				07FF5F0D25E54DCF003E19AE /* SignInViewController.swift in Sources */,
 				07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */,
 				07FF5F0525E421A9003E19AE /* StatAchievementCollectionViewCell.swift in Sources */,
+				0788E47F25FBD3F5004FC782 /* UIView+SafeAnchors.swift in Sources */,
 				07FF5F0B25E481BB003E19AE /* Animator.swift in Sources */,
 				07FF5F0325E41EF9003E19AE /* StatsViewController.swift in Sources */,
 				07BD25F725D44FE900CF812E /* UIColor+Conversions.swift in Sources */,

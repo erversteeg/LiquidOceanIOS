@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ActionButtonViewTouchDelegate: AnyObject {
+    func notifyTouchStateChanged(state: UIGestureRecognizer.State)
+}
+
 class ActionButtonView: UIView {
 
     static var altGreenColor: Int32!
@@ -70,12 +74,20 @@ class ActionButtonView: UIView {
     var selected: Bool {
         set {
             _selected = newValue
-            setNeedsDisplay()
+            
+            if !topLayer {
+                setNeedsDisplay()
+            }
         }
         get {
             return _selected
         }
     }
+    
+    weak var touchDelegate: ActionButtonViewTouchDelegate?
+    
+    // acts as a color layer typically over a white version of the same
+    var topLayer = false
     
     private var _representingColor: Int32 = 0
     var representingColor: Int32 {
@@ -234,18 +246,36 @@ class ActionButtonView: UIView {
         }
     }
     
-    @objc func onTouchAction(sender: UILongPressGestureRecognizer) {
+    @objc func onTouchAction(sender: UIDrawGestureRecognizer) {
         if sender.state == .began {
             self.selected = true
+            
+            if topLayer {
+                alpha = 0
+                UIView.animate(withDuration: 0.1) {
+                    self.alpha = 1
+                }
+            }
+            
+            touchDelegate?.notifyTouchStateChanged(state: .began)
+            
             setNeedsDisplay()
         }
         else if sender.state == .changed  {
-            self.selected = false
+            self.selected = true
+            
+            if !topLayer {
+                touchDelegate?.notifyTouchStateChanged(state: .changed)
+            }
+            
             setNeedsDisplay()
         }
         
         if sender.state == .ended {
             self.selected = false
+            
+            touchDelegate?.notifyTouchStateChanged(state: .ended)
+            
             setNeedsDisplay()
             self.clickHandler?()
         }
@@ -287,10 +317,10 @@ class ActionButtonView: UIView {
                 paint = ActionButtonView.lightYellowColor!
             }
             else  if colorMode == .black {
-                   paint = ActionButtonView.thirdGrayColor!
+                   paint = ActionButtonView.twoThirdGrayColor!
             }
             else if colorMode == .white {
-                paint = ActionButtonView.twoThirdGrayColor!
+                paint = ActionButtonView.thirdGrayColor!
             }
         }
         
@@ -360,10 +390,10 @@ class ActionButtonView: UIView {
                 paint = ActionButtonView.lightGreenColor!
             }
             else  if colorMode == .black {
-                   paint = ActionButtonView.thirdGrayColor!
+                   paint = ActionButtonView.twoThirdGrayColor!
             }
             else if colorMode == .white {
-                paint = ActionButtonView.twoThirdGrayColor!
+                paint = ActionButtonView.thirdGrayColor!
             }
         }
         
@@ -407,10 +437,10 @@ class ActionButtonView: UIView {
                 paint = ActionButtonView.lightRedColor!
             }
             else  if colorMode == .black {
-                   paint = ActionButtonView.thirdGrayColor!
+                   paint = ActionButtonView.twoThirdGrayColor!
             }
             else if colorMode == .white {
-                paint = ActionButtonView.twoThirdGrayColor!
+                paint = ActionButtonView.thirdGrayColor!
             }
         }
         
@@ -477,9 +507,6 @@ class ActionButtonView: UIView {
         self.cols = 7
        
         var paint = ActionButtonView.semiColor!
-        if SessionSettings.instance.darkIcons {
-            paint = ActionButtonView.semiDarkColor!
-        }
         
         if self.selected {
             paint = ActionButtonView.lightYellowColor!
@@ -723,7 +750,7 @@ class ActionButtonView: UIView {
         rows = 4
         cols = 16
         
-        var paint = ActionButtonView.lightGrayColor!
+        var paint = ActionButtonView.whiteColor!
         
         if selected {
             paint = ActionButtonView.altGreenColor!
@@ -771,7 +798,7 @@ class ActionButtonView: UIView {
         rows = 4
         cols = 26
         
-        var paint = ActionButtonView.lightGrayColor!
+        var paint = ActionButtonView.whiteColor!
         
         if selected && selectable {
             paint = ActionButtonView.altGreenColor!
@@ -847,7 +874,7 @@ class ActionButtonView: UIView {
         rows = 4
         cols = 20
         
-        var paint = ActionButtonView.lightGrayColor!
+        var paint = ActionButtonView.whiteColor!
         
         if selected && selectable {
             paint = ActionButtonView.altGreenColor!
@@ -904,7 +931,7 @@ class ActionButtonView: UIView {
         rows = 4
         cols = 15
         
-        var paint = ActionButtonView.lightGrayColor!
+        var paint = ActionButtonView.whiteColor!
         
         if selected {
             paint = ActionButtonView.altGreenColor!
@@ -954,7 +981,7 @@ class ActionButtonView: UIView {
         rows = 4
         cols = 21
         
-        var paint = ActionButtonView.lightGrayColor!
+        var paint = ActionButtonView.whiteColor!
         
         if selected {
             paint = ActionButtonView.altGreenColor!
@@ -1024,7 +1051,7 @@ class ActionButtonView: UIView {
         rows = 4
         cols = 22
        
-        var paint = ActionButtonView.lightGrayColor!
+        var paint = ActionButtonView.whiteColor!
        
         if selected {
             paint = ActionButtonView.altGreenColor!
@@ -1091,7 +1118,7 @@ class ActionButtonView: UIView {
         rows = 4
         cols = 21
        
-        var paint = ActionButtonView.lightGrayColor!
+        var paint = ActionButtonView.whiteColor!
        
         if selected {
             paint = ActionButtonView.altGreenColor!
@@ -1155,7 +1182,7 @@ class ActionButtonView: UIView {
         rows = 4
         cols = 12
        
-        var paint = ActionButtonView.lightGrayColor!
+        var paint = ActionButtonView.whiteColor!
        
         if selected {
             paint = ActionButtonView.altGreenColor!
