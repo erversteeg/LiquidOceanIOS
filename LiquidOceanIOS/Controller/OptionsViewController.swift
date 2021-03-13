@@ -206,12 +206,14 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             SessionSettings.instance.paintIndicatorWidth = value
         }
         
-        optionsTitleAction.isHidden = true
-        
-        panelTextureTitle.isHidden = true
-        panelsCollectionView.isHidden = true
-        canvasLockBorderContainer.isHidden = true
-        canvasLockColorContainer.isHidden = true
+        if view.frame.size.height <= 600 {
+            optionsTitleAction.isHidden = true
+            
+            panelTextureTitle.isHidden = true
+            panelsCollectionView.isHidden = true
+            canvasLockBorderContainer.isHidden = true
+            canvasLockColorContainer.isHidden = true
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -224,12 +226,14 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        Animator.animateTitleFromTop(titleView: optionsTitleAction)
-        
-        Animator.animateHorizontalViewEnter(view: panelTextureTitle, left: false)
-        Animator.animateHorizontalViewEnter(view: panelsCollectionView, left: true)
-        Animator.animateHorizontalViewEnter(view: canvasLockBorderContainer, left: false)
-        Animator.animateHorizontalViewEnter(view: canvasLockColorContainer, left: true)
+        if view.frame.size.height <= 600 {
+            Animator.animateTitleFromTop(titleView: optionsTitleAction)
+            
+            Animator.animateHorizontalViewEnter(view: panelTextureTitle, left: false)
+            Animator.animateHorizontalViewEnter(view: panelsCollectionView, left: true)
+            Animator.animateHorizontalViewEnter(view: canvasLockBorderContainer, left: false)
+            Animator.animateHorizontalViewEnter(view: canvasLockColorContainer, left: true)
+        }
     }
     
     @IBAction func switchChanged(_ sender: UISwitch) {

@@ -22,6 +22,9 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     var darkGrayColor: Int32!
     var grayAccentColor: Int32!
     var darkLineColor: Int32!
+    
+    var thirdGraySemiColor: Int32!
+    var twoThirdGraySemiColor: Int32!
 
     var lineWidth: CGFloat = 1.0
     
@@ -58,6 +61,9 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
         darkLineColor = darkGrayColor
         
         lineColor = Utils.int32FromColorHex(hex: "0xFFFFFFFF")
+        
+        thirdGraySemiColor = Utils.int32FromColorHex(hex: "0x99AAAAAA")
+        twoThirdGraySemiColor = Utils.int32FromColorHex(hex: "0x99555555")
         
         self.backgroundColor = UIColor.clear
     }
@@ -134,24 +140,23 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
                     else {
                         drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: ActionButtonView.twoThirdGrayColor)
                     }
-                    
                 }
             }
             else {
-                if flashingError {
-                    drawPixel(ctx: ctx, x: (cols - 1), y: 1, color: ActionButtonView.redColor)
+                if flashingError && world && relQty == 0 {
+                    drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: ActionButtonView.redColor)
                 }
-                else {
+                else if world {
                     drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: brownColor)
                 }
             }
             
             if x < cols - 2 {
                 if panelThemeConfig.darkPaintQtyBar {
-                    drawLine(ctx: ctx, start: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight), end: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight * 2), color: darkLineColor)
+                    drawLine(ctx: ctx, start: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight), end: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight * 2), color: twoThirdGraySemiColor)
                 }
                 else {
-                    drawLine(ctx: ctx, start: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight), end: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight * 2), color: lineColor)
+                    drawLine(ctx: ctx, start: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight), end: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight * 2), color: thirdGraySemiColor)
                 }
             }
             
@@ -183,7 +188,13 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     }
     
     func flashError() {
+        flashingError = true
+        setNeedsDisplay()
         
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (tmr) in
+            self.flashingError = false
+            self.setNeedsDisplay()
+        }
     }
     
     // paint qty delegate

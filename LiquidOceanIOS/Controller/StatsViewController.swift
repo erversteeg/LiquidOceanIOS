@@ -65,14 +65,17 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let headerView = collectionView.visibleSupplementaryViews(ofKind: UICollectionView.elementKindSectionHeader)[0]
-        Animator.animateTitleFromTop(titleView: headerView)
-        
-        var i = 0
-        for visibleCell in collectionView.visibleCells {
-            Animator.animateHorizontalViewEnter(view: visibleCell, left: i % 2 == 0)
-            i += 1
+        if view.frame.size.height <= 600 {
+            let headerView = collectionView.visibleSupplementaryViews(ofKind: UICollectionView.elementKindSectionHeader)[0]
+            Animator.animateTitleFromTop(titleView: headerView)
+            
+            var i = 0
+            for visibleCell in collectionView.visibleCells {
+                Animator.animateHorizontalViewEnter(view: visibleCell, left: i % 2 == 0)
+                i += 1
+            }
         }
+        
         initial = false
     }
     
@@ -111,7 +114,7 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
             cell.statAmt.text = formatted
         }
         
-        if indexPath.item < 6 && initial {
+        if indexPath.item < 6 && initial && view.frame.size.height <= 600 {
             cell.isHidden = true
         }
         
@@ -138,7 +141,7 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "StatHeaderView", for: indexPath) as! ActionViewReusableView
         
         if indexPath.section == 0 {
-            if initial {
+            if initial && self.view.frame.size.height <= 600 {
                 view.isHidden = true
             }
             

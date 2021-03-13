@@ -45,7 +45,7 @@ class LoadingViewController: UIViewController {
     @IBOutlet weak var topContributorAmt9: UILabel!
     @IBOutlet weak var topContributorAmt10: UILabel!
     
-    let gameTips = ["You can turn several features on / off in the Options mneu",
+    let gameTips = ["You can turn several features on / off in the Options menu",
                     "All drawings can be exported to a PNG file. Simply use the object selector tool, tap an object, and from there you can save it",
                     "Anything you create on the world canvas is automatically saved and shared with others.",
                     "Like you level, paint, and other stas? Back your account up now and sync across multiple devices with Google.",

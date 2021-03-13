@@ -25,6 +25,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var paintPanelTrailing: NSLayoutConstraint!
     
     @IBOutlet weak var paintPanelWidth: NSLayoutConstraint!
+    
     @IBOutlet weak var colorPickerFrameWidth: NSLayoutConstraint!
     
     @IBOutlet weak var paintColorAccept: ActionButtonView!
@@ -85,6 +86,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var recentColorsContainerLeading: NSLayoutConstraint!
     @IBOutlet weak var recentColorsContainerBottom: NSLayoutConstraint!
     
+    @IBOutlet weak var pixelHistoryViewTop: NSLayoutConstraint!
+    @IBOutlet weak var pixelHistoryViewLeading: NSLayoutConstraint!
+    
     var panelThemeConfig: PanelThemeConfig!
     
     var world = false
@@ -94,10 +98,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     var previousColor: Int32!
     
+    var resizedColorPicker = false
+    var initial = true
+    
     var pixelHistoryViewController: PixelHistoryViewController!
     weak var recentColorsViewController: RecentColorsViewController!
     weak var exportViewController: ExportViewController!
-    weak var colorPickerViewController: CustomColorPickerViewController!
+    weak var colorPickerViewController: ColorPickerOutletsViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,8 +113,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         surfaceView.interactiveCanvas.world = world
         
         paintQuantityBar.world = world
-        
-        surfaceView.setInitalScale()
         
         SessionSettings.instance.interactiveCanvas = self.surfaceView.interactiveCanvas
         
@@ -120,17 +125,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.interactiveCanvas.recentColorsDelegate = self
         self.surfaceView.interactiveCanvas.artExportDelegate = self
         
-        let backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: self.view.frame.size.height))
-        if SessionSettings.instance.panelBackgroundName == "" {
-            backgroundImage.image = UIImage(named: "wood_texture_light.jpg")
-            panelThemeConfig = PanelThemeConfig.defaultDarkTheme()
-        }
-        else {
-            backgroundImage.image = UIImage(named: SessionSettings.instance.panelBackgroundName)
-            panelThemeConfig = PanelThemeConfig.buildConfig(imageName: SessionSettings.instance.panelBackgroundName)
-        }
+        // surfaceView.setInitalScale()
         
-        backgroundImage.contentMode = .scaleToFill
+        panelThemeConfig = themeConfigFromBackground()
         
         // back button
         self.backButton.type = .back
@@ -151,14 +148,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             }
         }
         
-        if !SessionSettings.instance.showPaintBar {
+        if !SessionSettings.instance.showPaintBar || !world {
             paintQuantityBar.isHidden = true
         }
         
         //self.paintPanelWidth.constant = 0
         self.colorPickerFrameWidth.constant = 0
-        
-        self.paintPanel.insertSubview(backgroundImage, at: 0)
+        self.colorPickerFrame.isHidden = true
         
         // toolbox
         //self.toggleToolbox(open: false)
@@ -223,7 +219,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.recentColorsViewController.collectionView.reloadData()
             
-            SessionSettings.instance.save()
+            SessionSettings.instance.quickSave()
             
             self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         }
@@ -231,6 +227,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         // grid lines
         gridLinesButton.setOnClickListener {
             SessionSettings.instance.showGridLines = !SessionSettings.instance.showGridLines
+            
+            SessionSettings.instance.quickSave()
             
             self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         }
@@ -324,6 +322,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.recentColorsButton.isHidden = false
             
             self.surfaceView.endPaintSelection()
+            
+            SessionSettings.instance.quickSave()
         }
         
         // paint selection cancel
@@ -421,51 +421,71 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     }
     
     override func viewDidLayoutSubviews() {
-        let backX = self.backButton.frame.origin.x
-        let paintPanelButtonX = self.paintPanelButton.frame.origin.x + self.paintPanelButton.frame.size.width
-        
-        let exportButtonX = self.exportButton.frame.origin.x + self.exportButton.frame.size.width
-        let changeBackgroundButtonX = self.changeBackgroundButton.frame.origin.x + self.changeBackgroundButton.frame.size.width
-        let gridLinesButtonX = self.gridLinesButton.frame.origin.x + self.gridLinesButton.frame.size.width
-        
-        let toolboxButtonX = self.toolboxButton.frame.origin.x + self.toolboxButton.frame.size.width
-        
-        let recentColorsButtonX = self.recentColorsButton.frame.origin.x
-        
-        let recentColorsX = self.recentColorsContainer.frame.origin.x
-        
-        if paintPanelButtonX > self.view.frame.size.width {
-            paintPanelButtonTrailing.constant += 30
+        if initial {
+            let backX = self.backButton.frame.origin.x
+            let paintPanelButtonX = self.paintPanelButton.frame.origin.x + self.paintPanelButton.frame.size.width
+            
+            let exportButtonX = self.exportButton.frame.origin.x + self.exportButton.frame.size.width
+            let changeBackgroundButtonX = self.changeBackgroundButton.frame.origin.x + self.changeBackgroundButton.frame.size.width
+            let gridLinesButtonX = self.gridLinesButton.frame.origin.x + self.gridLinesButton.frame.size.width
+            
+            let toolboxButtonX = self.toolboxButton.frame.origin.x + self.toolboxButton.frame.size.width
+            
+            let recentColorsButtonX = self.recentColorsButton.frame.origin.x
+            
+            let recentColorsX = self.recentColorsContainer.frame.origin.x
+            
+            if paintPanelButtonX > self.view.frame.size.width {
+                paintPanelButtonTrailing.constant += 30
+            }
+            
+            if exportButtonX > self.view.frame.size.width {
+                exportButtonTrailing.constant += 30
+            }
+            
+            if changeBackgroundButtonX > self.view.frame.size.width {
+                changeBackgroundButtonTrailing.constant += 30
+            }
+            
+            if gridLinesButtonX > self.view.frame.size.width {
+                gridLinesButtonTrailing.constant += 30
+            }
+            
+            if toolboxButtonX > self.view.frame.size.width {
+                toolboxButtonTrailing.constant += 30
+            }
+            
+            if backX < 0 {
+                backButtonLeading.constant += 30
+            }
+            
+            if recentColorsButtonX < 0 {
+                recentColorsButtonLeading.constant += 30
+            }
+            
+            if recentColorsX < 20 {
+                recentColorsContainerLeading.constant = 20
+                recentColorsContainerBottom.constant = 20
+            }
+            
+            let panelRatio = paintPanel.frame.size.width / paintPanel.frame.size.height
+            
+            var adjust = false
+            if panelRatio < 0.4 || panelRatio > 0.6 {
+                paintPanelWidth.constant = paintPanel.frame.size.height * 0.25
+                adjust = true
+            }
+            
+            setPaintPanelBackground(adjust: adjust)
+
+            surfaceView.setInitalScale()
+                
+            initial = false
         }
-        
-        if exportButtonX > self.view.frame.size.width {
-            exportButtonTrailing.constant += 30
-        }
-        
-        if changeBackgroundButtonX > self.view.frame.size.width {
-            changeBackgroundButtonTrailing.constant += 30
-        }
-        
-        if gridLinesButtonX > self.view.frame.size.width {
-            gridLinesButtonTrailing.constant += 30
-        }
-        
-        if toolboxButtonX > self.view.frame.size.width {
-            toolboxButtonTrailing.constant += 30
-        }
-        
-        if backX < 0 {
-            backButtonLeading.constant += 30
-        }
-        
-        if recentColorsButtonX < 0 {
-            recentColorsButtonLeading.constant += 30
-        }
-        
-        if recentColorsX < 20 {
-            recentColorsContainerLeading.constant = 20
-            recentColorsContainerBottom.constant = 20
-        }
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     @objc func didTapPaintQuantityBar() {
@@ -545,7 +565,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // embeds
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ColorPickerEmbed" {
-            colorPickerViewController = segue.destination as! CustomColorPickerViewController
+            colorPickerViewController = segue.destination as! ColorPickerOutletsViewController
             colorPickerViewController.delegate = self
             colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintColor)
             colorPickerViewController.view.backgroundColor = UIColor.clear
@@ -572,7 +592,27 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @objc func didTapColorIndicator(sender: UITapGestureRecognizer) {
         self.previousColor = SessionSettings.instance.paintColor
         
-        self.colorPickerFrameWidth.constant = 330
+        if self.previousColor == 0 {
+            colorPickerViewController.selectedColor = UIColor.white
+        }
+        
+        // tablet
+        if view.frame.size.height > 600 && !resizedColorPicker {
+            colorPickerFrameWidth.constant = 330
+            colorPickerFrameWidth.constant *= 1.4
+            
+            colorPickerViewController.hsbWheelWidth.constant *= 1.5
+            colorPickerViewController.hsbWheelHeight.constant *= 1.5
+            
+            colorPickerViewController.hsbWheelXCenter.constant = 0
+            colorPickerViewController.hsbWheelYCenter.constant = 0
+            
+            resizedColorPicker = true
+        }
+        else if view.frame.size.height <= 600 {
+            colorPickerFrameWidth.constant = 330
+        }
+        
         self.colorPickerFrame.isHidden = false
         
         self.paintColorAccept.isHidden = false
@@ -677,9 +717,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             y = self.view.frame.size.height - self.pixelHistoryView.frame.size.height - 20
         }
         
-        self.pixelHistoryView.frame = CGRect(x: CGFloat(x), y: CGFloat(y),
-                                             width: self.pixelHistoryView.frame.size.width,
-                                             height: self.pixelHistoryView.frame.size.height)
+        pixelHistoryViewLeading.constant = x
+        pixelHistoryViewTop.constant = y
         
         self.pixelHistoryView.isHidden = false
     }
@@ -799,8 +838,48 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // paint action delegate
     func notifyPaintActionStarted() {
         toggleRecentColors(open: false)
+        
+        if SessionSettings.instance.dropsAmt == 0 {
+            paintQuantityBar.flashError()
+        }
     }
     
+    func setPaintPanelBackground(adjust: Bool) {
+        var w = CGFloat(200)
+        if adjust {
+            w = self.paintPanel.frame.size.height * 0.25
+        }
+        let backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: w, height: self.paintPanel.frame.size.height))
+        
+        if SessionSettings.instance.panelBackgroundName == "" {
+            backgroundImage.image = UIImage(named: "wood_texture_light.jpg")
+        }
+        else {
+            backgroundImage.image = UIImage(named: SessionSettings.instance.panelBackgroundName)
+        }
+        
+        if adjust {
+            backgroundImage.contentMode = .topLeft
+        }
+        else {
+            backgroundImage.contentMode = .scaleToFill
+        }
+        
+        self.paintPanel.insertSubview(backgroundImage, at: 0)
+    }
+    
+    func themeConfigFromBackground() -> PanelThemeConfig {
+        var ptc: PanelThemeConfig!
+        
+        if SessionSettings.instance.panelBackgroundName == "" {
+            ptc = PanelThemeConfig.defaultDarkTheme()
+        }
+        else {
+            ptc = PanelThemeConfig.buildConfig(imageName: SessionSettings.instance.panelBackgroundName)
+        }
+        
+        return ptc
+    }
 }
 
 

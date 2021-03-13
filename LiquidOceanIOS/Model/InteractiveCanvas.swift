@@ -353,7 +353,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     }
     
     func isBackground(unitPoint: CGPoint) -> Bool {
-        return arr[Int(unitPoint.y)][Int(unitPoint.x)] == 0
+        return unitPoint.x < 0 || unitPoint.y < 0 || unitPoint.x > CGFloat(cols - 1) || unitPoint.y > CGFloat(rows - 1) || arr[Int(unitPoint.y)][Int(unitPoint.x)] == 0
     }
     
     func paintUnitOrUndo(x: Int, y: Int, mode: Int = 0) {

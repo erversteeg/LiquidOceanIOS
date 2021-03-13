@@ -100,22 +100,24 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
             }
         }
         else if sender.state == .changed {
-            let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
-            
-            if self.undo {
-                // undo
-                interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.x), y: Int(unitPoint.y), mode: 1)
-            }
-            else {
-                // paint
-                interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.x), y: Int(unitPoint.y))
-            }
-            
-            if interactiveCanvas.restorePoints.count == 1 {
-                interactiveCanvas.paintDelegate?.notifyPaintingStarted()
-            }
-            else if interactiveCanvas.restorePoints.count == 0 {
-                interactiveCanvas.paintDelegate?.notifyPaintingEnded()
+            if mode == .painting {
+                let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
+                
+                if self.undo {
+                    // undo
+                    interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.x), y: Int(unitPoint.y), mode: 1)
+                }
+                else {
+                    // paint
+                    interactiveCanvas.paintUnitOrUndo(x: Int(unitPoint.x), y: Int(unitPoint.y))
+                }
+                
+                if interactiveCanvas.restorePoints.count == 1 {
+                    interactiveCanvas.paintDelegate?.notifyPaintingStarted()
+                }
+                else if interactiveCanvas.restorePoints.count == 0 {
+                    interactiveCanvas.paintDelegate?.notifyPaintingEnded()
+                }
             }
         }
     }

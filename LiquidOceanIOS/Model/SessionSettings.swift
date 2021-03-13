@@ -120,6 +120,16 @@ class SessionSettings: NSObject {
         userDefaults().set(showPaintBar, forKey: "show_paint_bar")
     }
     
+    func quickSave() {
+        userDefaults().set(uniqueId, forKey: "installation_id")
+        userDefaults().set(sentUniqueId, forKey: "sent_unique_id")
+        userDefaults().set(googleAuth, forKey: "google_auth")
+        userDefaults().set(dropsAmt, forKey: "drops_amt")
+        userDefaults().set(paintColor, forKey: "paint_color")
+        userDefaults().set(backgroundColorIndex, forKey: "background_color")
+        userDefaults().set(showGridLines, forKey: "show_grid_lines")
+    }
+    
     func load() {
         uniqueId = userDefaultsString(forKey: "installation_id", defaultVal: UUID().uuidString)
         

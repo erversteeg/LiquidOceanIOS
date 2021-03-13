@@ -55,12 +55,23 @@ class PaintColorIndicator: UIView, ActionButtonViewTouchDelegate {
             fillAndStroke = true
         }
         
+        var indicatorStrokeWidth = ringSizeFromOption(widthVal: SessionSettings.instance.paintIndicatorWidth)
+        
         let indicatorColor = SessionSettings.instance.paintColor!
         ctx.setStrokeColor(UIColor(argb: indicatorColor).cgColor)
         ctx.setFillColor(UIColor(argb: indicatorColor).cgColor)
         
-        var indicatorStrokeWidth = CGFloat(1.0)
-        let borderStrokeWidth = CGFloat(1.0)
+        var radius = frame.size.width / 3
+        
+        let w = SessionSettings.instance.paintIndicatorWidth
+        if !SessionSettings.instance.paintIndicatorFill && !SessionSettings.instance.paintIndicatorSquare && w > 3 {
+            if w == 4 {
+                radius = frame.size.width * 0.38
+            }
+            else if w == 5 {
+                radius = frame.size.width * 0.43
+            }
+        }
         
         if SessionSettings.instance.paintIndicatorSquare {
             let width = squareSizeFromOption(widthVal: SessionSettings.instance.paintIndicatorWidth)
@@ -69,70 +80,56 @@ class PaintColorIndicator: UIView, ActionButtonViewTouchDelegate {
         }
         else if SessionSettings.instance.paintIndicatorFill {
             let width = circleSizeFromOption(widthVal: SessionSettings.instance.paintIndicatorWidth)
-            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: width, startAngle: 0, endAngle: 6.3, clockwise: true)
+            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: width, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
             ctx.drawPath(using: .fill)
         }
         else {
-            indicatorStrokeWidth = ringSizeFromOption(widthVal: SessionSettings.instance.paintIndicatorWidth)
+            if SessionSettings.instance.paintIndicatorOutline {
+                drawIndicatorOutline(ctx: ctx, radius: radius, indicatorStrokeWidth: indicatorStrokeWidth)
+            }
             
             ctx.setLineWidth(indicatorStrokeWidth)
+            ctx.setStrokeColor(UIColor(argb: indicatorColor).cgColor)
+            ctx.setFillColor(UIColor(argb: indicatorColor).cgColor)
             
-            var radius = self.frame.width / CGFloat(3)
-            
-            let w = SessionSettings.instance.paintIndicatorWidth
-            if w == 4 {
-                radius = frame.size.width * 0.38
-            }
-            else if w == 5 {
-                radius = frame.size.width * 0.43
-            }
-            
-            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: radius, startAngle: 0, endAngle: 6.3, clockwise: true)
+            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: radius, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
             
             ctx.drawPath(using: .stroke)
         }
         
-        if SessionSettings.instance.paintIndicatorOutline {
-            var radius = frame.size.width / 3
-            
-            let w = SessionSettings.instance.paintIndicatorWidth
-            if !SessionSettings.instance.paintIndicatorFill && !SessionSettings.instance.paintIndicatorSquare && w > 3 {
-                if w == 4 {
-                    radius = frame.size.width * 0.38
-                }
-                else if w == 5 {
-                    radius = frame.size.width * 0.43
-                }
-                
-            }
-            
-            ctx.setLineWidth(borderStrokeWidth)
-            
-            if panelThemeConfig.paintColorIndicatorLineColor == ActionButtonView.blackColor {
-                if selectedOutline {
-                    ctx.setStrokeColor(UIColor(argb: ActionButtonView.twoThirdGrayColor).cgColor)
-                }
-                else {
-                    ctx.setStrokeColor(UIColor.black.cgColor)
-                }
+        if SessionSettings.instance.paintIndicatorOutline && SessionSettings.instance.paintIndicatorSquare || SessionSettings.instance.paintIndicatorFill {
+            drawIndicatorOutline(ctx: ctx, radius: radius, indicatorStrokeWidth: indicatorStrokeWidth)
+        }
+    }
+    
+    func drawIndicatorOutline(ctx: CGContext, radius: CGFloat, indicatorStrokeWidth: CGFloat) {
+        let borderStrokeWidth = CGFloat(1.0)
+        ctx.setLineWidth(borderStrokeWidth)
+        
+        if panelThemeConfig.paintColorIndicatorLineColor == ActionButtonView.blackColor {
+            if selectedOutline {
+                ctx.setStrokeColor(UIColor(argb: ActionButtonView.twoThirdGrayColor).cgColor)
             }
             else {
-                if selectedOutline {
-                    ctx.setStrokeColor(UIColor(argb: ActionButtonView.thirdGrayColor).cgColor)
-                }
-                else {
-                    ctx.setStrokeColor(UIColor.white.cgColor)
-                }
+                ctx.setStrokeColor(UIColor.black.cgColor)
             }
-            
-            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: radius - (indicatorStrokeWidth / 2  + borderStrokeWidth / 2), startAngle: 0, endAngle: 6.28319, clockwise: true)
-            
-            if !SessionSettings.instance.paintIndicatorFill && !SessionSettings.instance.paintIndicatorSquare {
-                ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: radius + (indicatorStrokeWidth / 2  + borderStrokeWidth / 2), startAngle: 0, endAngle: 6.28319, clockwise: true)
-            }
-            
-            ctx.drawPath(using: .stroke)
         }
+        else {
+            if selectedOutline {
+                ctx.setStrokeColor(UIColor(argb: ActionButtonView.thirdGrayColor).cgColor)
+            }
+            else {
+                ctx.setStrokeColor(UIColor.white.cgColor)
+            }
+        }
+        
+        ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: radius - (indicatorStrokeWidth / 2  + borderStrokeWidth / 2), startAngle: 0, endAngle: 6.3, clockwise: true)
+        
+        if !SessionSettings.instance.paintIndicatorFill && !SessionSettings.instance.paintIndicatorSquare {
+            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: radius + (indicatorStrokeWidth / 2  + borderStrokeWidth / 2), startAngle: 0, endAngle: 6.3, clockwise: true)
+        }
+        
+        ctx.drawPath(using: .stroke)
     }
     
     func ringSizeFromOption(widthVal: Int) -> CGFloat {

@@ -20,6 +20,7 @@ class ExportViewController: UIViewController {
     @IBOutlet weak var shareButton: ActionButtonFrame!
     @IBOutlet weak var shareActionView: ActionButtonView!
     
+    @IBOutlet weak var artViewWidth: NSLayoutConstraint!
     @IBOutlet weak var artViewHeight: NSLayoutConstraint!
     
     var _art: [InteractiveCanvas.RestorePoint]?
@@ -89,6 +90,11 @@ class ExportViewController: UIViewController {
         let backX = self.backButton.frame.origin.x
         if backX < 0 {
             backButtonLeading.constant += 30
+        }
+        
+        if view.frame.size.height > 600 {
+            artViewWidth.constant = view.frame.size.width - 130
+            artViewHeight.constant = view.frame.size.height - 130
         }
     }
 

@@ -40,21 +40,25 @@ class HowtoViewController: UIViewController {
         artView.showBackground = false
         artView.jsonFile = "mushroom_json"
         
-        howtoTitleAction.isHidden = true
-        
-        step1Text.isHidden = true
-        paintAction.isHidden = true
-        paintQtyBar.isHidden = true
+        if view.frame.size.height <= 600 {
+            howtoTitleAction.isHidden = true
+            
+            step1Text.isHidden = true
+            paintAction.isHidden = true
+            paintQtyBar.isHidden = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        Animator.animateTitleFromTop(titleView: howtoTitleAction)
-        
-        Animator.animateHorizontalViewEnter(view: step1Text, left: true)
-        Animator.animateHorizontalViewEnter(view: paintAction, left: true)
-        Animator.animateHorizontalViewEnter(view: paintQtyBar, left: true)
+        if view.frame.size.height <= 600 {
+            Animator.animateTitleFromTop(titleView: howtoTitleAction)
+            
+            Animator.animateHorizontalViewEnter(view: step1Text, left: true)
+            Animator.animateHorizontalViewEnter(view: paintAction, left: true)
+            Animator.animateHorizontalViewEnter(view: paintQtyBar, left: true)
+        }
     }
 
     func setBackground() {

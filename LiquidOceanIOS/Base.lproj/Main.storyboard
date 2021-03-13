@@ -402,7 +402,7 @@
                         <outlet property="worldButton" destination="Fx7-u2-Ock" id="2s8-o1-GBX"/>
                         <outlet property="worldButtonBottomLayer" destination="uiN-RJ-6H5" id="rcL-Ot-yr0"/>
                         <segue destination="J7C-7P-Zxh" kind="show" identifier="ShowLoading" animates="NO" id="pK7-f3-2ih"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="ShowSinglePlay" animates="NO" id="jzH-A0-0Va"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="ShowSinglePlay" animates="NO" modalPresentationStyle="fullScreen" id="jzH-A0-0Va"/>
                         <segue destination="jsN-na-INd" kind="show" identifier="ShowStats" animates="NO" id="8JS-PC-Hfp"/>
                         <segue destination="PmP-As-lpW" kind="show" identifier="ShowOptions" animates="NO" id="1QF-V5-Kp9"/>
                         <segue destination="cM5-dv-LHE" kind="show" identifier="ShowHowto" animates="NO" id="Yj8-x7-H07"/>
@@ -972,9 +972,8 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bre-8f-FlS" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bre-8f-FlS" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
                                                 <rect key="frame" x="588" y="0.0" width="60" height="60"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Y6-QX-FrA" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                                         <rect key="frame" x="25" y="25" width="10" height="10"/>
@@ -983,10 +982,13 @@
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="8dO-5o-hZz"/>
+                                                    <constraint firstAttribute="width" constant="60" id="iFJ-br-Nmu"/>
+                                                </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yyh-NZ-pet" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yyh-NZ-pet" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
                                                 <rect key="frame" x="692" y="0.0" width="60" height="60"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rGI-cJ-4cT" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                                         <rect key="frame" x="25" y="25" width="10" height="10"/>
@@ -995,10 +997,17 @@
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="UMY-3C-I2J"/>
+                                                    <constraint firstAttribute="width" constant="60" id="WeQ-5E-AsF"/>
+                                                </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xdn-YK-Cgh">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xdn-YK-Cgh">
                                                 <rect key="frame" x="658" y="18" width="24" height="24"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="24" id="LFZ-hc-SJf"/>
+                                                    <constraint firstAttribute="height" constant="24" id="vcl-5w-wPb"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1007,7 +1016,13 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="0mF-Sw-Vcg"/>
+                                            <constraint firstItem="Yyh-NZ-pet" firstAttribute="centerY" secondItem="cnN-jm-H46" secondAttribute="centerY" id="6Ls-cl-s8a"/>
+                                            <constraint firstAttribute="trailing" secondItem="Yyh-NZ-pet" secondAttribute="trailing" constant="16" id="7B5-us-77D"/>
+                                            <constraint firstItem="Xdn-YK-Cgh" firstAttribute="centerY" secondItem="cnN-jm-H46" secondAttribute="centerY" id="Pcr-EF-xWt"/>
+                                            <constraint firstItem="bre-8f-FlS" firstAttribute="centerY" secondItem="cnN-jm-H46" secondAttribute="centerY" id="dTq-JW-0Hw"/>
                                             <constraint firstItem="K8g-vD-5PN" firstAttribute="leading" secondItem="cnN-jm-H46" secondAttribute="leading" constant="16" id="lfs-Lq-ubx"/>
+                                            <constraint firstItem="Yyh-NZ-pet" firstAttribute="leading" secondItem="Xdn-YK-Cgh" secondAttribute="trailing" constant="10" id="nLo-OB-wSq"/>
+                                            <constraint firstItem="Xdn-YK-Cgh" firstAttribute="leading" secondItem="bre-8f-FlS" secondAttribute="trailing" constant="10" id="teK-Vi-2XV"/>
                                             <constraint firstItem="K8g-vD-5PN" firstAttribute="centerY" secondItem="cnN-jm-H46" secondAttribute="centerY" id="ycz-eq-HAZ"/>
                                         </constraints>
                                     </view>
@@ -1390,7 +1405,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game tip here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQe-ix-IAx">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game tip here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="HQe-ix-IAx">
                                 <rect key="frame" x="64" y="311" width="768" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="NWo-t9-W5m"/>
@@ -1692,7 +1707,7 @@
                         <outlet property="topContributorName7" destination="1ms-nQ-47U" id="1EJ-uK-7ju"/>
                         <outlet property="topContributorName8" destination="q18-Yx-4Pd" id="3CG-Sj-zWg"/>
                         <outlet property="topContributorName9" destination="fpE-io-4Ob" id="Mtz-rj-3GV"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="ShowInteractiveCanvas" animates="NO" id="28p-wv-bjn"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="ShowInteractiveCanvas" animates="NO" modalPresentationStyle="fullScreen" id="28p-wv-bjn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5ui-ju-aXZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1715,7 +1730,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="696" height="414"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xoZ-vF-uEO">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xoZ-vF-uEO">
                                 <rect key="frame" x="0.0" y="0.0" width="350" height="414"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lpT-yf-Thz">
@@ -1736,7 +1751,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dcg-RG-ceO" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                <rect key="frame" x="832" y="10" width="40" height="40"/>
+                                <rect key="frame" x="836" y="10" width="40" height="40"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="BqO-n7-aUp"/>
@@ -1744,7 +1759,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fyk-ME-JTp" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                <rect key="frame" x="822" y="90" width="60" height="60"/>
+                                <rect key="frame" x="826" y="90" width="60" height="60"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NUc-5X-S7I" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="10" y="10" width="40" height="40"/>
@@ -1764,7 +1779,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hsl-8Q-RoJ" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                <rect key="frame" x="822" y="150" width="60" height="80"/>
+                                <rect key="frame" x="826" y="150" width="60" height="80"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGr-k4-4TI" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="10" y="10" width="40" height="53"/>
@@ -1784,7 +1799,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ape-vj-wQL" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                <rect key="frame" x="822" y="230" width="60" height="60"/>
+                                <rect key="frame" x="826" y="230" width="60" height="60"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jNJ-AC-2Ea" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="10" y="10" width="40" height="13"/>
@@ -1844,7 +1859,7 @@
                                 </constraints>
                             </view>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1T9-L7-JKj">
-                                <rect key="frame" x="44" y="323" width="150" height="70"/>
+                                <rect key="frame" x="40" y="323" width="150" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="2eF-Z7-7JJ"/>
                                     <constraint firstAttribute="height" constant="70" id="F3A-4L-zxV"/>
@@ -1888,7 +1903,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="py9-Zf-Ycq" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="80" y="359" width="40" height="40"/>
+                                        <rect key="frame" x="80" y="354" width="40" height="40"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Has-yp-8jy"/>
@@ -1899,8 +1914,8 @@
                                         <rect key="frame" x="15" y="122" width="170" height="170"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="170" id="Flq-nf-oB3"/>
-                                            <constraint firstAttribute="width" constant="170" id="V5a-Ws-y28"/>
+                                            <constraint firstAttribute="height" priority="999" constant="170" id="Flq-nf-oB3"/>
+                                            <constraint firstAttribute="width" priority="999" constant="170" id="V5a-Ws-y28"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dAw-EJ-sTU" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -1920,7 +1935,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOR-fl-NRH" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="30" y="359" width="56" height="40"/>
+                                        <rect key="frame" x="30" y="354" width="56" height="40"/>
                                         <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="2M5-aV-JKd"/>
@@ -1928,7 +1943,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1GZ-U0-nZS" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="130" y="359" width="40" height="40"/>
+                                        <rect key="frame" x="130" y="354" width="40" height="40"/>
                                         <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="9kP-A7-WCV"/>
@@ -1939,37 +1954,43 @@
                                 <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="lAW-wc-Wna" firstAttribute="top" secondItem="b36-UU-QMQ" secondAttribute="bottom" constant="20" id="0tE-2B-AWv"/>
+                                    <constraint firstItem="1GZ-U0-nZS" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" constant="50" id="Dfk-td-bvN"/>
                                     <constraint firstItem="gi1-s8-Ps3" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" id="GGl-Qc-XbH"/>
+                                    <constraint firstItem="py9-Zf-Ycq" firstAttribute="bottom" secondItem="uOR-fl-NRH" secondAttribute="bottom" id="HHz-5z-os1"/>
+                                    <constraint firstItem="gi1-s8-Ps3" firstAttribute="top" relation="lessThanOrEqual" secondItem="lAW-wc-Wna" secondAttribute="bottom" constant="11" id="I7d-zh-MYH"/>
                                     <constraint firstItem="lAW-wc-Wna" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" id="LHW-Kd-4V1"/>
                                     <constraint firstItem="b36-UU-QMQ" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" id="NqC-zA-wbw"/>
                                     <constraint firstItem="b36-UU-QMQ" firstAttribute="top" secondItem="tjQ-fj-IaW" secondAttribute="top" constant="15" id="QDe-x3-xEC"/>
                                     <constraint firstItem="dAw-EJ-sTU" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" id="TYJ-SB-CeW"/>
                                     <constraint firstItem="gi1-s8-Ps3" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" id="VuJ-4r-cDm"/>
                                     <constraint firstAttribute="width" constant="200" id="Yjv-8R-2E5"/>
-                                    <constraint firstAttribute="bottom" secondItem="1GZ-U0-nZS" secondAttribute="bottom" constant="15" id="Ymb-lK-v1W"/>
-                                    <constraint firstAttribute="bottom" secondItem="uOR-fl-NRH" secondAttribute="bottom" constant="15" id="cdL-dn-0cw"/>
+                                    <constraint firstAttribute="bottom" secondItem="1GZ-U0-nZS" secondAttribute="bottom" constant="20" id="Ymb-lK-v1W"/>
+                                    <constraint firstAttribute="bottom" secondItem="uOR-fl-NRH" secondAttribute="bottom" constant="20" id="cdL-dn-0cw"/>
+                                    <constraint firstItem="gi1-s8-Ps3" firstAttribute="leading" relation="lessThanOrEqual" secondItem="tjQ-fj-IaW" secondAttribute="leading" constant="15" id="cvS-a7-Hj5"/>
+                                    <constraint firstItem="uOR-fl-NRH" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" constant="-42" id="dfu-ba-pc7"/>
+                                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="gi1-s8-Ps3" secondAttribute="trailing" constant="15" id="gG9-zU-DmP"/>
                                     <constraint firstItem="gi1-s8-Ps3" firstAttribute="centerY" secondItem="tjQ-fj-IaW" secondAttribute="centerY" id="jEN-Uk-RYO"/>
                                     <constraint firstAttribute="bottom" secondItem="K85-Mp-3IN" secondAttribute="bottom" constant="15" id="jF6-q0-3Lj"/>
                                     <constraint firstItem="K85-Mp-3IN" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" id="jUz-Q9-Aji"/>
                                     <constraint firstItem="py9-Zf-Ycq" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" id="jcw-Ki-NDk"/>
-                                    <constraint firstAttribute="trailing" secondItem="1GZ-U0-nZS" secondAttribute="trailing" constant="30" id="kXA-Jb-w0w"/>
-                                    <constraint firstItem="uOR-fl-NRH" firstAttribute="leading" secondItem="tjQ-fj-IaW" secondAttribute="leading" constant="30" id="ox9-Hv-WeZ"/>
                                     <constraint firstItem="dAw-EJ-sTU" firstAttribute="centerY" secondItem="tjQ-fj-IaW" secondAttribute="centerY" id="tUu-wr-tlD"/>
-                                    <constraint firstAttribute="bottom" secondItem="py9-Zf-Ycq" secondAttribute="bottom" constant="15" id="z7x-4V-Yuz"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vhR-03-8Ib" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                <rect key="frame" x="24" y="10" width="56" height="40"/>
+                                <rect key="frame" x="20" y="10" width="56" height="40"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="56" id="bAl-zd-zyM"/>
                                     <constraint firstAttribute="height" constant="40" id="sMT-tH-gdn"/>
                                 </constraints>
                             </view>
-                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0af-Id-wac">
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0af-Id-wac">
                                 <rect key="frame" x="328" y="68" width="400" height="240"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="atF-5C-NXK"/>
+                                    <constraint firstAttribute="width" constant="400" id="kHD-JS-kuH"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="vo5-8R-hgg" kind="embed" identifier="PixelHistoryEmbed" id="fCJ-D5-qFK"/>
                                 </connections>
@@ -2038,7 +2059,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="Dcg-RG-ceO" secondAttribute="trailing" constant="-40" id="0n1-va-9gO"/>
                             <constraint firstItem="JBK-ya-sQZ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="20" id="3n0-Hr-AW4"/>
@@ -2051,6 +2072,7 @@
                             <constraint firstItem="Noh-3c-qct" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="A8U-WJ-UM9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hsl-8Q-RoJ" secondAttribute="trailing" constant="-50" id="ABH-ha-y6s"/>
                             <constraint firstAttribute="trailing" secondItem="Xy2-vk-Qhk" secondAttribute="trailing" id="AQ7-KZ-Zr8"/>
+                            <constraint firstItem="0af-Id-wac" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="68" id="CMp-7O-VLW"/>
                             <constraint firstItem="xoZ-vF-uEO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Jh7-I7-tfX"/>
                             <constraint firstItem="3Wc-83-toh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LbT-aO-inW"/>
                             <constraint firstAttribute="bottom" secondItem="3Wc-83-toh" secondAttribute="bottom" id="Niy-ET-z8Z"/>
@@ -2058,6 +2080,7 @@
                             <constraint firstAttribute="trailing" secondItem="UYW-Te-7QB" secondAttribute="trailing" constant="200" id="SMr-fv-78B"/>
                             <constraint firstAttribute="bottom" secondItem="tjQ-fj-IaW" secondAttribute="bottom" id="T2S-q7-raM"/>
                             <constraint firstItem="Xy2-vk-Qhk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VgR-ke-MNW"/>
+                            <constraint firstItem="0af-Id-wac" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="328" id="Vzr-rr-hEP"/>
                             <constraint firstItem="Fyk-ME-JTp" firstAttribute="top" secondItem="Dcg-RG-ceO" secondAttribute="bottom" constant="40" id="YSY-oR-HjC"/>
                             <constraint firstAttribute="bottom" secondItem="Noh-3c-qct" secondAttribute="bottom" id="YXr-5N-gI1"/>
                             <constraint firstItem="UYW-Te-7QB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="cgX-kE-orb"/>
@@ -2116,6 +2139,8 @@
                         <outlet property="paintQuantityBar" destination="b36-UU-QMQ" id="wZG-as-ccp"/>
                         <outlet property="paintYes" destination="uOR-fl-NRH" id="EBM-FW-8KS"/>
                         <outlet property="pixelHistoryView" destination="0af-Id-wac" id="pV6-j1-63X"/>
+                        <outlet property="pixelHistoryViewLeading" destination="Vzr-rr-hEP" id="Q96-5W-mrX"/>
+                        <outlet property="pixelHistoryViewTop" destination="CMp-7O-VLW" id="Vwe-K6-V2X"/>
                         <outlet property="recentColorsActionView" destination="kgE-k4-rlO" id="737-FS-JZW"/>
                         <outlet property="recentColorsButton" destination="3Wc-83-toh" id="7o2-XU-baj"/>
                         <outlet property="recentColorsButtonLeading" destination="LbT-aO-inW" id="nah-r4-AS8"/>
@@ -2136,16 +2161,16 @@
             </objects>
             <point key="canvasLocation" x="196.875" y="114.49275362318842"/>
         </scene>
-        <!--Custom Color Picker View Controller-->
+        <!--Color Picker Outlets View Controller-->
         <scene sceneID="jn0-CM-Vf9">
             <objects>
-                <viewController id="vlp-4O-A3P" customClass="CustomColorPickerViewController" customModule="FlexColorPicker" sceneMemberID="viewController">
+                <viewController id="vlp-4O-A3P" customClass="ColorPickerOutletsViewController" customModule="LiquidOceanIOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5r5-D9-GHB">
                         <rect key="frame" x="0.0" y="0.0" width="350" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQc-ZZ-5IN" customClass="RadialPaletteControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="54" y="34" width="272" height="272"/>
+                                <rect key="frame" x="39" y="34" width="272" height="272"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="SPU-B7-fss"/>
@@ -2153,7 +2178,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q2Z-sl-HLi" customClass="BrightnessSliderControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="48" y="333" width="252" height="47"/>
+                                <rect key="frame" x="49" y="333" width="252" height="47"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="6dJ-mr-B18"/>
@@ -2163,15 +2188,20 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="UQc-ZZ-5IN" secondAttribute="trailing" constant="40" id="1ix-Od-2f9"/>
-                            <constraint firstItem="UQc-ZZ-5IN" firstAttribute="top" secondItem="5r5-D9-GHB" secondAttribute="top" constant="50" id="1pD-gR-XYk"/>
+                            <constraint firstItem="UQc-ZZ-5IN" firstAttribute="centerY" secondItem="5r5-D9-GHB" secondAttribute="centerY" constant="-37" id="63x-7h-xiz"/>
                             <constraint firstAttribute="bottom" secondItem="q2Z-sl-HLi" secondAttribute="bottom" constant="50" id="8Uu-SF-HmS"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="q2Z-sl-HLi" secondAttribute="trailing" constant="50" id="b60-sn-6Be"/>
+                            <constraint firstItem="UQc-ZZ-5IN" firstAttribute="centerX" secondItem="5r5-D9-GHB" secondAttribute="centerX" id="NNE-pj-7tC"/>
+                            <constraint firstItem="q2Z-sl-HLi" firstAttribute="centerX" secondItem="5r5-D9-GHB" secondAttribute="centerX" id="PEr-do-HPe"/>
+                            <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="q2Z-sl-HLi" secondAttribute="trailing" constant="50" id="b60-sn-6Be"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="36R-El-x8r"/>
                     </view>
                     <connections>
                         <outlet property="brightnessSlider" destination="q2Z-sl-HLi" id="nfD-N0-tNQ"/>
+                        <outlet property="hsbWheelHeight" destination="SPU-B7-fss" id="SpD-CU-i0e"/>
+                        <outlet property="hsbWheelWidth" destination="bc6-qq-Hi7" id="y4N-nt-cyu"/>
+                        <outlet property="hsbWheelXCenter" destination="NNE-pj-7tC" id="rBK-ef-R9H"/>
+                        <outlet property="hsbWheelYCenter" destination="63x-7h-xiz" id="4Ym-5h-qXH"/>
                         <outlet property="radialHsbPalette" destination="UQc-ZZ-5IN" id="MBw-ci-iol"/>
                     </connections>
                 </viewController>
@@ -2455,6 +2485,7 @@
                     <connections>
                         <outlet property="artView" destination="GIL-ip-Skh" id="DfB-Bi-pcR"/>
                         <outlet property="artViewHeight" destination="MA1-Ll-daa" id="p2c-qZ-RgI"/>
+                        <outlet property="artViewWidth" destination="Ubd-MB-MXj" id="pg4-hn-a9D"/>
                         <outlet property="backButton" destination="MqO-ne-2SR" id="hQZ-2g-3qp"/>
                         <outlet property="backButtonLeading" destination="vW3-Vt-cOj" id="2zV-YE-11r"/>
                         <outlet property="saveActionView" destination="H6I-Ua-i2Y" id="9Sc-Ie-xGG"/>
@@ -2476,7 +2507,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnn-iB-Zo4" customClass="RadialPaletteControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="55" y="50" width="240" height="240"/>
+                                <rect key="frame" x="39" y="34" width="272" height="272"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="KDt-ja-w5Q"/>
@@ -2484,7 +2515,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6PM-av-mg5" customClass="BrightnessSliderControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="65" y="349" width="220" height="15"/>
+                                <rect key="frame" x="49" y="333" width="252" height="47"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="UZq-lk-JOc"/>
@@ -2527,6 +2558,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="jzH-A0-0Va"/>
+        <segue reference="28p-wv-bjn"/>
     </inferredMetricsTieBreakers>
 </document>
