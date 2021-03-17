@@ -94,6 +94,11 @@ class SessionSettings: NSObject {
     var canvasLockColor: Int32 = 0
     
     var showPaintBar = true
+    var showPaintCircle = false
+    
+    var shortTermPixels = [InteractiveCanvas.ShortTermPixel]()
+    
+    var paintIndicatorColor: Int32 = 0
     
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
@@ -118,6 +123,8 @@ class SessionSettings: NSObject {
         userDefaults().set(canvasLockBorder, forKey: "canvas_lock_border")
         userDefaults().set(canvasLockColor, forKey: "canvas_lock_color")
         userDefaults().set(showPaintBar, forKey: "show_paint_bar")
+        userDefaults().set(showPaintCircle, forKey: "show_paint_circle")
+        userDefaults().set(paintIndicatorColor, forKey: "paint_indicator_color")
     }
     
     func quickSave() {
@@ -172,6 +179,10 @@ class SessionSettings: NSObject {
         canvasLockColor = userDefaultsInt32(forKey: "canvas_lock_color", defaultVal: Utils.int32FromColorHex(hex: "0x66FF0000"))
         
         showPaintBar = userDefaultsBool(forKey: "show_paint_bar", defaultVal: true)
+        
+        showPaintCircle = userDefaultsBool(forKey: "show_paint_circle", defaultVal: false)
+        
+        paintIndicatorColor = userDefaultsInt32(forKey: "paint_indicator_color", defaultVal: Utils.int32FromColorHex(hex: "0xff999999"))
     }
     
     func userDefaults() -> UserDefaults {
@@ -216,6 +227,18 @@ class SessionSettings: NSObject {
         else {
             return defaultVal
         }
+    }
+    
+    func addShortTermPixels(pixels: [InteractiveCanvas.ShortTermPixel]) {
+        for pixel in pixels {
+            shortTermPixels.append(pixel)
+        }
+    }
+    
+    func updateShortTermPixels() {
+        shortTermPixels.removeAll(where: {
+            Date().timeIntervalSince1970 - $0.time > 60 * 2
+        })
     }
     
     // art showcase

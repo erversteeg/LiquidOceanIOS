@@ -13,11 +13,6 @@
 	</array>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>We&apos;d like to add to photos to save the currently selected pixel art image.</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

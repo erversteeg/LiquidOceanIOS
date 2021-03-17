@@ -59,6 +59,39 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         self.addGestureRecognizer(pinchGestureRecognizer)
         
         self.drawGestureRecognizer = UIDrawGestureRecognizer(target: self, action: #selector(didDraw(sender:)))
+        
+        /*Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { (tmr) in
+            let rT = arc4random() % 20 + 1
+            Timer.scheduledTimer(withTimeInterval: Double(rT), repeats: false) { (tmr) in
+                self.simulateDraw()
+            }
+        }*/
+    }
+    
+    func simulateDraw() {
+        let smallAmt = Int(arc4random() % 20) + 2
+        let bigAmt = Int(arc4random() % 100) + 50
+        
+        startPainting()
+        
+        let r = arc4random() % 10
+        
+        if r < 2 {
+            for _ in 0...smallAmt - 1 {
+                let rX = Int(arc4random() % UInt32(interactiveCanvas.cols))
+                let rY = Int(arc4random() % UInt32(interactiveCanvas.rows))
+                interactiveCanvas.paintUnitOrUndo(x: rX, y: rY, mode: 0)
+            }
+        }
+        else {
+            for _ in 0...bigAmt - 1 {
+                let rX = Int(arc4random() % UInt32(interactiveCanvas.cols))
+                let rY = Int(arc4random() % UInt32(interactiveCanvas.rows))
+                interactiveCanvas.paintUnitOrUndo(x: rX, y: rY, mode: 0)
+            }
+        }
+        
+        endPainting(accept: true)
     }
     
     // draw

@@ -13,6 +13,7 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     let rows = 3
     let cols = 13
     
+    var primaryColor: Int32!
     var greenColor: Int32!
     var whiteColor: Int32!
     var blueColor: Int32!
@@ -48,6 +49,8 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     
     func commonInit() {
         panelThemeConfig = PanelThemeConfig.defaultLightTheme()
+        
+        primaryColor = SessionSettings.instance.paintIndicatorColor
         
         greenColor = Utils.int32FromColorHex(hex: "0xFF42FF7B")
         whiteColor = Utils.int32FromColorHex(hex: "0xFFFFFFFF")
@@ -87,12 +90,12 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
             }
             
             // decor
-            drawPixel(ctx: ctx, x: 6, y: 0, color: grayAccentColor)
-            drawPixel(ctx: ctx, x: 2, y: 2, color: grayAccentColor)
-            drawPixel(ctx: ctx, x: 8, y: 2, color: grayAccentColor)
+            //drawPixel(ctx: ctx, x: 6, y: 0, color: grayAccentColor)
+            //drawPixel(ctx: ctx, x: 2, y: 2, color: grayAccentColor)
+            //drawPixel(ctx: ctx, x: 8, y: 2, color: grayAccentColor)
             
             // ends
-            drawPixel(ctx: ctx, x: 0, y: 1, color: greenColor)
+            drawPixel(ctx: ctx, x: 0, y: 1, color: darkGrayColor)
             drawPixel(ctx: ctx, x: cols - 1, y: 1, color: darkGrayColor)
         }
         else {
@@ -104,12 +107,12 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
             }
             
             // decor
-            drawPixel(ctx: ctx, x: 6, y: 0, color: lightGrayColor)
-            drawPixel(ctx: ctx, x: 2, y: 2, color: lightGrayColor)
-            drawPixel(ctx: ctx, x: 8, y: 2, color: lightGrayColor)
+            //drawPixel(ctx: ctx, x: 6, y: 0, color: lightGrayColor)
+            //drawPixel(ctx: ctx, x: 2, y: 2, color: lightGrayColor)
+            //drawPixel(ctx: ctx, x: 8, y: 2, color: lightGrayColor)
             
             // ends
-            drawPixel(ctx: ctx, x: 0, y: 1, color: greenColor)
+            drawPixel(ctx: ctx, x: 0, y: 1, color: whiteColor)
             drawPixel(ctx: ctx, x: cols - 1, y: 1, color: whiteColor)
         }
     }
@@ -120,17 +123,13 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
         
         var relQty = CGFloat(SessionSettings.instance.dropsAmt) / CGFloat(SessionSettings.instance.maxPaintAmt)
         
-        if !world {
-            relQty = CGFloat(1)
-        }
-        
         let numPixels = cols - 2
         let qtyPer = 1.0 / CGFloat(numPixels)
         var curProg: CGFloat = 0.0
         
         for x in 1...cols - 2 {
             if relQty > curProg {
-                if world {
+                /*if world {
                     drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: blueColor)
                 }
                 else {
@@ -140,25 +139,26 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
                     else {
                         drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: ActionButtonView.twoThirdGrayColor)
                     }
-                }
+                }*/
+                drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: primaryColor)
             }
             else {
                 if flashingError && world && relQty == 0 {
                     drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: ActionButtonView.redColor)
                 }
-                else if world {
-                    drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: brownColor)
+                else {
+                    drawPixel(ctx: ctx, x: (cols - 1) - x, y: 1, color: UIColor.black.argb()!)
                 }
             }
             
-            if x < cols - 2 {
+            /*if x < cols - 2 {
                 if panelThemeConfig.darkPaintQtyBar {
                     drawLine(ctx: ctx, start: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight), end: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight * 2), color: twoThirdGraySemiColor)
                 }
                 else {
                     drawLine(ctx: ctx, start: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight), end: CGPoint(x: CGFloat(cols - 1 - x) * pxWidth, y: pxHeight * 2), color: thirdGraySemiColor)
                 }
-            }
+            }*/
             
             curProg += qtyPer
         }

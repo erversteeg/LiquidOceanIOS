@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class LoadingViewController: UIViewController {
+class LoadingViewController: UIViewController, InteractiveCanvasSocketConnectionDelegate {
 
     var showInteractiveCanvas = "ShowInteractiveCanvas"
     
@@ -62,6 +62,8 @@ class LoadingViewController: UIViewController {
     var doneLoadingChunk3 = false
     var doneLoadingChunk4 = false
     
+    var doneConnectingSocket = false
+    
     var timer: Timer!
     var lastDotsStr = ""
     
@@ -95,6 +97,11 @@ class LoadingViewController: UIViewController {
         }
         
         getTopContributors()
+        
+        InteractiveCanvasSocket.instance.startSocket()
+        InteractiveCanvasSocket.instance.socketConnectionDelegate = self
+        
+        SessionSettings.instance.updateShortTermPixels()
         
         let rIndex = Int(arc4random() % UInt32(gameTips.count))
         gameTipLabel.text = gameTips[rIndex]
@@ -234,10 +241,10 @@ class LoadingViewController: UIViewController {
     
     func downloadFinished() {
         if realmId == 1 {
-            statusLabel.text = String(format: "Loading %d / 6", getNumLoaded())
+            statusLabel.text = String(format: "Loading %d / 7", getNumLoaded())
         }
         else {
-            statusLabel.text = String(format: "Loading %d / 3", getNumLoaded())
+            statusLabel.text = String(format: "Loading %d / 4", getNumLoaded())
         }
         
         if loadingDone() {
@@ -277,16 +284,22 @@ class LoadingViewController: UIViewController {
             num += 1
         }
         
+        if doneConnectingSocket {
+            num += 1
+        }
+        
         return num
     }
     
     func loadingDone() -> Bool {
         if realmId == 1 {
             return doneSyncDevice && doneLoadingTopContributors && doneLoadingChunk1 &&
-                doneLoadingChunk2 && doneLoadingChunk3 && doneLoadingChunk4
+                doneLoadingChunk2 && doneLoadingChunk3 && doneLoadingChunk4 &&
+                doneConnectingSocket
         }
         else {
-            return doneLoadingPixels && doneSyncDevice && doneLoadingTopContributors
+            return doneLoadingPixels && doneSyncDevice && doneLoadingTopContributors &&
+                doneConnectingSocket
         }
         
     }
@@ -311,5 +324,15 @@ class LoadingViewController: UIViewController {
         gradient.endPoint = CGPoint(x: 0, y: 1)
 
         view.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    // socket connection delegate
+    func notifySocketConnect() {
+        doneConnectingSocket = true
+        InteractiveCanvasSocket.instance.socketConnectionDelegate = nil
+    }
+    
+    func notifySocketConnectionError() {
+        
     }
 }

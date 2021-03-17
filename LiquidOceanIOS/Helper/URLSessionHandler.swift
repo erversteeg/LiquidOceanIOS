@@ -12,11 +12,14 @@ import CFNetwork
 
 class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
+    //let baseUrl = "https://192.168.200.69:5000"
+    let baseUrl = "https://ericversteeg.com:5000"
+    
     static let instance = URLSessionHandler()
     
     func downloadCanvasPixels(completionHandler: @escaping (Bool) -> Void) {
         
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/canvas/2/pixels")!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/canvas/2/pixels")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -40,7 +43,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     
     func downloadCanvasChunkPixels(chunk: Int, completionHandler: @escaping (Bool) -> Void) {
         
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/canvas/1/pixels/" + String(chunk))!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/canvas/1/pixels/" + String(chunk))!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -89,7 +92,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     
     func downloadTopContributors(completionHandler: @escaping ([[String: Any]]) -> Void) {
         
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/top/contributors")!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/top/contributors")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -117,7 +120,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     func sendDeviceId(completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/devices/register")!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/register")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "POST"
 
@@ -150,7 +153,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     func sendDeviceStat(eventType: StatTracker.EventType, amt: Int, completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/devices/" + uniqueId)!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + uniqueId)!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "POST"
 
@@ -206,7 +209,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     func updateDisplayName(name: String, completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/devices/" + uniqueId)!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + uniqueId)!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "POST"
 
@@ -243,7 +246,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     func getDeviceInfo(completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/devices/" + uniqueId + "/info")!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + uniqueId + "/info")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -291,7 +294,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     }
     
     func sendApiStatusCheck(completionHandler: @escaping (Bool) -> (Void)) {
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/status")!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/status")!)
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 10
         config.timeoutIntervalForResource = 10
@@ -333,7 +336,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     }
     
     func sendNameCheck(name: String, completionHandler: @escaping (Bool) -> (Void)) {
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/devices/checkname/" + name)!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/checkname/" + name)!)
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 10
         config.timeoutIntervalForResource = 10
@@ -376,7 +379,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     }
     
     func getPaintTimerInfo(completionHandler: @escaping (Bool, Double) -> (Void)) {
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/paint/time/sync")!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/paint/time/sync")!)
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 10
         config.timeoutIntervalForResource = 10
@@ -419,7 +422,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     func sendGoogleToken(token: String, completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/devices/" + uniqueId + "/google/auth")!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + uniqueId + "/google/auth")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "POST"
 
@@ -479,7 +482,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     
     func downloadPixelHistory(pixelId: Int, completionHandler: @escaping (Bool, [AnyObject]) -> Void) {
         
-        var request = URLRequest(url: URL(string: "https://192.168.200.69:5000/api/v1/canvas/pixels/" + String(pixelId) + "/history")!)
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/canvas/pixels/" + String(pixelId) + "/history")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -506,7 +509,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+    /*func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
-    }
+    }*/
 }

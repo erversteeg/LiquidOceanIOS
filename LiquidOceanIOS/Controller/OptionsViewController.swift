@@ -26,6 +26,13 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet weak var showPaintBarContainer: UIView!
     @IBOutlet weak var showPaintBarSwitch: UISwitch!
     
+    @IBOutlet weak var showPaintCircleContainer: UIView!
+    @IBOutlet weak var showPaintCircleSwitch: UISwitch!
+    
+    @IBOutlet weak var paintMeterColorContainer: UIView!
+    @IBOutlet weak var paintMeterColorColorView: UIView!
+    @IBOutlet weak var paintMeterColorResetButton: UIButton!
+    
     @IBOutlet weak var changeNameButton: UIButton!
     @IBOutlet weak var changeNameTextField: UITextField!
     
@@ -83,6 +90,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     
     var panels = PanelThemeConfig.panels
     
+    var selectingPaintMeterColor = false
     var selectingGridLineColor = false
     var selectingCanvasLockColor = false
     
@@ -120,6 +128,20 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         showPaintBarContainer.layer.borderWidth = 2
         showPaintBarSwitch.isOn = SessionSettings.instance.showPaintBar
         
+        // show paint circle
+        showPaintCircleContainer.layer.borderColor = UIColor.white.cgColor
+        showPaintCircleContainer.layer.borderWidth = 2
+        showPaintCircleSwitch.isOn = SessionSettings.instance.showPaintCircle
+        
+        // paint meter color
+        paintMeterColorContainer.layer.borderColor = UIColor.white.cgColor
+        paintMeterColorContainer.layer.borderWidth = 2
+        
+        paintMeterColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.paintIndicatorColor)
+        
+        var tgr = UITapGestureRecognizer(target: self, action: #selector(tappedPaintMeterColorView(sender:)))
+        paintMeterColorColorView.addGestureRecognizer(tgr)
+        
         // canvas lock border
         canvasLockBorderContainer.layer.borderColor = UIColor.white.cgColor
         canvasLockBorderContainer.layer.borderWidth = 2
@@ -134,7 +156,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         gridLineColorContainer.layer.borderColor = UIColor.white.cgColor
         gridLineColorContainer.layer.borderWidth = 2
         
-        var tgr = UITapGestureRecognizer(target: self, action: #selector(tappedGridLineColorView(sender:)))
+        tgr = UITapGestureRecognizer(target: self, action: #selector(tappedGridLineColorView(sender:)))
         gridLineColorColorView.addGestureRecognizer(tgr)
         
         tgr = UITapGestureRecognizer(target: self, action: #selector(tappedCanvasLockColorView(sender:)))
@@ -262,11 +284,26 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
         else if sender == showPaintBarSwitch {
             SessionSettings.instance.showPaintBar = sender.isOn
+            if sender.isOn && showPaintCircleSwitch.isOn {
+                showPaintCircleSwitch.setOn(false, animated: true)
+                SessionSettings.instance.showPaintCircle = false
+            }
+        }
+        else if sender == showPaintCircleSwitch {
+            SessionSettings.instance.showPaintCircle = sender.isOn
+            if sender.isOn && showPaintBarSwitch.isOn {
+                showPaintBarSwitch.setOn(false, animated: true)
+                SessionSettings.instance.showPaintBar = false
+            }
         }
     }
     
     @IBAction func resetButtonPressed(_ sender: UIButton) {
-        if sender == gridLineColorResetButton {
+        if sender == paintMeterColorResetButton {
+            SessionSettings.instance.paintIndicatorColor = Utils.int32FromColorHex(hex: "0xff999999")
+            paintMeterColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.paintIndicatorColor)
+        }
+        else if sender == gridLineColorResetButton {
             SessionSettings.instance.gridLineColor = 0
             gridLineColorColorView.backgroundColor = UIColor.white
         }
@@ -274,6 +311,25 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             SessionSettings.instance.canvasLockColor = Utils.int32FromColorHex(hex: "0x66ff0000")
             canvasLockColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.canvasLockColor)
         }
+    }
+    
+    @objc func tappedPaintMeterColorView(sender: UIView) {
+        colorPickerContainerView.isHidden = false
+        colorPickerContainerView.alpha = 0
+        
+        colorPickerCancelButton.isHidden = false
+        colorPickerCancelButton.alpha = 0
+        
+        colorPickerDoneButton.isHidden = false
+        colorPickerDoneButton.alpha = 0
+        
+        UIView.animate(withDuration: 0.2) {
+            self.colorPickerContainerView.alpha = 1
+            self.colorPickerCancelButton.alpha = 1
+            self.colorPickerDoneButton.alpha = 1
+        }
+        
+        selectingPaintMeterColor = true
     }
     
     @objc func tappedGridLineColorView(sender: UIView) {
@@ -371,6 +427,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     @IBAction func colorPickerCancelPressed(_ sender: Any) {
+        if selectingPaintMeterColor {
+            paintMeterColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.paintIndicatorColor)
+            colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintIndicatorColor)
+            
+            selectingPaintMeterColor = false
+        }
         if selectingCanvasLockColor {
             canvasLockColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.gridLineColor)
             colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.gridLineColor)
@@ -406,7 +468,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBAction func colorSelectDonePressed(_ sender: Any) {
         let color = self.colorPickerViewController.selectedColor
     
-        if selectingGridLineColor {
+        if selectingPaintMeterColor {
+            SessionSettings.instance.paintIndicatorColor = color.argb()!
+            
+            selectingPaintMeterColor = false
+        }
+        else if selectingGridLineColor {
             SessionSettings.instance.gridLineColor = color.argb()!
             
             selectingGridLineColor = false
@@ -593,7 +660,10 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     
     // color picker delegate
     func colorPicker(_ colorPicker: ColorPickerController, selectedColor: UIColor, usingControl: ColorControl) {
-        if selectingGridLineColor {
+        if selectingPaintMeterColor {
+            paintMeterColorColorView.backgroundColor = selectedColor
+        }
+        else if selectingGridLineColor {
             gridLineColorColorView.backgroundColor = selectedColor
         }
         else if selectingCanvasLockColor {

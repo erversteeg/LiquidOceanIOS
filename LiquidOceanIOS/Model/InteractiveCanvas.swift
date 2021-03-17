@@ -40,7 +40,7 @@ protocol InteractiveCanvasSocketStatusDelegate: AnyObject {
     func notifySocketError()
 }
 
-class InteractiveCanvas: NSObject, URLSessionDelegate {
+class InteractiveCanvas: NSObject {
     var rows = 512
     var cols = 512
     
@@ -72,7 +72,6 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     weak var pixelHistoryDelegate: InteractiveCanvasPixelHistoryDelegate?
     weak var recentColorsDelegate: InteractiveCanvasRecentColorsDelegate?
     weak var artExportDelegate: InteractiveCanvasArtExportDelegate?
-    weak var socketStatusDelegate: InteractiveCanvasSocketStatusDelegate?
     
     var startScaleFactor = CGFloat(0.2)
     
@@ -90,14 +89,8 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     
     let numBackgrounds = 6
     
-    var manager: SocketManager!
-    var socket: SocketIOClient?
-    
     var restorePoints =  [RestorePoint]()
     var pixelsOut: [RestorePoint]!
-    
-    var checkStatusReceived = false
-    var checkEventTimeout = 20.0
     
     var receivedPaintRecently = false
     
@@ -112,6 +105,16 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             self.y = y
             self.color = color
             self.newColor = newColor
+        }
+    }
+    
+    class ShortTermPixel {
+        var restorePoint: RestorePoint
+        var time: Double
+        
+        init(restorePoint: RestorePoint) {
+            self.restorePoint = restorePoint
+            self.time = Date().timeIntervalSince1970
         }
     }
     
@@ -134,28 +137,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
                 initPixels(arrJsonStr: dataJsonStr!)
             }
             
-            // socket init
-            manager = SocketManager(socketURL: URL(string: "https://192.168.200.69:5010")!, config: [.log(true), .compress, .selfSigned(true), .sessionDelegate(self)])
-            
-            socket = manager.defaultSocket
-            
-            socket?.connect()
-            
-            socket?.on(clientEvent: .connect) { (data, ack) in
-                print(data)
-                
-                self.sendSocketStatusCheck()
-            }
-            
-            socket?.on(clientEvent: .disconnect) { (data, ack) in
-                print(data)
-            }
-            
-            socket?.on(clientEvent: .error) { (data, ack) in
-                print(data)
-            }
-            
-            registerForSocketEvents(socket: socket!)
+            registerForSocketEvents(socket: InteractiveCanvasSocket.instance.socket)
         }
         // single play
         else {
@@ -167,6 +149,14 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             else {
                 initPixels(arrJsonStr: dataJsonStr!)
             }
+        }
+        
+        // short term pixels
+        for shortTermPixel in SessionSettings.instance.shortTermPixels {
+            let x = shortTermPixel.restorePoint.x
+            let y = shortTermPixel.restorePoint.y
+            
+            arr[y][x] = shortTermPixel.restorePoint.color
         }
         
         // both
@@ -227,6 +217,8 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
     }
     
     func registerForSocketEvents(socket: SocketIOClient) {
+        var shortTermPixels = [ShortTermPixel]()
+        
         socket.on("pixels_commit") { (data, ack) in
             let pixelsJsonArr = data[0] as! [[String: Any]]
             
@@ -239,8 +231,13 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
                 let y = unit1DIndex / self.cols
                 let x = unit1DIndex % self.cols
                 
-                self.arr[y][x] = pixelObj["color"] as! Int32
+                let color = pixelObj["color"] as! Int32
+                self.arr[y][x] = color
+                
+                shortTermPixels.append(ShortTermPixel(restorePoint: RestorePoint(x: x, y: y, color: color, newColor: color)))
             }
+            
+            SessionSettings.instance.addShortTermPixels(pixels: shortTermPixels)
             
             self.drawCallback?.notifyCanvasRedraw()
         }
@@ -253,21 +250,6 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
                 Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { (tmr) in
                     self.receivedPaintRecently = false
                 }
-            }
-        }
-        
-        socket.on("check_success") { (data, ack) in
-            self.checkStatusReceived = true
-        }
-    }
-    
-    func sendSocketStatusCheck() {
-        socket?.emit("check_event")
-        
-        self.checkStatusReceived = false
-        Timer.scheduledTimer(withTimeInterval: checkEventTimeout, repeats: false) { (tmr) in
-            if !self.checkStatusReceived {
-                self.socketStatusDelegate?.notifySocketError()
             }
         }
     }
@@ -412,7 +394,7 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
             
             print(reqObj)
             
-            socket?.emit("pixels_event", reqObj)
+            InteractiveCanvasSocket.instance.socket.emit("pixels_event", reqObj)
             
             StatTracker.instance.reportEvent(eventType: .pixelPaintedWorld, amt: restorePoints.count)
         }
@@ -660,9 +642,5 @@ class InteractiveCanvas: NSObject, URLSessionDelegate {
         deviceViewport = CGRect(x: left, y: top, width: right - left, height: bottom - top)
         
         drawCallback?.notifyCanvasRedraw()
-    }
-    
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
     }
 }

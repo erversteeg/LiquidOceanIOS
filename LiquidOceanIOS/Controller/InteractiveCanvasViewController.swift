@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -34,6 +34,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var paintYes: ActionButtonView!
     @IBOutlet weak var paintNo: ActionButtonView!
     
+    @IBOutlet weak var paintQuantityCircle: PaintQuantityCircle!
     @IBOutlet weak var paintQuantityBar: PaintQuantityBar!
     
     @IBOutlet weak var backButton: ActionButtonView!
@@ -69,6 +70,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var paintEventInfoContainer: UIView!
     @IBOutlet weak var paintEventTimeLabel: UILabel!
+    @IBOutlet weak var paintEventAmtLabel: UILabel!
     @IBOutlet weak var paintEventInfoContainerWidth: NSLayoutConstraint!
     
     @IBOutlet weak var canvasLockView: UIView!
@@ -89,6 +91,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var pixelHistoryViewTop: NSLayoutConstraint!
     @IBOutlet weak var pixelHistoryViewLeading: NSLayoutConstraint!
     
+    @IBOutlet weak var paintInfoContainerTop: NSLayoutConstraint!
+    
     var panelThemeConfig: PanelThemeConfig!
     
     var world = false
@@ -101,6 +105,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     var resizedColorPicker = false
     var initial = true
     
+    var paintTextMode = 2
+    
+    var paintTextModeTime = 0
+    var paintTextModeAmt = 1
+    var paintTextModeHide = 2
+    
     var pixelHistoryViewController: PixelHistoryViewController!
     weak var recentColorsViewController: RecentColorsViewController!
     weak var exportViewController: ExportViewController!
@@ -112,7 +122,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         surfaceView.interactiveCanvas.realmId = realmId
         surfaceView.interactiveCanvas.world = world
         
-        paintQuantityBar.world = world
+        // paintQuantityMeter.world = world
         
         SessionSettings.instance.interactiveCanvas = self.surfaceView.interactiveCanvas
         
@@ -148,7 +158,29 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             }
         }
         
-        if !SessionSettings.instance.showPaintBar || !world {
+        SessionSettings.instance.paintQtyDelegates.append(self)
+        paintEventAmtLabel.text = String(SessionSettings.instance.dropsAmt)
+        
+        // paint quantity meter
+        if SessionSettings.instance.showPaintBar {
+            SessionSettings.instance.paintQtyDelegates.append(paintQuantityBar)
+            
+            paintQuantityCircle.isHidden = true
+        }
+        else if SessionSettings.instance.showPaintCircle {
+            SessionSettings.instance.paintQtyDelegates.append(paintQuantityCircle)
+            
+            paintInfoContainerTop.constant -= 25
+            
+            paintQuantityBar.isHidden = true
+        }
+        else {
+            paintQuantityCircle.isHidden = true
+            paintQuantityBar.isHidden = true
+        }
+        
+        if !world {
+            paintQuantityCircle.isHidden = true
             paintQuantityBar.isHidden = true
         }
         
@@ -290,9 +322,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             }*/
         }
         
-        // paint quantity bar
-        SessionSettings.instance.paintQtyDelegates.append(self.paintQuantityBar)
-        
+        // paint quantity meter
         let paintIndicatorTap = UITapGestureRecognizer(target: self, action: #selector(didTapColorIndicator(sender:)))
         self.paintColorIndicator.addGestureRecognizer(paintIndicatorTap)
         
@@ -399,24 +429,39 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         self.paintColorAccept.touchDelegate = self.paintColorIndicator
         
+        self.paintQuantityCircle.panelThemeConfig = panelThemeConfig
         self.paintQuantityBar.panelThemeConfig = panelThemeConfig
+        
         self.paintColorIndicator.panelThemeConfig = panelThemeConfig
         
         // paint event time toggle
         let tgr = UITapGestureRecognizer(target: self, action: #selector(didTapPaintQuantityBar))
-        self.paintQuantityBar.addGestureRecognizer(tgr)
+        
+        if SessionSettings.instance.showPaintCircle {
+            self.paintQuantityCircle.addGestureRecognizer(tgr)
+        }
+        else if SessionSettings.instance.showPaintBar {
+            self.paintQuantityBar.addGestureRecognizer(tgr)
+        }
         
         StatTracker.instance.achievementListener = self
         
-        surfaceView.interactiveCanvas.socketStatusDelegate = self
+        InteractiveCanvasSocket.instance.socketStatusDelegate = self
         
         if world {
-            startServerStatusChecks()
+            Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { (tmr) in
+                self.startServerStatusChecks()
+            }
             
             getPaintTimerInfo()
         }
         else {
-            self.paintQuantityBar.removeGestureRecognizer(tgr)
+            if SessionSettings.instance.showPaintCircle {
+                self.paintQuantityCircle.removeGestureRecognizer(tgr)
+            }
+            else if SessionSettings.instance.showPaintBar {
+                self.paintQuantityBar.removeGestureRecognizer(tgr)
+            }
         }
     }
     
@@ -489,7 +534,26 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     }
     
     @objc func didTapPaintQuantityBar() {
-        paintEventInfoContainer.isHidden = !paintEventInfoContainer.isHidden
+        paintTextMode += 1
+        if paintTextMode == 3 {
+            paintTextMode = 0
+        }
+        
+        if paintTextMode == paintTextModeTime {
+            paintEventTimeLabel.isHidden = false
+            paintEventInfoContainer.isHidden = false
+    
+            paintEventAmtLabel.isHidden = true
+        }
+        else if paintTextMode == paintTextModeAmt {
+            paintEventAmtLabel.isHidden = false
+            paintEventInfoContainer.isHidden = false
+            
+            paintEventTimeLabel.isHidden = true
+        }
+        else if paintTextMode == paintTextModeHide {
+            paintEventInfoContainer.isHidden = true
+        }
     }
     
     func startServerStatusChecks() {
@@ -506,7 +570,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                         self.showDisconnectedMessage(type: 1)
                     }
                     else {
-                        self.surfaceView.interactiveCanvas.sendSocketStatusCheck()
+                        InteractiveCanvasSocket.instance.sendSocketStatusCheck()
                     }
                 }
             }
@@ -532,6 +596,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         else {
             self.paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF303030"))
             self.paintEventTimeLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
+        }
+        
+        if SessionSettings.instance.showPaintCircle {
+            self.paintEventInfoContainer.backgroundColor = UIColor.clear
         }
         
         self.paintEventInfoContainer.layer.cornerRadius = 20
@@ -584,7 +652,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
         else if segue.identifier == "UnwindToMenu" {
             StatTracker.instance.achievementListener = nil
-            surfaceView.interactiveCanvas.socket?.disconnect()
+            InteractiveCanvasSocket.instance.socket.disconnect()
         }
     }
     
@@ -840,6 +908,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         toggleRecentColors(open: false)
         
         if SessionSettings.instance.dropsAmt == 0 {
+            paintQuantityCircle.flashError()
             paintQuantityBar.flashError()
         }
     }
@@ -879,6 +948,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
         
         return ptc
+    }
+    
+    // paint quantity delegate
+    func notifyPaintQtyChanged(qty: Int) {
+        paintEventAmtLabel.text = String(qty)
     }
 }
 
