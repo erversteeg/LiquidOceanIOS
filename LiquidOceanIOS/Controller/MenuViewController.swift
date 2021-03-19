@@ -126,7 +126,7 @@ class MenuViewController: UIViewController, AchievementListener {
                 self.toggleMenuButtons(show: true, depth: 0)
                 self.toggleMenuButtons(show: false, depth: 1)
                 
-                Animator.animateMenuButtons(views: [[self.playButtonBottomLayer, self.playButton], [self.optionsButtonBottomLayer, self.optionsButton], [self.statsButtonBottomLayer, self.statsButton], [self.howtoButtonBottomLayer, self.howtoButton]], cascade: true, moveOut: false)
+                Animator.animateMenuButtons(views: [[self.playButtonBottomLayer, self.playButton], [self.optionsButtonBottomLayer, self.optionsButton], [self.statsButtonBottomLayer, self.statsButton], [self.howtoButtonBottomLayer, self.howtoButton]], cascade: true, moveOut: false, inverse: false)
                 
                 self.backAction.isHidden = true
             }
@@ -136,7 +136,7 @@ class MenuViewController: UIViewController, AchievementListener {
             self.toggleMenuButtons(show: false, depth: 0)
             self.toggleMenuButtons(show: true, depth: 1)
             
-            Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false)
+            Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false, inverse: false)
             
             self.backAction.isHidden = false
         }
@@ -185,7 +185,7 @@ class MenuViewController: UIViewController, AchievementListener {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Animator.animateMenuButtons(views: [[self.playButtonBottomLayer, self.playButton], [self.optionsButtonBottomLayer, self.optionsButton], [self.statsButtonBottomLayer, self.statsButton], [self.howtoButtonBottomLayer, self.howtoButton]], cascade: true, moveOut: false)
+        Animator.animateMenuButtons(views: [[self.playButtonBottomLayer, self.playButton], [self.optionsButtonBottomLayer, self.optionsButton], [self.statsButtonBottomLayer, self.statsButton], [self.howtoButtonBottomLayer, self.howtoButton]], cascade: true, moveOut: false, inverse: false)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -211,7 +211,7 @@ class MenuViewController: UIViewController, AchievementListener {
         self.toggleMenuButtons(show: true, depth: 0)
         self.toggleMenuButtons(show: false, depth: 1)
         
-        Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false)
+        Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false, inverse: false)
         
         self.backAction.isHidden = true
         

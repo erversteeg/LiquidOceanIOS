@@ -100,6 +100,10 @@ class SessionSettings: NSObject {
     
     var paintIndicatorColor: Int32 = 0
     
+    var rightHanded = false
+    
+    var smallActionButtons = false
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -125,6 +129,8 @@ class SessionSettings: NSObject {
         userDefaults().set(showPaintBar, forKey: "show_paint_bar")
         userDefaults().set(showPaintCircle, forKey: "show_paint_circle")
         userDefaults().set(paintIndicatorColor, forKey: "paint_indicator_color")
+        userDefaults().set(rightHanded, forKey: "right_handed")
+        userDefaults().set(smallActionButtons, forKey: "small_action_buttons")
     }
     
     func quickSave() {
@@ -183,6 +189,10 @@ class SessionSettings: NSObject {
         showPaintCircle = userDefaultsBool(forKey: "show_paint_circle", defaultVal: false)
         
         paintIndicatorColor = userDefaultsInt32(forKey: "paint_indicator_color", defaultVal: Utils.int32FromColorHex(hex: "0xff999999"))
+        
+        rightHanded = userDefaultsBool(forKey: "right_handed", defaultVal: false)
+        
+        smallActionButtons = userDefaultsBool(forKey: "small_action_buttons", defaultVal: false)
     }
     
     func userDefaults() -> UserDefaults {

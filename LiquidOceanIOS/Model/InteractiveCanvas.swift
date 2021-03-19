@@ -223,18 +223,30 @@ class InteractiveCanvas: NSObject {
             let pixelsJsonArr = data[0] as! [[String: Any]]
             
             for pixelObj in pixelsJsonArr {
+                var sameRealm = false
+                
                 var unit1DIndex = (pixelObj["id"] as! Int) - 1
+                
+                if unit1DIndex < (512 * 512) && self.realmId == 2 {
+                    sameRealm = true
+                }
+                else if (unit1DIndex >= (512 * 512) && self.realmId == 1) {
+                    sameRealm = true
+                }
+                
                 if self.realmId == 1 {
                     unit1DIndex -= (512 * 512)
                 }
                 
-                let y = unit1DIndex / self.cols
-                let x = unit1DIndex % self.cols
-                
-                let color = pixelObj["color"] as! Int32
-                self.arr[y][x] = color
-                
-                shortTermPixels.append(ShortTermPixel(restorePoint: RestorePoint(x: x, y: y, color: color, newColor: color)))
+                if (sameRealm) {
+                    let y = unit1DIndex / self.cols
+                    let x = unit1DIndex % self.cols
+                    
+                    let color = pixelObj["color"] as! Int32
+                    self.arr[y][x] = color
+                    
+                    shortTermPixels.append(ShortTermPixel(restorePoint: RestorePoint(x: x, y: y, color: color, newColor: color)))
+                }
             }
             
             SessionSettings.instance.addShortTermPixels(pixels: shortTermPixels)

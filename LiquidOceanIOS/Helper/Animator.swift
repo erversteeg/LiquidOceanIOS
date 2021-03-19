@@ -97,7 +97,7 @@ class Animator: NSObject {
         return CGFloat(arc4random() % 1000000) / CGFloat(1000000)
     }
     
-    static func animateMenuButtons(views: [[UIView]], cascade: Bool, moveOut: Bool) {
+    static func animateMenuButtons(views: [[UIView]], cascade: Bool, moveOut: Bool, inverse: Bool) {
         let delays = [0, 0.05, 0.08, 0.1]
         
         if !moveOut {
@@ -108,7 +108,12 @@ class Animator: NSObject {
                     
                     var delay = delays[index]
                     
-                    layer.transform = layer.transform.translatedBy(x: 500, y: 0)
+                    if inverse {
+                        layer.transform = layer.transform.translatedBy(x: -500, y: 0)
+                    }
+                    else {
+                        layer.transform = layer.transform.translatedBy(x: 500, y: 0)
+                    }
                     
                     layer.alpha = 0
                     
@@ -118,7 +123,12 @@ class Animator: NSObject {
                     UIView.animate(withDuration: 0.15, delay: delay, options: .allowAnimatedContent, animations: {
                         layer.alpha = 1
                         
-                        layer.transform = layer.transform.translatedBy(x: -500, y: 0)
+                        if inverse {
+                            layer.transform = layer.transform.translatedBy(x: 500, y: 0)
+                        }
+                        else {
+                            layer.transform = layer.transform.translatedBy(x: -500, y: 0)
+                        }
                     }, completion: nil)
                 }
                 index += 1
@@ -135,11 +145,22 @@ class Animator: NSObject {
                     }
                     
                     UIView.animate(withDuration: 0.15, delay: delay, options: .allowAnimatedContent, animations: {
-                        layer.transform = layer.transform.translatedBy(x: 500, y: 0)
+                        if inverse {
+                            layer.transform = layer.transform.translatedBy(x: -500, y: 0)
+                        }
+                        else {
+                            layer.transform = layer.transform.translatedBy(x: 500, y: 0)
+                        }
                     }) { (done) in
                         if done {
                             layer.isHidden = true
-                            layer.transform = layer.transform.translatedBy(x: -500, y: 0)
+                            
+                            if inverse {
+                                layer.transform = layer.transform.translatedBy(x: 500, y: 0)
+                            }
+                            else {
+                                layer.transform = layer.transform.translatedBy(x: -500, y: 0)
+                            }
                         }
                     }
                 }

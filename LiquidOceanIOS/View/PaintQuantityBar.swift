@@ -76,7 +76,7 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     override func draw(_ rect: CGRect) {
         let ctx = UIGraphicsGetCurrentContext()!
         
-        drawPixelBorder(ctx: ctx)
+        //drawPixelBorder(ctx: ctx)
         drawQuantity(ctx: ctx)
     }
     
@@ -118,7 +118,17 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     }
     
     func drawQuantity(ctx: CGContext) {
-        let pxWidth = self.frame.size.width / CGFloat(cols)
+        let relQty = CGFloat(SessionSettings.instance.dropsAmt) / CGFloat(SessionSettings.instance.maxPaintAmt)
+        
+        ctx.setFillColor(UIColor.black.cgColor)
+        ctx.addRect(CGRect(x: 0, y: frame.size.height / 3, width: frame.size.width, height: frame.size.height / 3))
+        ctx.drawPath(using: .fill)
+        
+        ctx.setFillColor(UIColor(argb: primaryColor).cgColor)
+        ctx.addRect(CGRect(x: (1 - relQty) * frame.size.width, y: frame.size.height / 3, width: relQty * frame.size.width, height: frame.size.height / 3))
+        ctx.drawPath(using: .fill)
+        
+        /*let pxWidth = self.frame.size.width / CGFloat(cols)
         let pxHeight = self.frame.size.height / CGFloat(rows)
         
         var relQty = CGFloat(SessionSettings.instance.dropsAmt) / CGFloat(SessionSettings.instance.maxPaintAmt)
@@ -161,7 +171,7 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
             }*/
             
             curProg += qtyPer
-        }
+        }*/
     }
 
     func rectForPixel(x: Int, y: Int) -> CGRect {

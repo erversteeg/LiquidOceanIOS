@@ -76,6 +76,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet weak var recentColorsAmtLabel7: UILabel!
     @IBOutlet weak var recentColorsAmtLabel8: UILabel!
     
+    @IBOutlet weak var rightHandedContainer: UIView!
+    @IBOutlet weak var rightHandedSwitch: UISwitch!
+    
+    @IBOutlet weak var smallActionButtonsContainer: UIView!
+    @IBOutlet weak var smallActionButtonsSwitch: UISwitch!
+    
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
     
     weak var colorPickerViewController: CustomColorPickerViewController!
@@ -228,6 +234,17 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             SessionSettings.instance.paintIndicatorWidth = value
         }
         
+        // right-handed
+        rightHandedContainer.layer.borderColor = UIColor.white.cgColor
+        rightHandedContainer.layer.borderWidth = 2
+        rightHandedSwitch.isOn = SessionSettings.instance.rightHanded
+        
+        // small action buttons
+        smallActionButtonsContainer.layer.borderColor = UIColor.white.cgColor
+        smallActionButtonsContainer.layer.borderWidth = 2
+        smallActionButtonsSwitch.isOn = SessionSettings.instance.smallActionButtons
+        
+        // before animation
         if view.frame.size.height <= 600 {
             optionsTitleAction.isHidden = true
             
@@ -295,6 +312,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
                 showPaintBarSwitch.setOn(false, animated: true)
                 SessionSettings.instance.showPaintBar = false
             }
+        }
+        else if sender == rightHandedSwitch {
+            SessionSettings.instance.rightHanded = sender.isOn
+        }
+        else if sender == smallActionButtonsSwitch {
+            SessionSettings.instance.smallActionButtons = sender.isOn
         }
     }
     
