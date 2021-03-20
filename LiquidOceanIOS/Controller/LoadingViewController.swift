@@ -53,6 +53,9 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                     "No violence, racism, bigotry, or nudity of any kind is allowed on the world canvas.",
                     "Anyone can get started painting on the world canvas in 5 minutes or less, tap the paint bar to bring up a timer with when the next paint event will occur."]
     
+    var errorTypeServer = "server"
+    var errorTypeSocket = "socket"
+    
     var doneLoadingPixels = false
     var doneSyncDevice = false
     var doneLoadingTopContributors = false
@@ -68,6 +71,8 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     var lastDotsStr = ""
     
     var realmId = 0
+    
+    var showingError = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,6 +120,13 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             }
             self.dotsLabel.text = self.lastDotsStr
         }
+        
+        if realmId == 1 {
+            statusLabel.text = String(format: "Loading %d / 7", getNumLoaded())
+        }
+        else {
+            statusLabel.text = String(format: "Loading %d / 4", getNumLoaded())
+        }
     }
     
     func downloadCanvasChunkPixels() {
@@ -123,11 +135,17 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 self.doneLoadingChunk1 = true
                 self.downloadFinished()
             }
+            else {
+                self.showError(type: self.errorTypeServer)
+            }
         }
         URLSessionHandler.instance.downloadCanvasChunkPixels(chunk: 2) { (success) in
             if success {
                 self.doneLoadingChunk2 = true
                 self.downloadFinished()
+            }
+            else {
+                self.showError(type: self.errorTypeServer)
             }
         }
         URLSessionHandler.instance.downloadCanvasChunkPixels(chunk: 3) { (success) in
@@ -135,11 +153,17 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 self.doneLoadingChunk3 = true
                 self.downloadFinished()
             }
+            else {
+                self.showError(type: self.errorTypeServer)
+            }
         }
         URLSessionHandler.instance.downloadCanvasChunkPixels(chunk: 4) { (success) in
             if success {
                 self.doneLoadingChunk4 = true
                 self.downloadFinished()
+            }
+            else {
+                self.showError(type: self.errorTypeServer)
             }
         }
     }
@@ -152,6 +176,9 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 
                 self.downloadFinished()
             }
+            else {
+                self.showError(type: self.errorTypeServer)
+            }
         }
     }
     
@@ -163,59 +190,64 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             let topContributorAmtViews1 = [self.topContributorAmt1, self.topContributorAmt2, self.topContributorAmt3, self.topContributorAmt4, self.topContributorAmt5]
             let topContributorAmtViews2 = [self.topContributorAmt6, self.topContributorAmt7, self.topContributorAmt8, self.topContributorAmt9, self.topContributorAmt10]
             
-            for i in topContributors.indices {
-                let topContributor = topContributors[i]
-                
-                let name = topContributor["name"] as! String
-                let amt = topContributor["amt"] as! Int
-                
-                if i == 0 {
-                    SessionSettings.instance.firstContributorName = name
-                    self.topContributorName1.textColor = Utils.UIColorFromColorHex(hex: "0xffdecb52")
-                }
-                else if i == 1 {
-                    SessionSettings.instance.secondContributorName = name
-                    self.topContributorName2.textColor = Utils.UIColorFromColorHex(hex: "0xffafb3b1")
-                }
-                else if i == 2 {
-                    SessionSettings.instance.thirdContributorName = name
-                    self.topContributorName3.textColor = Utils.UIColorFromColorHex(hex: "0xffbd927b")
-                }
-                
-                if i < 5 {
-                    topContributorNameViews1[i]!.text = name
-                    topContributorAmtViews1[i]!.text = String(amt)
+            if topContributors != nil {
+                for i in topContributors!.indices {
+                    let topContributor = topContributors![i]
                     
-                    topContributorNameViews1[i]!.isHidden = false
-                    topContributorAmtViews1[i]!.isHidden = false
+                    let name = topContributor["name"] as! String
+                    let amt = topContributor["amt"] as! Int
                     
-                    topContributorNameViews1[i]!.alpha = 0
-                    topContributorAmtViews1[i]!.alpha = 0
+                    if i == 0 {
+                        SessionSettings.instance.firstContributorName = name
+                        self.topContributorName1.textColor = Utils.UIColorFromColorHex(hex: "0xffdecb52")
+                    }
+                    else if i == 1 {
+                        SessionSettings.instance.secondContributorName = name
+                        self.topContributorName2.textColor = Utils.UIColorFromColorHex(hex: "0xffafb3b1")
+                    }
+                    else if i == 2 {
+                        SessionSettings.instance.thirdContributorName = name
+                        self.topContributorName3.textColor = Utils.UIColorFromColorHex(hex: "0xffbd927b")
+                    }
                     
-                    UIView.animate(withDuration: 0.5) {
-                        topContributorNameViews1[i]!.alpha = 1
-                        topContributorAmtViews1[i]!.alpha = 1
+                    if i < 5 {
+                        topContributorNameViews1[i]!.text = name
+                        topContributorAmtViews1[i]!.text = String(amt)
+                        
+                        topContributorNameViews1[i]!.isHidden = false
+                        topContributorAmtViews1[i]!.isHidden = false
+                        
+                        topContributorNameViews1[i]!.alpha = 0
+                        topContributorAmtViews1[i]!.alpha = 0
+                        
+                        UIView.animate(withDuration: 0.5) {
+                            topContributorNameViews1[i]!.alpha = 1
+                            topContributorAmtViews1[i]!.alpha = 1
+                        }
+                    }
+                    else {
+                        topContributorNameViews2[i - 5]!.text = name
+                        topContributorAmtViews2[i - 5]!.text = String(amt)
+                        
+                        topContributorNameViews2[i - 5]!.isHidden = false
+                        topContributorAmtViews2[i - 5]!.isHidden = false
+                        
+                        topContributorNameViews2[i - 5]!.alpha = 0
+                        topContributorAmtViews2[i - 5]!.alpha = 0
+                        
+                        UIView.animate(withDuration: 0.5) {
+                            topContributorNameViews2[i - 5]!.alpha = 1
+                            topContributorAmtViews2[i - 5]!.alpha = 1
+                        }
                     }
                 }
-                else {
-                    topContributorNameViews2[i - 5]!.text = name
-                    topContributorAmtViews2[i - 5]!.text = String(amt)
-                    
-                    topContributorNameViews2[i - 5]!.isHidden = false
-                    topContributorAmtViews2[i - 5]!.isHidden = false
-                    
-                    topContributorNameViews2[i - 5]!.alpha = 0
-                    topContributorAmtViews2[i - 5]!.alpha = 0
-                    
-                    UIView.animate(withDuration: 0.5) {
-                        topContributorNameViews2[i - 5]!.alpha = 1
-                        topContributorAmtViews2[i - 5]!.alpha = 1
-                    }
-                }
+                
+                self.doneLoadingTopContributors = true
+                self.downloadFinished()
             }
-            
-            self.doneLoadingTopContributors = true
-            self.downloadFinished()
+            else {
+                self.showError(type: self.errorTypeServer)
+            }
         }
     }
     
@@ -226,6 +258,9 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 
                 self.downloadFinished()
             }
+            else {
+                self.showError(type: self.errorTypeServer)
+            }
         }
     }
     
@@ -235,6 +270,9 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 self.doneSyncDevice = true
                 
                 self.downloadFinished()
+            }
+            else {
+                self.showError(type: self.errorTypeServer)
             }
         }
     }
@@ -326,6 +364,32 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         view.layer.insertSublayer(gradient, at: 0)
     }
     
+    func showError(type: String) {
+        if !showingError {
+            var msg = ""
+            
+            if type == errorTypeServer {
+                msg = "Oops, could not find world pixel data. Please try again"
+            }
+            else if type == errorTypeSocket {
+                msg = "Socket connection error"
+            }
+            
+            // create the alert
+            let alert = UIAlertController(title: nil, message: msg, preferredStyle: UIAlertController.Style.alert)
+            // add the actions (buttons)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
+                InteractiveCanvasSocket.instance.socketConnectionDelegate = nil
+                
+                self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+            }))
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
+            
+            showingError = true
+        }
+    }
+    
     // socket connection delegate
     func notifySocketConnect() {
         doneConnectingSocket = true
@@ -333,6 +397,6 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     }
     
     func notifySocketConnectionError() {
-        
+        showError(type: errorTypeSocket)
     }
 }

@@ -31,6 +31,13 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            if error != nil {
+                DispatchQueue.main.async {
+                    completionHandler(false)
+                }
+                return
+            }
+            
             SessionSettings.instance.userDefaults().set(String(data: data!, encoding: .utf8), forKey: "arr")
             
             DispatchQueue.main.async {
@@ -52,6 +59,13 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false)
+                    }
+                    return
+                }
+                
                 let jsonArr = try JSONSerialization.jsonObject(with: data!, options: []) as! [[Int32]]
                 
                 var arr = [[Int32]]()
@@ -90,7 +104,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func downloadTopContributors(completionHandler: @escaping ([[String: Any]]) -> Void) {
+    func downloadTopContributors(completionHandler: @escaping ([[String: Any]]?) -> Void) {
         
         var request = URLRequest(url: URL(string: baseUrl + "/api/v1/top/contributors")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
@@ -101,6 +115,13 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(nil)
+                    }
+                    return
+                }
+                
                 let jsonObj = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
                 
                 let jsonArr = jsonObj["data"] as! [[String: Any]]
@@ -133,6 +154,13 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false)
+                    }
+                    return
+                }
+                
                 let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
             
                 SessionSettings.instance.dropsAmt = jsonDict["paint_qty"] as? Int
@@ -185,14 +213,16 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
-                let _ = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
-            
                 if error != nil {
-                    print("Error updating stat.")
+                    DispatchQueue.main.async {
+                        completionHandler(false)
+                    }
+                    return
                 }
-                else {
-                    print(key + " updated.")
-                }
+                
+                let _ = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
+                
+                print(key + " updated.")
                 
                 DispatchQueue.main.async {
                     completionHandler(true)
@@ -259,6 +289,13 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false)
+                    }
+                    return
+                }
+                
                 let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
             
                 SessionSettings.instance.sentUniqueId = true
@@ -350,6 +387,13 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        if name.count > 20 {
+            DispatchQueue.main.async {
+                completionHandler(false)
+                return
+            }
+        }
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             
@@ -438,6 +482,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                 if error != nil {
                     DispatchQueue.main.async {
                         completionHandler(false)
+                        return
                     }
                 }
                 
@@ -495,6 +540,13 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false, [])
+                    }
+                    return
+                }
+                
                 let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: AnyObject]
                 
                 DispatchQueue.main.async {

@@ -60,7 +60,18 @@ class SessionSettings: NSObject {
     
     var showcaseIndex = 0
     
-    var googleAuth = false
+    var _googleAuth = false
+    var googleAuth: Bool {
+        set {
+            changedGoogleAuth = true
+            _googleAuth = newValue
+        }
+        get {
+            return _googleAuth
+        }
+    }
+    
+    var changedGoogleAuth = false
     
     var nextPaintTime: Double!
     
@@ -101,6 +112,7 @@ class SessionSettings: NSObject {
     var paintIndicatorColor: Int32 = 0
     
     var rightHanded = false
+    var selectedHand = false
     
     var smallActionButtons = false
     
@@ -130,6 +142,7 @@ class SessionSettings: NSObject {
         userDefaults().set(showPaintCircle, forKey: "show_paint_circle")
         userDefaults().set(paintIndicatorColor, forKey: "paint_indicator_color")
         userDefaults().set(rightHanded, forKey: "right_handed")
+        userDefaults().set(selectedHand, forKey: "selected_hand")
         userDefaults().set(smallActionButtons, forKey: "small_action_buttons")
     }
     
@@ -141,6 +154,8 @@ class SessionSettings: NSObject {
         userDefaults().set(paintColor, forKey: "paint_color")
         userDefaults().set(backgroundColorIndex, forKey: "background_color")
         userDefaults().set(showGridLines, forKey: "show_grid_lines")
+        userDefaults().set(rightHanded, forKey: "right_handed")
+        userDefaults().set(selectedHand, forKey: "selected_hand")
     }
     
     func load() {
@@ -191,6 +206,8 @@ class SessionSettings: NSObject {
         paintIndicatorColor = userDefaultsInt32(forKey: "paint_indicator_color", defaultVal: Utils.int32FromColorHex(hex: "0xff999999"))
         
         rightHanded = userDefaultsBool(forKey: "right_handed", defaultVal: false)
+        
+        selectedHand = userDefaultsBool(forKey: "selected_hand", defaultVal: false)
         
         smallActionButtons = userDefaultsBool(forKey: "small_action_buttons", defaultVal: false)
     }

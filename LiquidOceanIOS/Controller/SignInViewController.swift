@@ -14,6 +14,8 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
     @IBOutlet weak var backAction: ActionButtonView!
     @IBOutlet weak var signInButton: GIDSignInButton!
     
+    @IBOutlet weak var statusLabel: UILabel!
+    
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
     
     override func viewDidLoad() {
@@ -39,6 +41,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
         
         if SessionSettings.instance.googleAuth {
             signInButton.isEnabled = false
+            statusLabel.text = "Signed in"
         }
     }
     
@@ -80,12 +83,13 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
       
         if idToken != nil {
             URLSessionHandler.instance.sendGoogleToken(token: String(idToken!.prefix(16))) { (success) -> (Void) in
-                if success {
-                    self.signInButton.isEnabled = false
+                if !success {
+                    self.statusLabel.text = "Could not sign in"
                 }
                 else {
-                    self.signInButton.isEnabled = true
+                    self.statusLabel.text = "Signed in"
                 }
+                self.signInButton.isEnabled = false
             }
         }
     }

@@ -20,7 +20,11 @@ class HowtoViewController: UIViewController {
     
     @IBOutlet weak var artView: ArtView!
     
+    @IBOutlet weak var paintEventInfoContainer: UIView!
+    @IBOutlet weak var paintEventTimeLabel: UILabel!
+    
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
+    @IBOutlet weak var paintEventInfoContainerWidth: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +51,13 @@ class HowtoViewController: UIViewController {
             paintAction.isHidden = true
             paintQtyBar.isHidden = true
         }
+        
+        paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF303030"))
+        paintEventInfoContainer.layer.cornerRadius = 20
+        
+        getPaintTimeInfo()
+        
+        setupPaintBarTap()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +93,50 @@ class HowtoViewController: UIViewController {
         
         if backX < 0 {
             backActionLeading.constant += 30
+        }
+    }
+    
+    func setupPaintBarTap() {
+        let tgr = UITapGestureRecognizer(target: self, action: #selector(paintBarTapped))
+        paintQtyBar.addGestureRecognizer(tgr)
+    }
+    
+    @objc func paintBarTapped() {
+        if paintEventInfoContainer.isHidden {
+            paintEventInfoContainer.isHidden = false
+        }
+        else {
+            paintEventInfoContainer.isHidden = true
+        }
+    }
+    
+    func getPaintTimeInfo() {
+        URLSessionHandler.instance.getPaintTimerInfo { (success, nextPaintTime) -> (Void) in
+            if success {
+                if nextPaintTime >= 0 {
+                    var ts = Int(nextPaintTime)
+                    let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (tmr) in
+                        ts -= 1
+                        
+                        if ts == 0 {
+                            ts = 300
+                        }
+                        
+                        let m = ts / 60
+                        let s = ts % 60
+                        
+                        self.paintEventTimeLabel.text = String(format: "%02d:%02d", m, s)
+                        self.paintEventInfoContainerWidth.constant = self.paintEventTimeLabel.text!.size(withAttributes: [.font: UIFont.boldSystemFont(ofSize: self.paintEventTimeLabel.font.pointSize)]).width + 20
+                    }
+                    timer.fire()
+                }
+                else {
+                    self.paintEventTimeLabel.text = "???"
+                }
+            }
+            else {
+                self.paintEventTimeLabel.text = "???"
+            }
         }
     }
 }

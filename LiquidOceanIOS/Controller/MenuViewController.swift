@@ -37,6 +37,12 @@ class MenuViewController: UIViewController, AchievementListener {
     @IBOutlet weak var devButtonBottomLayer: ActionButtonView!
     @IBOutlet weak var devButton: ActionButtonView!
     
+    @IBOutlet weak var leftyButtonBottomLayer: ActionButtonView!
+    @IBOutlet weak var leftyButton: ActionButtonView!
+    
+    @IBOutlet weak var rightyButtonBottomLayer: ActionButtonView!
+    @IBOutlet weak var rightyButton: ActionButtonView!
+    
     @IBOutlet weak var backAction: ActionButtonView!
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
     
@@ -66,6 +72,8 @@ class MenuViewController: UIViewController, AchievementListener {
         (gradient1: Utils.int32FromColorHex(hex: "0xff3b943f"), gradient2: Utils.int32FromColorHex(hex: "0xff4f1fe0")),
         (gradient1: Utils.int32FromColorHex(hex: "0xff242e8f"), gradient2: Utils.int32FromColorHex(hex: "0xff8f3234")),
         (gradient1: Utils.int32FromColorHex(hex: "0xff898f1d"), gradient2: Utils.int32FromColorHex(hex: "0xff158f86"))]
+    
+    var menuLayer = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,16 +127,34 @@ class MenuViewController: UIViewController, AchievementListener {
         devButton.type = .dev
         devButton.topLayer = true
         
+        leftyButtonBottomLayer.type = .lefty
+        leftyButtonBottomLayer.selectable = false
+        
+        leftyButton.type = .lefty
+        leftyButton.topLayer = true
+        
+        rightyButtonBottomLayer.type = .righty
+        rightyButtonBottomLayer.selectable = false
+        
+        rightyButton.type = .righty
+        rightyButton.topLayer = true
+        
         backAction.type = .backSolid
         
         self.backAction.setOnClickListener {
-            if !self.singleButton.isHidden {
+            if self.menuLayer == 1 {
                 self.toggleMenuButtons(show: true, depth: 0)
                 self.toggleMenuButtons(show: false, depth: 1)
                 
                 Animator.animateMenuButtons(views: [[self.playButtonBottomLayer, self.playButton], [self.optionsButtonBottomLayer, self.optionsButton], [self.statsButtonBottomLayer, self.statsButton], [self.howtoButtonBottomLayer, self.howtoButton]], cascade: true, moveOut: false, inverse: false)
                 
                 self.backAction.isHidden = true
+            }
+            else if self.menuLayer == 2 {
+                self.toggleMenuButtons(show: true, depth: 1)
+                self.toggleMenuButtons(show: false, depth: 2)
+                
+                Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false, inverse: false)
             }
         }
         
@@ -139,6 +165,8 @@ class MenuViewController: UIViewController, AchievementListener {
             Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false, inverse: false)
             
             self.backAction.isHidden = false
+            
+            self.menuLayer += 1
         }
         
         self.optionsButton.setOnClickListener {
@@ -154,24 +182,66 @@ class MenuViewController: UIViewController, AchievementListener {
         }
         
         self.singleButton.setOnClickListener {
-            self.performSegue(withIdentifier: self.showSinglePlay, sender: nil)
+            self.realmId = 0
+            if SessionSettings.instance.selectedHand {
+                self.performSegue(withIdentifier: self.showSinglePlay, sender: nil)
+            }
+            else {
+                self.showHandButtons()
+            }
         }
         
         self.worldButton.setOnClickListener {
             self.realmId = 1
-            self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
+            if SessionSettings.instance.selectedHand {
+                self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
+            }
+            else {
+                self.showHandButtons()
+            }
         }
         
         self.devButton.setOnClickListener {
             self.realmId = 2
-            self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
+            if SessionSettings.instance.selectedHand {
+                self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
+            }
+            else {
+                self.showHandButtons()
+            }
+        }
+        
+        leftyButton.setOnClickListener {
+            SessionSettings.instance.rightHanded = false
+            SessionSettings.instance.selectedHand = true
+            
+            SessionSettings.instance.quickSave()
+            
+            if self.realmId == 0 {
+                self.performSegue(withIdentifier: self.showSinglePlay, sender: nil)
+            }
+            else {
+                self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
+            }
+        }
+        
+        rightyButton.setOnClickListener {
+            SessionSettings.instance.rightHanded = true
+            SessionSettings.instance.selectedHand = true
+            
+            SessionSettings.instance.quickSave()
+            
+            if self.realmId == 0 {
+                self.performSegue(withIdentifier: self.showSinglePlay, sender: nil)
+            }
+            else {
+                self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
+            }
         }
         
         StatTracker.instance.achievementListener = self
         
         startShowcase()
-        
-        startPixels()
     }
     
     override func viewDidLayoutSubviews() {
@@ -180,6 +250,8 @@ class MenuViewController: UIViewController, AchievementListener {
         if backX < 0 {
             backActionLeading.constant += 30
         }
+        
+        startPixels()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -210,9 +282,11 @@ class MenuViewController: UIViewController, AchievementListener {
     @IBAction func unwindToViewController(segue: UIStoryboardSegue) {
         self.toggleMenuButtons(show: true, depth: 0)
         self.toggleMenuButtons(show: false, depth: 1)
+        self.toggleMenuButtons(show: false, depth: 2)
         
         Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false, inverse: false)
         
+        menuLayer = 0
         self.backAction.isHidden = true
         
         startShowcase()
@@ -259,6 +333,22 @@ class MenuViewController: UIViewController, AchievementListener {
             self.devButtonBottomLayer.isHidden = !show
             self.devButton.isHidden = !show
         }
+        else if depth == 2 {
+            leftyButtonBottomLayer.isHidden = !show
+            leftyButton.isHidden = !show
+            
+            rightyButtonBottomLayer.isHidden = !show
+            rightyButton.isHidden = !show
+        }
+    }
+    
+    func showHandButtons() {
+        toggleMenuButtons(show: false, depth: 1)
+        toggleMenuButtons(show: true, depth: 2)
+        
+        Animator.animateMenuButtons(views: [[leftyButtonBottomLayer, leftyButton], [rightyButtonBottomLayer, rightyButton]], cascade: true, moveOut: false, inverse: false)
+        
+        menuLayer += 1
     }
     
     func startShowcase() {

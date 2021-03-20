@@ -125,10 +125,6 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         checkedName = SessionSettings.instance.displayName
         changeNameTextField.text = SessionSettings.instance.displayName
         
-        if SessionSettings.instance.panelBackgroundName != "" {
-            panelsCollectionView.scrollToItem(at: IndexPath(item: panels.firstIndex(of: SessionSettings.instance.panelBackgroundName)!, section: 0), at: .centeredHorizontally, animated: true)
-        }
-        
         // show paint bar
         showPaintBarContainer.layer.borderColor = UIColor.white.cgColor
         showPaintBarContainer.layer.borderWidth = 2
@@ -260,6 +256,10 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         if backX < 0 {
             backActionLeading.constant += 30
         }
+        
+        if SessionSettings.instance.panelBackgroundName != "" {
+            panelsCollectionView.scrollToItem(at: IndexPath(item: panels.firstIndex(of: SessionSettings.instance.panelBackgroundName)!, section: 0), at: .centeredHorizontally, animated: true)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -272,6 +272,18 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             Animator.animateHorizontalViewEnter(view: panelsCollectionView, left: true)
             Animator.animateHorizontalViewEnter(view: canvasLockBorderContainer, left: false)
             Animator.animateHorizontalViewEnter(view: canvasLockColorContainer, left: true)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if SessionSettings.instance.changedGoogleAuth {
+            URLSessionHandler.instance.getDeviceInfo { (success) -> (Void) in
+                if success {
+                    self.changeNameTextField.text = SessionSettings.instance.displayName
+                }
+            }
         }
     }
     
@@ -621,7 +633,6 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // let offsetX = collectionView.contentOffset.x
         SessionSettings.instance.panelBackgroundName = self.panels[indexPath.item]
-        SessionSettings.instance.save()
         
         collectionView.reloadData()
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)

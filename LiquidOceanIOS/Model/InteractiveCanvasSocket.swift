@@ -48,7 +48,10 @@ class InteractiveCanvasSocket: NSObject, URLSessionDelegate {
         
         socket.on(clientEvent: .error) { (data, ack) in
             print(data)
-            self.socketConnectionDelegate?.notifySocketConnectionError()
+            
+            DispatchQueue.main.async {
+                self.socketConnectionDelegate?.notifySocketConnectionError()
+            }
         }
         
         socket.on("check_success") { (data, ack) in
