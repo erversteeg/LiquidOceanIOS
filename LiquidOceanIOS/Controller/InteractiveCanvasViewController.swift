@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -83,6 +83,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var canvasLockView: UIView!
     
+    @IBOutlet weak var objectSelectionView: UIView!
+    
     @IBOutlet weak var backButtonLeading: NSLayoutConstraint!
     @IBOutlet weak var paintPanelButtonTrailing: NSLayoutConstraint!
     
@@ -153,7 +155,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
         
-        self.surfaceView.paintActionDelegate = self
+        surfaceView.paintActionDelegate = self
+        surfaceView.objectSelectionDelegate = self
         
         self.surfaceView.interactiveCanvas.paintDelegate = self
         self.surfaceView.interactiveCanvas.pixelHistoryDelegate = self
@@ -172,8 +175,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                     self.promptBack()
                 }
                 else {
-                    self.surfaceView.interactiveCanvas.save()
-                    
                     self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
                 }
             }
@@ -558,10 +559,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 adjust = true
             }
             
-            setPaintPanelBackground(adjust: adjust)
-
-            surfaceView.setInitalScale()
-            
             // right-handed
             if SessionSettings.instance.rightHanded {
                 
@@ -669,6 +666,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 closePaintPanelActionWidth.constant = closePaintPanelActionWidth.constant * 0.833
                 closePaintPanelActionHeight.constant = closePaintPanelActionHeight.constant * 0.833
             }
+            
+            setPaintPanelBackground(adjust: adjust)
+
+            surfaceView.setInitalScale()
                 
             initial = false
         }
@@ -796,6 +797,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.exportViewController.delegate = self
         }
         else if segue.identifier == "UnwindToMenu" {
+            SessionSettings.instance.save()
+            
             StatTracker.instance.achievementListener = nil
             if world {
                 InteractiveCanvasSocket.instance.socket.disconnect()
@@ -862,10 +865,20 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             changeBackgroundButton.isHidden = false
             gridLinesButton.isHidden = false
             
-            Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: false, inverse: true)
+            if SessionSettings.instance.rightHanded {
+                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: false, inverse: true)
+            }
+            else {
+                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: false, inverse: false)
+            }
         }
         else {
-            Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: true, inverse: true)
+            if SessionSettings.instance.rightHanded {
+                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: true, inverse: true)
+            }
+            else {
+                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: true, inverse: false)
+            }
         }
     }
     
@@ -1038,8 +1051,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         let alert = UIAlertController(title: nil, message: "Are you sure you would like to go back?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-            self.surfaceView.interactiveCanvas.save()
-            
             self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
         }))
         
@@ -1061,11 +1072,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     }
     
     func setPaintPanelBackground(adjust: Bool) {
-        var w = CGFloat(200)
+        /*var w = CGFloat(200)
         if adjust {
             w = self.paintPanel.frame.size.height * 0.25
-        }
-        let backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: w, height: self.paintPanel.frame.size.height))
+        }*/
+        let backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: paintPanel.frame.size.width, height: paintPanel.frame.size.height))
+        
+        //paintPanelWidth.constant = w
         
         if SessionSettings.instance.panelBackgroundName == "" {
             backgroundImage.image = UIImage(named: "wood_texture_light.jpg")
@@ -1100,6 +1113,31 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // paint quantity delegate
     func notifyPaintQtyChanged(qty: Int) {
         paintEventAmtLabel.text = String(qty)
+    }
+    
+    // object selection delegate
+    func notifyObjectSelectionBoundsChanged(upperLeft: CGPoint, lowerRight: CGPoint) {
+        objectSelectionView.isHidden = false
+        
+        objectSelectionView.layer.borderWidth = 1
+        if SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3 {
+            objectSelectionView.backgroundColor = Utils.UIColorFromColorHex(hex: "0x44000000")
+            objectSelectionView.layer.borderColor = Utils.UIColorFromColorHex(hex: "0xff2f2f2f").cgColor
+        }
+        else {
+            objectSelectionView.backgroundColor = Utils.UIColorFromColorHex(hex: "0x44ffffff")
+            objectSelectionView.layer.borderColor = Utils.UIColorFromColorHex(hex: "0xffffffff").cgColor
+        }
+        
+        objectSelectionView.frame = CGRect(x: upperLeft.x, y: upperLeft.y, width: lowerRight.x - upperLeft.x, height: lowerRight.y - upperLeft.y)
+        
+        //objectSelectionView.frame = CGRect(x: upperLeft.x, y: upperLeft.y, width: 100, height: 100)
+        
+        print(objectSelectionView.frame)
+    }
+    
+    func notifyObjectSelectionEnded() {
+        objectSelectionView.isHidden = true
     }
 }
 

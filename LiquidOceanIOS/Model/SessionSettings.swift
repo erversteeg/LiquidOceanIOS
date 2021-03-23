@@ -116,6 +116,8 @@ class SessionSettings: NSObject {
     
     var smallActionButtons = false
     
+    var pincodeSet = false
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -144,6 +146,7 @@ class SessionSettings: NSObject {
         userDefaults().set(rightHanded, forKey: "right_handed")
         userDefaults().set(selectedHand, forKey: "selected_hand")
         userDefaults().set(smallActionButtons, forKey: "small_action_buttons")
+        userDefaults().set(pincodeSet, forKey: "pincode_set")
     }
     
     func quickSave() {
@@ -210,6 +213,8 @@ class SessionSettings: NSObject {
         selectedHand = userDefaultsBool(forKey: "selected_hand", defaultVal: false)
         
         smallActionButtons = userDefaultsBool(forKey: "small_action_buttons", defaultVal: false)
+        
+        pincodeSet = userDefaultsBool(forKey: "pincode_set", defaultVal: false)
     }
     
     func userDefaults() -> UserDefaults {

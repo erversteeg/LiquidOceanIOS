@@ -18,9 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SessionSettings.instance.load()
         StatTracker.instance.load()
         
-        URLSessionHandler.instance.getDeviceInfo { (success) -> (Void) in
-            if success {
-                
+        if !SessionSettings.instance.sentUniqueId {
+            URLSessionHandler.instance.sendDeviceId { (success) -> (Void) in
+                if success {
+                    
+                }
+            }
+        }
+        else {
+            URLSessionHandler.instance.getDeviceInfo { (success) -> (Void) in
+                if success {
+                    
+                }
             }
         }
         

@@ -9,29 +9,23 @@
 import UIKit
 import GoogleSignIn
 
-class SignInViewController: UIViewController, GIDSignInDelegate {
+class SignInViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var backAction: ActionButtonView!
-    @IBOutlet weak var signInButton: GIDSignInButton!
     
     @IBOutlet weak var statusLabel: UILabel!
     
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
     
+    @IBOutlet weak var titleAction: ActionButtonView!
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var pincodeTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
-
-        // init
-        GIDSignIn.sharedInstance()?.clientID = "454898966293-tac43n0h50as6i07qbt3mc1let090390.apps.googleusercontent.com"
-        GIDSignIn.sharedInstance()?.delegate = self
-        
-        // vc specific
-        GIDSignIn.sharedInstance()?.presentingViewController = self
-
-        // Automatically sign in the user.
-        // GIDSignIn.sharedInstance()?.restorePreviousSignIn()
+        setBackground()
         
         backAction.type = .backSolid
         
@@ -39,10 +33,13 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
             self.performSegue(withIdentifier: "UnwindToOptions", sender: nil)
         }
         
-        if SessionSettings.instance.googleAuth {
-            signInButton.isEnabled = false
-            statusLabel.text = "Signed in"
-        }
+        titleAction.type = .signIn
+        titleAction.selectable = false
+        
+        nameTextField.text = ""
+        pincodeTextField.text = ""
+        
+        statusLabel.textColor = UIColor(argb: ActionButtonView.altGreenColor)
     }
     
     override func viewDidLayoutSubviews() {
@@ -52,51 +49,77 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
         }
     }
     
-    // google sign-in delegate
-    @available(iOS 9.0, *)
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-      return GIDSignIn.sharedInstance().handle(url)
-    }
-    
-    func application(_ application: UIApplication,
-                     open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-      return GIDSignIn.sharedInstance().handle(url)
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
-              withError error: Error!) {
-        if let error = error {
-            if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
-                print("The user has not signed in before or they have since signed out.")
-            } else {
-                print("\(error.localizedDescription)")
-            }
+    @IBAction func signInPressed() {
+        let nameInput = nameTextField.text!
+        let pincodeInput = pincodeTextField.text!
+        
+        if nameInput.count > 20 {
+            statusLabel.text = "Too many characters"
             return
         }
-        // Perform any operations on signed in user here.
-        let userId = user.userID                  // For client-side use only!
-        let idToken = user.authentication.idToken // Safe to send to the server
-        let fullName = user.profile.name
-        let givenName = user.profile.givenName
-        let familyName = user.profile.familyName
-        let email = user.profile.email
-      
-        if idToken != nil {
-            URLSessionHandler.instance.sendGoogleToken(token: String(idToken!.prefix(16))) { (success) -> (Void) in
-                if !success {
-                    self.statusLabel.text = "Could not sign in"
+        else if nameInput.count == 0 {
+            statusLabel.text = "Please enter a display name"
+            return
+        }
+        
+        if pincodeInput.count == 0 {
+            statusLabel.text = "Please enter a pincode"
+            return
+        }
+        else if pincodeInput.count != 8 {
+            statusLabel.text = "Pincode length is incorrect"
+            return
+        }
+        
+        URLSessionHandler.instance.pincodeAuth(name: nameInput, pincode: pincodeInput) { (success, data) in
+            if success {
+                if data["error"] != nil {
+                    self.statusLabel.text = "Display name or password is incorrect"
                 }
                 else {
-                    self.statusLabel.text = "Signed in"
+                    SessionSettings.instance.pincodeSet = true
+                    
+                    SessionSettings.instance.uniqueId = data["uuid"] as? String
+                    SessionSettings.instance.dropsAmt = data["paint_qty"] as? Int
+                    SessionSettings.instance.xp = data["xp"] as! Int
+                    
+                    SessionSettings.instance.displayName = data["name"] as! String
+                    
+                    SessionSettings.instance.sentUniqueId = true
+                    
+                    StatTracker.instance.numPixelsPaintedWorld = data["wt"] as! Int
+                    StatTracker.instance.numPixelsPaintedSingle = data["st"] as! Int
+                    StatTracker.instance.totalPaintAccrued = data["tp"] as! Int
+                    StatTracker.instance.numPixelOverwritesIn = data["oi"] as! Int
+                    StatTracker.instance.numPixelOverwritesOut = data["oo"] as! Int
+                    
+                    StatTracker.instance.save()
+                    
+                    self.statusLabel.text = "Successfully signed in"
                 }
-                self.signInButton.isEnabled = false
+            }
+            else {
+                self.statusLabel.text = "Server or connection error"
             }
         }
     }
     
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
-              withError error: Error!) {
-      // Perform any operations when the user disconnects from app here.
-      // ...
+    func setBackground() {
+        let gradient = CAGradientLayer()
+
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff000000")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff333333")).cgColor]
+        
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 0, y: 1)
+
+        view.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    // ui textfield delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return false
     }
 }

@@ -346,6 +346,10 @@ class InteractiveCanvas: NSObject {
         }
     }
     
+    func isCanvas(unitPoint: CGPoint) -> Bool {
+        return unitPoint.x > 0 && unitPoint.y > 0 && unitPoint.x < CGFloat(cols) && unitPoint.y < CGFloat(rows)
+    }
+    
     func isBackground(unitPoint: CGPoint) -> Bool {
         return unitPoint.x < 0 || unitPoint.y < 0 || unitPoint.x > CGFloat(cols - 1) || unitPoint.y > CGFloat(rows - 1) || arr[Int(unitPoint.y)][Int(unitPoint.x)] == 0
     }
@@ -517,6 +521,95 @@ class InteractiveCanvas: NSObject {
         }
         
         return nil
+    }
+    
+    func exportSelection(startUnit: CGPoint, endUnit: CGPoint) {
+        var pixelsOut = [RestorePoint]()
+        
+        var numLeadingCols = 0
+        var numTrailingCols = 0
+        
+        var numLeadingRows = 0
+        var numTrailingRows = 0
+        
+        let startX = Int(startUnit.x)
+        let startY = Int(startUnit.y)
+        
+        let endX  = Int(endUnit.x)
+        let endY = Int(endUnit.y)
+        
+        var before = true
+        for x in startX...endX {
+            var clear = true
+            for y in startY...endY {
+                if arr[y][x] != 0 {
+                    clear = false
+                    before = false
+                }
+            }
+            
+            if clear && before {
+                numLeadingCols += 1
+            }
+        }
+        
+        before = true
+        for xi in startX...endX {
+            let x = (endX - xi) + startX
+            var clear = true
+            for y in startY...endY {
+                if arr[y][x] != 0 {
+                    clear = false
+                    before = false
+                }
+            }
+            
+            if clear && before {
+                numTrailingCols += 1
+            }
+        }
+        
+        before = true
+        for y in startY...endY {
+            var clear = true
+            for x in startX...endX {
+                if arr[y][x] != 0 {
+                    clear = false
+                    before = false
+                }
+            }
+            
+            if clear && before {
+                numLeadingRows += 1
+            }
+        }
+        
+        before = true
+        for yi in startY...endY {
+            let y = (endY - yi) + startY
+            var clear = true
+            for x in startX...endX {
+                if arr[y][x] != 0 {
+                    clear = false
+                    before = false
+                }
+            }
+            
+            if clear && before {
+                numTrailingRows += 1
+            }
+        }
+        
+        if (startX + numLeadingCols) < (endX - numTrailingCols) &&
+            (startY + numLeadingRows) < (endY - numTrailingRows) {
+            for x in (startX + numLeadingCols)...(endX - numTrailingCols) {
+                for y in (startY + numLeadingRows)...(endY - numTrailingRows) {
+                    pixelsOut.append(RestorePoint(x: x, y: y, color: arr[y][x], newColor: arr[y][x]))
+                }
+            }
+        }
+        
+        artExportDelegate?.notifyArtExported(art: pixelsOut)
     }
     
     func exportSelection(unitPoint: CGPoint) {

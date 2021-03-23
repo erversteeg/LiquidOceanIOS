@@ -12,6 +12,12 @@ protocol PaintActionDelegate {
     func notifyPaintActionStarted()
 }
 
+protocol ObjectSelectionDelegate: AnyObject {
+    func notifyObjectSelectionBoundsChanged(upperLeft: CGPoint, lowerRight: CGPoint)
+    
+    func notifyObjectSelectionEnded()
+}
+
 class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveCanvasScaleCallback {
 
     enum Mode {
@@ -38,6 +44,11 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     var panGestureRecognizer: UIPanGestureRecognizer!
     var tapGestureRecognizer: UITapGestureRecognizer!
     var drawGestureRecognizer: UIDrawGestureRecognizer!
+    
+    weak var objectSelectionDelegate: ObjectSelectionDelegate?
+    
+    var objectSelectionStartUnit: CGPoint!
+    var objectSelectionStartPoint: CGPoint!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -129,7 +140,13 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
             }
             else if mode == .exporting {
                 let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
-                interactiveCanvas.exportSelection(unitPoint: unitPoint)
+                
+                if interactiveCanvas.isCanvas(unitPoint: unitPoint) {
+                    objectSelectionStartUnit = unitPoint
+                    objectSelectionStartPoint = location
+                }
+                
+                // interactiveCanvas.exportSelection(unitPoint: unitPoint)
             }
         }
         else if sender.state == .changed {
@@ -150,6 +167,40 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 }
                 else if interactiveCanvas.restorePoints.count == 0 {
                     interactiveCanvas.paintDelegate?.notifyPaintingEnded()
+                }
+            }
+            else if mode == .exporting {
+                let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
+                
+                if interactiveCanvas.isCanvas(unitPoint: unitPoint) {
+                    let minX = fmin(location.x, objectSelectionStartPoint.x)
+                    let minY = fmin(location.y, objectSelectionStartPoint.y)
+                    
+                    let maxX = fmax(location.x, objectSelectionStartPoint.x)
+                    let maxY = fmax(location.y, objectSelectionStartPoint.y)
+                    
+                    objectSelectionDelegate?.notifyObjectSelectionBoundsChanged(upperLeft: CGPoint(x: minX, y: minY), lowerRight: CGPoint(x: maxX, y: maxY))
+                }
+            }
+        }
+        else if sender.state == .ended {
+            if mode == .exporting {
+                let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
+                
+                if interactiveCanvas.isCanvas(unitPoint: unitPoint) {
+                    if unitPoint.x == objectSelectionStartUnit.x && unitPoint.y == objectSelectionStartUnit.y {
+                        interactiveCanvas.exportSelection(unitPoint: unitPoint)
+                    }
+                    else {
+                        let minX = fmin(unitPoint.x, objectSelectionStartUnit.x)
+                        let minY = fmin(unitPoint.y, objectSelectionStartUnit.y)
+                        
+                        let maxX = fmax(unitPoint.x, objectSelectionStartUnit.x)
+                        let maxY = fmax(unitPoint.y, objectSelectionStartUnit.y)
+                        
+                        interactiveCanvas.exportSelection(startUnit: CGPoint(x: minX, y: minY), endUnit: CGPoint(x: maxX, y: maxY))
+                    }
+                    objectSelectionDelegate?.notifyObjectSelectionEnded()
                 }
             }
         }

@@ -23,6 +23,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     
     @IBOutlet weak var signInButton: UIButton!
     
+    @IBOutlet weak var pincodeButton: UIButton!
+    
     @IBOutlet weak var showPaintBarContainer: UIView!
     @IBOutlet weak var showPaintBarSwitch: UISwitch!
     
@@ -87,6 +89,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     weak var colorPickerViewController: CustomColorPickerViewController!
     
     var showSignIn = "ShowSignIn"
+    var showPincode = "ShowPincode"
     
     var images = [UIImage]()
     
@@ -239,6 +242,14 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         smallActionButtonsContainer.layer.borderColor = UIColor.white.cgColor
         smallActionButtonsContainer.layer.borderWidth = 2
         smallActionButtonsSwitch.isOn = SessionSettings.instance.smallActionButtons
+        
+        if SessionSettings.instance.pincodeSet {
+            signInButton.isEnabled = false
+            pincodeButton.setTitle("Change Access Pincode", for: .normal)
+        }
+        else {
+            pincodeButton.setTitle("Set Access Pincode", for: .normal)
+        }
         
         // before animation
         if view.frame.size.height <= 600 {
@@ -556,8 +567,13 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         self.performSegue(withIdentifier: showSignIn, sender: nil)
     }
     
+    // pincode
+    @IBAction func pincodePressed() {
+        self.performSegue(withIdentifier: showPincode, sender: nil)
+    }
+    
     @IBAction func singlePlayReset(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: "Resetting your single play will permanently erase your single play canvas. To proceed please type PROCEED", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Please understand that resetting your single play will permanently erase your current single play canvas, to proceed please type DELETE in all caps.", preferredStyle: .alert)
         
         alert.addTextField { (textField) in
             self.alertTextField = textField
@@ -565,7 +581,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { (action) in
-            if self.alertTextField.text != nil && self.alertTextField.text == "PROCEED" {
+            if self.alertTextField.text != nil && self.alertTextField.text == "DELETE" {
                 UserDefaults.standard.removeObject(forKey: "arr_single")
             }
         }))
@@ -593,6 +609,14 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
         
         changeNameTextField.text = SessionSettings.instance.displayName
+        
+        if SessionSettings.instance.pincodeSet {
+            signInButton.isEnabled = false
+            pincodeButton.setTitle("Change Access Pincode", for: .normal)
+        }
+        else {
+            pincodeButton.setTitle("Set Access Pincode", for: .normal)
+        }
     }
     
     // panel collection view
@@ -689,6 +713,16 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         else if segue.identifier == "ColorPickerEmbed" {
             colorPickerViewController = segue.destination as! CustomColorPickerViewController
             colorPickerViewController.delegate = self
+        }
+        else if segue.identifier == "ShowPincode" {
+            let pincodeViewContoller = segue.destination as! PincodeViewController
+            
+            if SessionSettings.instance.pincodeSet {
+                pincodeViewContoller.mode = pincodeViewContoller.modeChangePincode
+            }
+            else {
+                pincodeViewContoller.mode = pincodeViewContoller.modeSetPincode
+            }
         }
     }
     

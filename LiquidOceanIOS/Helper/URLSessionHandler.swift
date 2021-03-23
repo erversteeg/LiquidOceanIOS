@@ -138,6 +138,114 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
+    func pincodeAuth(name: String, pincode: String, completionHandler: @escaping (Bool, [String: AnyObject]) -> Void) {
+        
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/pincode/auth")!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "POST"
+
+        let params = ["name": name, "pincode": pincode] as Dictionary<String, String>
+
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: AnyObject]
+                
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false, jsonDict)
+                    }
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    completionHandler(true, jsonDict)
+                }
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
+    func setPincode(pincode: String, completionHandler: @escaping (Bool, [String: AnyObject]) -> Void) {
+        
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + SessionSettings.instance.uniqueId)!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "POST"
+
+        let params = ["pincode": pincode] as Dictionary<String, String>
+
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: AnyObject]
+                
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false, jsonDict)
+                    }
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    completionHandler(true, jsonDict)
+                }
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
+    func changePincode(oldPincode: String, pincode: String, completionHandler: @escaping (Bool, [String: AnyObject]) -> Void) {
+        
+        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + SessionSettings.instance.uniqueId + "/pincode")!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "POST"
+
+        let params = ["old_pincode": oldPincode, "pincode": pincode] as Dictionary<String, String>
+
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: AnyObject]
+                
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false, jsonDict)
+                    }
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    completionHandler(true, jsonDict)
+                }
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
     func sendDeviceId(completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
