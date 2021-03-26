@@ -15,6 +15,11 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
     @IBOutlet weak var backAction: ActionButtonView!
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
     
+    @IBOutlet weak var iconContainer: UIView!
+    @IBOutlet weak var iconBackground: UIView!
+    
+    @IBOutlet weak var iconContainerHeight: NSLayoutConstraint!
+    
     var initial = true
     
     var data: [[String: String]]?
@@ -22,6 +27,9 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
     let statKeys = ["Pixels Single", "Pixels World", "Pixel Overwrites In", "Pixel Overwrites Out", "Paint Accrued", "World Level"]
     
     let achKeys = ["Pixels Single", "Pixels World", "Pixel Overwrites In", "Pixel Overwrites Out", "Paint Accrued"]
+    
+    let eventTypes = [StatTracker.EventType.pixelPaintedSingle, StatTracker.EventType.pixelPaintedWorld,
+    StatTracker.EventType.pixelOverwriteIn, StatTracker.EventType.pixelOverwriteOut, StatTracker.EventType.paintReceived]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +62,9 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
         data![1]["Paint Accrued"] = StatTracker.instance.getAchievementProgressString(eventType: .paintReceived)
         
         self.collectionView.reloadData()
+        
+        let tgr = UITapGestureRecognizer(target: self, action: #selector(didTapIconBackground))
+        iconBackground.addGestureRecognizer(tgr)
     }
     
     override func viewDidLayoutSubviews() {
@@ -77,6 +88,18 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
         }
         
         initial = false
+    }
+    
+    @objc func didTapIconBackground() {
+        for v in iconContainer.subviews {
+            v.removeFromSuperview()
+        }
+        
+        iconBackground.isHidden = true
+        
+        if iconContainer.layer.sublayers != nil && iconContainer.layer.sublayers!.count > 0 {
+            iconContainer.layer.sublayers![0].removeFromSuperlayer()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -130,7 +153,30 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        if indexPath.section == 1 {
+            let eventType = eventTypes[indexPath.item]
+            let thresholdsPassed = StatTracker.instance.thresholdsPassed(eventType: eventType)
+            
+            let cHeight = (thresholdsPassed / 8 * 55) + 60
+            
+            iconContainerHeight.constant = CGFloat(cHeight)
+            
+            for t in 0...thresholdsPassed - 1 {
+                let margin = 5
+                let size = 50
+                
+                let x = (t % 8) * size + (t % 8) * margin + margin
+                let y = (t / 8) * size + (t / 8) * margin + margin
+                
+                let icon = AchievementIcon(frame: CGRect(x: x, y: y, width: size, height: size))
+                icon.setType(achievementType: eventType, thresholds: t + 1)
+                
+                iconContainer.addSubview(icon)
+            }
+            
+            setIconContainerBackground(frame: CGRect(x: 0, y: 0, width: iconContainer.frame.size.width, height: CGFloat(cHeight)))
+            iconBackground.isHidden = false
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -168,5 +214,17 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
         gradient.endPoint = CGPoint(x: 0, y: 1)
 
         view.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    func setIconContainerBackground(frame: CGRect) {
+        let gradient = CAGradientLayer()
+
+        gradient.frame = frame
+        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff242e8f")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff8f3234")).cgColor]
+        
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 0)
+
+        iconContainer.layer.insertSublayer(gradient, at: 0)
     }
 }

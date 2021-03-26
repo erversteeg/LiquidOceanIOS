@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AchievementListener {
-    func notifyDisplayAchievement(nextAchievement: [StatTracker.EventType: Int], displayInterval: Int)
+    func notifyDisplayAchievement(nextAchievement: [String: Any], displayInterval: Int)
 }
 
 class StatTracker: NSObject {
@@ -76,7 +76,7 @@ class StatTracker: NSObject {
     let levelThresholds = [5000, 11000, 18000, 28000, 45000, 80000, 115000, 160000, 200000, 245000, 300000, 360000,
     435000, 550000, 675000, 820000, 960000, 1120000, 1300000]
     
-    private var achievementQueue = [[EventType: Int]]()
+    private var achievementQueue = [[String: Any]]()
     
     func reportEvent(eventType: EventType, amt: Int) {
         let numPixelsPaintedWorldOld = numPixelsPaintedWorld
@@ -147,13 +147,17 @@ class StatTracker: NSObject {
     }
     
     private func checkAchievements(eventType: EventType, oldVal: Int, newVal: Int) {
+        var thresholdsPassed = 0
+        
         if eventType == .pixelPaintedWorld {
+            thresholdsPassed = pixelWorldThresholds.count
             for i in pixelWorldThresholds.indices {
                 let threshold = pixelWorldThresholds[pixelWorldThresholds.count - 1 - i]
                 if threshold > oldVal && threshold <= newVal {
-                    enqueueAchievement(eventType: eventType, threshold: threshold)
+                    enqueueAchievement(eventType: eventType, threshold: threshold, thresholdsPassed: thresholdsPassed)
                     return
                 }
+                thresholdsPassed -= 1
             }
             
             let oldXp = oldVal * 20
@@ -162,53 +166,65 @@ class StatTracker: NSObject {
             for i in levelThresholds.indices {
                 let threshold = levelThresholds[levelThresholds.count - 1 - i]
                 if threshold > oldXp && threshold <= newXp {
-                    enqueueAchievement(eventType: .worldXp, threshold: threshold)
+                    enqueueAchievement(eventType: .worldXp, threshold: threshold, thresholdsPassed: thresholdsPassed)
                     return
                 }
             }
         }
         else if eventType == .pixelPaintedSingle {
+            thresholdsPassed = pixelSingleThresholds.count
             for i in pixelSingleThresholds.indices {
                 let threshold = pixelSingleThresholds[pixelSingleThresholds.count - 1 - i]
                 if threshold > oldVal && threshold <= newVal {
-                    enqueueAchievement(eventType: eventType, threshold: threshold)
+                    enqueueAchievement(eventType: eventType, threshold: threshold, thresholdsPassed: thresholdsPassed)
                     return
                 }
+                thresholdsPassed -= 1
             }
         }
         else if eventType == .paintReceived {
+            thresholdsPassed = paintAccruedThresholds.count
             for i in paintAccruedThresholds.indices {
                 let threshold = paintAccruedThresholds[paintAccruedThresholds.count - 1 - i]
                 if threshold > oldVal && threshold <= newVal {
-                    enqueueAchievement(eventType: eventType, threshold: threshold)
+                    enqueueAchievement(eventType: eventType, threshold: threshold, thresholdsPassed: thresholdsPassed)
                     return
                 }
+                thresholdsPassed -= 1
             }
         }
         else if eventType == .pixelOverwriteIn {
+            thresholdsPassed = overwritesInThresholds.count
             for i in overwritesInThresholds.indices {
                 let threshold = overwritesInThresholds[overwritesInThresholds.count - 1 - i]
                 if threshold > oldVal && threshold <= newVal {
-                    enqueueAchievement(eventType: eventType, threshold: threshold)
+                    enqueueAchievement(eventType: eventType, threshold: threshold, thresholdsPassed: thresholdsPassed)
                     return
                 }
+                thresholdsPassed -= 1
             }
         }
         else if eventType == .pixelOverwriteOut {
+            thresholdsPassed = overwritesOutThresholds.count
             for i in overwritesOutThresholds.indices {
                 let threshold = overwritesOutThresholds[overwritesOutThresholds.count - 1 - i]
                 if threshold > oldVal && threshold <= newVal {
-                    enqueueAchievement(eventType: eventType, threshold: threshold)
+                    enqueueAchievement(eventType: eventType, threshold: threshold, thresholdsPassed: thresholdsPassed)
                     return
                 }
+                thresholdsPassed -= 1
             }
         }
     }
     
-    private func enqueueAchievement(eventType: EventType, threshold: Int) {
-        var dict = [EventType: Int]()
-        dict[eventType] = threshold
+    private func enqueueAchievement(eventType: EventType, threshold: Int, thresholdsPassed: Int) {
+        var dict = [String: Any]()
+        dict["event_type"] = eventType
+        dict["threshold"] = threshold
+        dict["thresholds_passed"] = thresholdsPassed
+        
         achievementQueue.append(dict)
+        
         if achievementListener != nil && achievementQueue.count == 1 {
             displayAchievements()
         }
@@ -241,6 +257,23 @@ class StatTracker: NSObject {
     func getAchievementProgressString(eventType: EventType) -> String {
         switch eventType {
             case .pixelPaintedSingle:
+                return thresholdsPassedString(progress: numPixelsPaintedSingle, thresholds: pixelSingleThresholds)
+            case .pixelPaintedWorld:
+                return thresholdsPassedString(progress: numPixelsPaintedWorld, thresholds: pixelWorldThresholds)
+            case .pixelOverwriteIn:
+                return thresholdsPassedString(progress: numPixelOverwritesIn, thresholds: overwritesInThresholds)
+            case .pixelOverwriteOut:
+                return thresholdsPassedString(progress: numPixelOverwritesOut, thresholds: overwritesOutThresholds)
+            case .paintReceived:
+                return thresholdsPassedString(progress: totalPaintAccrued, thresholds: paintAccruedThresholds)
+            default:
+                return ""
+        }
+    }
+    
+    func thresholdsPassed(eventType: EventType) -> Int {
+        switch eventType {
+            case .pixelPaintedSingle:
                 return thresholdsPassed(progress: numPixelsPaintedSingle, thresholds: pixelSingleThresholds)
             case .pixelPaintedWorld:
                 return thresholdsPassed(progress: numPixelsPaintedWorld, thresholds: pixelWorldThresholds)
@@ -251,7 +284,7 @@ class StatTracker: NSObject {
             case .paintReceived:
                 return thresholdsPassed(progress: totalPaintAccrued, thresholds: paintAccruedThresholds)
             default:
-                return ""
+                return 0
         }
     }
     
@@ -271,7 +304,7 @@ class StatTracker: NSObject {
         SessionSettings.instance.userDefaults().set(numPixelOverwritesOut, forKey: numPixelOverwritesOutKey)
     }
     
-    func thresholdsPassed(progress: Int, thresholds: [Int]) -> String {
+    func thresholdsPassedString(progress: Int, thresholds: [Int]) -> String {
         var count = 0
         for i in thresholds.indices {
             let threshold = thresholds[i]
@@ -280,7 +313,19 @@ class StatTracker: NSObject {
             }
             count += 1
         }
-        return ""
+        return String(thresholds.count) +  " / " + String(thresholds.count)
+    }
+    
+    func thresholdsPassed(progress: Int, thresholds: [Int]) -> Int {
+        var count = 0
+        for i in thresholds.indices {
+            let threshold = thresholds[i]
+            if threshold > progress {
+                return count
+            }
+            count += 1
+        }
+        return thresholds.count
     }
     
     func getWorldLevel() -> Int {

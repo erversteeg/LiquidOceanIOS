@@ -359,12 +359,18 @@ class InteractiveCanvas: NSObject {
         
         if mode == 0 {
             if restorePoint == nil && (SessionSettings.instance.dropsAmt > 0 || !world) {
-                // paint
-                restorePoints.append(RestorePoint(x: x, y: y, color: arr[y][x], newColor: SessionSettings.instance.paintColor!))
-                
-                arr[y][x] = SessionSettings.instance.paintColor
-                
-                SessionSettings.instance.dropsAmt -= 1
+                if x > -1 && x < cols && y > -1 && y < rows {
+                    let unitColor = arr[y][x]
+                    
+                    if SessionSettings.instance.paintColor != unitColor {
+                        // paint
+                        restorePoints.append(RestorePoint(x: x, y: y, color: arr[y][x], newColor: SessionSettings.instance.paintColor!))
+                        
+                        arr[y][x] = SessionSettings.instance.paintColor
+                        
+                        SessionSettings.instance.dropsAmt -= 1
+                    }
+                }
             }
         }
         else if mode == 1 {

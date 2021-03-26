@@ -58,7 +58,8 @@ class PaintColorIndicator: UIView, ActionButtonViewTouchDelegate {
         var indicatorStrokeWidth = ringSizeFromOption(widthVal: SessionSettings.instance.paintIndicatorWidth)
         
         let indicatorColor = SessionSettings.instance.paintColor!
-        ctx.setStrokeColor(UIColor(argb: indicatorColor).cgColor)
+        
+        ctx.setStrokeColor(UIColor(argb: panelThemeConfig.paintColorIndicatorLineColor).cgColor)
         ctx.setFillColor(UIColor(argb: indicatorColor).cgColor)
         
         var radius = frame.size.width / 3
@@ -74,17 +75,47 @@ class PaintColorIndicator: UIView, ActionButtonViewTouchDelegate {
         }
         
         if SessionSettings.instance.paintIndicatorSquare {
+            var padding = CGFloat(0)
+            
+            if indicatorColor == 0 {
+                ctx.setLineWidth(5)
+                
+                padding = 2.5
+            }
+            
             let width = squareSizeFromOption(widthVal: SessionSettings.instance.paintIndicatorWidth)
-            ctx.addRect(CGRect(x: frame.size.width / 2 - width / 2, y: frame.size.height / 2 - width / 2, width: width, height: width))
-            ctx.drawPath(using: .fill)
+            
+            ctx.addRect(CGRect(x: frame.size.width / 2 - width / 2, y: frame.size.height / 2 - width / 2, width: width - padding, height: width - padding))
+            
+            if indicatorColor == 0 {
+                ctx.drawPath(using: .stroke)
+            }
+            else {
+                ctx.drawPath(using: .fill)
+            }
         }
         else if SessionSettings.instance.paintIndicatorFill {
+            var padding = CGFloat(0)
+            
+            if indicatorColor == 0 {
+                ctx.setLineWidth(5)
+                
+                padding = 2.5
+            }
+            
             let width = circleSizeFromOption(widthVal: SessionSettings.instance.paintIndicatorWidth)
-            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: width, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
-            ctx.drawPath(using: .fill)
+            
+            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: width - padding, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
+            
+            if indicatorColor == 0 {
+                ctx.drawPath(using: .stroke)
+            }
+            else {
+                ctx.drawPath(using: .fill)
+            }
         }
         else {
-            if SessionSettings.instance.paintIndicatorOutline {
+            if SessionSettings.instance.paintIndicatorOutline || indicatorColor == 0 {
                 drawIndicatorOutline(ctx: ctx, radius: radius, indicatorStrokeWidth: indicatorStrokeWidth)
             }
             
@@ -92,12 +123,14 @@ class PaintColorIndicator: UIView, ActionButtonViewTouchDelegate {
             ctx.setStrokeColor(UIColor(argb: indicatorColor).cgColor)
             ctx.setFillColor(UIColor(argb: indicatorColor).cgColor)
             
-            ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: radius, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
-            
-            ctx.drawPath(using: .stroke)
+            if indicatorColor != 0 {
+                ctx.addArc(center: CGPoint(x: self.frame.size.width / CGFloat(2), y: self.frame.size.height / CGFloat(2)), radius: radius, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
+                
+                ctx.drawPath(using: .stroke)
+            }
         }
         
-        if SessionSettings.instance.paintIndicatorOutline && SessionSettings.instance.paintIndicatorSquare || SessionSettings.instance.paintIndicatorFill {
+        if SessionSettings.instance.paintIndicatorOutline && (SessionSettings.instance.paintIndicatorSquare || SessionSettings.instance.paintIndicatorFill) {
             drawIndicatorOutline(ctx: ctx, radius: radius, indicatorStrokeWidth: indicatorStrokeWidth)
         }
     }
@@ -177,7 +210,7 @@ class PaintColorIndicator: UIView, ActionButtonViewTouchDelegate {
             case 4:
                 return frame.size.width * 0.45
             case 5:
-                return frame.size.width * 0.5
+                return frame.size.width * 0.49
             default:
                 return 0
         }

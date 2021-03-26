@@ -387,7 +387,7 @@
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rbr-2U-QK9">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rbr-2U-QK9" customClass="AchievementIcon" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="62" y="42" width="45" height="45"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -449,7 +449,7 @@
                     <connections>
                         <outlet property="achievementBanner" destination="6km-e7-nf8" id="g54-aC-ckr"/>
                         <outlet property="achievementDesc" destination="zwP-t1-PyA" id="xgc-jH-aZq"/>
-                        <outlet property="achievementIcon" destination="rbr-2U-QK9" id="RCx-uJ-6Dm"/>
+                        <outlet property="achievementIcon" destination="rbr-2U-QK9" id="Mdz-2q-XYf"/>
                         <outlet property="achievementName" destination="cUe-wc-7Z5" id="cNq-oW-bIg"/>
                         <outlet property="artView" destination="AJ4-0j-Gbk" id="wXQ-cD-Mrm"/>
                         <outlet property="backAction" destination="bP3-IR-f5V" id="Z3J-eW-c5c"/>
@@ -1866,12 +1866,34 @@
                                     <constraint firstAttribute="width" constant="56" id="cFC-Dq-jPC"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CkP-fD-g4y">
+                                <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0gn-61-OsL">
+                                        <rect key="frame" x="225.5" y="177" width="445" height="60"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="L3h-Hp-bXJ"/>
+                                            <constraint firstAttribute="width" constant="445" id="prl-0f-uRr"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.75" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="0gn-61-OsL" firstAttribute="centerX" secondItem="CkP-fD-g4y" secondAttribute="centerX" id="amn-lO-czV"/>
+                                    <constraint firstItem="0gn-61-OsL" firstAttribute="centerY" secondItem="CkP-fD-g4y" secondAttribute="centerY" id="zvo-tF-CxE"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="HXQ-eT-NpT" firstAttribute="top" secondItem="cKH-lG-0TZ" secondAttribute="topMargin" constant="10" id="0Wk-9H-Yfm"/>
+                            <constraint firstItem="CkP-fD-g4y" firstAttribute="leading" secondItem="cKH-lG-0TZ" secondAttribute="leading" id="5l5-0b-0pU"/>
                             <constraint firstAttribute="bottom" secondItem="WJx-fG-DBp" secondAttribute="bottom" id="JUy-GG-GUf"/>
+                            <constraint firstAttribute="trailing" secondItem="CkP-fD-g4y" secondAttribute="trailing" id="Opz-O0-yOa"/>
+                            <constraint firstAttribute="bottom" secondItem="CkP-fD-g4y" secondAttribute="bottom" id="QdN-ps-pN4"/>
                             <constraint firstItem="HXQ-eT-NpT" firstAttribute="leading" secondItem="cKH-lG-0TZ" secondAttribute="leadingMargin" constant="-30" id="Z7d-0T-LVq"/>
+                            <constraint firstItem="CkP-fD-g4y" firstAttribute="top" secondItem="cKH-lG-0TZ" secondAttribute="top" id="et9-Id-bh5"/>
                             <constraint firstItem="WJx-fG-DBp" firstAttribute="leading" secondItem="cKH-lG-0TZ" secondAttribute="leading" id="yM1-Wt-TSH"/>
                             <constraint firstItem="WJx-fG-DBp" firstAttribute="top" secondItem="GZN-CP-2gO" secondAttribute="top" id="yU1-Rw-ili"/>
                             <constraint firstAttribute="trailing" secondItem="WJx-fG-DBp" secondAttribute="trailing" id="zM2-aK-giW"/>
@@ -1883,6 +1905,9 @@
                         <outlet property="backAction" destination="HXQ-eT-NpT" id="z2L-9V-NiA"/>
                         <outlet property="backActionLeading" destination="Z7d-0T-LVq" id="h9p-hR-v3e"/>
                         <outlet property="collectionView" destination="WJx-fG-DBp" id="4qC-eg-OU0"/>
+                        <outlet property="iconBackground" destination="CkP-fD-g4y" id="8VE-Vu-mUs"/>
+                        <outlet property="iconContainer" destination="0gn-61-OsL" id="o7V-ej-6hv"/>
+                        <outlet property="iconContainerHeight" destination="L3h-Hp-bXJ" id="L4A-V4-rlE"/>
                         <segue destination="jyI-cX-yg5" kind="unwind" identifier="UnwindToMenu" animates="NO" unwindAction="unwindToViewControllerWithSegue:" id="n40-pV-si5"/>
                     </connections>
                 </viewController>
@@ -2624,7 +2649,7 @@
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BTJ-yk-HBe">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BTJ-yk-HBe" customClass="AchievementIcon" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="62" y="42" width="45" height="45"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -2715,7 +2740,7 @@
                     <connections>
                         <outlet property="achievementBanner" destination="JBK-ya-sQZ" id="883-87-N9W"/>
                         <outlet property="achievementDesc" destination="rMg-eH-Ro1" id="tL1-i3-t9c"/>
-                        <outlet property="achievementIcon" destination="BTJ-yk-HBe" id="FEc-Un-REu"/>
+                        <outlet property="achievementIcon" destination="BTJ-yk-HBe" id="emm-0r-Tot"/>
                         <outlet property="achievementName" destination="FOQ-9l-Zo0" id="slQ-kx-dMs"/>
                         <outlet property="backButton" destination="vhR-03-8Ib" id="N62-V4-P0m"/>
                         <outlet property="backButtonLeading" destination="e1J-Uu-p3F" id="gth-aV-7FV"/>
@@ -3187,6 +3212,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="28p-wv-bjn"/>
+        <segue reference="jzH-A0-0Va"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -48,7 +48,7 @@ class MenuViewController: UIViewController, AchievementListener {
     
     @IBOutlet weak var achievementBanner: UIView!
     
-    @IBOutlet weak var achievementIcon: UIView!
+    @IBOutlet weak var achievementIcon: AchievementIcon!
     @IBOutlet weak var achievementName: UILabel!
     @IBOutlet weak var achievementDesc: UILabel!
     
@@ -402,12 +402,13 @@ class MenuViewController: UIViewController, AchievementListener {
     }
     
     // achievement listener
-    func notifyDisplayAchievement(nextAchievement: [StatTracker.EventType : Int], displayInterval: Int) {
+    func notifyDisplayAchievement(nextAchievement: [String : Any], displayInterval: Int) {
         achievementBanner.layer.borderWidth = 2
         achievementBanner.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF7819")).cgColor
         
-        let eventType = nextAchievement.keys.first!
-        let val = nextAchievement[eventType]!
+        let eventType = nextAchievement["event_type"] as! StatTracker.EventType
+        let value = nextAchievement["threshold"] as! Int
+        let thresholdsPassed = nextAchievement["thresholds_passed"] as! Int
         
         if eventType == .paintReceived {
             achievementName.text = "Total Paint Accrued"
@@ -429,7 +430,7 @@ class MenuViewController: UIViewController, AchievementListener {
         }
         
         if eventType != .worldXp {
-            achievementDesc.text = "Passed the " + String(val) + " threshold"
+            achievementDesc.text = "Passed the " + String(value) + " threshold"
         }
         else {
             achievementDesc.text = "Congrats on reaching level " + String(StatTracker.instance.getWorldLevel())
@@ -438,6 +439,8 @@ class MenuViewController: UIViewController, AchievementListener {
         achievementBanner.isHidden = false
         achievementBanner.layer.borderWidth = 1
         achievementBanner.layer.borderColor = UIColor.black.cgColor
+        
+        achievementIcon.setType(achievementType: eventType, thresholds: thresholdsPassed)
         
         let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (tmr) in
             DispatchQueue.main.async {
