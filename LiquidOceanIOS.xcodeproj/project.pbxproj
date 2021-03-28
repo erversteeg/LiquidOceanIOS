@@ -17,6 +17,7 @@
 		0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */; };
 		073663782608F16600E5403F /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073663772608F16600E5403F /* PincodeViewController.swift */; };
 		0736637A260E148700E5403F /* AchievementIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07366379260E148700E5403F /* AchievementIcon.swift */; };
+		0742A4A726110AAB009D9096 /* icon_new_foreground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0742A4A626110AAB009D9096 /* icon_new_foreground.png */; };
 		0788E47D25FBD1D8004FC782 /* iOSDeviceModelMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */; };
 		0788E47F25FBD3F5004FC782 /* UIView+SafeAnchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0788E47E25FBD3F5004FC782 /* UIView+SafeAnchors.swift */; };
 		0788E48125FC58BC004FC782 /* ColorPickerOutletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0788E48025FC58BC004FC782 /* ColorPickerOutletsViewController.swift */; };
@@ -127,6 +128,7 @@
 		0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		073663772608F16600E5403F /* PincodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PincodeViewController.swift; sourceTree = "<group>"; };
 		07366379260E148700E5403F /* AchievementIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementIcon.swift; sourceTree = "<group>"; };
+		0742A4A626110AAB009D9096 /* icon_new_foreground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_new_foreground.png; sourceTree = "<group>"; };
 		0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iOSDeviceModelMapping.plist; sourceTree = "<group>"; };
 		0788E47E25FBD3F5004FC782 /* UIView+SafeAnchors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SafeAnchors.swift"; sourceTree = "<group>"; };
 		0788E48025FC58BC004FC782 /* ColorPickerOutletsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerOutletsViewController.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 		07A305EF25D5B55B003A6CEA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0742A4A626110AAB009D9096 /* icon_new_foreground.png */,
 				07A9B17B25ED6CCC009A47DF /* amb_2.jpg */,
 				07A9B18225ED6CCD009A47DF /* amb_3.jpg */,
 				07A9B17225ED6CCB009A47DF /* amb_4.jpg */,
@@ -554,6 +557,7 @@
 				07A9B16825EC8790009A47DF /* hfs_json.json in Resources */,
 				07FF5F2825E5BDF6003E19AE /* crystal_7.jpg in Resources */,
 				07FF5F3425E5BDF6003E19AE /* metal_floor_1.jpg in Resources */,
+				0742A4A726110AAB009D9096 /* icon_new_foreground.png in Resources */,
 				07A9B16625EC8790009A47DF /* water_drop_json.json in Resources */,
 				07FF5F2B25E5BDF6003E19AE /* metal_floor_2.jpg in Resources */,
 				07A9B16525EC8790009A47DF /* doughnut_json.json in Resources */,

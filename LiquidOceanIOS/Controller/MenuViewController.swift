@@ -156,6 +156,8 @@ class MenuViewController: UIViewController, AchievementListener {
                 
                 Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false, inverse: false)
             }
+            
+            self.menuLayer -= 1
         }
         
         self.playButton.setOnClickListener {
@@ -254,8 +256,8 @@ class MenuViewController: UIViewController, AchievementListener {
         startPixels()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         Animator.animateMenuButtons(views: [[self.playButtonBottomLayer, self.playButton], [self.optionsButtonBottomLayer, self.optionsButton], [self.statsButtonBottomLayer, self.statsButton], [self.howtoButtonBottomLayer, self.howtoButton]], cascade: true, moveOut: false, inverse: false)
     }
@@ -295,7 +297,15 @@ class MenuViewController: UIViewController, AchievementListener {
     }
     
     func randomGradientBackground() {
-        let rIndex = Int(arc4random() % UInt32(backgrounds.count))
+        var rIndex = Int(arc4random() % UInt32(backgrounds.count))
+        
+        if SessionSettings.instance.defaultBg {
+            rIndex = 8
+            
+            SessionSettings.instance.defaultBg = false
+            SessionSettings.instance.quickSave()
+        }
+        
         let randBackground = backgrounds[rIndex]
         
         let gradient = CAGradientLayer()
@@ -330,8 +340,8 @@ class MenuViewController: UIViewController, AchievementListener {
             self.worldButtonBottomLayer.isHidden = !show
             self.worldButton.isHidden = !show
             
-            self.devButtonBottomLayer.isHidden = !show
-            self.devButton.isHidden = !show
+            self.devButtonBottomLayer.isHidden = true
+            self.devButton.isHidden = true
         }
         else if depth == 2 {
             leftyButtonBottomLayer.isHidden = !show

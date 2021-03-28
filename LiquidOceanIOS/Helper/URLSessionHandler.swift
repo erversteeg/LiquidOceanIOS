@@ -14,6 +14,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
     //let baseUrl = "https://192.168.200.69:5000"
     let baseUrl = "https://ericversteeg.com:5000"
+    let key1 = "8AHI!VR7299G7cq3YsP359HDkKz682oNT3QHh?yyehuvkyzdm674w45o"
     
     static let instance = URLSessionHandler()
     
@@ -29,6 +30,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             if error != nil {
@@ -56,6 +58,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -112,6 +115,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -150,6 +154,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -186,6 +191,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -222,6 +228,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -259,6 +266,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -318,6 +326,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -358,6 +367,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -394,6 +404,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -453,6 +464,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -495,6 +507,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
         
         if name.count > 20 {
             DispatchQueue.main.async {
@@ -545,6 +558,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -584,6 +598,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {
@@ -645,6 +660,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
 
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             do {

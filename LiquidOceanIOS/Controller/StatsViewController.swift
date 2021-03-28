@@ -161,20 +161,23 @@ class StatsViewController: UIViewController, UICollectionViewDataSource, UIColle
             
             iconContainerHeight.constant = CGFloat(cHeight)
             
-            for t in 0...thresholdsPassed - 1 {
-                let margin = 5
-                let size = 50
+            if thresholdsPassed > 0 {
+                for t in 0...thresholdsPassed - 1 {
+                    let margin = 5
+                    let size = 50
+                    
+                    let x = (t % 8) * size + (t % 8) * margin + margin
+                    let y = (t / 8) * size + (t / 8) * margin + margin
+                    
+                    let icon = AchievementIcon(frame: CGRect(x: x, y: y, width: size, height: size))
+                    icon.setType(achievementType: eventType, thresholds: t + 1)
+                    
+                    iconContainer.addSubview(icon)
+                }
                 
-                let x = (t % 8) * size + (t % 8) * margin + margin
-                let y = (t / 8) * size + (t / 8) * margin + margin
-                
-                let icon = AchievementIcon(frame: CGRect(x: x, y: y, width: size, height: size))
-                icon.setType(achievementType: eventType, thresholds: t + 1)
-                
-                iconContainer.addSubview(icon)
+                setIconContainerBackground(frame: CGRect(x: 0, y: 0, width: iconContainer.frame.size.width, height: CGFloat(cHeight)))
             }
             
-            setIconContainerBackground(frame: CGRect(x: 0, y: 0, width: iconContainer.frame.size.width, height: CGFloat(cHeight)))
             iconBackground.isHidden = false
         }
     }

@@ -118,6 +118,8 @@ class SessionSettings: NSObject {
     
     var pincodeSet = false
     
+    var defaultBg = true
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -147,6 +149,7 @@ class SessionSettings: NSObject {
         userDefaults().set(selectedHand, forKey: "selected_hand")
         userDefaults().set(smallActionButtons, forKey: "small_action_buttons")
         userDefaults().set(pincodeSet, forKey: "pincode_set")
+        userDefaults().set(defaultBg, forKey: "default_bg")
     }
     
     func quickSave() {
@@ -159,6 +162,7 @@ class SessionSettings: NSObject {
         userDefaults().set(showGridLines, forKey: "show_grid_lines")
         userDefaults().set(rightHanded, forKey: "right_handed")
         userDefaults().set(selectedHand, forKey: "selected_hand")
+        userDefaults().set(defaultBg, forKey: "default_bg")
     }
     
     func load() {
@@ -182,7 +186,7 @@ class SessionSettings: NSObject {
         
         googleAuth = userDefaultsBool(forKey: "google_auth", defaultVal: false)
         
-        panelBackgroundName = userDefaultsString(forKey: "panel_background", defaultVal: "amb_15.jpg")
+        panelBackgroundName = userDefaultsString(forKey: "panel_background", defaultVal: "metal_floor_1.jpg")
         
         showGridLines = userDefaultsBool(forKey: "show_grid_lines", defaultVal: true)
         
@@ -192,7 +196,7 @@ class SessionSettings: NSObject {
         
         paintIndicatorOutline = userDefaultsBool(forKey: "paint_indicator_outline", defaultVal: false)
         
-        paintIndicatorWidth = userDefaultsInt(forKey: "paint_indicator_width", defaultVal: 3)
+        paintIndicatorWidth = userDefaultsInt(forKey: "paint_indicator_width", defaultVal: 4)
         
         gridLineColor = userDefaultsInt32(forKey: "grid_line_color", defaultVal: 0)
         
@@ -206,7 +210,7 @@ class SessionSettings: NSObject {
         
         showPaintCircle = userDefaultsBool(forKey: "show_paint_circle", defaultVal: false)
         
-        paintIndicatorColor = userDefaultsInt32(forKey: "paint_indicator_color", defaultVal: Utils.int32FromColorHex(hex: "0xff999999"))
+        paintIndicatorColor = userDefaultsInt32(forKey: "paint_indicator_color", defaultVal: Utils.int32FromColorHex(hex: "0xffAAAAAA"))
         
         rightHanded = userDefaultsBool(forKey: "right_handed", defaultVal: false)
         
@@ -215,6 +219,8 @@ class SessionSettings: NSObject {
         smallActionButtons = userDefaultsBool(forKey: "small_action_buttons", defaultVal: false)
         
         pincodeSet = userDefaultsBool(forKey: "pincode_set", defaultVal: false)
+        
+        defaultBg = userDefaultsBool(forKey: "default_bg", defaultVal: true)
     }
     
     func userDefaults() -> UserDefaults {
@@ -365,7 +371,6 @@ class SessionSettings: NSObject {
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "water_drop_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "doughnut_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "bird_json")!)
-        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "rainbow_badge")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "hfs_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "paint_bucket_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "fire_badge_json")!)

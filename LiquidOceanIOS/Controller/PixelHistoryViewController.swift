@@ -55,7 +55,7 @@ class PixelHistoryViewController: UIViewController, UICollectionViewDataSource, 
         let dataObj = data![indexPath.row] as! [String: AnyObject]
         
         let color = dataObj["color"] as! Int32
-        let name = dataObj["name"] as! String
+        var name = dataObj["name"] as! String
         let level = dataObj["level"] as! Int
         let timestamp = dataObj["timestamp"] as! Int
         
@@ -85,6 +85,10 @@ class PixelHistoryViewController: UIViewController, UICollectionViewDataSource, 
             cell.fullDateLabel.isHidden = true
             
             cell.colorView.backgroundColor = UIColor(argb: color)
+            
+            if name.count > 10 {
+                name = String(name.prefix(7)) + "..."
+            }
             
             cell.nameLabel.text = name
             cell.nameLabelWidth.constant = name.size(withAttributes: [.font: UIFont.boldSystemFont(ofSize: 24.0)]).width + 5

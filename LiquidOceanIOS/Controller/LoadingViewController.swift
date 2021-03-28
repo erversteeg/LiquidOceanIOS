@@ -45,13 +45,14 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     @IBOutlet weak var topContributorAmt9: UILabel!
     @IBOutlet weak var topContributorAmt10: UILabel!
     
-    let gameTips = ["You can turn several features on / off in the Options menu",
-                    "All drawings can be exported to a PNG file. Simply use the object selector tool, tap an object, and from there you can save it",
+    let gameTips = ["You can turn several features on / off in the Options menu.",
+                    "All drawings can be exported to a PNG file. Simply choose the object selector tool in the toolbox, tap an object, then select the share or save feature.",
                     "Anything you create on the world canvas is automatically saved and shared with others.",
-                    "Like you level, paint, and other stas? Back your account up now and sync across multiple devices with Google.",
+                    "Like you level, paint, and other stas? Back your account up and sync across multiple devices with an access pincode.",
                     "Tap on any pixel on the world canvas to view a history of edits for that position.",
-                    "No violence, racism, bigotry, or nudity of any kind is allowed on the world canvas.",
-                    "Anyone can get started painting on the world canvas in 5 minutes or less, tap the paint bar to bring up a timer with when the next paint event will occur."]
+                    "No racism, harassment, or hate speech is allowed on the world canvas.",
+                    "Anyone can get started painting on the world canvas in 5 minutes or less. Simply wait for the next Paint Cycle.",
+                    "Tap the bottom corner of the screen while drawing to bring up many recently used colors."]
     
     var errorTypeServer = "server"
     var errorTypeSocket = "socket"
@@ -194,7 +195,12 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 for i in topContributors!.indices {
                     let topContributor = topContributors![i]
                     
-                    let name = topContributor["name"] as! String
+                    var name = topContributor["name"] as! String
+                    
+                    if name.count > 10 {
+                        name = String(name.prefix(7)) + "..."
+                    }
+                    
                     let amt = topContributor["amt"] as! Int
                     
                     if i == 0 {

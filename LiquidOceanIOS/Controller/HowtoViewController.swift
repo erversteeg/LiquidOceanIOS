@@ -52,7 +52,7 @@ class HowtoViewController: UIViewController {
             paintQtyBar.isHidden = true
         }
         
-        paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF303030"))
+        paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF000000"))
         paintEventInfoContainer.layer.cornerRadius = 20
         
         getPaintTimeInfo()

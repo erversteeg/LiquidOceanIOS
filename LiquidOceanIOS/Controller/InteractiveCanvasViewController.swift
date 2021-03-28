@@ -120,12 +120,15 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var closePaintPanelActionWidth: NSLayoutConstraint!
     @IBOutlet weak var closePaintPanelActionHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var canvasLockLeading: NSLayoutConstraint!
+    @IBOutlet weak var canvasLockTrailing: NSLayoutConstraint!
+    
     var panelThemeConfig: PanelThemeConfig!
     
     var world = false
     var realmId = 0
     
-    var statusCheckTimer: Timer!
+    var statusCheckTimer: Timer?
     
     var previousColor: Int32!
     
@@ -137,6 +140,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     var paintTextModeTime = 0
     var paintTextModeAmt = 1
     var paintTextModeHide = 2
+    
+    var singlePlaySaveTimer: Timer!
     
     var pixelHistoryViewController: PixelHistoryViewController!
     weak var recentColorsViewController: RecentColorsViewController!
@@ -180,6 +185,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             }
             else {
                 self.exportAction.selected = false
+                self.exportAction.layer.borderWidth = 0
+                
                 self.surfaceView.endExporting()
             }
         }
@@ -196,7 +203,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         else if SessionSettings.instance.showPaintCircle {
             SessionSettings.instance.paintQtyDelegates.append(paintQuantityCircle)
             
-            paintInfoContainerTop.constant -= 25
+            paintInfoContainerTop.constant -= 15
             
             paintQuantityBar.isHidden = true
         }
@@ -260,6 +267,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.exportButton.setOnClickListener {
             self.surfaceView.startExporting()
             self.exportAction.selected = true
+            self.exportAction.layer.borderColor = UIColor(argb: ActionButtonView.lightYellowColor).cgColor
+            self.exportAction.layer.borderWidth = 1
         }
         
         // change background
@@ -303,6 +312,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.pixelHistoryView.isHidden = true
             
             self.backButton.isHidden = true
+            
             self.recentColorsButton.isHidden = false
             
             if SessionSettings.instance.canvasLockBorder {
@@ -451,6 +461,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         if SessionSettings.instance.canvasLockBorder {
             canvasLockView.layer.borderWidth = 4
             canvasLockView.layer.borderColor = UIColor(argb: SessionSettings.instance.canvasLockColor).cgColor
+            canvasLockView.layer.cornerRadius = 40
         }
         
         // panel theme config
@@ -487,13 +498,15 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         InteractiveCanvasSocket.instance.socketStatusDelegate = self
         
         if world {
-            Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { (tmr) in
-                self.startServerStatusChecks()
-            }
+            self.startServerStatusChecks()
             
             getPaintTimerInfo()
         }
         else {
+            singlePlaySaveTimer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true, block: { (tmr) in
+                self.surfaceView.interactiveCanvas.save()
+            })
+            
             if SessionSettings.instance.showPaintCircle {
                 self.paintQuantityCircle.removeGestureRecognizer(tgr)
             }
@@ -561,6 +574,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             // right-handed
             if SessionSettings.instance.rightHanded {
+                
+                canvasLockLeading.constant = paintPanelWidth.constant
+                canvasLockTrailing.constant = 0
                 
                 // paint panel
                 paintPanel.translatesAutoresizingMaskIntoConstraints = false
@@ -647,6 +663,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 
                 // paint qty bar
                 paintQuantityBar.transform = CGAffineTransform.init(rotationAngle: CGFloat(180 * Double.pi / 180.0))
+            }
+            else {
+                canvasLockLeading.constant = 0
+                canvasLockTrailing.constant = paintPanelWidth.constant
             }
             
             // small action buttons
@@ -737,11 +757,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     func getPaintTimerInfo() {
         if panelThemeConfig.inversePaintEventInfo {
             self.paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
-            self.paintEventTimeLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF303030"))
+            self.paintEventTimeLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF000000"))
+            self.paintEventAmtLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF000000"))
         }
         else {
-            self.paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF303030"))
+            self.paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF000000"))
             self.paintEventTimeLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
+            self.paintEventAmtLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
         }
         
         if SessionSettings.instance.showPaintCircle {
@@ -800,8 +822,17 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             SessionSettings.instance.save()
             
             StatTracker.instance.achievementListener = nil
+            
             if world {
                 InteractiveCanvasSocket.instance.socket.disconnect()
+                
+                statusCheckTimer?.invalidate()
+            }
+            
+            else {
+                surfaceView.interactiveCanvas.save()
+                
+                singlePlaySaveTimer.invalidate()
             }
         }
     }
@@ -931,17 +962,17 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         var x = screenPoint.x + 10
         var y = screenPoint.y - 130
         
-        if x < 0 {
+        if x < 20 {
             x = 20
         }
-        else if x + self.pixelHistoryView.frame.size.width > self.view.frame.size.width {
+        else if x + self.pixelHistoryView.frame.size.width > self.view.frame.size.width - 20 {
             x = self.view.frame.size.width - self.pixelHistoryView.frame.size.width - 20
         }
         
-        if y < 0 {
+        if y < 20 {
             y = 20
         }
-        else if y + self.pixelHistoryView.frame.size.height > self.view.frame.size.height {
+        else if y + self.pixelHistoryView.frame.size.height > self.view.frame.size.height - 20 {
             y = self.view.frame.size.height - self.pixelHistoryView.frame.size.height - 20
         }
         
@@ -988,6 +1019,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         exportContainer.isHidden = true
         
         self.exportAction.selected = false
+        self.exportAction.layer.borderWidth = 0
+        
         surfaceView.endExporting()
     }
     

@@ -84,6 +84,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet weak var smallActionButtonsContainer: UIView!
     @IBOutlet weak var smallActionButtonsSwitch: UISwitch!
     
+    @IBOutlet weak var creditsScrollView: UIScrollView!
+    
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
     
     weak var colorPickerViewController: CustomColorPickerViewController!
@@ -114,7 +116,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         backAction.type = .backSolid
         
         backAction.setOnClickListener {
-            self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+            if (!self.creditsScrollView.isHidden) {
+                self.creditsScrollView.isHidden = true
+            }
+            else {
+                self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+            }
         }
         
         if SessionSettings.instance.googleAuth {
@@ -124,6 +131,9 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         for panel in panels {
             images.append(UIImage(named: panel)!)
         }
+        
+        var tgr = UITapGestureRecognizer(target: self, action: #selector(tappedTextureTitle))
+        panelTextureTitle.addGestureRecognizer(tgr)
         
         checkedName = SessionSettings.instance.displayName
         changeNameTextField.text = SessionSettings.instance.displayName
@@ -144,7 +154,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         paintMeterColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.paintIndicatorColor)
         
-        var tgr = UITapGestureRecognizer(target: self, action: #selector(tappedPaintMeterColorView(sender:)))
+        tgr = UITapGestureRecognizer(target: self, action: #selector(tappedPaintMeterColorView(sender:)))
         paintMeterColorColorView.addGestureRecognizer(tgr)
         
         // canvas lock border
@@ -257,6 +267,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             
             panelTextureTitle.isHidden = true
             panelsCollectionView.isHidden = true
+            rightHandedContainer.isHidden = true
             canvasLockBorderContainer.isHidden = true
             canvasLockColorContainer.isHidden = true
         }
@@ -281,8 +292,9 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             
             Animator.animateHorizontalViewEnter(view: panelTextureTitle, left: false)
             Animator.animateHorizontalViewEnter(view: panelsCollectionView, left: true)
-            Animator.animateHorizontalViewEnter(view: canvasLockBorderContainer, left: false)
-            Animator.animateHorizontalViewEnter(view: canvasLockColorContainer, left: true)
+            Animator.animateHorizontalViewEnter(view: rightHandedContainer, left: false)
+            Animator.animateHorizontalViewEnter(view: canvasLockBorderContainer, left: true)
+            Animator.animateHorizontalViewEnter(view: canvasLockColorContainer, left: false)
         }
     }
     
@@ -359,7 +371,13 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
     }
     
+    @objc func tappedTextureTitle() {
+        creditsScrollView.isHidden = false
+    }
+    
     @objc func tappedPaintMeterColorView(sender: UIView) {
+        colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintIndicatorColor)
+        
         colorPickerContainerView.isHidden = false
         colorPickerContainerView.alpha = 0
         
@@ -379,6 +397,13 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     @objc func tappedGridLineColorView(sender: UIView) {
+        if SessionSettings.instance.gridLineColor == 0 {
+            colorPickerViewController.selectedColor = UIColor.white
+        }
+        else {
+            colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.gridLineColor)
+        }
+        
         colorPickerContainerView.isHidden = false
         colorPickerContainerView.alpha = 0
         
@@ -398,6 +423,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     @objc func tappedCanvasLockColorView(sender: UIView) {
+        colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.canvasLockColor)
+        
         colorPickerContainerView.isHidden = false
         colorPickerContainerView.alpha = 0
         
@@ -479,9 +506,9 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             
             selectingPaintMeterColor = false
         }
-        if selectingCanvasLockColor {
-            canvasLockColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.gridLineColor)
-            colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.gridLineColor)
+        else if selectingCanvasLockColor {
+            canvasLockColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.canvasLockColor)
+            colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.canvasLockColor)
             
             selectingCanvasLockColor = false
         }
@@ -685,6 +712,15 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         let name = textField.text
         if (name != nil) {
+            if name!.count > 20 {
+                self.changeNameButton.isEnabled = false
+                
+                textField.layer.borderWidth = 2
+                textField.layer.borderColor = UIColor(argb: ActionButtonView.redColor).cgColor
+                
+                return false
+            }
+            
             URLSessionHandler.instance.sendNameCheck(name: name!.trimmingCharacters(in: .whitespacesAndNewlines)) { (success) -> (Void) in
                 if success {
                     self.changeNameButton.isEnabled = true

@@ -193,7 +193,7 @@ class PaintColorIndicator: UIView, ActionButtonViewTouchDelegate {
             case 4:
                 return frame.size.width * 0.9
             case 5:
-                return frame.size.width
+                return frame.size.width * 0.95
             default:
                 return 0
         }
