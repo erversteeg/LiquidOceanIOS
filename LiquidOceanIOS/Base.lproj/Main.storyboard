@@ -24,7 +24,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="4Mq-C2-OyC"/>
                                         </constraints>
-                                        <string key="text">It's easy to get started. If you are in Single Play, open the paint panel and select a color. Tap and drag anywhere to draw. If you are playing World Play you will have to wait a small amount of time for the next Paint Event. A paint event occurs every 5 minutes and when it happens everyone gets some paint to use on the World Canvas. If you would like to know when the next paint batch is going to arrive, tap on the paint bar for a countdown.</string>
+                                        <string key="text">It's easy to get started. If you are in Single Play, open the paint drawer and select a color. Tap and drag anywhere to draw. If you are playing World Play you will have to wait a small amount of time for the next Paint Event. A paint event occurs every 5 minutes and when it happens everyone gets some paint to use on the World Canvas. If you would like to know when the next paint batch is going to arrive, tap on the paint bar for a countdown.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1625,7 +1625,7 @@
                                             <constraint firstAttribute="height" constant="32" id="wQq-iq-4ct"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="EPg-xj-JXa">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here you can set an access pincode to gain access to your account from your other devices or upon app reinstallation." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="EPg-xj-JXa">
                                         <rect key="frame" x="64" y="55" width="768" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="dCU-3F-nbF"/>
@@ -1635,7 +1635,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Old 8-digit pincode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2hB-uk-Thm">
-                                        <rect key="frame" x="64" y="125" width="250" height="44"/>
+                                        <rect key="frame" x="64" y="145" width="250" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="ZJJ-Kp-xql"/>
                                             <constraint firstAttribute="width" constant="250" id="yun-xU-Q31"/>
@@ -1645,7 +1645,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New 8-digit pincode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vso-Rn-5An">
-                                        <rect key="frame" x="64" y="185" width="250" height="44"/>
+                                        <rect key="frame" x="64" y="205" width="250" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="7Xh-fH-NTw"/>
                                             <constraint firstAttribute="height" constant="44" id="t31-xy-VWw"/>
@@ -1655,7 +1655,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repeat new 8-digit pincode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kht-Hh-KOC">
-                                        <rect key="frame" x="64" y="244" width="250" height="44"/>
+                                        <rect key="frame" x="64" y="264" width="250" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="Qjh-AD-Ur0"/>
                                             <constraint firstAttribute="height" constant="44" id="uGf-CF-Dm3"/>
@@ -1665,7 +1665,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JqM-5A-XTY">
-                                        <rect key="frame" x="632" y="127" width="200" height="40"/>
+                                        <rect key="frame" x="632" y="147" width="200" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="dTL-WX-LtH"/>
                                             <constraint firstAttribute="width" constant="200" id="uLw-iL-vdM"/>
@@ -1677,7 +1677,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XbU-0E-jeg">
-                                        <rect key="frame" x="632" y="187" width="200" height="40"/>
+                                        <rect key="frame" x="632" y="207" width="200" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="QN4-8m-1pe"/>
                                             <constraint firstAttribute="height" constant="40" id="rOp-vV-QYV"/>
@@ -1689,7 +1689,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3cU-9S-09f">
-                                        <rect key="frame" x="632" y="246" width="200" height="40"/>
+                                        <rect key="frame" x="632" y="266" width="200" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="3Mi-sx-7AM"/>
                                             <constraint firstAttribute="height" constant="40" id="x4f-bQ-sHp"/>
@@ -1701,7 +1701,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0A5-4h-aP4">
-                                        <rect key="frame" x="64" y="300" width="768" height="40"/>
+                                        <rect key="frame" x="64" y="320" width="768" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="5Mk-3W-nRH"/>
                                         </constraints>
@@ -1722,11 +1722,11 @@
                                     <constraint firstItem="SLa-3a-huM" firstAttribute="top" secondItem="u6q-yc-ybu" secondAttribute="top" constant="15" id="POa-aA-nS7"/>
                                     <constraint firstItem="fPP-IC-QjH" firstAttribute="trailing" secondItem="0A5-4h-aP4" secondAttribute="trailing" constant="64" id="Rng-ch-XRO"/>
                                     <constraint firstItem="fPP-IC-QjH" firstAttribute="trailing" secondItem="XbU-0E-jeg" secondAttribute="trailing" constant="64" id="Ucj-Qy-C7A"/>
-                                    <constraint firstItem="Vso-Rn-5An" firstAttribute="top" secondItem="EPg-xj-JXa" secondAttribute="bottom" constant="70" id="crv-tw-4gW"/>
+                                    <constraint firstItem="Vso-Rn-5An" firstAttribute="top" secondItem="EPg-xj-JXa" secondAttribute="bottom" constant="90" id="crv-tw-4gW"/>
                                     <constraint firstItem="SLa-3a-huM" firstAttribute="centerX" secondItem="wes-bk-vYy" secondAttribute="centerX" id="dDO-mw-83S"/>
                                     <constraint firstItem="EPg-xj-JXa" firstAttribute="top" secondItem="SLa-3a-huM" secondAttribute="bottom" constant="8" id="dLQ-Xj-dnM"/>
                                     <constraint firstItem="Vso-Rn-5An" firstAttribute="leading" secondItem="fPP-IC-QjH" secondAttribute="leading" constant="64" id="dSs-0m-4mM"/>
-                                    <constraint firstItem="2hB-uk-Thm" firstAttribute="top" secondItem="EPg-xj-JXa" secondAttribute="bottom" constant="10" id="dpg-Ji-Xb8"/>
+                                    <constraint firstItem="2hB-uk-Thm" firstAttribute="top" secondItem="EPg-xj-JXa" secondAttribute="bottom" constant="30" id="dpg-Ji-Xb8"/>
                                     <constraint firstItem="XbU-0E-jeg" firstAttribute="centerY" secondItem="Vso-Rn-5An" secondAttribute="centerY" id="gyo-gI-akG"/>
                                     <constraint firstItem="EPg-xj-JXa" firstAttribute="centerX" secondItem="wes-bk-vYy" secondAttribute="centerX" id="jY9-Q8-HAA"/>
                                     <constraint firstItem="fPP-IC-QjH" firstAttribute="trailing" secondItem="3cU-9S-09f" secondAttribute="trailing" constant="64" id="pk7-Ez-KPi"/>

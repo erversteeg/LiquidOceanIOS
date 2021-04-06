@@ -57,6 +57,7 @@ class ActionButtonView: UIView {
         case gridLines
         case save
         case dot
+        case dotLight
         case recentColor
         case share
         case single
@@ -229,6 +230,9 @@ class ActionButtonView: UIView {
         }
         else if type == .dot {
             drawDotAction()
+        }
+        else if type == .dotLight {
+            drawDotLightAction()
         }
         else if type == .recentColor {
             drawRecentColorAction()
@@ -751,6 +755,21 @@ class ActionButtonView: UIView {
         if SessionSettings.instance.darkIcons {
             paint = ActionButtonView.semiDarkLightColor!
         }
+        
+        if selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+    }
+    
+    func drawDotLightAction() {
+        rows = 1
+        cols = 1
+        
+        var paint = ActionButtonView.semiLightColor!
         
         if selected {
             paint = ActionButtonView.lightYellowColor!

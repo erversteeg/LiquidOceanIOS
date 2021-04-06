@@ -431,20 +431,23 @@ class InteractiveCanvas: NSObject {
     }
     
     private func updateRecentColors() {
+        var colorIndex = -1
         for restorePoint in self.restorePoints {
             var contains = false
             for i in 0...recentColors.count - 1 {
                 if restorePoint.newColor == self.recentColors[i] {
-                    self.recentColors.remove(at: i)
-                    self.recentColors.append(restorePoint.newColor)
-                    
                     contains = true
+                    colorIndex = i
                 }
             }
             if !contains {
                 if self.recentColors.count == SessionSettings.instance.numRecentColors {
                     recentColors.remove(at: 0)
                 }
+                self.recentColors.append(restorePoint.newColor)
+            }
+            else {
+                self.recentColors.remove(at: colorIndex)
                 self.recentColors.append(restorePoint.newColor)
             }
         }

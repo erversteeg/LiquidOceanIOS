@@ -56,7 +56,7 @@ class PincodeViewController: UIViewController, UITextFieldDelegate {
         statusLabel.textColor = UIColor(argb: ActionButtonView.altGreenColor)
         
         if mode == modeSetPincode {
-            pincodeTitleTop.constant = 10
+            pincodeTitleTop.constant = 30
             
             pincodeOldLabel.isHidden = true
             pincodeOldTextField.isHidden = true
@@ -179,7 +179,7 @@ class PincodeViewController: UIViewController, UITextFieldDelegate {
             
             if success {
                 if data["error"] != nil {
-                    self.statusLabel.text = "Display name or password is incorrect"
+                    self.statusLabel.text = "Pincode is incorrect"
                 }
                 else {
                     SessionSettings.instance.pincodeSet = true

@@ -79,7 +79,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         }*/
     }
     
-    func simulateDraw() {
+    /*func simulateDraw() {
         let smallAmt = Int(arc4random() % 20) + 2
         let bigAmt = Int(arc4random() % 100) + 50
         
@@ -103,7 +103,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         }
         
         endPainting(accept: true)
-    }
+    }*/
     
     // draw
     @objc func didDraw(sender: UIDrawGestureRecognizer) {

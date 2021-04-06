@@ -736,7 +736,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                         self.showDisconnectedMessage(type: 1)
                     }
                     else {
-                        InteractiveCanvasSocket.instance.sendSocketStatusCheck()
+                        if self.world {
+                            InteractiveCanvasSocket.instance.sendSocketStatusCheck()
+                        }
                     }
                 }
             }
@@ -944,6 +946,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func notifyPaintColorUpdate() {
         self.paintColorIndicator.setPaintColor(color: SessionSettings.instance.paintColor)
+        colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintColor)
     }
     
     // color picker delegate

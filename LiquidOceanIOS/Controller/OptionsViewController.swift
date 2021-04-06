@@ -204,8 +204,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         paletteSizeMinusFrame.actionButtonView = paletteSizeMinusAction
         paletteSizePlusFrame.actionButtonView = paletteSizePlusAction
         
-        paletteSizeMinusAction.type = .dot
-        paletteSizePlusAction.type = .dot
+        paletteSizeMinusAction.type = .dotLight
+        paletteSizePlusAction.type = .dotLight
         
         // prompt back
         promptBackContainer.layer.borderColor = UIColor.white.cgColor
