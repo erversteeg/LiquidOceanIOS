@@ -17,7 +17,6 @@
 		0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */; };
 		073663782608F16600E5403F /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073663772608F16600E5403F /* PincodeViewController.swift */; };
 		0736637A260E148700E5403F /* AchievementIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07366379260E148700E5403F /* AchievementIcon.swift */; };
-		0742A4A726110AAB009D9096 /* icon_new_foreground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0742A4A626110AAB009D9096 /* icon_new_foreground.png */; };
 		0788E47D25FBD1D8004FC782 /* iOSDeviceModelMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */; };
 		0788E47F25FBD3F5004FC782 /* UIView+SafeAnchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0788E47E25FBD3F5004FC782 /* UIView+SafeAnchors.swift */; };
 		0788E48125FC58BC004FC782 /* ColorPickerOutletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0788E48025FC58BC004FC782 /* ColorPickerOutletsViewController.swift */; };
@@ -27,6 +26,7 @@
 		07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A246D725D4BF0800C73CA6 /* URLSessionHandler.swift */; };
 		07A305F325D5B6F5003A6CEA /* ActionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A305F225D5B6F5003A6CEA /* ActionButtonView.swift */; };
 		07A305F525D5D348003A6CEA /* PaintColorIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A305F425D5D348003A6CEA /* PaintColorIndicator.swift */; };
+		07A7C843272AEEC9003AD69C /* UITouchGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A7C842272AEEC9003AD69C /* UITouchGestureRecognizer.swift */; };
 		07A9B16025EC8790009A47DF /* fire_badge_json.json in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B15325EC878F009A47DF /* fire_badge_json.json */; };
 		07A9B16125EC8790009A47DF /* mc_tool_json.json in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B15425EC878F009A47DF /* mc_tool_json.json */; };
 		07A9B16225EC8790009A47DF /* mushroom_json.json in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B15525EC878F009A47DF /* mushroom_json.json */; };
@@ -128,7 +128,6 @@
 		0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		073663772608F16600E5403F /* PincodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PincodeViewController.swift; sourceTree = "<group>"; };
 		07366379260E148700E5403F /* AchievementIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementIcon.swift; sourceTree = "<group>"; };
-		0742A4A626110AAB009D9096 /* icon_new_foreground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_new_foreground.png; sourceTree = "<group>"; };
 		0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iOSDeviceModelMapping.plist; sourceTree = "<group>"; };
 		0788E47E25FBD3F5004FC782 /* UIView+SafeAnchors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SafeAnchors.swift"; sourceTree = "<group>"; };
 		0788E48025FC58BC004FC782 /* ColorPickerOutletsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerOutletsViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +138,7 @@
 		07A305F225D5B6F5003A6CEA /* ActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonView.swift; sourceTree = "<group>"; };
 		07A305F425D5D348003A6CEA /* PaintColorIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaintColorIndicator.swift; sourceTree = "<group>"; };
 		07A3060225D5FFBD003A6CEA /* ChromaColorPicker */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ChromaColorPicker; path = ../ChromaColorPicker; sourceTree = "<group>"; };
+		07A7C842272AEEC9003AD69C /* UITouchGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITouchGestureRecognizer.swift; sourceTree = "<group>"; };
 		07A9B15325EC878F009A47DF /* fire_badge_json.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fire_badge_json.json; sourceTree = "<group>"; };
 		07A9B15425EC878F009A47DF /* mc_tool_json.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mc_tool_json.json; sourceTree = "<group>"; };
 		07A9B15525EC878F009A47DF /* mushroom_json.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mushroom_json.json; sourceTree = "<group>"; };
@@ -267,7 +267,6 @@
 		07A305EF25D5B55B003A6CEA /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				0742A4A626110AAB009D9096 /* icon_new_foreground.png */,
 				07A9B17B25ED6CCC009A47DF /* amb_2.jpg */,
 				07A9B18225ED6CCD009A47DF /* amb_3.jpg */,
 				07A9B17225ED6CCB009A47DF /* amb_4.jpg */,
@@ -421,6 +420,7 @@
 				07FF5F0A25E481BB003E19AE /* Animator.swift */,
 				07A9B16F25ED611C009A47DF /* PanelThemeConfig.swift */,
 				0788E47E25FBD3F5004FC782 /* UIView+SafeAnchors.swift */,
+				07A7C842272AEEC9003AD69C /* UITouchGestureRecognizer.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -455,7 +455,6 @@
 				07BD25C025D43FB500CF812E /* Frameworks */,
 				07BD25C125D43FB500CF812E /* Resources */,
 				36D56385962055673D81B0DB /* [CP] Embed Pods Frameworks */,
-				BAA76FC8CDF6D9224799416E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -557,7 +556,6 @@
 				07A9B16825EC8790009A47DF /* hfs_json.json in Resources */,
 				07FF5F2825E5BDF6003E19AE /* crystal_7.jpg in Resources */,
 				07FF5F3425E5BDF6003E19AE /* metal_floor_1.jpg in Resources */,
-				0742A4A726110AAB009D9096 /* icon_new_foreground.png in Resources */,
 				07A9B16625EC8790009A47DF /* water_drop_json.json in Resources */,
 				07FF5F2B25E5BDF6003E19AE /* metal_floor_2.jpg in Resources */,
 				07A9B16525EC8790009A47DF /* doughnut_json.json in Resources */,
@@ -635,23 +633,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BAA76FC8CDF6D9224799416E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -692,6 +673,7 @@
 				07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */,
 				0788E48125FC58BC004FC782 /* ColorPickerOutletsViewController.swift in Sources */,
 				07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */,
+				07A7C843272AEEC9003AD69C /* UITouchGestureRecognizer.swift in Sources */,
 				07FF5F1125E5BA4F003E19AE /* PanelBackgroundCollectionViewCell.swift in Sources */,
 				07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */,
 				07A9B17025ED611C009A47DF /* PanelThemeConfig.swift in Sources */,
@@ -861,12 +843,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = C49644A98X;
 				INFOPLIST_FILE = LiquidOceanIOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.01;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ericversteeg.liquidocean.LiquidOceanIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Let's Draw 2021 App Store";
@@ -882,12 +866,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = C49644A98X;
 				INFOPLIST_FILE = LiquidOceanIOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.01;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ericversteeg.liquidocean.LiquidOceanIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Let's Draw 2021 App Store";

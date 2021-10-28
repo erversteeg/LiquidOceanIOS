@@ -28,7 +28,7 @@ extension UIColor {
         )
     }
     
-    func argb() -> Int32? {
+    func argb() -> Int32 {
         var fRed : CGFloat = 0
         var fGreen : CGFloat = 0
         var fBlue : CGFloat = 0
@@ -44,7 +44,7 @@ extension UIColor {
             return rgb
         } else {
             // Could not extract RGBA components:
-            return nil
+            return 0
         }
     }
 }

@@ -18,7 +18,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet weak var panelTextureTitle: UILabel!
     @IBOutlet weak var panelsCollectionView: UICollectionView!
     
-    @IBOutlet weak var optionsTitleAction: ActionButtonView!
+    @IBOutlet weak var optionsTitleLabel: UILabel!
+    
     @IBOutlet weak var backAction: ActionButtonView!
     
     @IBOutlet weak var signInButton: UIButton!
@@ -109,9 +110,6 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         super.viewDidLoad()
         
         setBackground()
-
-        optionsTitleAction.selectable = false
-        optionsTitleAction.type = .options
         
         backAction.type = .backSolid
         
@@ -263,7 +261,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // before animation
         if view.frame.size.height <= 600 {
-            optionsTitleAction.isHidden = true
+            optionsTitleLabel.isHidden = true
             
             panelTextureTitle.isHidden = true
             panelsCollectionView.isHidden = true
@@ -288,7 +286,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         super.viewWillAppear(animated)
         
         if view.frame.size.height <= 600 {
-            Animator.animateTitleFromTop(titleView: optionsTitleAction)
+            Animator.animateTitleFromTop(titleView: optionsTitleLabel)
             
             Animator.animateHorizontalViewEnter(view: panelTextureTitle, left: false)
             Animator.animateHorizontalViewEnter(view: panelsCollectionView, left: true)
@@ -542,17 +540,17 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         let color = self.colorPickerViewController.selectedColor
     
         if selectingPaintMeterColor {
-            SessionSettings.instance.paintIndicatorColor = color.argb()!
+            SessionSettings.instance.paintIndicatorColor = color.argb()
             
             selectingPaintMeterColor = false
         }
         else if selectingGridLineColor {
-            SessionSettings.instance.gridLineColor = color.argb()!
+            SessionSettings.instance.gridLineColor = color.argb()
             
             selectingGridLineColor = false
         }
         else if selectingCanvasLockColor {
-            SessionSettings.instance.canvasLockColor = color.argb()!
+            SessionSettings.instance.canvasLockColor = color.argb()
             
             selectingCanvasLockColor = false
         }

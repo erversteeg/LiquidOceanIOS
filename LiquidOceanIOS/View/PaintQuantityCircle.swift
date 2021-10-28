@@ -41,7 +41,7 @@ class PaintQuantityCircle: UIView, PaintQtyDelegate, PaintActionDelegate {
             bgColor = Utils.int32FromColorHex(hex: "0xff2f2f2f")
         }
         else {
-            bgColor = UIColor.white.argb()!
+            bgColor = UIColor.white.argb()
         }
         
         self.backgroundColor = UIColor.clear
@@ -62,7 +62,7 @@ class PaintQuantityCircle: UIView, PaintQtyDelegate, PaintActionDelegate {
                 bgColor = Utils.int32FromColorHex(hex: "0xff2f2f2f")
             }
             else {
-                bgColor = UIColor.white.argb()!
+                bgColor = UIColor.white.argb()
             }
         }
         

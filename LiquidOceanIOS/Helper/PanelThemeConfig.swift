@@ -41,11 +41,11 @@ class PanelThemeConfig: NSObject {
     }
     
     static func defaultDarkTheme() -> PanelThemeConfig {
-        return PanelThemeConfig(darkPaintQtyBar: true, inversePaintEventInfo: false, paintColorIndicatorLineColor: UIColor.black.argb()!, actionButtonColor: UIColor.black.argb()!)
+        return PanelThemeConfig(darkPaintQtyBar: true, inversePaintEventInfo: false, paintColorIndicatorLineColor: UIColor.black.argb(), actionButtonColor: UIColor.black.argb())
     }
     
     static func defaultLightTheme() -> PanelThemeConfig {
-        return PanelThemeConfig(darkPaintQtyBar: false, inversePaintEventInfo: true, paintColorIndicatorLineColor: UIColor.white.argb()!, actionButtonColor: UIColor.white.argb()!)
+        return PanelThemeConfig(darkPaintQtyBar: false, inversePaintEventInfo: true, paintColorIndicatorLineColor: UIColor.white.argb(), actionButtonColor: UIColor.white.argb())
     }
     
     static func buildConfig(imageName: String) -> PanelThemeConfig {

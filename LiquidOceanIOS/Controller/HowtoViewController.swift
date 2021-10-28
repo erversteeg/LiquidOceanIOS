@@ -11,7 +11,8 @@ import UIKit
 class HowtoViewController: UIViewController {
 
     @IBOutlet weak var backAction: ActionButtonView!
-    @IBOutlet weak var howtoTitleAction: ActionButtonView!
+    @IBOutlet weak var howtoTitleLabel: UILabel!
+    
     @IBOutlet weak var step1Text: UILabel!
     @IBOutlet weak var step2Text: UILabel!
     
@@ -38,14 +39,12 @@ class HowtoViewController: UIViewController {
         
         paintAction.selectable = false
         paintAction.type = .paint
-
-        howtoTitleAction.type = .howto
         
         artView.showBackground = false
         artView.jsonFile = "mushroom_json"
         
         if view.frame.size.height <= 600 {
-            howtoTitleAction.isHidden = true
+            howtoTitleLabel.isHidden = true
             
             step1Text.isHidden = true
             paintAction.isHidden = true
@@ -64,7 +63,7 @@ class HowtoViewController: UIViewController {
         super.viewWillAppear(animated)
         
         if view.frame.size.height <= 600 {
-            Animator.animateTitleFromTop(titleView: howtoTitleAction)
+            Animator.animateTitleFromTop(titleView: howtoTitleLabel)
             
             Animator.animateHorizontalViewEnter(view: step1Text, left: true)
             Animator.animateHorizontalViewEnter(view: paintAction, left: true)

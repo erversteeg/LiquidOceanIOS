@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SessionSettings.instance.load()
         StatTracker.instance.load()
         
-        if !SessionSettings.instance.sentUniqueId {
+        /*if !SessionSettings.instance.sentUniqueId {
             URLSessionHandler.instance.sendDeviceId { (success) -> (Void) in
                 if success {
                     
@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                 }
             }
-        }
+        }*/
         
         return true
     }
