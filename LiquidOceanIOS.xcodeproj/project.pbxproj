@@ -15,6 +15,9 @@
 		0712053625DEDF1100AE0F52 /* ActionButtonFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */; };
 		0712053825DF2D5100AE0F52 /* RecentColorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053725DF2D5100AE0F52 /* RecentColorsViewController.swift */; };
 		0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */; };
+		07270EE0272B92B300DB35CE /* PalettesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07270EDF272B92B300DB35CE /* PalettesViewController.swift */; };
+		07270EE2272C214300DB35CE /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07270EE1272C214300DB35CE /* Palette.swift */; };
+		07270EE4272C333A00DB35CE /* PaletteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07270EE3272C333A00DB35CE /* PaletteCollectionViewCell.swift */; };
 		073663782608F16600E5403F /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073663772608F16600E5403F /* PincodeViewController.swift */; };
 		0736637A260E148700E5403F /* AchievementIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07366379260E148700E5403F /* AchievementIcon.swift */; };
 		0788E47D25FBD1D8004FC782 /* iOSDeviceModelMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */; };
@@ -126,6 +129,9 @@
 		0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonFrame.swift; sourceTree = "<group>"; };
 		0712053725DF2D5100AE0F52 /* RecentColorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentColorsViewController.swift; sourceTree = "<group>"; };
 		0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentColorCollectionViewCell.swift; sourceTree = "<group>"; };
+		07270EDF272B92B300DB35CE /* PalettesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalettesViewController.swift; sourceTree = "<group>"; };
+		07270EE1272C214300DB35CE /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		07270EE3272C333A00DB35CE /* PaletteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCollectionViewCell.swift; sourceTree = "<group>"; };
 		073663772608F16600E5403F /* PincodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PincodeViewController.swift; sourceTree = "<group>"; };
 		07366379260E148700E5403F /* AchievementIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementIcon.swift; sourceTree = "<group>"; };
 		0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iOSDeviceModelMapping.plist; sourceTree = "<group>"; };
@@ -260,6 +266,7 @@
 				07A9B19525EDAB8F009A47DF /* ColorPickerViewController.swift */,
 				0788E48025FC58BC004FC782 /* ColorPickerOutletsViewController.swift */,
 				073663772608F16600E5403F /* PincodeViewController.swift */,
+				07270EDF272B92B300DB35CE /* PalettesViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -395,6 +402,7 @@
 				07FF5F1025E5BA4F003E19AE /* PanelBackgroundCollectionViewCell.swift */,
 				078AF00826016CCB00AB4CE4 /* PaintQuantityCircle.swift */,
 				07366379260E148700E5403F /* AchievementIcon.swift */,
+				07270EE3272C333A00DB35CE /* PaletteCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -406,6 +414,7 @@
 				07BD25F825D450CF00CF812E /* SessionSettings.swift */,
 				07FF5F0825E4354B003E19AE /* StatTracker.swift */,
 				078AF006260119DE00AB4CE4 /* InteractiveCanvasSocket.swift */,
+				07270EE1272C214300DB35CE /* Palette.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -654,6 +663,7 @@
 				078AF007260119DE00AB4CE4 /* InteractiveCanvasSocket.swift in Sources */,
 				07BD25F525D44F2A00CF812E /* Utils.swift in Sources */,
 				07FF5F0D25E54DCF003E19AE /* SignInViewController.swift in Sources */,
+				07270EE0272B92B300DB35CE /* PalettesViewController.swift in Sources */,
 				07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */,
 				07FF5F0525E421A9003E19AE /* StatAchievementCollectionViewCell.swift in Sources */,
 				0788E47F25FBD3F5004FC782 /* UIView+SafeAnchors.swift in Sources */,
@@ -661,7 +671,9 @@
 				07FF5F0325E41EF9003E19AE /* StatsViewController.swift in Sources */,
 				07BD25F725D44FE900CF812E /* UIColor+Conversions.swift in Sources */,
 				07A305F525D5D348003A6CEA /* PaintColorIndicator.swift in Sources */,
+				07270EE2272C214300DB35CE /* Palette.swift in Sources */,
 				07006C4025D6CEF200DF9A64 /* MenuViewController.swift in Sources */,
+				07270EE4272C333A00DB35CE /* PaletteCollectionViewCell.swift in Sources */,
 				07A305F325D5B6F5003A6CEA /* ActionButtonView.swift in Sources */,
 				07006C3C25D607D500DF9A64 /* UIDrawGestureRecognizer.swift in Sources */,
 				0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */,
@@ -846,6 +858,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = C49644A98X;
 				INFOPLIST_FILE = LiquidOceanIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -869,6 +882,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = C49644A98X;
 				INFOPLIST_FILE = LiquidOceanIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

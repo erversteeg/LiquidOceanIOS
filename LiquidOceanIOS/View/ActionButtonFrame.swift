@@ -10,7 +10,17 @@ import UIKit
 
 class ActionButtonFrame: UIView {
 
-    weak var actionButtonView: ActionButtonView?
+    weak var _actionButtonView: ActionButtonView?
+    weak var actionButtonView: ActionButtonView? {
+        set {
+            _actionButtonView = newValue
+            
+            backgroundColor = UIColor.clear
+        }
+        get {
+            return _actionButtonView
+        }
+    }
     
     var clickHandler: (() -> Void)?
 

@@ -39,7 +39,7 @@ extension UIColor {
         var firstVal: Int32 = 0
         var secondVal: Int32 = 0
         
-        for char in hexString {
+        for char in hexString.uppercased() {
             if i % 2 == 0 {
                 firstVal = UIColor.numberForCharacter(char: char)
             }

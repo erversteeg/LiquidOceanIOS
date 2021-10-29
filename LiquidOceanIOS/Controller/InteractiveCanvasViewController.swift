@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -76,6 +76,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var achievementName: UILabel!
     @IBOutlet weak var achievementDesc: UILabel!
     
+    @IBOutlet weak var colorPaletteTitleLabel: UILabel!
+    
     @IBOutlet weak var paintEventInfoContainer: UIView!
     @IBOutlet weak var paintEventTimeLabel: UILabel!
     @IBOutlet weak var paintEventAmtLabel: UILabel!
@@ -123,6 +125,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var canvasLockLeading: NSLayoutConstraint!
     @IBOutlet weak var canvasLockTrailing: NSLayoutConstraint!
     
+    @IBOutlet weak var palettesView: UIView!
+    
     var panelThemeConfig: PanelThemeConfig!
     
     var world = false
@@ -147,6 +151,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     weak var recentColorsViewController: RecentColorsViewController!
     weak var exportViewController: ExportViewController!
     weak var colorPickerViewController: ColorPickerOutletsViewController!
+    weak var palettesViewController: PalettesViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -167,6 +172,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.interactiveCanvas.pixelHistoryDelegate = self
         self.surfaceView.interactiveCanvas.recentColorsDelegate = self
         self.surfaceView.interactiveCanvas.artExportDelegate = self
+        self.surfaceView.palettesDelegate = self
         
         // surfaceView.setInitalScale()
         
@@ -261,7 +267,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.toggleRecentColors(open: self.recentColorsContainer.isHidden)
         }
         
-        self.setupRecentColors(recentColors: self.surfaceView.interactiveCanvas.recentColors)
+        self.setupColorPalette(colors: self.surfaceView.interactiveCanvas.recentColors)
         
         // export
         self.exportButton.setOnClickListener {
@@ -307,6 +313,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.paintPanelButton.setOnClickListener {
             self.togglePaintPanel(open: true)
         }
+        
+        self.paintPanel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapPaintPanel)))
         
         // close paint panel
         self.closePaintPanelButton.setOnClickListener {
@@ -436,10 +444,14 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         self.colorPicker(self.colorPickerViewController.colorPicker, selectedColor: self.colorPickerViewController.selectedColor, usingControl: self.colorPickerViewController.colorPicker.radialHsbPalette!)
         
+        var tgr = UITapGestureRecognizer(target: self, action: #selector(didTapColorPaletteTitle))
+        colorPaletteTitleLabel.addGestureRecognizer(tgr)
         
+        colorPaletteTitleLabel.text = SessionSettings.instance.palette.displayName
+        self.syncPaletteAndColor()
         
         // paint event time toggle
-        let tgr = UITapGestureRecognizer(target: self, action: #selector(didTapPaintQuantityBar))
+        tgr = UITapGestureRecognizer(target: self, action: #selector(didTapPaintQuantityBar))
         
         if SessionSettings.instance.showPaintCircle {
             self.paintQuantityCircle.addGestureRecognizer(tgr)
@@ -677,6 +689,14 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
     }
     
+    @objc func didTapColorPaletteTitle() {
+        self.togglePalettesView(show: true)
+    }
+    
+    @objc func didTapPaintPanel() {
+        self.togglePalettesView(show: false)
+    }
+    
     func startServerStatusChecks() {
         statusCheckTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (tmr) in
             let connected = Utils.isNetworkAvailable()
@@ -790,6 +810,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.exportViewController = segue.destination as? ExportViewController
             self.exportViewController.delegate = self
         }
+        else if segue.identifier == "PalettesEmbed" {
+            self.palettesViewController = segue.destination as? PalettesViewController
+            self.palettesViewController.delegate = self
+        }
         else if segue.identifier == "UnwindToMenu" {
             SessionSettings.instance.save()
             
@@ -894,18 +918,16 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 self.canvasLockView.isHidden = true
             }
             
-            /*UIView.animate(withDuration: 0.5, animations: {
-                self.paintPanelTrailing.constant = -200
-            }) { (done) in
-                if done {
-                    if SessionSettings.instance.canvasLockBorder {
-                        if SessionSettings.instance.canvasLockBorder {
-                            self.canvasLockView.isHidden = true
-                        }
-                    }
-                }
-            }*/
+            self.togglePalettesView(show: false)
         }
+    }
+    
+    func togglePalettesView(show: Bool) {
+        if show {
+            palettesViewController.palettes = SessionSettings.instance.palettes
+            palettesViewController.reset()
+        }
+        palettesView.isHidden = !show
     }
     
     func toggleToolbox(open: Bool) {
@@ -1037,20 +1059,22 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     // recent colors delegate
     func notifyNewRecentColors(recentColors: [Int32]) {
-        self.setupRecentColors(recentColors: recentColors)
+        if SessionSettings.instance.selectedPaletteIndex == 0 {
+            self.setupColorPalette(colors: recentColors)
+        }
     }
     
-    func setupRecentColors(recentColors: [Int32]) {
+    func setupColorPalette(colors: [Int32]) {
         let itemWidth = self.recentColorsViewController.itemWidth
         let itemHeight = self.recentColorsViewController.itemWidth
         let margin = self.recentColorsViewController.itemMargin
         
         self.recentColorsContainerWidth.constant = itemWidth * 4 + margin * 3
         
-        let numRows = SessionSettings.instance.numRecentColors / 4
+        let numRows = (colors.count - 1) / 4 + 1
         self.recentColorsContainerHeight.constant = itemHeight * CGFloat(numRows) + margin * CGFloat(numRows - 1)
         
-        self.recentColorsViewController.data = recentColors.reversed()
+        self.recentColorsViewController.data = colors.reversed()
         self.recentColorsViewController.collectionView.reloadData()
     }
     
@@ -1255,6 +1279,33 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     func colorPickerDidLayoutSubviews(colorPickerViewController: ColorPickerOutletsViewController) {
         colorPickerViewController.colorHexTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         colorPickerViewController.delegate = self
+    }
+    
+    // palettes delegate
+    func isPalettesViewControllerVisible() -> Bool {
+        return !palettesView.isHidden
+    }
+    
+    func notifyClosePalettesViewController() {
+        self.togglePalettesView(show: false)
+    }
+    
+    // palettes view controller delegate
+    func notifyPaletteSelected(palette: Palette, index: Int) {
+        self.colorPaletteTitleLabel.text = palette.displayName
+        
+        self.togglePalettesView(show: false)
+        
+        self.syncPaletteAndColor()
+    }
+    
+    func syncPaletteAndColor() {
+        if SessionSettings.instance.selectedPaletteIndex == 0 {
+            self.setupColorPalette(colors: self.surfaceView.interactiveCanvas.recentColors)
+        }
+        else {
+            self.setupColorPalette(colors: SessionSettings.instance.palette.colors)
+        }
     }
 }
 

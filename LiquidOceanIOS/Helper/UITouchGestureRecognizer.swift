@@ -16,6 +16,16 @@ class UITouchGestureRecognizer: UIGestureRecognizer {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
         self.state = .changed
+        
+        let bounds = view!.bounds
+        
+        for touch in touches {
+            let loc = touch.location(in: view)
+            
+            if loc.x < bounds.origin.x || loc.y < bounds.origin.y || loc.x > bounds.width || loc.y > bounds.height {
+                self.state = .cancelled
+            }
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {

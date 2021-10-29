@@ -57,6 +57,7 @@ class ActionButtonView: UIView {
         case changeBackground
         case gridLines
         case save
+        case add
         case dot
         case dotLight
         case recentColor
@@ -234,6 +235,9 @@ class ActionButtonView: UIView {
         }
         else if type == .save {
             drawSaveAction()
+        }
+        else if type == .add {
+            drawAddAction()
         }
         else if type == .changeBackground {
             drawChangeBackgroundAction()
@@ -707,6 +711,42 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 1, y: 4, color: paint)
         drawPixel(ctx: context, x: 2, y: 4, color: paint)
         drawPixel(ctx: context, x: 3, y: 4, color: paint)
+    }
+    
+    func drawAddAction() {
+        rows = 5
+        cols = 5
+        
+        var paint = ActionButtonView.semiColor!
+        
+        if SessionSettings.instance.darkIcons {
+            paint = ActionButtonView.semiDarkColor!
+        }
+        
+        if selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        // row 1
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        
+        // row 2
+        drawPixel(ctx: context, x: 2, y: 1, color: paint)
+
+        // row 3
+        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+        drawPixel(ctx: context, x: 1, y: 2, color: paint)
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
+        drawPixel(ctx: context, x: 3, y: 2, color: paint)
+        drawPixel(ctx: context, x: 4, y: 2, color: paint)
+        
+        // row 4
+        drawPixel(ctx: context, x: 2, y: 3, color: paint)
+
+        // row 5
+        drawPixel(ctx: context, x: 2, y: 4, color: paint)
     }
     
     func drawChangeBackgroundAction() {

@@ -18,6 +18,11 @@ protocol ObjectSelectionDelegate: AnyObject {
     func notifyObjectSelectionEnded()
 }
 
+protocol InteractiveCanvasPalettesDelegate: AnyObject {
+    func isPalettesViewControllerVisible() -> Bool
+    func notifyClosePalettesViewController()
+}
+
 class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveCanvasScaleCallback {
 
     enum Mode {
@@ -46,6 +51,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     var drawGestureRecognizer: UIDrawGestureRecognizer!
     
     weak var objectSelectionDelegate: ObjectSelectionDelegate?
+    
+    weak var palettesDelegate: InteractiveCanvasPalettesDelegate?
     
     var objectSelectionStartUnit: CGPoint!
     var objectSelectionStartPoint: CGPoint!
@@ -111,6 +118,11 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         if sender.state == .began {
             if mode == .painting {
+                if palettesDelegate != nil && palettesDelegate!.isPalettesViewControllerVisible() {
+                    palettesDelegate?.notifyClosePalettesViewController()
+                    return
+                }
+                
                 interactiveCanvas.drawCallback?.notifyCanvasRedraw()
                 
                 paintActionDelegate?.notifyPaintActionStarted()

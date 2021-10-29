@@ -120,6 +120,21 @@ class SessionSettings: NSObject {
     
     var defaultBg = true
     
+    var palettes = [Palette]()
+    
+    private var _selectedPaletteIndex = 0
+    var selectedPaletteIndex: Int {
+        set {
+            _selectedPaletteIndex = newValue
+            palette = palettes[_selectedPaletteIndex]
+        }
+        get {
+            return _selectedPaletteIndex
+        }
+    }
+    
+    var palette: Palette!
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -150,6 +165,8 @@ class SessionSettings: NSObject {
         userDefaults().set(smallActionButtons, forKey: "small_action_buttons")
         userDefaults().set(pincodeSet, forKey: "pincode_set")
         userDefaults().set(defaultBg, forKey: "default_bg")
+        userDefaults().set(palettesJsonStr(), forKey: "palettes")
+        userDefaults().set(selectedPaletteIndex, forKey: "selected_palette_index")
     }
     
     func quickSave() {
@@ -221,6 +238,18 @@ class SessionSettings: NSObject {
         pincodeSet = userDefaultsBool(forKey: "pincode_set", defaultVal: false)
         
         defaultBg = userDefaultsBool(forKey: "default_bg", defaultVal: true)
+        
+        palettes = palettesFromJsonString(jsonString: userDefaultsString(forKey: "palettes", defaultVal: "[]"))
+        
+        palettes.insert(Palette(name: "Recent Color"), at: 0)
+        
+        selectedPaletteIndex = userDefaultsInt(forKey: "selected_palette_index", defaultVal: 0)
+        
+        /*let palette = Palette(name: "Palette")
+        palette.addColor(color: UIColor(hexString: "EACB6E").argb())
+        palette.addColor(color: UIColor(hexString: "6385EA").argb())
+        
+        palettes.append(palette)*/
     }
     
     func userDefaults() -> UserDefaults {
@@ -375,5 +404,47 @@ class SessionSettings: NSObject {
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "paint_bucket_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "fire_badge_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "fries_json")!)
+    }
+    
+    func addPalette(name: String) {
+        palettes.append(Palette(name: name))
+    }
+    
+    private func palettesJsonStr() -> String {
+        var palettesArray = [[String: Any]]()
+        
+        var i = 0
+        for palette in palettes {
+            if i > 0 {
+                palettesArray.append(palette.toDictionary())
+            }
+            
+            i += 1
+        }
+        
+        let jsonData = try! JSONSerialization.data(withJSONObject: palettesArray, options: [])
+        
+        return String(data: jsonData, encoding: .utf8)!
+    }
+    
+    private func palettesFromJsonString(jsonString: String) -> [Palette] {
+        var palettes = [Palette]()
+        
+        let jsonArray = try! JSONSerialization.jsonObject(with: jsonString.data(using: .utf8)!, options: []) as! [[String: Any]]
+        
+        for paletteJsonObj in jsonArray {
+            let name = paletteJsonObj["name"] as! String
+            let colors = paletteJsonObj["colors"] as! [Int32]
+            
+            let palette = Palette(name: name)
+            
+            for color in colors {
+                palette.addColor(color: color)
+            }
+            
+            palettes.append(palette)
+        }
+        
+        return palettes
     }
 }
