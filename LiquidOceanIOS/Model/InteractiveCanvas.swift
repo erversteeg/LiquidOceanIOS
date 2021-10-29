@@ -324,8 +324,6 @@ class InteractiveCanvas: NSObject {
             
             arr.append(innerArr)
         }
-        
-        arr[rows / 2][cols / 2] = Utils.int32FromColorHex(hex: "0xff00ff00")
     }
     
     func save() {

@@ -227,4 +227,25 @@ class PaintColorIndicator: UIView, ActionButtonViewTouchDelegate {
             setNeedsDisplay()
         }
     }
+    
+    static func darkness(color: Int32) -> CGFloat {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        
+        let uiColor = UIColor(argb: color)
+        uiColor.getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        let darkness = 1 - (0.299 * r + 0.587 * g + 0.114 * b)
+        return darkness
+    }
+    
+    static func isColorDark(color: Int32) -> Bool {
+        return darkness(color: color) > 0.85
+    }
+    
+    static func isColorLight(color: Int32) -> Bool {
+        return darkness(color: color) < 0.15
+    }
 }

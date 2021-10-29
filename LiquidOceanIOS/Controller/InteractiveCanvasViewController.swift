@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -305,63 +305,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         // paint panel
         self.paintPanel.isHidden = true
         self.paintPanelButton.setOnClickListener {
-            self.paintPanelButton.isHidden = true
-            
-            self.paintPanel.isHidden = false
-            
-            self.pixelHistoryView.isHidden = true
-            
-            self.backButton.isHidden = true
-            
-            self.recentColorsButton.isHidden = false
-            
-            if SessionSettings.instance.canvasLockBorder {
-                self.canvasLockView.isHidden = false
-            }
-            
-            //self.paintPanelWidth.constant = 200
-            
-            /*UIView.animate(withDuration: 0.5, animations: {
-                self.paintPanelTrailing.constant = 0
-            }) { (done) in
-                if done {
-                    if SessionSettings.instance.canvasLockBorder {
-                        self.canvasLockView.isHidden = false
-                    }
-                }
-            }*/
-            
-            self.surfaceView.startPainting()
+            self.togglePaintPanel(open: true)
         }
         
         // close paint panel
         self.closePaintPanelButton.setOnClickListener {
-            self.surfaceView.endPainting(accept: false)
-            
-            self.paintPanelButton.isHidden = false
-            
-            self.backButton.isHidden = false
-            
-            self.recentColorsButton.isHidden = true
-            
-            self.toggleRecentColors(open: false)
-            
-            self.paintPanel.isHidden = true
-            if SessionSettings.instance.canvasLockBorder {
-                self.canvasLockView.isHidden = true
-            }
-            
-            /*UIView.animate(withDuration: 0.5, animations: {
-                self.paintPanelTrailing.constant = -200
-            }) { (done) in
-                if done {
-                    if SessionSettings.instance.canvasLockBorder {
-                        if SessionSettings.instance.canvasLockBorder {
-                            self.canvasLockView.isHidden = true
-                        }
-                    }
-                }
-            }*/
+            self.togglePaintPanel(open: false)
         }
         
         // paint quantity meter
@@ -476,12 +425,18 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             closePaintPanelButtonAction.colorMode = .white
         }
         
+        self.updatePaintColorAcceptColorMode(color: SessionSettings.instance.paintColor)
+        
         self.paintColorAcceptAction.touchDelegate = self.paintColorIndicator
         
         self.paintQuantityCircle.panelThemeConfig = panelThemeConfig
         self.paintQuantityBar.panelThemeConfig = panelThemeConfig
         
         self.paintColorIndicator.panelThemeConfig = panelThemeConfig
+        
+        self.colorPicker(self.colorPickerViewController.colorPicker, selectedColor: self.colorPickerViewController.selectedColor, usingControl: self.colorPickerViewController.colorPicker.radialHsbPalette!)
+        
+        
         
         // paint event time toggle
         let tgr = UITapGestureRecognizer(target: self, action: #selector(didTapPaintQuantityBar))
@@ -800,13 +755,28 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
     }
     
+    func setDefaultColorsClickListeners() {
+        colorPickerViewController.defaultBlackButton.setOnClickListener {
+            self.colorPickerViewController.selectedColor = UIColor.black
+            self.colorPicker(self.colorPickerViewController.colorPicker, selectedColor: self.colorPickerViewController.selectedColor, usingControl: self.colorPickerViewController.colorPicker.radialHsbPalette!)
+        }
+        
+        colorPickerViewController.defaultWhiteButton.setOnClickListener {
+            self.colorPickerViewController.selectedColor = UIColor.white
+            self.colorPicker(self.colorPickerViewController.colorPicker, selectedColor: self.colorPickerViewController.selectedColor, usingControl: self.colorPickerViewController.colorPicker.radialHsbPalette!)
+        }
+    }
+    
     // embeds
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ColorPickerEmbed" {
             colorPickerViewController = segue.destination as! ColorPickerOutletsViewController
             colorPickerViewController.delegate = self
+            colorPickerViewController.layoutDelegate = self
             colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintColor)
             colorPickerViewController.view.backgroundColor = UIColor.clear
+            
+            setDefaultColorsClickListeners()
         }
         else if segue.identifier == "PixelHistoryEmbed" {
             segue.destination.modalPresentationStyle = .overCurrentContext
@@ -879,6 +849,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.toggleRecentColors(open: false)
         self.recentColorsButton.isHidden = true
         
+        self.colorPickerViewController.colorHexTextField.delegate = self
+        
         self.surfaceView.startPaintSelection()
     }
     
@@ -889,6 +861,50 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         if self.surfaceView.interactiveCanvas.restorePoints.count == 0 {
             self.closePaintPanelButton.isHidden = false
+        }
+    }
+    
+    func togglePaintPanel(open: Bool) {
+        if open {
+            self.paintPanelButton.isHidden = true
+            
+            self.paintPanel.isHidden = false
+            
+            self.pixelHistoryView.isHidden = true
+            
+            self.backButton.isHidden = true
+            
+            if SessionSettings.instance.canvasLockBorder {
+                self.canvasLockView.isHidden = false
+            }
+            
+            self.surfaceView.startPainting()
+        }
+        else {
+            self.surfaceView.endPainting(accept: false)
+            
+            self.paintPanelButton.isHidden = false
+            
+            self.backButton.isHidden = false
+            
+            self.toggleRecentColors(open: false)
+            
+            self.paintPanel.isHidden = true
+            if SessionSettings.instance.canvasLockBorder {
+                self.canvasLockView.isHidden = true
+            }
+            
+            /*UIView.animate(withDuration: 0.5, animations: {
+                self.paintPanelTrailing.constant = -200
+            }) { (done) in
+                if done {
+                    if SessionSettings.instance.canvasLockBorder {
+                        if SessionSettings.instance.canvasLockBorder {
+                            self.canvasLockView.isHidden = true
+                        }
+                    }
+                }
+            }*/
         }
     }
     
@@ -919,6 +935,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         if open {
             self.recentColorsActionView.isHidden = true
             self.recentColorsContainer.isHidden = false
+            
+            if (paintPanel.isHidden) {
+                self.togglePaintPanel(open: true)
+            }
         }
         else {
             self.recentColorsActionView.isHidden = false
@@ -928,6 +948,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
 
     override func viewDidAppear(_ animated: Bool) {
         self.surfaceView.backgroundColor = UIColor.red
+        
+        self.toggleToolbox(open: true)
     }
     
     // paint delegate
@@ -947,12 +969,35 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     func notifyPaintColorUpdate() {
         self.paintColorIndicator.setPaintColor(color: SessionSettings.instance.paintColor)
         colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintColor)
+        
+        self.colorPicker(self.colorPickerViewController.colorPicker, selectedColor: self.colorPickerViewController.selectedColor, usingControl: self.colorPickerViewController.colorPicker.radialHsbPalette!)
     }
     
     // color picker delegate
     func colorPicker(_ colorPicker: ColorPickerController, selectedColor: UIColor, usingControl: ColorControl) {
-        SessionSettings.instance.paintColor = selectedColor.argb()
+        let color = selectedColor.argb()
+        
+        SessionSettings.instance.paintColor = color
         self.paintColorIndicator.setNeedsDisplay()
+        
+        self.updatePaintColorAcceptColorMode(color: color)
+        
+        self.colorPickerViewController.colorHexTextField.text = UIColor(argb: color).hexValue()
+    }
+    
+    func updatePaintColorAcceptColorMode(color: Int32) {
+        if PaintColorIndicator.isColorLight(color: color) && panelThemeConfig.actionButtonColor == ActionButtonView.whiteColor {
+            paintColorAcceptAction.colorMode = .black
+        }
+        else if panelThemeConfig.actionButtonColor == ActionButtonView.whiteColor {
+            paintColorAcceptAction.colorMode = .white
+        }
+        else if PaintColorIndicator.isColorDark(color: color) && panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
+            paintColorAcceptAction.colorMode = .white
+        }
+        else if panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
+            paintColorAcceptAction.colorMode = .black
+        }
     }
     
     // pixel history delegate
@@ -1177,6 +1222,39 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func notifyObjectSelectionEnded() {
         objectSelectionView.isHidden = true
+    }
+    
+    func setColorFromHexString(hexString: String) {
+        self.colorPickerViewController.selectedColor = UIColor(hexString: hexString)
+        
+        self.colorPicker(self.colorPickerViewController.colorPicker, selectedColor: self.colorPickerViewController.selectedColor, usingControl: self.colorPickerViewController.colorPicker.radialHsbPalette!)
+    }
+    
+    @objc func textFieldDidChange() {
+        let textField = self.colorPickerViewController.colorHexTextField!
+        let range = NSRange(location: 0, length: textField.text!.count)
+        let regex = try! NSRegularExpression(pattern: "[A-F0-9]{6}")
+        
+        let result = regex.firstMatch(in: textField.text!, options: [], range: range)
+    
+        if result != nil && textField.text!.count == 6 {
+            self.setColorFromHexString(hexString: textField.text!)
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if range.location > 5 {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
+    // color picker layout delegate
+    func colorPickerDidLayoutSubviews(colorPickerViewController: ColorPickerOutletsViewController) {
+        colorPickerViewController.colorHexTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        colorPickerViewController.delegate = self
     }
 }
 

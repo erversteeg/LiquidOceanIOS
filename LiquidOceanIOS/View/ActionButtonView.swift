@@ -31,6 +31,7 @@ class ActionButtonView: UIView {
     static var lightYellowSemiColor: Int32!
     static var photoshopGrayColor: Int32!
     static var lightGrayColor: Int32!
+    static var darkGrayColor: Int32!
     static var twoThirdGrayColor: Int32!
     static var thirdGrayColor: Int32!
     
@@ -68,6 +69,8 @@ class ActionButtonView: UIView {
         case righty
         case signIn
         case pincode
+        case defaultBlack
+        case defaultWhite
     }
     
     var selectable = true
@@ -125,7 +128,16 @@ class ActionButtonView: UIView {
         case white
     }
     
-    var colorMode = ColorMode.color
+    var _colorMode = ColorMode.color
+    var colorMode: ColorMode {
+        set {
+            _colorMode = newValue
+            setNeedsDisplay()
+        }
+        get {
+            return _colorMode
+        }
+    }
     
     var clickHandler: (() -> Void)?
     
@@ -163,6 +175,7 @@ class ActionButtonView: UIView {
         ActionButtonView.lightYellowSemiColor = Utils.int32FromColorHex(hex: "0x99FAE38D")
         ActionButtonView.photoshopGrayColor = Utils.int32FromColorHex(hex: "0xFFCCCCCC")
         ActionButtonView.lightGrayColor = Utils.int32FromColorHex(hex: "0xFFDDDDDD")
+        ActionButtonView.darkGrayColor = Utils.int32FromColorHex(hex: "0xFF303030")
         ActionButtonView.twoThirdGrayColor = Utils.int32FromColorHex(hex: "0xFF555555")
         ActionButtonView.thirdGrayColor = Utils.int32FromColorHex(hex: "0xFFAAAAAA")
     }
@@ -263,6 +276,12 @@ class ActionButtonView: UIView {
         }
         else if type == .pincode {
             drawPincode()
+        }
+        else if type == .defaultBlack {
+            drawDefaultBlackAction()
+        }
+        else if type == .defaultWhite {
+            drawDefaultWhiteAction()
         }
     }
     
@@ -368,26 +387,25 @@ class ActionButtonView: UIView {
     }
     
     func drawPaintAction() {
-        self.rows = 4
-        self.cols = 4
+        self.rows = 3
+        self.cols = 3
         
-        var primaryColor = ActionButtonView.whiteColor!
-        var accentColor = ActionButtonView.altGreenColor!
+        var primaryColor = ActionButtonView.semiColor!
+        //var accentColor = ActionButtonView.altGreenColor!
         
         if SessionSettings.instance.darkIcons {
-            primaryColor = ActionButtonView.blackColor!
+            primaryColor = ActionButtonView.semiDarkColor!
         }
         
         if selected && selectable {
-            accentColor = ActionButtonView.lightAltGreenColor!
+            primaryColor = ActionButtonView.lightYellowColor!
         }
         
         let context = UIGraphicsGetCurrentContext()!
         
-        drawPixel(ctx: context, x: 3, y: 0, color: accentColor)
-        drawPixel(ctx: context, x: 2, y: 1, color: primaryColor)
-        drawPixel(ctx: context, x: 1, y: 2, color: primaryColor)
-        drawPixel(ctx: context, x: 0, y: 3, color: primaryColor)
+        drawPixel(ctx: context, x: 2, y: 0, color: primaryColor)
+        drawPixel(ctx: context, x: 1, y: 1, color: primaryColor)
+        drawPixel(ctx: context, x: 0, y: 2, color: primaryColor)
     }
     
     func drawYesAction() {
@@ -751,9 +769,9 @@ class ActionButtonView: UIView {
         rows = 1
         cols = 1
         
-        var paint = ActionButtonView.semiLightColor!
+        var paint = ActionButtonView.semiColor!
         if SessionSettings.instance.darkIcons {
-            paint = ActionButtonView.semiDarkLightColor!
+            paint = ActionButtonView.semiDarkColor!
         }
         
         if selected {
@@ -1677,6 +1695,66 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 24, y: 3, color: paint)
         drawPixel(ctx: context, x: 25, y: 0, color: paint)
         drawPixel(ctx: context, x: 25, y: 3, color: paint)
+    }
+    
+    func drawDefaultBlackAction() {
+        self.rows = 8
+        self.cols = 8
+        
+        var paint = ActionButtonView.lightGrayColor!
+        
+        if SessionSettings.instance.darkIcons {
+            paint = ActionButtonView.darkGrayColor!
+        }
+        
+        if selected {
+            paint = ActionButtonView.altGreenColor!
+        }
+        
+        let colorPaint = ActionButtonView.blackColor!
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        for y in 0...rows - 1 {
+            for x in 0...cols - 1 {
+                var color = colorPaint
+                if (y == 0 || y == rows - 1 || x == 0 || x == cols - 1) {
+                    color = paint
+                }
+                
+                drawPixel(ctx: context, x: x, y: y, color: color)
+            }
+        }
+    }
+    
+    func drawDefaultWhiteAction() {
+        self.rows = 8
+        self.cols = 8
+        
+        var paint = ActionButtonView.lightGrayColor!
+        
+        if SessionSettings.instance.darkIcons {
+            paint = ActionButtonView.darkGrayColor!
+        }
+        
+        if selected {
+            paint = ActionButtonView.altGreenColor!
+        }
+        
+        let colorPaint = ActionButtonView.whiteColor!
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        for y in 0...rows - 1 {
+            for x in 0...cols - 1 {
+                var color = colorPaint
+                if (y == 0 || y == rows - 1 || x == 0 || x == cols - 1) {
+                    color = paint
+                }
+                
+                drawPixel(ctx: context, x: x, y: y, color: color)
+            }
+        }
     }
     
     func rectForPixel(x: Int, y: Int) -> CGRect {
