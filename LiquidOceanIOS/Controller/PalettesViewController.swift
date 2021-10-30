@@ -12,7 +12,7 @@ protocol PalettesViewControllerDelegate: AnyObject {
     func notifyPaletteSelected(palette: Palette, index: Int)
 }
 
-class PalettesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, PaletteCollectionViewCellDelegate {
+class PalettesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -59,10 +59,37 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
         addPaletteButton.setOnClickListener {
             self.startNameInput()
         }
+        
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(sender:)))
+        lpgr.delaysTouchesBegan = true
+        lpgr.delegate = self
+        collectionView.addGestureRecognizer(lpgr)
     }
     
     override func viewDidLayoutSubviews() {
         setBackground()
+    }
+    
+    @objc func didLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let point = sender.location(in: collectionView)
+            let indexPath = collectionView.indexPathForItem(at: point)!
+            
+            if indexPath.item > 0 {
+                showPaletteRemoveAlert(palette: palettes[indexPath.item], atIndexPath: indexPath)
+            }
+        }
+    }
+    
+    func showPaletteRemoveAlert(palette: Palette, atIndexPath: IndexPath) {
+        let alertVC = UIAlertController(title: nil, message: "Remove " + palette.name + "?", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { action in
+            self.removePalette(palette: palette, atIndexPath: atIndexPath)
+        }))
+        alertVC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            
+        }))
+        self.present(alertVC, animated: true, completion: nil)
     }
     
     func reset() {
@@ -80,6 +107,17 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
             }
         }
         
+        return nil
+    }
+    
+    func paletteCellAtIndexPath(indexPath: IndexPath) -> PaletteCollectionViewCell? {
+        let visibleCells = collectionView.visibleCells
+        for cell in visibleCells {
+            let cellIndexPath = collectionView.indexPath(for: cell)!
+            if indexPath.item == cellIndexPath.item {
+                return cell as? PaletteCollectionViewCell
+            }
+        }
         return nil
     }
     
@@ -121,9 +159,9 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
             }
         }
         
-        cell.delegate = self
+        //cell.delegate = self
         
-        cell.onIndexPath(indexPath: indexPath)
+        //cell.onRecycle(indexPath: indexPath)
         
         return cell
     }
@@ -219,12 +257,14 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
         return selectedPaletteCollectionViewCell()
     }
     
-    func deletePaletteCell(cell: PaletteCollectionViewCell) {
-        let indexPath = collectionView.indexPath(for: cell)!
-        
-        let index = indexPath.item
+    func removePalette(palette: Palette, atIndexPath: IndexPath) {
+        let index = atIndexPath.item
         if index > 0 {
-            collectionView.deleteItems(at: [indexPath])
+            collectionView.deleteItems(at: [atIndexPath])
+            
+            if SessionSettings.instance.selectedPaletteIndex == index {
+                SessionSettings.instance.selectedPaletteIndex = 0
+            }
             
             SessionSettings.instance.palettes.remove(at: index)
             palettes = SessionSettings.instance.palettes

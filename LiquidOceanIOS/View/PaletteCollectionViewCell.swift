@@ -13,7 +13,7 @@ protocol PaletteCollectionViewCellDelegate: AnyObject {
     func deletePaletteCell(cell: PaletteCollectionViewCell)
 }
 
-class PaletteCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
+class PaletteCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var numColorsLabel: UILabel!
     
@@ -24,32 +24,28 @@ class PaletteCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     var indexPath: IndexPath!
     
     override func awakeFromNib() {
-        let gr = UILongPressGestureRecognizer(target: self, action: #selector(didTouchCell(sender:)))
-        gr.minimumPressDuration = 0
+        let gr = UITouchGestureRecognizer(target: self, action: #selector(didTouchCell(sender:)))
         gr.cancelsTouchesInView = false
         
         scrollView.delegate = self
         scrollView.isUserInteractionEnabled = false
         
+        gr.delegate = self
         //contentView.addGestureRecognizer(gr)
+        
+        let pgr = UIPanGestureRecognizer(target: self, action: #selector(didPan(sender:)))
+        pgr.cancelsTouchesInView = false
+        
+        pgr.delegate = self
+        //contentView.addGestureRecognizer(pgr)
     }
     
     @objc func didTouchCell(sender: UITouchGestureRecognizer) {
         if sender.state == .began {
-            nameLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xffdf7126"))
             
-            let selectedCell = delegate?.getSelectedPaletteCollectionViewCell()
-            if selectedCell != nil && selectedCell != self {
-                selectedCell?.nameLabel.textColor = UIColor.white
-            }
         }
         else if sender.state == .cancelled {
-            nameLabel.textColor = UIColor.white
             
-            let selectedCell = delegate?.getSelectedPaletteCollectionViewCell()
-            if selectedCell != nil {
-                selectedCell?.nameLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xffdf7126"))
-            }
         }
     }
     
@@ -67,6 +63,24 @@ class PaletteCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         }
     }
     
+    func highlight() {
+        nameLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xffdf7126"))
+        
+        let selectedCell = delegate?.getSelectedPaletteCollectionViewCell()
+        if selectedCell != nil && selectedCell != self {
+            selectedCell?.nameLabel.textColor = UIColor.white
+        }
+    }
+    
+    func unhighlight() {
+        nameLabel.textColor = UIColor.white
+        
+        let selectedCell = delegate?.getSelectedPaletteCollectionViewCell()
+        if selectedCell != nil {
+            selectedCell?.nameLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xffdf7126"))
+        }
+    }
+    
     func resetOrDelete() {
         if scrollView.contentOffset.x < self.frame.size.width / 2 {
             scrollView .setContentOffset(CGPoint(x: 0, y: 0), animated: true)
@@ -77,8 +91,11 @@ class PaletteCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         }
     }
     
-    func onIndexPath(indexPath: IndexPath) {
-        let pgr = UIPanGestureRecognizer(target: self, action: #selector(didPan(sender:)))
-        contentView.addGestureRecognizer(pgr)
+    func onRecycle(indexPath: IndexPath) {
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

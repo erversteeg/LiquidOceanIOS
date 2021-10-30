@@ -927,6 +927,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             palettesViewController.palettes = SessionSettings.instance.palettes
             palettesViewController.reset()
         }
+        else {
+            syncPaletteAndColor()
+        }
         palettesView.isHidden = !show
     }
     
@@ -1292,14 +1295,14 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     // palettes view controller delegate
     func notifyPaletteSelected(palette: Palette, index: Int) {
-        self.colorPaletteTitleLabel.text = palette.displayName
-        
         self.togglePalettesView(show: false)
-        
-        self.syncPaletteAndColor()
     }
     
     func syncPaletteAndColor() {
+        // set title
+        self.colorPaletteTitleLabel.text = SessionSettings.instance.palette.displayName
+        
+        // set color palette
         if SessionSettings.instance.selectedPaletteIndex == 0 {
             self.setupColorPalette(colors: self.surfaceView.interactiveCanvas.recentColors)
         }
