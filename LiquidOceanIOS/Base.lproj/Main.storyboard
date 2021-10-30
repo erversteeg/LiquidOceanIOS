@@ -3364,21 +3364,59 @@
                                     <constraint firstAttribute="height" constant="60" id="Yjs-xU-zrb"/>
                                 </constraints>
                             </view>
+                            <label hidden="YES" opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pixel Size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wff-Ag-cNh">
+                                <rect key="frame" x="486.5" y="16" width="155" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="jki-I8-bDG"/>
+                                    <constraint firstAttribute="width" constant="155" id="rT7-Fa-Mcl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HCR-md-Wjq">
+                                <rect key="frame" x="424.5" y="15" width="49" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="47" id="kqX-ls-WLT"/>
+                                    <constraint firstAttribute="height" constant="31" id="thC-Kr-LfU"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="artSizeValueChanged:" destination="8fZ-ml-M6r" eventType="valueChanged" id="uJJ-UT-fLf"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Screen Size" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kwd-vz-DyL">
+                                <rect key="frame" x="242.5" y="16" width="167" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="167" id="L3n-Tm-Xfx"/>
+                                    <constraint firstAttribute="height" constant="29" id="RQA-We-4oK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="JR0-q5-Asy"/>
                         <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="MqO-ne-2SR" firstAttribute="top" secondItem="YlS-jE-YaY" secondAttribute="top" constant="10" id="0gT-cm-Zus"/>
+                            <constraint firstItem="wff-Ag-cNh" firstAttribute="leading" secondItem="HCR-md-Wjq" secondAttribute="trailing" constant="15" id="1Bj-ay-C82"/>
+                            <constraint firstItem="HCR-md-Wjq" firstAttribute="leading" secondItem="Kwd-vz-DyL" secondAttribute="trailing" constant="15" id="DEY-xD-RR8"/>
                             <constraint firstItem="4bw-r1-aTY" firstAttribute="top" secondItem="YlS-jE-YaY" secondAttribute="top" id="Imd-4H-OG7"/>
                             <constraint firstAttribute="trailing" secondItem="4bw-r1-aTY" secondAttribute="trailing" id="Jfa-mO-qnX"/>
+                            <constraint firstItem="wff-Ag-cNh" firstAttribute="centerY" secondItem="HCR-md-Wjq" secondAttribute="centerY" id="MaF-Z9-TVA"/>
                             <constraint firstItem="GIL-ip-Skh" firstAttribute="centerY" secondItem="YlS-jE-YaY" secondAttribute="centerY" id="Q9E-kb-RKt"/>
                             <constraint firstItem="4bw-r1-aTY" firstAttribute="leading" secondItem="Ghr-rn-ObS" secondAttribute="trailing" id="cfR-im-o1U"/>
                             <constraint firstItem="Ghr-rn-ObS" firstAttribute="top" secondItem="YlS-jE-YaY" secondAttribute="topMargin" id="lH7-d4-nm1"/>
+                            <constraint firstItem="HCR-md-Wjq" firstAttribute="top" secondItem="YlS-jE-YaY" secondAttribute="topMargin" constant="15" id="mSo-b3-BWE"/>
                             <constraint firstItem="GIL-ip-Skh" firstAttribute="centerX" secondItem="YlS-jE-YaY" secondAttribute="centerX" id="u1M-n0-X19"/>
                             <constraint firstItem="MqO-ne-2SR" firstAttribute="leading" secondItem="YlS-jE-YaY" secondAttribute="leadingMargin" constant="-40" id="vW3-Vt-cOj"/>
+                            <constraint firstItem="HCR-md-Wjq" firstAttribute="centerX" secondItem="YlS-jE-YaY" secondAttribute="centerX" id="w34-JX-Dzg"/>
+                            <constraint firstItem="HCR-md-Wjq" firstAttribute="centerY" secondItem="Kwd-vz-DyL" secondAttribute="centerY" id="xcg-Vm-wcS"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="actualSizeLabel" destination="wff-Ag-cNh" id="Uzc-j0-hbt"/>
+                        <outlet property="artSizeSwitch" destination="HCR-md-Wjq" id="j8w-Aa-6gd"/>
                         <outlet property="artView" destination="GIL-ip-Skh" id="DfB-Bi-pcR"/>
                         <outlet property="artViewHeight" destination="MA1-Ll-daa" id="p2c-qZ-RgI"/>
                         <outlet property="artViewWidth" destination="Ubd-MB-MXj" id="pg4-hn-a9D"/>
@@ -3386,6 +3424,7 @@
                         <outlet property="backButtonLeading" destination="vW3-Vt-cOj" id="2zV-YE-11r"/>
                         <outlet property="saveActionView" destination="H6I-Ua-i2Y" id="9Sc-Ie-xGG"/>
                         <outlet property="saveButton" destination="Ghr-rn-ObS" id="Xwm-dQ-knG"/>
+                        <outlet property="screenSizeLabel" destination="Kwd-vz-DyL" id="k3d-h5-Tfp"/>
                         <outlet property="shareActionView" destination="he3-iI-6b2" id="S0D-U3-stx"/>
                         <outlet property="shareButton" destination="4bw-r1-aTY" id="dhl-R0-UGK"/>
                     </connections>

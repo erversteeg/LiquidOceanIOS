@@ -23,6 +23,10 @@ class ExportViewController: UIViewController {
     @IBOutlet weak var artViewWidth: NSLayoutConstraint!
     @IBOutlet weak var artViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var screenSizeLabel: UILabel!
+    @IBOutlet weak var actualSizeLabel: UILabel!
+    @IBOutlet weak var artSizeSwitch: UISwitch!
+    
     var _art: [InteractiveCanvas.RestorePoint]?
     var art: [InteractiveCanvas.RestorePoint]? {
         set {
@@ -80,6 +84,10 @@ class ExportViewController: UIViewController {
             // present the view controller
             self.present(activityViewController, animated: true, completion: nil)
         }
+        
+        screenSizeLabel.addGestureRecognizer(UITouchGestureRecognizer(target: self, action: #selector(touchedScreenSizeLabel(sender:))))
+        
+        actualSizeLabel.addGestureRecognizer(UITouchGestureRecognizer(target: self, action: #selector(touchedActualSizeLabel(sender:))))
     }
     
     override func viewDidLayoutSubviews() {
@@ -97,15 +105,41 @@ class ExportViewController: UIViewController {
             artViewHeight.constant = view.frame.size.height - 130
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func artSizeValueChanged(_ sender: UISwitch) {
+        if sender.isOn {
+            actualSize()
+        }
+        else {
+            screenSize()
+        }
     }
-    */
 
+    @objc func touchedScreenSizeLabel(sender: UITouchGestureRecognizer) {
+        if sender.state == .began {
+            artSizeSwitch.isOn = true
+            artSizeValueChanged(artSizeSwitch)
+        }
+    }
+    
+    @objc func touchedActualSizeLabel(sender: UITouchGestureRecognizer) {
+        if sender.state == .began {
+            artSizeSwitch.isOn = false
+            artSizeValueChanged(artSizeSwitch)
+        }
+    }
+    
+    func screenSize() {
+        screenSizeLabel.isHidden = false
+        actualSizeLabel.isHidden = true
+        
+        artView.actualSize = false
+    }
+    
+    func actualSize() {
+        screenSizeLabel.isHidden = true
+        actualSizeLabel.isHidden = false
+        
+        artView.actualSize = true
+    }
 }

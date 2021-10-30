@@ -35,6 +35,17 @@ class ArtView: UIView {
     
     var showBackground = false
     
+    var _actualSize = false
+    var actualSize: Bool {
+        set {
+            _actualSize = newValue
+            setNeedsDisplay()
+        }
+        get {
+            return _actualSize
+        }
+    }
+    
     var ppu = CGFloat(10)
     
     let margin = 2
@@ -59,7 +70,7 @@ class ArtView: UIView {
         super.draw(rect)
         
         let ctx = UIGraphicsGetCurrentContext()!
-        drawArt(ctx: ctx, size: self.frame.size, background: showBackground)
+        drawArt(ctx: ctx, size: self.frame.size, background: showBackground, actualSize: actualSize, export: false)
     }
     
     @objc func onImageSavedToPhotos(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
@@ -68,16 +79,32 @@ class ArtView: UIView {
         }
     }
     
-    func drawArt(ctx: CGContext, size: CGSize, background: Bool = false) {
-        adjustPpu(size: size)
+    func drawArt(ctx: CGContext, size: CGSize, background: Bool = false, actualSize: Bool, export: Bool) {
+        let gridPpu = CGFloat(10)
+        
+        if actualSize && export {
+            ppu = 1
+        }
+        else if actualSize {
+            ppu = gridPpu
+        }
+        else {
+            adjustPpu(size: size)
+        }
         
         let minX = getMinX()
         let minY = getMinY()
         
-        let offsetX = (size.width - (CGFloat(artWidth()) * ppu)) / 2
-        let offsetY = (size.height - (CGFloat(artHeight()) * ppu)) / 2
+        var offsetX = (size.width - (CGFloat(artWidth()) * ppu)) / 2
+        var offsetY = (size.height - (CGFloat(artHeight()) * ppu)) / 2
         
-        let gridPpu = CGFloat(10)
+        if actualSize && !export {
+            let offsetGridByX = offsetX.truncatingRemainder(dividingBy: gridPpu)
+            let offsetGridByY = offsetY.truncatingRemainder(dividingBy: gridPpu)
+            
+            offsetX -= offsetGridByX
+            offsetY -= offsetGridByY
+        }
         
         let widthUnits = Int(size.width / gridPpu) + 1
         let heightUnits = Int(size.height / gridPpu) + 1
@@ -195,7 +222,12 @@ class ArtView: UIView {
         let saveWidth = 1375
         let saveHeight = 825
         
-        let rect = CGRect(x: 0, y: 0, width: saveWidth, height: saveHeight)
+        var rect = CGRect(x: 0, y: 0, width: saveWidth, height: saveHeight)
+        
+        if actualSize {
+            rect = CGRect(x: 0, y: 0, width: artWidth(), height: artHeight())
+        }
+        
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
         UIColor.clear.setFill()
         UIRectFill(rect)
@@ -213,7 +245,7 @@ class ArtView: UIView {
         // Get the current context
         let context = UIGraphicsGetCurrentContext()!
 
-        self.drawArt(ctx: context, size: rect.size, background: false)
+        self.drawArt(ctx: context, size: rect.size, background: false, actualSize: self.actualSize, export: true)
         
         // Save the context as a new UIImage
         image = UIGraphicsGetImageFromCurrentImageContext()!
