@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -133,6 +133,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var palettesView: UIView!
     
+    @IBOutlet weak var summaryView: InteractiveCanvasSummaryView!
+    @IBOutlet weak var deviceViewportSummaryView: DeviceViewportSummaryView!
+    
+    @IBOutlet weak var summaryButton: ActionButtonFrame!
+    @IBOutlet weak var summaryAction: ActionButtonView!
+    
     var panelThemeConfig: PanelThemeConfig!
     
     var world = false
@@ -179,6 +185,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.interactiveCanvas.recentColorsDelegate = self
         self.surfaceView.interactiveCanvas.artExportDelegate = self
         self.surfaceView.palettesDelegate = self
+        self.surfaceView.gestureDelegate = self
         
         // surfaceView.setInitalScale()
         
@@ -253,6 +260,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         gridLinesButton.actionButtonView = gridLinesAction
         gridLinesAction.type = .gridLines
         
+        summaryButton.actionButtonView = summaryAction
+        summaryAction.type = .summary
+        
         // toolbox
         self.toolboxActionView.type = .dot
         self.toolboxButton.actionButtonView = self.toolboxActionView
@@ -264,6 +274,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         exportButton.isHidden = true
         changeBackgroundButton.isHidden = true
         gridLinesButton.isHidden = true
+        summaryButton.isHidden = true
         
         // recent colors
         self.recentColorsActionView.type = .dot
@@ -295,12 +306,15 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.exportAction.setNeedsDisplay()
             self.changeBackgroundAction.setNeedsDisplay()
             self.gridLinesAction.setNeedsDisplay()
+            self.summaryAction.setNeedsDisplay()
             self.paintPanelButton.setNeedsDisplay()
             self.backButton.setNeedsDisplay()
             self.paletteAddColorAction.setNeedsDisplay()
             self.paletteRemoveColorAction.setNeedsDisplay()
             
             self.palettesViewController.addPaletteAction.setNeedsDisplay()
+            
+            self.summaryView.setNeedsDisplay()
             
             self.recentColorsViewController.collectionView.reloadData()
             
@@ -312,6 +326,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             SessionSettings.instance.showGridLines = !SessionSettings.instance.showGridLines
             
             self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+        }
+        
+        // summary
+        summaryButton.setOnClickListener {
+            self.toggleSummary()
         }
         
         // paint panel
@@ -359,6 +378,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         paletteRemoveColor.setOnClickListener {
             self.showPaletteColorRemoveAlert(color: SessionSettings.instance.paintColor)
         }
+        
+        // summary
+        
+        summaryView.interactiveCanvas = surfaceView.interactiveCanvas
+        deviceViewportSummaryView.interactiveCanvas = surfaceView.interactiveCanvas
         
         // paint selection accept
         self.paintColorAccept.setOnClickListener {
@@ -965,20 +989,25 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             exportButton.isHidden = false
             changeBackgroundButton.isHidden = false
             gridLinesButton.isHidden = false
+            summaryButton.isHidden = false
             
             if SessionSettings.instance.rightHanded {
-                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: false, inverse: true)
+                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton],
+                    [summaryButton]], cascade: false, moveOut: false, inverse: true)
             }
             else {
-                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: false, inverse: false)
+                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton],
+                    [summaryButton]], cascade: false, moveOut: false, inverse: false)
             }
         }
         else {
             if SessionSettings.instance.rightHanded {
-                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: true, inverse: true)
+                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton],
+                    [summaryButton]], cascade: false, moveOut: true, inverse: true)
             }
             else {
-                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton]], cascade: false, moveOut: true, inverse: false)
+                Animator.animateMenuButtons(views: [[exportButton], [changeBackgroundButton], [gridLinesButton],
+                    [summaryButton]], cascade: false, moveOut: true, inverse: false)
             }
         }
     }
@@ -996,6 +1025,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.recentColorsActionView.isHidden = false
             self.recentColorsContainer.isHidden = true
         }
+    }
+    
+    func toggleSummary() {
+        summaryView.isHidden = !summaryView.isHidden
+        deviceViewportSummaryView.isHidden = !deviceViewportSummaryView.isHidden
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -1364,6 +1398,15 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
         }))
         self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    // scale delegate
+    func notifyInteractiveCanvasPan() {
+        deviceViewportSummaryView.setNeedsDisplay()
+    }
+    
+    func notifyInteractiveCanvasScale() {
+        deviceViewportSummaryView.setNeedsDisplay()
     }
 }
 

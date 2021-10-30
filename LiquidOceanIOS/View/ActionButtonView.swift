@@ -56,6 +56,7 @@ class ActionButtonView: UIView {
         case exportSolid
         case changeBackground
         case gridLines
+        case summary
         case save
         case add
         case remove
@@ -259,6 +260,9 @@ class ActionButtonView: UIView {
         }
         else if type == .gridLines {
             drawGridLinesAction()
+        }
+        else if type == .summary {
+            drawSummaryAction()
         }
         else if type == .dot {
             drawDotAction()
@@ -842,6 +846,37 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 0, y: 0, color: paint)
         drawPixel(ctx: context, x: 1, y: 0, color: paint)
         drawPixel(ctx: context, x: 2, y: 0, color: paint)
+    }
+    
+    func drawSummaryAction() {
+        rows = 3
+        cols = 3
+        
+        var paint = ActionButtonView.semiColor!
+        if SessionSettings.instance.darkIcons {
+            paint = ActionButtonView.semiDarkColor!
+        }
+        
+        if selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        // row 1
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 0, color: paint)
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        
+        // row 2
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 1, y: 1, color: paint)
+        drawPixel(ctx: context, x: 2, y: 1, color: paint)
+
+        // row 3
+        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+        drawPixel(ctx: context, x: 1, y: 2, color: paint)
+        drawPixel(ctx: context, x: 2, y: 2, color: paint)
     }
     
     func drawDotAction() {

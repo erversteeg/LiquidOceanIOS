@@ -77,6 +77,8 @@
 		07BD25F525D44F2A00CF812E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F425D44F2A00CF812E /* Utils.swift */; };
 		07BD25F725D44FE900CF812E /* UIColor+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F625D44FE900CF812E /* UIColor+Conversions.swift */; };
 		07BD25F925D450CF00CF812E /* SessionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F825D450CF00CF812E /* SessionSettings.swift */; };
+		07D0ED24272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D0ED23272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift */; };
+		07D0ED26272DFC9000755C1D /* DeviceViewportSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D0ED25272DFC9000755C1D /* DeviceViewportSummaryView.swift */; };
 		07FF5EFF25DF5833003E19AE /* ArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5EFE25DF5833003E19AE /* ArtView.swift */; };
 		07FF5F0125DF616A003E19AE /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0025DF616A003E19AE /* ExportViewController.swift */; };
 		07FF5F0325E41EF9003E19AE /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0225E41EF9003E19AE /* StatsViewController.swift */; };
@@ -196,6 +198,8 @@
 		07BD25F425D44F2A00CF812E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		07BD25F625D44FE900CF812E /* UIColor+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Conversions.swift"; sourceTree = "<group>"; };
 		07BD25F825D450CF00CF812E /* SessionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSettings.swift; sourceTree = "<group>"; };
+		07D0ED23272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveCanvasSummaryView.swift; sourceTree = "<group>"; };
+		07D0ED25272DFC9000755C1D /* DeviceViewportSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewportSummaryView.swift; sourceTree = "<group>"; };
 		07FF5EFE25DF5833003E19AE /* ArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtView.swift; sourceTree = "<group>"; };
 		07FF5F0025DF616A003E19AE /* ExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
 		07FF5F0225E41EF9003E19AE /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
@@ -403,6 +407,8 @@
 				078AF00826016CCB00AB4CE4 /* PaintQuantityCircle.swift */,
 				07366379260E148700E5403F /* AchievementIcon.swift */,
 				07270EE3272C333A00DB35CE /* PaletteCollectionViewCell.swift */,
+				07D0ED23272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift */,
+				07D0ED25272DFC9000755C1D /* DeviceViewportSummaryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -691,6 +697,8 @@
 				07A9B17025ED611C009A47DF /* PanelThemeConfig.swift in Sources */,
 				078AF00926016CCB00AB4CE4 /* PaintQuantityCircle.swift in Sources */,
 				07FF5EFF25DF5833003E19AE /* ArtView.swift in Sources */,
+				07D0ED24272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift in Sources */,
+				07D0ED26272DFC9000755C1D /* DeviceViewportSummaryView.swift in Sources */,
 				07BD25F925D450CF00CF812E /* SessionSettings.swift in Sources */,
 				073663782608F16600E5403F /* PincodeViewController.swift in Sources */,
 			);

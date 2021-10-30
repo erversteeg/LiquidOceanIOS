@@ -80,12 +80,12 @@ class InteractiveCanvas: NSObject {
     
     var recentColors = [Int32]()
     
-    let backgroundBlack = 0
-    let backgroundWhite = 1
-    let backgroundGrayThirds = 2
-    let backgroundPhotoshop = 3
-    let backgroundClassic = 4
-    let backgroundChess = 5
+    static let backgroundBlack = 0
+    static let backgroundWhite = 1
+    static let backgroundGrayThirds = 2
+    static let backgroundPhotoshop = 3
+    static let backgroundClassic = 4
+    static let backgroundChess = 5
     
     let numBackgrounds = 6
     
@@ -93,6 +93,10 @@ class InteractiveCanvas: NSObject {
     var pixelsOut: [RestorePoint]!
     
     var receivedPaintRecently = false
+    
+    var summary = [RestorePoint]()
+    
+    var screenSpaceRect = CGRect()
     
     class RestorePoint {
         var x: Int
@@ -273,8 +277,15 @@ class InteractiveCanvas: NSObject {
                 for i in 0...outerArray.count - 1 {
                     let innerArr = outerArray[i] as! [Int32]
                     var arrRow = [Int32]()
+                    var arrColorRow = [CGColor]()
                     for j in 0...innerArr.count - 1 {
-                        arrRow.append(innerArr[j])
+                        let color = innerArr[j]
+                        
+                        if color != 0 {
+                            summary.append(RestorePoint(x: j, y: i, color: color, newColor: color))
+                        }
+                        
+                        arrRow.append(color)
                     }
                     arr.append(arrRow)
                 }
@@ -314,12 +325,7 @@ class InteractiveCanvas: NSObject {
         for i in 0...rows - 1 {
             var innerArr = [Int32]()
             for j in 0...cols - 1 {
-                if (i + j) % 2 == 0 {
-                    innerArr.append(0)
-                }
-                else {
-                    innerArr.append(0)
-                }
+                innerArr.append(0)
             }
             
             arr.append(innerArr)
@@ -469,9 +475,9 @@ class InteractiveCanvas: NSObject {
             let white = Utils.int32FromColorHex(hex: "0xFFFFFFFF")
             let black = Utils.int32FromColorHex(hex: "0xFF000000")
             switch SessionSettings.instance.backgroundColorIndex {
-                case backgroundWhite:
+                case InteractiveCanvas.backgroundWhite:
                     return black
-                case backgroundPhotoshop:
+                case InteractiveCanvas.backgroundPhotoshop:
                     return black
                 default:
                     return white
@@ -481,17 +487,17 @@ class InteractiveCanvas: NSObject {
     
     func getBackgroundColors(index: Int) -> (primary: Int32, secondary: Int32)? {
         switch index {
-            case backgroundBlack:
+            case InteractiveCanvas.backgroundBlack:
                 return (Utils.int32FromColorHex(hex: "0xFF000000"), Utils.int32FromColorHex(hex: "0xFF000000"))
-            case backgroundWhite:
+            case InteractiveCanvas.backgroundWhite:
                 return (Utils.int32FromColorHex(hex: "0xFFFFFFFF"), Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
-            case backgroundGrayThirds:
+            case InteractiveCanvas.backgroundGrayThirds:
                 return (Utils.int32FromColorHex(hex: "0xFFAAAAAA"), Utils.int32FromColorHex(hex: "0xFF555555"))
-            case backgroundPhotoshop:
+            case InteractiveCanvas.backgroundPhotoshop:
                 return (Utils.int32FromColorHex(hex: "0xFFFFFFFF"), Utils.int32FromColorHex(hex: "0xFFCCCCCC"))
-            case backgroundClassic:
+            case InteractiveCanvas.backgroundClassic:
                 return (Utils.int32FromColorHex(hex: "0xFF666666"), Utils.int32FromColorHex(hex: "0xFF333333"))
-            case backgroundChess:
+            case InteractiveCanvas.backgroundChess:
                 return (Utils.int32FromColorHex(hex: "0xFFB59870"), Utils.int32FromColorHex(hex: "0xFF000000"))
             default:
                 return nil
@@ -697,7 +703,12 @@ class InteractiveCanvas: NSObject {
         let offsetX = (CGFloat(x) - deviceViewport.origin.x) * CGFloat(ppu)
         let offsetY = (CGFloat(y) - deviceViewport.origin.y) * CGFloat(ppu)
         
-        return CGRect(x: round(max(offsetX, 0.0)), y: round(max(offsetY, 0.0)), width: round(offsetX + CGFloat(ppu)), height: round(offsetY + CGFloat(ppu)))
+        screenSpaceRect.origin.x = round(max(offsetX, 0.0))
+        screenSpaceRect.origin.y = round(max(offsetY, 0.0))
+        screenSpaceRect.size.width = round(offsetX + CGFloat(ppu))
+        screenSpaceRect.size.height = round(offsetY + CGFloat(ppu))
+        
+        return screenSpaceRect
     }
     
     func unitForScreenPoint(x: CGFloat, y: CGFloat) -> CGPoint {

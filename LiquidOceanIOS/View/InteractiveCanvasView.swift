@@ -23,6 +23,11 @@ protocol InteractiveCanvasPalettesDelegate: AnyObject {
     func notifyClosePalettesViewController()
 }
 
+protocol InteractiveCanvasGestureDelegate: AnyObject {
+    func notifyInteractiveCanvasPan()
+    func notifyInteractiveCanvasScale()
+}
+
 class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveCanvasScaleCallback {
 
     enum Mode {
@@ -53,6 +58,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     weak var objectSelectionDelegate: ObjectSelectionDelegate?
     
     weak var palettesDelegate: InteractiveCanvasPalettesDelegate?
+    
+    weak var gestureDelegate: InteractiveCanvasGestureDelegate?
     
     var objectSelectionStartUnit: CGPoint!
     var objectSelectionStartPoint: CGPoint!
@@ -258,6 +265,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
             interactiveCanvas.pixelHistoryDelegate?.notifyHidePixelHistory()
             
             interactiveCanvas.translateBy(x: -velocity.x, y: -velocity.y)
+            
+            gestureDelegate?.notifyInteractiveCanvasPan()
         }
         else if mode == .painting {
             
@@ -291,6 +300,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         interactiveCanvas.ppu = Int((CGFloat(interactiveCanvas.basePpu) * scaleFactor))
         
         interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, fromScale: true)
+        gestureDelegate?.notifyInteractiveCanvasScale()
+        
         interactiveCanvas.drawCallback?.notifyCanvasRedraw()
     }
     
@@ -376,6 +387,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     }
     
     func drawInteractiveCanvas(ctx: CGContext) {
+        let startTime = Date().timeIntervalSince1970
         let deviceViewport = interactiveCanvas.deviceViewport!
         let ppu = interactiveCanvas.ppu!
         
@@ -384,6 +396,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         if interactiveCanvas.ppu >= interactiveCanvas.gridLineThreshold {
             drawGridLines(ctx: ctx, deviceViewport: deviceViewport, ppu: ppu)
         }
+        print("draw time (1 / " + String(1 / (Date().timeIntervalSince1970 - startTime)) + " secs)")
     }
     
     func drawGridLines(ctx: CGContext, deviceViewport: CGRect, ppu: Int) {
@@ -423,6 +436,9 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         let backgroundColors = interactiveCanvas.getBackgroundColors(index: SessionSettings.instance.backgroundColorIndex)!
         
+        let primaryBackground = UIColor(argb: backgroundColors.primary).cgColor
+        let secondaryBackground = UIColor(argb: backgroundColors.secondary).cgColor
+        
         for x in 0...rangeX {
             for y in 0...rangeY {
                 let unitX = x + startUnitIndexX
@@ -430,12 +446,13 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 
                 if unitX >= 0 && unitX < interactiveCanvas.cols && unitY >= 0 && unitY < interactiveCanvas.rows {
                     let color = interactiveCanvas.arr[unitY][unitX]
+
                     if color == 0 {
                         if ((unitX + unitY) % 2 == 0) {
-                            ctx.setFillColor(UIColor(argb: backgroundColors.primary).cgColor)
+                            ctx.setFillColor(primaryBackground)
                         }
                         else {
-                            ctx.setFillColor(UIColor(argb: backgroundColors.secondary).cgColor)
+                            ctx.setFillColor(secondaryBackground)
                         }
                         
                         ctx.addRect(interactiveCanvas.getScreenSpaceForUnit(x: unitX, y: unitY))
