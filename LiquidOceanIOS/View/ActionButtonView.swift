@@ -58,6 +58,7 @@ class ActionButtonView: UIView {
         case gridLines
         case save
         case add
+        case remove
         case dot
         case dotLight
         case recentColor
@@ -75,6 +76,17 @@ class ActionButtonView: UIView {
     }
     
     var selectable = true
+    
+    private var _darkIcons = true
+    var darkIcons: Bool {
+        set {
+            _darkIcons = newValue
+            setNeedsDisplay()
+        }
+        get {
+            return _darkIcons
+        }
+    }
     
     let menuButtonRows = 4
     let menuButtonCols = 26
@@ -238,6 +250,9 @@ class ActionButtonView: UIView {
         }
         else if type == .add {
             drawAddAction()
+        }
+        else if type == .remove {
+            drawRemoveAction()
         }
         else if type == .changeBackground {
             drawChangeBackgroundAction()
@@ -719,7 +734,7 @@ class ActionButtonView: UIView {
         
         var paint = ActionButtonView.semiColor!
         
-        if SessionSettings.instance.darkIcons {
+        if SessionSettings.instance.darkIcons && darkIcons {
             paint = ActionButtonView.semiDarkColor!
         }
         
@@ -747,6 +762,30 @@ class ActionButtonView: UIView {
 
         // row 5
         drawPixel(ctx: context, x: 2, y: 4, color: paint)
+    }
+    
+    func drawRemoveAction() {
+        rows = 1
+        cols = 5
+        
+        var paint = ActionButtonView.semiColor!
+        
+        if SessionSettings.instance.darkIcons && darkIcons {
+            paint = ActionButtonView.semiDarkColor!
+        }
+        
+        if selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+
+        // row 1
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 0, color: paint)
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        drawPixel(ctx: context, x: 3, y: 0, color: paint)
+        drawPixel(ctx: context, x: 4, y: 0, color: paint)
     }
     
     func drawChangeBackgroundAction() {

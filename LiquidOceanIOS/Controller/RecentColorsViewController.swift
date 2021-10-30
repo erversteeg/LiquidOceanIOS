@@ -36,7 +36,12 @@ class RecentColorsViewController: UIViewController, UICollectionViewDataSource, 
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if data != nil {
-            return data!.count
+            if data!.count == 1 {
+                return 2
+            }
+            else {
+                return data!.count
+            }
         }
         else {
             return 0
@@ -50,8 +55,14 @@ class RecentColorsViewController: UIViewController, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecentColorCell", for: indexPath) as! RecentColorCollectionViewCell
         
-        cell.actionView.type = .recentColor
-        cell.actionView.representingColor = self.data![indexPath.item]
+        // fix for centered single cell
+        if indexPath.item >= self.data!.count {
+            cell.actionView.type = .none
+        }
+        else {
+            cell.actionView.type = .recentColor
+            cell.actionView.representingColor = self.data![indexPath.item]
+        }
         
         return cell
     }
@@ -65,7 +76,9 @@ class RecentColorsViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        SessionSettings.instance.paintColor = self.data![indexPath.item]
-        delegate?.notifyRecentColorSelected(color: self.data![indexPath.item])
+        if indexPath.item < self.data!.count {
+            SessionSettings.instance.paintColor = self.data![indexPath.item]
+            delegate?.notifyRecentColorSelected(color: self.data![indexPath.item])
+        }
     }
 }

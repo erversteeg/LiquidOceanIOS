@@ -283,7 +283,7 @@ class MenuViewController: UIViewController, AchievementListener {
         SessionSettings.instance.rightHanded = false
         SessionSettings.instance.selectedHand = true
         
-        SessionSettings.instance.quickSave()
+        //SessionSettings.instance.quickSave()
         
         if self.realmId == 0 {
             self.performSegue(withIdentifier: self.showSinglePlay, sender: nil)
@@ -306,7 +306,7 @@ class MenuViewController: UIViewController, AchievementListener {
         SessionSettings.instance.rightHanded = true
         SessionSettings.instance.selectedHand = true
         
-        SessionSettings.instance.quickSave()
+        //SessionSettings.instance.quickSave()
         
         if self.realmId == 0 {
             self.performSegue(withIdentifier: self.showSinglePlay, sender: nil)
@@ -332,7 +332,7 @@ class MenuViewController: UIViewController, AchievementListener {
             rIndex = 8
             
             SessionSettings.instance.defaultBg = false
-            SessionSettings.instance.quickSave()
+            //SessionSettings.instance.quickSave()
         }
         
         let randBackground = backgrounds[rIndex]

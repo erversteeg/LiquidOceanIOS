@@ -45,6 +45,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var paintQuantityCircle: PaintQuantityCircle!
     @IBOutlet weak var paintQuantityBar: PaintQuantityBar!
     
+    @IBOutlet weak var paletteAddColor: ActionButtonFrame!
+    @IBOutlet weak var paletteAddColorAction: ActionButtonView!
+    
+    @IBOutlet weak var paletteRemoveColor: ActionButtonFrame!
+    @IBOutlet weak var paletteRemoveColorAction: ActionButtonView!
+    
     @IBOutlet weak var backButton: ActionButtonView!
     
     @IBOutlet weak var exportButton: ActionButtonFrame!
@@ -291,10 +297,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.gridLinesAction.setNeedsDisplay()
             self.paintPanelButton.setNeedsDisplay()
             self.backButton.setNeedsDisplay()
+            self.paletteAddColorAction.setNeedsDisplay()
+            self.paletteRemoveColorAction.setNeedsDisplay()
+            
+            self.palettesViewController.addPaletteAction.setNeedsDisplay()
             
             self.recentColorsViewController.collectionView.reloadData()
-            
-            SessionSettings.instance.quickSave()
             
             self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         }
@@ -302,8 +310,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         // grid lines
         gridLinesButton.setOnClickListener {
             SessionSettings.instance.showGridLines = !SessionSettings.instance.showGridLines
-            
-            SessionSettings.instance.quickSave()
             
             self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         }
@@ -334,6 +340,26 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.paintColorAccept.isHidden = true
         self.paintColorCancel.isHidden = true
         
+        // palette
+        paletteAddColorAction.type = .add
+        paletteAddColorAction.darkIcons = false
+        paletteAddColor.actionButtonView = paletteAddColorAction
+        
+        paletteAddColor.setOnClickListener {
+            if SessionSettings.instance.palette.colors.count < Palette.maxColors {
+                SessionSettings.instance.palette.addColor(color: SessionSettings.instance.paintColor)
+                self.syncPaletteAndColor()
+            }
+        }
+        
+        paletteRemoveColorAction.type = .remove
+        paletteRemoveColorAction.darkIcons = false
+        paletteRemoveColor.actionButtonView = paletteRemoveColorAction
+        
+        paletteRemoveColor.setOnClickListener {
+            self.showPaletteColorRemoveAlert(color: SessionSettings.instance.paintColor)
+        }
+        
         // paint selection accept
         self.paintColorAccept.setOnClickListener {
             self.closeColorPicker()
@@ -354,8 +380,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.recentColorsButton.isHidden = false
             
             self.surfaceView.endPaintSelection()
-            
-            SessionSettings.instance.quickSave()
         }
         
         // paint selection cancel
@@ -426,11 +450,15 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             paintColorAcceptAction.colorMode = .black
             paintColorCancelAction.colorMode = .black
             closePaintPanelButtonAction.colorMode = .black
+            
+            colorPaletteTitleLabel.textColor = UIColor.black
         }
         else {
             paintColorAcceptAction.colorMode = .white
             paintColorCancelAction.colorMode = .white
             closePaintPanelButtonAction.colorMode = .white
+            
+            colorPaletteTitleLabel.textColor = UIColor.white
         }
         
         self.updatePaintColorAcceptColorMode(color: SessionSettings.instance.paintColor)
@@ -589,7 +617,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 
                 recentColorsButtonLeading.isActive = false
                 
-                constraints = [recentColorsButton.rightAnchor.constraint(equalTo: view.rightAnchor),
+                constraints = [recentColorsButton.rightAnchor.constraint(equalTo: colorPickerFrame.leftAnchor),
                                 recentColorsButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
                                 recentColorsButton.widthAnchor.constraint(equalTo: recentColorsButton.widthAnchor),
                                 recentColorsButton.heightAnchor.constraint(equalTo: recentColorsButton.heightAnchor)]
@@ -601,7 +629,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 
                 recentColorsContainerLeading.isActive = false
                 
-                constraints = [recentColorsContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40),
+                constraints = [recentColorsContainer.rightAnchor.constraint(equalTo: colorPickerFrame.leftAnchor, constant: -40),
                                 recentColorsContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 21),
                                 recentColorsContainer.widthAnchor.constraint(equalTo: recentColorsContainer.widthAnchor),
                                 recentColorsContainer.heightAnchor.constraint(equalTo: recentColorsContainer.heightAnchor)]
@@ -870,9 +898,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.paintYes.isHidden = true
         self.paintNo.isHidden = true
         
-        self.toggleRecentColors(open: false)
-        self.recentColorsButton.isHidden = true
-        
         self.colorPickerViewController.colorHexTextField.delegate = self
         
         self.surfaceView.startPaintSelection()
@@ -880,6 +905,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func closeColorPicker() {
         self.colorPickerFrame.isHidden = true
+        self.colorPickerFrameWidth.constant = 0
+        
         self.paintColorAccept.isHidden = true
         self.paintColorCancel.isHidden = true
         
@@ -1007,7 +1034,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         self.updatePaintColorAcceptColorMode(color: color)
         
-        self.colorPickerViewController.colorHexTextField.text = UIColor(argb: color).hexValue()
+        self.colorPickerViewController.colorHexTextField.text = UIColor(argb: color).hexString()
+        
+        self.syncPaletteAndColor()
     }
     
     func updatePaintColorAcceptColorMode(color: Int32) {
@@ -1086,7 +1115,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.notifyPaintColorUpdate()
         self.colorPickerViewController.selectedColor = UIColor(argb: color)
         
-        self.recentColorsContainer.isHidden = true
+        self.toggleRecentColors(open: false)
     }
     
     // export view controller delegate
@@ -1304,11 +1333,37 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         // set color palette
         if SessionSettings.instance.selectedPaletteIndex == 0 {
+            paletteAddColor.isHidden = true
+            paletteRemoveColor.isHidden = true
+            
             self.setupColorPalette(colors: self.surfaceView.interactiveCanvas.recentColors)
         }
         else {
+            // sync buttons with current color
+            if SessionSettings.instance.palette.colors.contains(SessionSettings.instance.paintColor) {
+                paletteAddColor.isHidden = true
+                paletteRemoveColor.isHidden = false
+            }
+            else {
+                paletteAddColor.isHidden = false
+                paletteRemoveColor.isHidden = true
+            }
+            
             self.setupColorPalette(colors: SessionSettings.instance.palette.colors)
         }
+    }
+    
+    func showPaletteColorRemoveAlert(color: Int32) {
+        let palette = SessionSettings.instance.palette!
+        let alertVC = UIAlertController(title: nil, message: "Remove this color from " + palette.name + "?", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { action in
+            SessionSettings.instance.palette.removeColor(color: color)
+            self.syncPaletteAndColor()
+        }))
+        alertVC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            
+        }))
+        self.present(alertVC, animated: true, completion: nil)
     }
 }
 

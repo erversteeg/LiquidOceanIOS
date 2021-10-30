@@ -60,13 +60,17 @@ extension UIColor {
             i += 1
         }
         
-        var argb = (a << 24) | (r << 16) | (g << 8) | b
+        print("r = " + String(r))
+        print("g = " + String(g))
+        print("b = " + String(b))
+        
+        //var argb = (a << 24) | (r << 16) | (g << 8) | b
         
         self.init(
-            red: Int((argb >> 16) & 0xFF),
-            green: Int((argb >> 8) & 0xFF),
-            blue: Int(argb & 0xFF),
-            a: Int((argb >> 24) & 0xFF)
+            red: Int(r),
+            green: Int(g),
+            blue: Int(b),
+            a: Int(a)
         )
     }
     

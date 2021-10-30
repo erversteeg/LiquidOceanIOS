@@ -54,6 +54,7 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
     
     override func viewDidLoad() {
         addPaletteAction.type = .add
+        addPaletteAction.darkIcons = false
         addPaletteButton.actionButtonView = addPaletteAction
         
         addPaletteButton.setOnClickListener {
@@ -94,7 +95,7 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
     
     func reset() {
         if palettes.count > 0 {
-            self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .bottom, animated: true)
+            self.collectionView.scrollToItem(at: IndexPath(item: SessionSettings.instance.selectedPaletteIndex, section: 0), at: .centeredVertically, animated: true)
         }
     }
     

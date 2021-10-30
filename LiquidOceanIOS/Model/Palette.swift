@@ -9,6 +9,7 @@
 import UIKit
 
 class Palette: NSObject {
+    static var maxColors = 32
     
     var name: String
     var colors = [Int32]()

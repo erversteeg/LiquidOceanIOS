@@ -41,8 +41,8 @@ protocol InteractiveCanvasSocketStatusDelegate: AnyObject {
 }
 
 class InteractiveCanvas: NSObject {
-    var rows = 512
-    var cols = 512
+    var rows = 1024
+    var cols = 1024
     
     var arr = [[Int32]]()
     
