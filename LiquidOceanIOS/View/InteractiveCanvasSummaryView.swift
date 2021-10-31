@@ -72,7 +72,12 @@ class InteractiveCanvasSummaryView: UIView {
                 var color = UIColor(argb: pixel.color).cgColor
                 
                 if pixel.color == 0 {
-                    color = UIColor.black.cgColor
+                    if SessionSettings.instance.backgroundColorIndex == InteractiveCanvas.backgroundBlack {
+                        color = UIColor(hexString: "222222").cgColor
+                    }
+                    else {
+                        color = UIColor.black.cgColor
+                    }
                 }
                 
                 ctx.setFillColor(color)

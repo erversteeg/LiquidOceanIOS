@@ -77,6 +77,7 @@
 		07BD25F525D44F2A00CF812E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F425D44F2A00CF812E /* Utils.swift */; };
 		07BD25F725D44FE900CF812E /* UIColor+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F625D44FE900CF812E /* UIColor+Conversions.swift */; };
 		07BD25F925D450CF00CF812E /* SessionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25F825D450CF00CF812E /* SessionSettings.swift */; };
+		07C9CCE6272ECA2900C9D0A1 /* CanvasFrameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C9CCE5272ECA2900C9D0A1 /* CanvasFrameViewController.swift */; };
 		07D0ED24272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D0ED23272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift */; };
 		07D0ED26272DFC9000755C1D /* DeviceViewportSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D0ED25272DFC9000755C1D /* DeviceViewportSummaryView.swift */; };
 		07FF5EFF25DF5833003E19AE /* ArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5EFE25DF5833003E19AE /* ArtView.swift */; };
@@ -198,6 +199,7 @@
 		07BD25F425D44F2A00CF812E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		07BD25F625D44FE900CF812E /* UIColor+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Conversions.swift"; sourceTree = "<group>"; };
 		07BD25F825D450CF00CF812E /* SessionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSettings.swift; sourceTree = "<group>"; };
+		07C9CCE5272ECA2900C9D0A1 /* CanvasFrameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasFrameViewController.swift; sourceTree = "<group>"; };
 		07D0ED23272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveCanvasSummaryView.swift; sourceTree = "<group>"; };
 		07D0ED25272DFC9000755C1D /* DeviceViewportSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewportSummaryView.swift; sourceTree = "<group>"; };
 		07FF5EFE25DF5833003E19AE /* ArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtView.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				0788E48025FC58BC004FC782 /* ColorPickerOutletsViewController.swift */,
 				073663772608F16600E5403F /* PincodeViewController.swift */,
 				07270EDF272B92B300DB35CE /* PalettesViewController.swift */,
+				07C9CCE5272ECA2900C9D0A1 /* CanvasFrameViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				07BD25F725D44FE900CF812E /* UIColor+Conversions.swift in Sources */,
 				07A305F525D5D348003A6CEA /* PaintColorIndicator.swift in Sources */,
 				07270EE2272C214300DB35CE /* Palette.swift in Sources */,
+				07C9CCE6272ECA2900C9D0A1 /* CanvasFrameViewController.swift in Sources */,
 				07006C4025D6CEF200DF9A64 /* MenuViewController.swift in Sources */,
 				07270EE4272C333A00DB35CE /* PaletteCollectionViewCell.swift in Sources */,
 				07A305F325D5B6F5003A6CEA /* ActionButtonView.swift in Sources */,

@@ -99,6 +99,8 @@ class SessionSettings: NSObject {
     
     var gridLineColor: Int32 = 0
     
+    var frameColor: Int32 = 0
+    
     var promptBack = false
     
     var canvasLockBorder = false
@@ -154,6 +156,7 @@ class SessionSettings: NSObject {
         userDefaults().set(paintIndicatorOutline, forKey: "paint_indicator_outline")
         userDefaults().set(paintIndicatorWidth, forKey: "paint_indicator_width")
         userDefaults().set(gridLineColor, forKey: "grid_line_color")
+        userDefaults().set(frameColor, forKey: "frame_color")
         userDefaults().set(promptBack, forKey: "prompt_back")
         userDefaults().set(canvasLockBorder, forKey: "canvas_lock_border")
         userDefaults().set(canvasLockColor, forKey: "canvas_lock_color")
@@ -216,6 +219,8 @@ class SessionSettings: NSObject {
         paintIndicatorWidth = userDefaultsInt(forKey: "paint_indicator_width", defaultVal: 4)
         
         gridLineColor = userDefaultsInt32(forKey: "grid_line_color", defaultVal: 0)
+        
+        frameColor = userDefaultsInt32(forKey: "frame_color", defaultVal: Utils.int32FromColorHex(hex: "0xFF999999"))
         
         promptBack = userDefaultsBool(forKey: "prompt_back", defaultVal: false)
         

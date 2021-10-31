@@ -8,8 +8,14 @@
 
 import UIKit
 
-protocol PaintActionDelegate {
+protocol PaintActionDelegate: AnyObject {
     func notifyPaintActionStarted()
+}
+
+protocol InteractiveCanvasPaintDelegate: AnyObject {
+    func notifyPaintingStarted()
+    func notifyPaintingEnded(accept: Bool)
+    func notifyPaintColorUpdate()
 }
 
 protocol ObjectSelectionDelegate: AnyObject {
@@ -26,6 +32,11 @@ protocol InteractiveCanvasPalettesDelegate: AnyObject {
 protocol InteractiveCanvasGestureDelegate: AnyObject {
     func notifyInteractiveCanvasPan()
     func notifyInteractiveCanvasScale()
+}
+
+protocol CanvasFrameDelegate: AnyObject {
+    func notifyToggleCanvasFrameView(canvasX: Int, canvasY: Int, screenPoint: CGPoint)
+    func notifyCloseCanvasFrameView()
 }
 
 class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveCanvasScaleCallback {
@@ -48,18 +59,17 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     
     var interactiveCanvas: InteractiveCanvas!
     
-    var paintActionDelegate: PaintActionDelegate?
-    
     var longPressGestureRecognizer: UILongPressGestureRecognizer!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var tapGestureRecognizer: UITapGestureRecognizer!
     var drawGestureRecognizer: UIDrawGestureRecognizer!
     
+    weak var paintActionDelegate: PaintActionDelegate?
+    weak var paintDelegate: InteractiveCanvasPaintDelegate?
     weak var objectSelectionDelegate: ObjectSelectionDelegate?
-    
     weak var palettesDelegate: InteractiveCanvasPalettesDelegate?
-    
     weak var gestureDelegate: InteractiveCanvasGestureDelegate?
+    weak var canvasFrameDelegate: CanvasFrameDelegate?
     
     var objectSelectionStartUnit: CGPoint!
     var objectSelectionStartPoint: CGPoint!
@@ -79,6 +89,9 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTap(sender:)))
         addTap()
+        
+        self.longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(sender:)))
+        addLongPress()
         
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(sender:)))
         self.addGestureRecognizer(pinchGestureRecognizer)
@@ -146,16 +159,21 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 }
                 
                 if interactiveCanvas.restorePoints.count == 1 {
-                    interactiveCanvas.paintDelegate?.notifyPaintingStarted()
+                    paintDelegate?.notifyPaintingStarted()
                 }
                 else if interactiveCanvas.restorePoints.count == 0 {
-                    interactiveCanvas.paintDelegate?.notifyPaintingEnded()
+                    paintDelegate?.notifyPaintingEnded(accept: false)
                 }
             }
             else if mode == .paintSelection {
                 let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
-                SessionSettings.instance.paintColor = interactiveCanvas.arr[Int(unitPoint.y)][Int(unitPoint.x)]
-                interactiveCanvas.paintDelegate?.notifyPaintColorUpdate()
+                let x = Int(unitPoint.x)
+                let y = Int(unitPoint.y)
+                
+                if x >= 0 && x < interactiveCanvas.cols && y >= 0 && y < interactiveCanvas.rows {
+                    SessionSettings.instance.paintColor = interactiveCanvas.arr[y][x]
+                    paintDelegate?.notifyPaintColorUpdate()
+                }
             }
             else if mode == .exporting {
                 let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
@@ -182,10 +200,10 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 }
                 
                 if interactiveCanvas.restorePoints.count == 1 {
-                    interactiveCanvas.paintDelegate?.notifyPaintingStarted()
+                    paintDelegate?.notifyPaintingStarted()
                 }
                 else if interactiveCanvas.restorePoints.count == 0 {
-                    interactiveCanvas.paintDelegate?.notifyPaintingEnded()
+                    paintDelegate?.notifyPaintingEnded(accept: false)
                 }
             }
             else if mode == .exporting {
@@ -240,12 +258,20 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         self.addGestureRecognizer(self.tapGestureRecognizer)
     }
     
+    func addLongPress() {
+        self.addGestureRecognizer(self.longPressGestureRecognizer)
+    }
+    
     func removePan() {
         self.removeGestureRecognizer(self.panGestureRecognizer)
     }
     
     func removeTap() {
         self.removeGestureRecognizer(self.tapGestureRecognizer)
+    }
+    
+    func removeLongPress() {
+        self.removeGestureRecognizer(self.longPressGestureRecognizer)
     }
     
     func addDraw() {
@@ -277,13 +303,29 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     @objc func didTap(sender: UITapGestureRecognizer) {
         let location = sender.location(in: self)
         
+        let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
+        
         if interactiveCanvas.world {
-            let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
-            
             if !interactiveCanvas.isBackground(unitPoint: unitPoint) {
                 self.interactiveCanvas.getPixelHistoryForUnitPoint(unitPoint: unitPoint) { (success, data) in
                     self.interactiveCanvas.pixelHistoryDelegate?.notifyShowPixelHistory(data: data, screenPoint: location)
                 }
+            }
+        }
+        else {
+            canvasFrameDelegate?.notifyCloseCanvasFrameView()
+        }
+    }
+    
+    // long press
+    @objc func didLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let location = sender.location(in: self)
+            
+            let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
+            
+            if !interactiveCanvas.world {
+                canvasFrameDelegate?.notifyToggleCanvasFrameView(canvasX: Int(unitPoint.x), canvasY: Int(unitPoint.y), screenPoint: location)
             }
         }
     }
@@ -316,6 +358,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         removePan()
         removeTap()
+        removeLongPress()
         
         addDraw()
     }
@@ -331,6 +374,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         interactiveCanvas.clearRestorePoints()
         
+        paintDelegate?.notifyPaintingEnded(accept: accept)
         interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         
         self.mode = .exploring
@@ -339,6 +383,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         addPan()
         addTap()
+        addLongPress()
     }
     
     func startPaintSelection() {
@@ -354,6 +399,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         removePan()
         removeTap()
+        removeLongPress()
         
         addDraw()
     }
@@ -363,12 +409,56 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         addPan()
         addTap()
+        addLongPress()
         
         removeDraw()
     }
     
     func isExporting() -> Bool {
         return mode == .exporting
+    }
+    
+    func createCanvasFrame(centerX: Int, centerY: Int, width: Int, height: Int, color: Int32) {
+        startPainting()
+        
+        let oldColor = SessionSettings.instance.paintColor
+        SessionSettings.instance.paintColor = color
+        
+        var minX = centerX - width / 2
+        var maxX = centerX + width / 2 + 1
+        var minY = centerY - height / 2
+        var maxY = centerY + height / 2 + 1
+        
+        if width % 2 != 0 {
+            minX = centerX - (width + 1) / 2
+            maxX = centerX + (width + 1) / 2
+        }
+        
+        if height % 2 != 0 {
+            minY = centerY - (height + 1) / 2
+            maxY = centerY + (height + 1) / 2
+        }
+        
+        // left
+        for y in minY...maxY {
+            interactiveCanvas.paintUnitOrUndo(x: minX, y: y, redraw: false)
+        }
+        // right
+        for y in minY...maxY {
+            interactiveCanvas.paintUnitOrUndo(x: maxX, y: y, redraw: false)
+        }
+        // top
+        for x in minX...maxX {
+            interactiveCanvas.paintUnitOrUndo(x: x, y: minY, redraw: false)
+        }
+        // bottom
+        for x in minX...maxX {
+            interactiveCanvas.paintUnitOrUndo(x: x, y: maxY, redraw: false)
+        }
+        
+        SessionSettings.instance.paintColor = oldColor
+        
+        endPainting(accept: true)
     }
     
     // draw callback

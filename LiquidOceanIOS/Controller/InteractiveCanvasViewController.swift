@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -109,6 +109,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var pixelHistoryViewTop: NSLayoutConstraint!
     @IBOutlet weak var pixelHistoryViewLeading: NSLayoutConstraint!
     
+    @IBOutlet weak var canvasFrameViewTop: NSLayoutConstraint!
+    @IBOutlet weak var canvasFrameViewLeading: NSLayoutConstraint!
+    
     @IBOutlet weak var paintInfoContainerTop: NSLayoutConstraint!
     
     @IBOutlet weak var colorPIckerFrameLeading: NSLayoutConstraint!
@@ -135,6 +138,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var summaryView: InteractiveCanvasSummaryView!
     @IBOutlet weak var deviceViewportSummaryView: DeviceViewportSummaryView!
+    
+    @IBOutlet weak var canvasFrameView: UIView!
     
     @IBOutlet weak var summaryButton: ActionButtonFrame!
     @IBOutlet weak var summaryAction: ActionButtonView!
@@ -164,6 +169,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     weak var exportViewController: ExportViewController!
     weak var colorPickerViewController: ColorPickerOutletsViewController!
     weak var palettesViewController: PalettesViewController!
+    weak var canvasFrameViewController: CanvasFrameViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,12 +186,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         surfaceView.paintActionDelegate = self
         surfaceView.objectSelectionDelegate = self
         
-        self.surfaceView.interactiveCanvas.paintDelegate = self
         self.surfaceView.interactiveCanvas.pixelHistoryDelegate = self
         self.surfaceView.interactiveCanvas.recentColorsDelegate = self
         self.surfaceView.interactiveCanvas.artExportDelegate = self
+        self.surfaceView.paintDelegate = self
         self.surfaceView.palettesDelegate = self
         self.surfaceView.gestureDelegate = self
+        self.surfaceView.canvasFrameDelegate = self
         
         // surfaceView.setInitalScale()
         
@@ -330,7 +337,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         // summary
         summaryButton.setOnClickListener {
-            self.toggleSummary()
+            if self.summaryView.isHidden {
+                self.toggleSummary(show: true)
+            }
+            else {
+                self.toggleSummary(show: false)
+            }
         }
         
         // paint panel
@@ -866,6 +878,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.palettesViewController = segue.destination as? PalettesViewController
             self.palettesViewController.delegate = self
         }
+        else if segue.identifier == "CanvasFrameEmbed" {
+            self.canvasFrameViewController = segue.destination as? CanvasFrameViewController
+            self.canvasFrameViewController.delegate = self
+        }
         else if segue.identifier == "UnwindToMenu" {
             SessionSettings.instance.save()
             
@@ -953,6 +969,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 self.canvasLockView.isHidden = false
             }
             
+            self.toggleSummary(show: false)
+            
+            self.hideCanvasFrameView()
+            
             self.surfaceView.startPainting()
         }
         else {
@@ -1027,9 +1047,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
     }
     
-    func toggleSummary() {
-        summaryView.isHidden = !summaryView.isHidden
-        deviceViewportSummaryView.isHidden = !deviceViewportSummaryView.isHidden
+    func toggleSummary(show: Bool) {
+        summaryView.isHidden = !show
+        deviceViewportSummaryView.isHidden = !show
+        
+        if show {
+            
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -1046,10 +1070,14 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.paintNo.isHidden = false
     }
     
-    func notifyPaintingEnded() {
+    func notifyPaintingEnded(accept: Bool) {
         self.closePaintPanelButton.isHidden = false
         self.paintYes.isHidden = true
         self.paintNo.isHidden = true
+        
+        if accept {
+            summaryView.setNeedsDisplay()
+        }
     }
     
     func notifyPaintColorUpdate() {
@@ -1403,10 +1431,61 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // scale delegate
     func notifyInteractiveCanvasPan() {
         deviceViewportSummaryView.setNeedsDisplay()
+        hideCanvasFrameView()
     }
     
     func notifyInteractiveCanvasScale() {
         deviceViewportSummaryView.setNeedsDisplay()
+    }
+    
+    func notifyToggleCanvasFrameView(canvasX: Int, canvasY: Int, screenPoint: CGPoint) {
+        if !canvasFrameView.isHidden {
+            hideCanvasFrameView()
+            return
+        }
+        
+        self.canvasFrameViewController.x = canvasX
+        self.canvasFrameViewController.y = canvasY
+        self.canvasFrameViewController.canvasFrameViewTop = canvasFrameViewTop
+        
+        var x = screenPoint.x + 10
+        var y = screenPoint.y - 130
+        
+        if x < 20 {
+            x = 20
+        }
+        else if x + canvasFrameView.frame.size.width > self.view.frame.size.width - 20 {
+            x = self.view.frame.size.width - canvasFrameView.frame.size.width - 20
+        }
+        
+        if y < 20 {
+            y = 20
+        }
+        else if y + canvasFrameView.frame.size.height > self.view.frame.size.height - 20 {
+            y = self.view.frame.size.height - canvasFrameView.frame.size.height - 20
+        }
+        
+        canvasFrameViewLeading.constant = x
+        canvasFrameViewTop.constant = y
+        
+        canvasFrameView.isHidden = false
+    }
+    
+    func notifyCloseCanvasFrameView() {
+        hideCanvasFrameView()
+    }
+    
+    func hideCanvasFrameView() {
+        canvasFrameViewController.closeKeyboard()
+        canvasFrameView.isHidden = true
+    }
+    
+    func createCanvasFrame(centerX: Int, centerY: Int, width: Int, height: Int) {
+        print("create frame at (" + String(centerX) + ", " + String(centerY) + ") width =" + String(width) + ", height = " + String(height))
+        
+        surfaceView.createCanvasFrame(centerX: centerX, centerY: centerY, width: width, height: height, color: SessionSettings.instance.frameColor)
+        
+        hideCanvasFrameView()
     }
 }
 

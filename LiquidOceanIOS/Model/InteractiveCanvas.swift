@@ -17,12 +17,6 @@ protocol InteractiveCanvasScaleCallback: AnyObject {
     func notifyScaleCancelled()
 }
 
-protocol InteractiveCanvasPaintDelegate: AnyObject {
-    func notifyPaintingStarted()
-    func notifyPaintingEnded()
-    func notifyPaintColorUpdate()
-}
-
 protocol InteractiveCanvasPixelHistoryDelegate: AnyObject {
     func notifyShowPixelHistory(data: [AnyObject], screenPoint: CGPoint)
     func notifyHidePixelHistory()
@@ -68,7 +62,6 @@ class InteractiveCanvas: NSObject {
     
     weak var drawCallback: InteractiveCanvasDrawCallback?
     weak var scaleCallback: InteractiveCanvasScaleCallback?
-    weak var paintDelegate: InteractiveCanvasPaintDelegate?
     weak var pixelHistoryDelegate: InteractiveCanvasPixelHistoryDelegate?
     weak var recentColorsDelegate: InteractiveCanvasRecentColorsDelegate?
     weak var artExportDelegate: InteractiveCanvasArtExportDelegate?
@@ -360,7 +353,7 @@ class InteractiveCanvas: NSObject {
         return unitPoint.x < 0 || unitPoint.y < 0 || unitPoint.x > CGFloat(cols - 1) || unitPoint.y > CGFloat(rows - 1) || arr[Int(unitPoint.y)][Int(unitPoint.x)] == 0
     }
     
-    func paintUnitOrUndo(x: Int, y: Int, mode: Int = 0) {
+    func paintUnitOrUndo(x: Int, y: Int, mode: Int = 0, redraw: Bool = true) {
         let restorePoint = unitInRestorePoints(x: x, y: y, restorePointsArr: self.restorePoints)
         
         if mode == 0 {
@@ -392,7 +385,9 @@ class InteractiveCanvas: NSObject {
             }
         }
         
-        drawCallback?.notifyCanvasRedraw()
+        if redraw {
+            drawCallback?.notifyCanvasRedraw()
+        }
     }
     
     func commitPixels() {
@@ -427,7 +422,11 @@ class InteractiveCanvas: NSObject {
             StatTracker.instance.reportEvent(eventType: .pixelPaintedWorld, amt: restorePoints.count)
         }
         else {
-            StatTracker.instance.reportEvent(eventType: .pixelPaintedSingle, amt: restorePoints.count)
+            //StatTracker.instance.reportEvent(eventType: .pixelPaintedSingle, amt: restorePoints.count)
+            for restorePoint in restorePoints {
+                summary.append(RestorePoint(x: restorePoint.x, y: restorePoint.y, color: restorePoint.newColor, newColor: restorePoint.newColor))
+            }
+            
         }
         
         updateRecentColors()
