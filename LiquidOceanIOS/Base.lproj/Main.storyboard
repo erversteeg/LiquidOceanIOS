@@ -18,76 +18,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6E-cV-Ty3">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z6E-cV-Ty3">
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="W3u-Qq-Gw5">
-                                        <rect key="frame" x="64" y="87" width="582" height="200"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="200" id="4Mq-C2-OyC"/>
-                                        </constraints>
-                                        <string key="text">It's easy to get started. If you are in Single Play, open the paint drawer and select a color. Tap and drag anywhere to draw. If you are playing World Play you will have to wait a small amount of time for the next Paint Event. A paint event occurs every 5 minutes and when it happens everyone gets some paint to use on the World Canvas. If you would like to know when the next paint batch is going to arrive, tap on the paint bar for a countdown.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="JIy-Bo-zWO">
-                                        <rect key="frame" x="250" y="437" width="606" height="200"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="200" id="7ca-ej-mlQ"/>
-                                        </constraints>
-                                        <string key="text">If you are new to pixel art or drawing, remember that with enough practice anyone can learn to do anything. It's fun! Start off easy and work your way up, however slowly, to slightly more complex subjects over time.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jgq-qB-7ZJ" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="726" y="132" width="50" height="50"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="bPX-yv-RfJ"/>
-                                            <constraint firstAttribute="width" constant="50" id="sFE-Uv-a7I"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPB-ZF-WXk" customClass="PaintQuantityBar" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="691" y="222" width="120" height="18"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="120" id="4O1-2Z-Nbe"/>
-                                            <constraint firstAttribute="height" constant="18" id="q7l-4g-bbh"/>
-                                        </constraints>
-                                    </view>
-                                    <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kB-eK-CLF">
-                                        <rect key="frame" x="701" y="250" width="100" height="40"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcC-6d-7LC">
-                                                <rect key="frame" x="0.0" y="7.5" width="100" height="25"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="25" id="t6K-yG-vLO"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstItem="hcC-6d-7LC" firstAttribute="centerX" secondItem="5kB-eK-CLF" secondAttribute="centerX" id="5zp-sQ-Hyp"/>
-                                            <constraint firstAttribute="trailing" secondItem="hcC-6d-7LC" secondAttribute="trailing" id="6YV-eo-NoH"/>
-                                            <constraint firstAttribute="width" constant="100" id="AdI-Ki-Fg8"/>
-                                            <constraint firstItem="hcC-6d-7LC" firstAttribute="centerY" secondItem="5kB-eK-CLF" secondAttribute="centerY" id="KyH-hB-dZs"/>
-                                            <constraint firstItem="hcC-6d-7LC" firstAttribute="leading" secondItem="5kB-eK-CLF" secondAttribute="leading" id="SRq-Vw-GK8"/>
-                                            <constraint firstAttribute="height" constant="40" id="oCR-eG-Qkt"/>
-                                        </constraints>
-                                    </view>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CBF-0O-nFt" customClass="ArtView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="80" y="477" width="120" height="120"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="120" id="K78-rD-av9"/>
-                                            <constraint firstAttribute="width" constant="120" id="j3D-bC-YY4"/>
-                                        </constraints>
-                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Howto" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePD-Wx-iiY">
                                         <rect key="frame" x="364" y="5" width="168" height="50"/>
                                         <constraints>
@@ -100,26 +33,367 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="2" height="2"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="W3u-Qq-Gw5">
+                                        <rect key="frame" x="64" y="87" width="582" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="4Mq-C2-OyC"/>
+                                            <constraint firstAttribute="width" constant="582" id="8vh-e2-z3F"/>
+                                        </constraints>
+                                        <string key="text">It's easy to get started. In draw mode, tap the draw icon to bring up the draw panel. From here you can choose a color. Tap and drag anywhere on the canvas to draw that color. Tap and drag back over any piels that you want to remove. Finalize by tapping the green checkmark, or to cancel, tap the red x.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jgq-qB-7ZJ" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="726" y="162" width="50" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="bPX-yv-RfJ"/>
+                                            <constraint firstAttribute="width" constant="50" id="sFE-Uv-a7I"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export and Share" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNU-rt-djE">
+                                        <rect key="frame" x="198" y="437" width="500" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="2zY-GM-GpN"/>
+                                            <constraint firstAttribute="width" constant="500" id="Keq-Kc-FvK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="2" height="2"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="JIy-Bo-zWO">
+                                        <rect key="frame" x="250" y="519" width="582" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="582" id="2xf-Gn-4MB"/>
+                                            <constraint firstAttribute="height" constant="200" id="7ca-ej-mlQ"/>
+                                        </constraints>
+                                        <string key="text">The first tool is the export tool. Tap the icon then select or drag around your drawing. A preview will appear with two export options in the upper right. The left icon is to save your drawing locally to your device photos. The right icon is to share your drawing through text, email, and other apps.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CBF-0O-nFt" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="120" y="594" width="50" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="K78-rD-av9"/>
+                                            <constraint firstAttribute="width" constant="50" id="j3D-bC-YY4"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Background" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6p-iE-202">
+                                        <rect key="frame" x="198" y="869" width="500" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="XeU-Wg-Vu8"/>
+                                            <constraint firstAttribute="width" constant="500" id="aGN-VX-B5W"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="2" height="2"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The second tool is the background tool. Tap the icon to switch between different canvas backgrounds." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="jSn-YP-tCE">
+                                        <rect key="frame" x="64" y="951" width="582" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="GT1-Cd-LwN"/>
+                                            <constraint firstAttribute="width" constant="582" id="ziH-pl-Sbw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="olG-L1-J4d" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="726" y="1017.5" width="50" height="67"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="6Mn-YN-JbM"/>
+                                            <constraint firstAttribute="height" constant="67" id="Dtw-gj-vTb"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grid Lines" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlD-m5-mCJ">
+                                        <rect key="frame" x="198" y="1301" width="500" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="500" id="TVW-GN-Jg1"/>
+                                            <constraint firstAttribute="height" constant="50" id="ioB-n3-vrV"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="2" height="2"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4NK-Ap-2vD">
+                                        <rect key="frame" x="250" y="1383" width="582" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="582" id="gbU-pO-PIx"/>
+                                            <constraint firstAttribute="height" constant="200" id="nrt-UL-W8t"/>
+                                        </constraints>
+                                        <string key="text">The third tool is the grid line toggle tool. Tap the icon to turn on and off grid lines. Grid lines appear when zoomed into the canvas.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nh-aT-CAJ" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="120" y="1474.5" width="50" height="17"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="DV9-jO-Bao"/>
+                                            <constraint firstAttribute="height" constant="17" id="kn9-fp-312"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas Summary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fj3-3h-yZ7">
+                                        <rect key="frame" x="198" y="1733" width="500" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="500" id="ViQ-oX-eht"/>
+                                            <constraint firstAttribute="height" constant="50" id="laI-8D-DGB"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="2" height="2"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The fourth and final tool is the Canvas Summary tool. This shows a summary of all the pixels drawn onto the canvas." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="BWO-FU-dZt">
+                                        <rect key="frame" x="64" y="1815" width="582" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="582" id="Z1g-Zf-tuB"/>
+                                            <constraint firstAttribute="height" constant="200" id="mJc-bp-gF5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89V-cx-YCq" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="726" y="1890" width="50" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="2K7-YV-yoz"/>
+                                            <constraint firstAttribute="height" constant="50" id="Uwm-Xb-atm"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Toggle Tools" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHC-Zn-NJ0">
+                                        <rect key="frame" x="198" y="2100" width="500" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="500" id="GMO-kT-eS9"/>
+                                            <constraint firstAttribute="height" constant="50" id="IRV-XH-60A"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="2" height="2"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The dot below all the tools is the toolbox toggle. Tap it to show and hide tools." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="AG8-0U-FwQ">
+                                        <rect key="frame" x="250" y="2182" width="582" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="LEd-6j-8tp"/>
+                                            <constraint firstAttribute="width" constant="582" id="Lew-Zf-bYN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XuQ-8Y-2rA" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="135" y="2272" width="20" height="20"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="9ep-Xo-x7e"/>
+                                            <constraint firstAttribute="width" constant="20" id="kLK-yg-XJH"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Palette" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xzz-kO-Y7q">
+                                        <rect key="frame" x="198" y="2532" width="500" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="500" id="eR4-d3-vm3"/>
+                                            <constraint firstAttribute="height" constant="50" id="jYk-9K-af7"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="2" height="2"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The dot on the opposite side of the toolbox toggle is the palette toggle. Tap it to show and hide the color palette." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-0s-MBD">
+                                        <rect key="frame" x="64" y="2614" width="582" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="582" id="LaR-xI-XbB"/>
+                                            <constraint firstAttribute="height" constant="200" id="Mqf-wq-pa6"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OgR-vk-nPy" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="741" y="2704" width="20" height="20"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="E3U-p2-HHH"/>
+                                            <constraint firstAttribute="width" constant="20" id="Gkr-Ns-4sa"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Palettes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1pI-A2-lAf">
+                                        <rect key="frame" x="198" y="2964" width="500" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="500" id="NfC-ma-1ZG"/>
+                                            <constraint firstAttribute="height" constant="50" id="pa6-7d-c2z"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="2" height="2"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="eep-v7-617">
+                                        <rect key="frame" x="260" y="3046" width="572" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="572" id="Ioh-5p-6aq"/>
+                                            <constraint firstAttribute="height" constant="200" id="pch-lS-kga"/>
+                                        </constraints>
+                                        <mutableString key="text">The default color palette is the Recent Color palette. It is composed of all the colors that you have drawn with recently. To add a new color palette tap on "Recent Color" in the draw panel. Then tap the + button and enter a name for your new palette. The new palette will be added to your list of palettes. Select the new palette by tapping on it in the list. As you use the color picker to select colors you will see a + and - sign under the palette name in the draw panel. Tap the + icon to add the color to your palette or tap the - icon to remove the color from your palette.</mutableString>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3r-kx-6ja">
+                                        <rect key="frame" x="64" y="3096" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="M3r-Au-1bl"/>
+                                            <constraint firstAttribute="width" constant="100" id="cOK-nN-aaV"/>
+                                        </constraints>
+                                        <connections>
+                                            <segue destination="4Eu-IR-h8h" kind="embed" identifier="RecentColorsEmbed" id="Oc8-rR-yNG"/>
+                                        </connections>
+                                    </containerView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frames" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5pG-lJ-4Q2">
+                                        <rect key="frame" x="198" y="3396" width="500" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="aDX-sl-YuC"/>
+                                            <constraint firstAttribute="width" constant="500" id="mz9-eP-g18"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="2" height="2"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="50Y-uP-zJE">
+                                        <rect key="frame" x="64" y="3478" width="582" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="3TQ-hn-Lx5"/>
+                                            <constraint firstAttribute="width" constant="582" id="VRr-U3-qlc"/>
+                                        </constraints>
+                                        <string key="text">To create a sizing frame for art, press and hold anywhere on the canvas while not drawing. A frame configuration panel will appear. Enter the width and height then tap the Create button to create a frame.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9I-yk-HJY" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="726" y="3548" width="50" height="60"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="c2Y-y3-N5b"/>
+                                            <constraint firstAttribute="width" constant="50" id="erz-vt-geu"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eraser" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5og-ZQ-Y2A">
+                                        <rect key="frame" x="198" y="3828" width="500" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="500" id="Pv7-Pa-VaO"/>
+                                            <constraint firstAttribute="height" constant="50" id="tFR-nr-eyh"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <size key="shadowOffset" width="2" height="2"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="gZI-lb-PAx">
+                                        <rect key="frame" x="250" y="3910" width="582" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="582" id="03n-hw-Egk"/>
+                                            <constraint firstAttribute="height" constant="200" id="STf-Mn-bWW"/>
+                                        </constraints>
+                                        <string key="text">To erase pixels, tap anywhere on the canvas where you haven't drawn yet with the color picker open to pick the transparent color off the canvas. Then draw back over the pixels that you want to erase.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="niI-0H-Jd2" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="135" y="4000" width="20" height="20"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="Mi0-aF-cvD"/>
+                                            <constraint firstAttribute="width" constant="20" id="l22-a3-6XJ"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="d9I-yk-HJY" firstAttribute="centerY" secondItem="50Y-uP-zJE" secondAttribute="centerY" id="0Nv-pW-sx6"/>
+                                    <constraint firstAttribute="trailing" secondItem="eep-v7-617" secondAttribute="trailing" constant="64" id="2VD-Bh-aRV"/>
+                                    <constraint firstItem="Xzz-kO-Y7q" firstAttribute="top" secondItem="AG8-0U-FwQ" secondAttribute="bottom" constant="150" id="2tL-Qd-v9j"/>
+                                    <constraint firstItem="BWO-FU-dZt" firstAttribute="top" secondItem="Fj3-3h-yZ7" secondAttribute="bottom" constant="32" id="3zs-XU-DHC"/>
+                                    <constraint firstItem="jSn-YP-tCE" firstAttribute="top" secondItem="u6p-iE-202" secondAttribute="bottom" constant="32" id="4Hr-nA-Xwx"/>
+                                    <constraint firstItem="4NK-Ap-2vD" firstAttribute="centerY" secondItem="0nh-aT-CAJ" secondAttribute="centerY" id="4S6-Gk-Rbr"/>
+                                    <constraint firstItem="niI-0H-Jd2" firstAttribute="centerY" secondItem="gZI-lb-PAx" secondAttribute="centerY" id="4fC-D1-1iV"/>
+                                    <constraint firstItem="jSn-YP-tCE" firstAttribute="leading" secondItem="NfK-oz-Ar6" secondAttribute="leading" constant="64" id="5Ny-A4-0bf"/>
                                     <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="jgq-qB-7ZJ" secondAttribute="trailing" constant="120" id="5YW-Vb-kHZ"/>
-                                    <constraint firstItem="JIy-Bo-zWO" firstAttribute="top" secondItem="W3u-Qq-Gw5" secondAttribute="bottom" constant="150" id="7zw-5F-KYY"/>
+                                    <constraint firstItem="gZI-lb-PAx" firstAttribute="top" secondItem="5og-ZQ-Y2A" secondAttribute="bottom" constant="32" id="6dF-FK-pXS"/>
+                                    <constraint firstItem="u6p-iE-202" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="7Zz-Ez-Rzy"/>
+                                    <constraint firstItem="JIy-Bo-zWO" firstAttribute="top" secondItem="pNU-rt-djE" secondAttribute="bottom" constant="32" id="7zw-5F-KYY"/>
+                                    <constraint firstItem="XuQ-8Y-2rA" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="135" id="8PS-BH-bNR"/>
                                     <constraint firstItem="W3u-Qq-Gw5" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="64" id="AVE-00-QnI"/>
-                                    <constraint firstItem="CBF-0O-nFt" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="80" id="F04-XQ-2NE"/>
-                                    <constraint firstItem="pPB-ZF-WXk" firstAttribute="top" secondItem="jgq-qB-7ZJ" secondAttribute="bottom" constant="40" id="GgF-vn-5UN"/>
+                                    <constraint firstItem="Fj3-3h-yZ7" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="CgE-lx-Jk5"/>
+                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="AG8-0U-FwQ" secondAttribute="trailing" constant="64" id="EK2-7m-O6E"/>
+                                    <constraint firstItem="JHC-Zn-NJ0" firstAttribute="top" secondItem="BWO-FU-dZt" secondAttribute="bottom" constant="85" id="EfA-JS-vMZ"/>
+                                    <constraint firstItem="CBF-0O-nFt" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="120" id="F04-XQ-2NE"/>
+                                    <constraint firstItem="niI-0H-Jd2" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="135" id="FjG-Uc-puL"/>
+                                    <constraint firstItem="u6p-iE-202" firstAttribute="top" secondItem="JIy-Bo-zWO" secondAttribute="bottom" constant="150" id="Fxa-ts-hs1"/>
+                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="gZI-lb-PAx" secondAttribute="trailing" constant="64" id="H1U-aw-6MS"/>
+                                    <constraint firstItem="Xzz-kO-Y7q" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="HD6-mR-W1o"/>
+                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="d9I-yk-HJY" secondAttribute="trailing" constant="120" id="IDc-In-pZN"/>
+                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="OgR-vk-nPy" secondAttribute="trailing" constant="135" id="K9A-zg-2c6"/>
+                                    <constraint firstItem="BWO-FU-dZt" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="64" id="Kc6-T1-Teu"/>
+                                    <constraint firstItem="AG8-0U-FwQ" firstAttribute="top" secondItem="JHC-Zn-NJ0" secondAttribute="bottom" constant="32" id="Liv-3m-Ava"/>
                                     <constraint firstItem="jgq-qB-7ZJ" firstAttribute="leading" secondItem="W3u-Qq-Gw5" secondAttribute="trailing" constant="80" id="Lr2-b2-G9o"/>
+                                    <constraint firstItem="XuQ-8Y-2rA" firstAttribute="centerY" secondItem="AG8-0U-FwQ" secondAttribute="centerY" id="NRv-3s-0PW"/>
                                     <constraint firstItem="ePD-Wx-iiY" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="OfY-zR-9mk"/>
-                                    <constraint firstItem="jgq-qB-7ZJ" firstAttribute="top" secondItem="W3u-Qq-Gw5" secondAttribute="top" constant="45" id="Rzf-jA-4C0"/>
-                                    <constraint firstItem="pPB-ZF-WXk" firstAttribute="centerX" secondItem="jgq-qB-7ZJ" secondAttribute="centerX" id="VOB-ZS-bbi"/>
+                                    <constraint firstItem="pNU-rt-djE" firstAttribute="top" secondItem="W3u-Qq-Gw5" secondAttribute="bottom" constant="150" id="PeI-SB-TuN"/>
+                                    <constraint firstItem="Z3r-kx-6ja" firstAttribute="leading" secondItem="NfK-oz-Ar6" secondAttribute="leading" constant="64" id="PpA-Hu-p2U"/>
+                                    <constraint firstItem="olG-L1-J4d" firstAttribute="centerY" secondItem="jSn-YP-tCE" secondAttribute="centerY" id="Wn6-vV-tyi"/>
+                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="89V-cx-YCq" secondAttribute="trailing" constant="120" id="XPx-iR-nIB"/>
+                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="olG-L1-J4d" secondAttribute="trailing" constant="120" id="XlS-Jd-t3T"/>
                                     <constraint firstItem="JIy-Bo-zWO" firstAttribute="centerY" secondItem="CBF-0O-nFt" secondAttribute="centerY" id="Y0A-cY-XPQ"/>
-                                    <constraint firstItem="pPB-ZF-WXk" firstAttribute="centerX" secondItem="5kB-eK-CLF" secondAttribute="centerX" id="ff9-av-OEP"/>
-                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="bottom" secondItem="JIy-Bo-zWO" secondAttribute="bottom" constant="100" id="i14-rG-5Cv"/>
-                                    <constraint firstItem="JIy-Bo-zWO" firstAttribute="leading" secondItem="CBF-0O-nFt" secondAttribute="trailing" constant="50" id="khq-j3-fH9"/>
+                                    <constraint firstItem="1pI-A2-lAf" firstAttribute="top" secondItem="V5B-0s-MBD" secondAttribute="bottom" constant="150" id="Z5W-Bm-myG"/>
+                                    <constraint firstItem="JHC-Zn-NJ0" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="ZPi-6C-4Hs"/>
+                                    <constraint firstItem="5pG-lJ-4Q2" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="bGD-ee-4om"/>
+                                    <constraint firstItem="Fj3-3h-yZ7" firstAttribute="top" secondItem="4NK-Ap-2vD" secondAttribute="bottom" constant="150" id="bS0-fc-isR"/>
+                                    <constraint firstItem="5og-ZQ-Y2A" firstAttribute="top" secondItem="50Y-uP-zJE" secondAttribute="bottom" constant="150" id="cPM-4L-Tr3"/>
+                                    <constraint firstItem="eep-v7-617" firstAttribute="top" secondItem="1pI-A2-lAf" secondAttribute="bottom" constant="32" id="eBg-ay-Q6e"/>
+                                    <constraint firstItem="eep-v7-617" firstAttribute="centerY" secondItem="Z3r-kx-6ja" secondAttribute="centerY" id="fZn-Oc-KEu"/>
+                                    <constraint firstItem="pNU-rt-djE" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="h1q-7v-1p5"/>
+                                    <constraint firstItem="5og-ZQ-Y2A" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="iT2-b5-w8y"/>
+                                    <constraint firstItem="4NK-Ap-2vD" firstAttribute="top" secondItem="YlD-m5-mCJ" secondAttribute="bottom" constant="32" id="j4B-ry-UZ9"/>
+                                    <constraint firstItem="V5B-0s-MBD" firstAttribute="top" secondItem="Xzz-kO-Y7q" secondAttribute="bottom" constant="32" id="kNt-CU-Emw"/>
+                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="4NK-Ap-2vD" secondAttribute="trailing" constant="64" id="kda-kZ-bwB"/>
+                                    <constraint firstItem="JIy-Bo-zWO" firstAttribute="leading" secondItem="CBF-0O-nFt" secondAttribute="trailing" constant="80" id="khq-j3-fH9"/>
+                                    <constraint firstItem="5pG-lJ-4Q2" firstAttribute="top" secondItem="eep-v7-617" secondAttribute="bottom" constant="150" id="l6t-KZ-110"/>
+                                    <constraint firstItem="YlD-m5-mCJ" firstAttribute="top" secondItem="jSn-YP-tCE" secondAttribute="bottom" constant="150" id="lDS-h5-4u2"/>
+                                    <constraint firstItem="OgR-vk-nPy" firstAttribute="centerY" secondItem="V5B-0s-MBD" secondAttribute="centerY" id="lcC-Sl-NIj"/>
                                     <constraint firstItem="W3u-Qq-Gw5" firstAttribute="top" secondItem="ePD-Wx-iiY" secondAttribute="bottom" constant="32" id="n5B-DZ-fmb"/>
-                                    <constraint firstItem="ePD-Wx-iiY" firstAttribute="top" secondItem="NfK-oz-Ar6" secondAttribute="top" constant="5" id="oqO-sH-99x"/>
-                                    <constraint firstItem="NfK-oz-Ar6" firstAttribute="trailing" secondItem="JIy-Bo-zWO" secondAttribute="trailing" constant="40" id="rA8-l3-8KH"/>
-                                    <constraint firstItem="NfK-oz-Ar6" firstAttribute="trailing" secondItem="W3u-Qq-Gw5" secondAttribute="trailing" constant="250" id="rBv-xc-1PG"/>
-                                    <constraint firstItem="5kB-eK-CLF" firstAttribute="top" secondItem="pPB-ZF-WXk" secondAttribute="bottom" constant="10" id="u6i-Ry-3oM"/>
+                                    <constraint firstItem="YlD-m5-mCJ" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="nGa-aG-lHj"/>
+                                    <constraint firstItem="ePD-Wx-iiY" firstAttribute="top" secondItem="VGm-qx-pHc" secondAttribute="top" constant="5" id="oqO-sH-99x"/>
+                                    <constraint firstItem="V5B-0s-MBD" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="64" id="qLr-Q4-cRo"/>
+                                    <constraint firstItem="89V-cx-YCq" firstAttribute="centerY" secondItem="BWO-FU-dZt" secondAttribute="centerY" id="qb0-49-2V5"/>
+                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="JIy-Bo-zWO" secondAttribute="trailing" constant="64" id="rA8-l3-8KH"/>
+                                    <constraint firstItem="0nh-aT-CAJ" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="120" id="sEk-mZ-GwO"/>
+                                    <constraint firstItem="1pI-A2-lAf" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="sfy-wf-iKm"/>
+                                    <constraint firstItem="50Y-uP-zJE" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="64" id="uY6-gJ-2FG"/>
+                                    <constraint firstItem="50Y-uP-zJE" firstAttribute="top" secondItem="5pG-lJ-4Q2" secondAttribute="bottom" constant="32" id="wLq-Eo-L0y"/>
+                                    <constraint firstItem="jgq-qB-7ZJ" firstAttribute="centerY" secondItem="W3u-Qq-Gw5" secondAttribute="centerY" id="x9J-qz-K8r"/>
+                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="bottom" secondItem="gZI-lb-PAx" secondAttribute="bottom" constant="100" id="yW4-j5-7tt"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="VGm-qx-pHc"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="NfK-oz-Ar6"/>
@@ -146,17 +420,22 @@
                     </view>
                     <navigationItem key="navigationItem" id="tAd-hj-GJi"/>
                     <connections>
-                        <outlet property="artView" destination="CBF-0O-nFt" id="bLe-8k-kpN"/>
                         <outlet property="backAction" destination="uTv-I1-CgJ" id="X5l-C3-0fm"/>
                         <outlet property="backActionLeading" destination="eac-6W-oob" id="tYI-H3-awr"/>
+                        <outlet property="changeBackgroundAction" destination="olG-L1-J4d" id="7To-lV-2RL"/>
+                        <outlet property="dotAction1" destination="XuQ-8Y-2rA" id="jLD-hS-H38"/>
+                        <outlet property="dotAction2" destination="OgR-vk-nPy" id="M5I-5W-tui"/>
+                        <outlet property="dotAction3" destination="niI-0H-Jd2" id="4lQ-1h-haN"/>
+                        <outlet property="exportAction" destination="CBF-0O-nFt" id="ITk-Be-vh9"/>
+                        <outlet property="frameAction" destination="d9I-yk-HJY" id="G4i-WU-vKT"/>
+                        <outlet property="gridLineAction" destination="0nh-aT-CAJ" id="24Y-RF-04w"/>
                         <outlet property="howtoTitleLabel" destination="ePD-Wx-iiY" id="TN9-Lw-get"/>
                         <outlet property="paintAction" destination="jgq-qB-7ZJ" id="263-JS-82r"/>
-                        <outlet property="paintEventInfoContainer" destination="5kB-eK-CLF" id="pQw-9w-Ces"/>
-                        <outlet property="paintEventInfoContainerWidth" destination="AdI-Ki-Fg8" id="hHs-bW-mg1"/>
-                        <outlet property="paintEventTimeLabel" destination="hcC-6d-7LC" id="OzT-aI-9xl"/>
-                        <outlet property="paintQtyBar" destination="pPB-ZF-WXk" id="lk4-hE-kIN"/>
+                        <outlet property="recentColorsContainerHeight" destination="M3r-Au-1bl" id="fzy-cj-mXT"/>
+                        <outlet property="recentColorsContainerWidth" destination="cOK-nN-aaV" id="XsG-27-qNY"/>
                         <outlet property="step1Text" destination="W3u-Qq-Gw5" id="XbT-jb-nVh"/>
                         <outlet property="step2Text" destination="JIy-Bo-zWO" id="9JO-uc-3yM"/>
+                        <outlet property="summaryAction" destination="89V-cx-YCq" id="R78-Bs-nnT"/>
                         <segue destination="HYu-qW-Nhe" kind="unwind" identifier="UnwindToMenu" animates="NO" unwindAction="unwindToViewControllerWithSegue:" id="axW-jb-qk6"/>
                     </connections>
                 </viewController>
@@ -3406,11 +3685,11 @@
             <objects>
                 <viewController id="4Eu-IR-h8h" customClass="RecentColorsViewController" customModule="LiquidOceanIOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m54-ZD-Z77">
-                        <rect key="frame" x="0.0" y="0.0" width="150" height="70"/>
+                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0tb-gh-gwe">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="70"/>
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Gov-3c-91k">
                                     <size key="itemSize" width="128" height="128"/>
@@ -3420,7 +3699,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RecentColorCell" id="D19-1N-fc8" customClass="RecentColorCollectionViewCell" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="11" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="-14" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="akD-rd-jML">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -3960,6 +4239,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
+        <segue reference="Oc8-rR-yNG"/>
         <segue reference="jzH-A0-0Va"/>
     </inferredMetricsTieBreakers>
     <resources>

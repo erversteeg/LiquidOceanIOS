@@ -20,6 +20,8 @@ class RecentColorsViewController: UIViewController, UICollectionViewDataSource, 
     
     var itemWidth = CGFloat(32)
     
+    var isStatic = false
+    
     weak var delegate: RecentColorsDelegate?
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -63,6 +65,8 @@ class RecentColorsViewController: UIViewController, UICollectionViewDataSource, 
             cell.actionView.type = .recentColor
             cell.actionView.representingColor = self.data![indexPath.item]
         }
+        
+        cell.actionView.isStatic = isStatic
         
         return cell
     }

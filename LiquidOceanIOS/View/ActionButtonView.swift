@@ -74,6 +74,7 @@ class ActionButtonView: UIView {
         case pincode
         case defaultBlack
         case defaultWhite
+        case frame
     }
     
     var selectable = true
@@ -152,6 +153,8 @@ class ActionButtonView: UIView {
             return _colorMode
         }
     }
+    
+    var isStatic = false
     
     var clickHandler: (() -> Void)?
     
@@ -306,6 +309,9 @@ class ActionButtonView: UIView {
         else if type == .defaultWhite {
             drawDefaultWhiteAction()
         }
+        else if type == .frame {
+            drawFrameAction()
+        }
     }
     
     @objc func onTouchAction(sender: UIDrawGestureRecognizer) {
@@ -417,7 +423,7 @@ class ActionButtonView: UIView {
         var primaryColor = ActionButtonView.semiColor!
         //var accentColor = ActionButtonView.altGreenColor!
         
-        if SessionSettings.instance.darkIcons {
+        if SessionSettings.instance.darkIcons && !isStatic {
             primaryColor = ActionButtonView.semiDarkColor!
         }
         
@@ -602,8 +608,12 @@ class ActionButtonView: UIView {
         self.cols = 4
         
         var paint = ActionButtonView.whiteColor!
-        if SessionSettings.instance.darkIcons {
+        if SessionSettings.instance.darkIcons && !isStatic {
             paint = ActionButtonView.blackColor
+        }
+        
+        if isStatic {
+            paint = ActionButtonView.semiColor!
         }
         
         if selected {
@@ -644,7 +654,7 @@ class ActionButtonView: UIView {
         cols = 3
         
         var paint = ActionButtonView.semiColor!
-        if SessionSettings.instance.darkIcons {
+        if SessionSettings.instance.darkIcons && !isStatic {
             paint = ActionButtonView.semiDarkColor!
         }
         
@@ -798,7 +808,7 @@ class ActionButtonView: UIView {
         cols = 3
         
         var paint = ActionButtonView.semiColor!
-        if SessionSettings.instance.darkIcons {
+        if SessionSettings.instance.darkIcons && !isStatic {
             paint = ActionButtonView.semiDarkColor!
         }
         
@@ -834,7 +844,7 @@ class ActionButtonView: UIView {
         cols = 3
         
         var paint = ActionButtonView.semiColor!
-        if SessionSettings.instance.darkIcons {
+        if SessionSettings.instance.darkIcons && !isStatic {
             paint = ActionButtonView.semiDarkColor!
         }
         
@@ -854,7 +864,7 @@ class ActionButtonView: UIView {
         cols = 3
         
         var paint = ActionButtonView.semiColor!
-        if SessionSettings.instance.darkIcons {
+        if SessionSettings.instance.darkIcons && !isStatic {
             paint = ActionButtonView.semiDarkColor!
         }
         
@@ -880,12 +890,58 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 2, y: 2, color: paint)
     }
     
+    func drawFrameAction() {
+        rows = 6
+        cols = 5
+        
+        var paint = ActionButtonView.semiColor!
+        if SessionSettings.instance.darkIcons && !isStatic {
+            paint = ActionButtonView.semiDarkColor!
+        }
+        
+        if selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        // row 1
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 0, color: paint)
+        drawPixel(ctx: context, x: 2, y: 0, color: paint)
+        drawPixel(ctx: context, x: 3, y: 0, color: paint)
+        drawPixel(ctx: context, x: 4, y: 0, color: paint)
+        
+        // row 2
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 4, y: 1, color: paint)
+
+        // row 3
+        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+        drawPixel(ctx: context, x: 4, y: 2, color: paint)
+        
+        // row 4
+        drawPixel(ctx: context, x: 0, y: 3, color: paint)
+        drawPixel(ctx: context, x: 4, y: 3, color: paint)
+        
+        // row 5
+        drawPixel(ctx: context, x: 0, y: 4, color: paint)
+        drawPixel(ctx: context, x: 4, y: 4, color: paint)
+        
+        // row 6
+        drawPixel(ctx: context, x: 0, y: 5, color: paint)
+        drawPixel(ctx: context, x: 1, y: 5, color: paint)
+        drawPixel(ctx: context, x: 2, y: 5, color: paint)
+        drawPixel(ctx: context, x: 3, y: 5, color: paint)
+        drawPixel(ctx: context, x: 4, y: 5, color: paint)
+    }
+    
     func drawDotAction() {
         rows = 1
         cols = 1
         
         var paint = ActionButtonView.semiColor!
-        if SessionSettings.instance.darkIcons {
+        if SessionSettings.instance.darkIcons && !isStatic {
             paint = ActionButtonView.semiDarkColor!
         }
         

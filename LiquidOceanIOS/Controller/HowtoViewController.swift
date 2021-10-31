@@ -17,15 +17,21 @@ class HowtoViewController: UIViewController {
     @IBOutlet weak var step2Text: UILabel!
     
     @IBOutlet weak var paintAction: ActionButtonView!
-    @IBOutlet weak var paintQtyBar: PaintQuantityBar!
-    
-    @IBOutlet weak var artView: ArtView!
-    
-    @IBOutlet weak var paintEventInfoContainer: UIView!
-    @IBOutlet weak var paintEventTimeLabel: UILabel!
+    @IBOutlet weak var exportAction: ActionButtonView!
+    @IBOutlet weak var changeBackgroundAction: ActionButtonView!
+    @IBOutlet weak var gridLineAction: ActionButtonView!
+    @IBOutlet weak var summaryAction: ActionButtonView!
+    @IBOutlet weak var dotAction1: ActionButtonView!
+    @IBOutlet weak var dotAction2: ActionButtonView!
+    @IBOutlet weak var frameAction: ActionButtonView!
+    @IBOutlet weak var dotAction3: ActionButtonView!
     
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
-    @IBOutlet weak var paintEventInfoContainerWidth: NSLayoutConstraint!
+    
+    @IBOutlet weak var recentColorsContainerWidth: NSLayoutConstraint!
+    @IBOutlet weak var recentColorsContainerHeight: NSLayoutConstraint!
+    
+    weak var recentColorsViewController: RecentColorsViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,26 +43,32 @@ class HowtoViewController: UIViewController {
             self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
         }
         
-        paintAction.selectable = false
-        paintAction.type = .paint
+        paintAction.isStatic = true
+        exportAction.isStatic = true
+        changeBackgroundAction.isStatic = true
+        gridLineAction.isStatic = true
+        summaryAction.isStatic = true
+        dotAction1.isStatic = true
+        dotAction2.isStatic = true
+        frameAction.isStatic = true
+        dotAction3.isStatic = true
         
-        artView.showBackground = false
-        artView.jsonFile = "mushroom_json"
+        paintAction.type = .paint
+        exportAction.type = .export
+        changeBackgroundAction.type = .changeBackground
+        gridLineAction.type = .gridLines
+        summaryAction.type = .summary
+        dotAction1.type = .dot
+        dotAction2.type = .dot
+        frameAction.type = .frame
+        dotAction3.type = .dot
         
         if view.frame.size.height <= 600 {
             howtoTitleLabel.isHidden = true
             
             step1Text.isHidden = true
             paintAction.isHidden = true
-            paintQtyBar.isHidden = true
         }
-        
-        paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF000000"))
-        paintEventInfoContainer.layer.cornerRadius = 20
-        
-        getPaintTimeInfo()
-        
-        setupPaintBarTap()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,7 +79,6 @@ class HowtoViewController: UIViewController {
             
             Animator.animateHorizontalViewEnter(view: step1Text, left: true)
             Animator.animateHorizontalViewEnter(view: paintAction, left: true)
-            Animator.animateHorizontalViewEnter(view: paintQtyBar, left: true)
         }
     }
 
@@ -93,49 +104,36 @@ class HowtoViewController: UIViewController {
         if backX < 0 {
             backActionLeading.constant += 30
         }
-    }
-    
-    func setupPaintBarTap() {
-        let tgr = UITapGestureRecognizer(target: self, action: #selector(paintBarTapped))
-        paintQtyBar.addGestureRecognizer(tgr)
-    }
-    
-    @objc func paintBarTapped() {
-        if paintEventInfoContainer.isHidden {
-            paintEventInfoContainer.isHidden = false
+        
+        let colorStrs = ["000000", "222034", "45283C", "663931", "8F563B", "DF7126", "D9A066", "EEC39A",
+                      "FBF236", "99E550", "6ABE30", "37946E", "4B692F", "524B24", "323C39", "3F3F74"]
+        
+        var colors = [Int32]()
+        for colorStr in colorStrs {
+            colors.append(Utils.int32FromColorHex(hex: "0xFF" + colorStr))
         }
-        else {
-            paintEventInfoContainer.isHidden = true
-        }
+        
+        setupColorPalette(colors: colors.reversed())
     }
     
-    func getPaintTimeInfo() {
-        URLSessionHandler.instance.getPaintTimerInfo { (success, nextPaintTime) -> (Void) in
-            if success {
-                if nextPaintTime >= 0 {
-                    var ts = Int(nextPaintTime)
-                    let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (tmr) in
-                        ts -= 1
-                        
-                        if ts == 0 {
-                            ts = 300
-                        }
-                        
-                        let m = ts / 60
-                        let s = ts % 60
-                        
-                        self.paintEventTimeLabel.text = String(format: "%02d:%02d", m, s)
-                        self.paintEventInfoContainerWidth.constant = self.paintEventTimeLabel.text!.size(withAttributes: [.font: UIFont.boldSystemFont(ofSize: self.paintEventTimeLabel.font.pointSize)]).width + 20
-                    }
-                    timer.fire()
-                }
-                else {
-                    self.paintEventTimeLabel.text = "???"
-                }
-            }
-            else {
-                self.paintEventTimeLabel.text = "???"
-            }
+    func setupColorPalette(colors: [Int32]) {
+        let itemWidth = self.recentColorsViewController.itemWidth
+        let itemHeight = self.recentColorsViewController.itemWidth
+        let margin = self.recentColorsViewController.itemMargin
+        
+        self.recentColorsContainerWidth.constant = itemWidth * 4 + margin * 3
+        
+        let numRows = (colors.count - 1) / 4 + 1
+        self.recentColorsContainerHeight.constant = itemHeight * CGFloat(numRows) + margin * CGFloat(numRows - 1)
+        
+        self.recentColorsViewController.data = colors.reversed()
+        self.recentColorsViewController.collectionView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "RecentColorsEmbed" {
+            self.recentColorsViewController = segue.destination as? RecentColorsViewController
+            self.recentColorsViewController.isStatic = true
         }
     }
 }
