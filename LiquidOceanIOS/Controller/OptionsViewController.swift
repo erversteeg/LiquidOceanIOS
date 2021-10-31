@@ -50,6 +50,14 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet weak var gridLineColorColorView: UIView!
     @IBOutlet weak var gridLineColorResetButton: UIButton!
     
+    @IBOutlet weak var frameColorContainer: UIView!
+    @IBOutlet weak var frameColorColorView: UIView!
+    @IBOutlet weak var frameColorResetButton: UIButton!
+    
+    @IBOutlet weak var closeDrawPanelColorContainer: UIView!
+    @IBOutlet weak var closeDrawPanelColorColorView: UIView!
+    @IBOutlet weak var closeDrawPanelColorResetButton: UIButton!
+    
     @IBOutlet weak var circlePaletteContainer: UIView!
     @IBOutlet weak var circlePaletteSwitch: UISwitch!
     
@@ -105,6 +113,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     var selectingPaintMeterColor = false
     var selectingGridLineColor = false
     var selectingCanvasLockColor = false
+    var selectingFrameColor = false
+    var selectingCloseDrawPanelColor = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,6 +175,9 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         canvasLockColorContainer.layer.borderWidth = 2
         canvasLockColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.canvasLockColor)
         
+        tgr = UITapGestureRecognizer(target: self, action: #selector(tappedCanvasLockColorView(sender:)))
+        canvasLockColorColorView.addGestureRecognizer(tgr)
+        
         // grid line color
         gridLineColorContainer.layer.borderColor = UIColor.white.cgColor
         gridLineColorContainer.layer.borderWidth = 2
@@ -172,12 +185,28 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         tgr = UITapGestureRecognizer(target: self, action: #selector(tappedGridLineColorView(sender:)))
         gridLineColorColorView.addGestureRecognizer(tgr)
         
-        tgr = UITapGestureRecognizer(target: self, action: #selector(tappedCanvasLockColorView(sender:)))
-        canvasLockColorColorView.addGestureRecognizer(tgr)
-        
         if SessionSettings.instance.gridLineColor != 0 {
             gridLineColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.gridLineColor)
         }
+        
+        // frame color
+        frameColorContainer.layer.borderColor = UIColor.white.cgColor
+        frameColorContainer.layer.borderWidth = 2
+        frameColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.frameColor)
+        
+        tgr = UITapGestureRecognizer(target: self, action: #selector(tappedFrameColorView(sender:)))
+        frameColorColorView.addGestureRecognizer(tgr)
+        
+        // close draw panel button color
+        closeDrawPanelColorContainer.layer.borderColor = UIColor.white.cgColor
+        closeDrawPanelColorContainer.layer.borderWidth = 2
+        
+        if SessionSettings.instance.paintPanelCloseButtonColor != 0 {
+            closeDrawPanelColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.paintPanelCloseButtonColor)
+        }
+        
+        tgr = UITapGestureRecognizer(target: self, action: #selector(tappedCloseDrawPanelColorView(sender:)))
+        closeDrawPanelColorColorView.addGestureRecognizer(tgr)
         
         // circle palette
         circlePaletteContainer.layer.borderColor = UIColor.white.cgColor
@@ -367,6 +396,14 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             SessionSettings.instance.canvasLockColor = Utils.int32FromColorHex(hex: "0x66ff0000")
             canvasLockColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.canvasLockColor)
         }
+        else if sender == frameColorResetButton {
+            SessionSettings.instance.frameColor = Utils.int32FromColorHex(hex: "0xff999999")
+            frameColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.frameColor)
+        }
+        else if sender == closeDrawPanelColorResetButton {
+            SessionSettings.instance.paintPanelCloseButtonColor = 0
+            closeDrawPanelColorColorView.backgroundColor = UIColor.white
+        }
     }
     
     @objc func tappedTextureTitle() {
@@ -439,6 +476,40 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
         
         selectingCanvasLockColor = true
+    }
+    
+    @objc func tappedFrameColorView(sender: UIView) {
+        colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.frameColor)
+        
+        colorPickerContainerView.isHidden = false
+        colorPickerContainerView.alpha = 0
+        
+        colorPickerCancelButton.isHidden = false
+        colorPickerCancelButton.alpha = 0
+        
+        colorPickerDoneButton.isHidden = false
+        colorPickerDoneButton.alpha = 0
+        
+        UIView.animate(withDuration: 0.2) {
+            self.colorPickerContainerView.alpha = 1
+            self.colorPickerCancelButton.alpha = 1
+            self.colorPickerDoneButton.alpha = 1
+        }
+        
+        selectingFrameColor = true
+    }
+    
+    @objc func tappedCloseDrawPanelColorView(sender: UIView) {
+        if SessionSettings.instance.paintPanelCloseButtonColor == 0 {
+            colorPickerViewController.selectedColor = UIColor.white
+        }
+        else {
+            colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintPanelCloseButtonColor)
+        }
+        
+        setupColorPicker()
+        
+        selectingCloseDrawPanelColor = true
     }
     
     @objc func tappedRecentColorLabel1(sender: UITapGestureRecognizer) {
@@ -522,6 +593,24 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             
             selectingGridLineColor = false
         }
+        else if selectingFrameColor {
+            frameColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.frameColor)
+            colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.frameColor)
+            
+            selectingFrameColor = false
+        }
+        else if selectingCloseDrawPanelColor {
+            if SessionSettings.instance.paintPanelCloseButtonColor == 0 {
+                closeDrawPanelColorColorView.backgroundColor = UIColor.white
+                colorPickerViewController.selectedColor = UIColor.white
+            }
+            else {
+                closeDrawPanelColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.paintPanelCloseButtonColor)
+                colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintPanelCloseButtonColor)
+            }
+            
+            selectingCloseDrawPanelColor = false
+        }
         
         UIView.animate(withDuration: 0.2, animations: {
             self.colorPickerContainerView.alpha = 0
@@ -554,6 +643,16 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             
             selectingCanvasLockColor = false
         }
+        else if selectingFrameColor {
+            SessionSettings.instance.frameColor = color.argb()
+            
+            selectingFrameColor = false
+        }
+        else if selectingCloseDrawPanelColor {
+            SessionSettings.instance.paintPanelCloseButtonColor = color.argb()
+            
+            selectingCloseDrawPanelColor = false
+        }
         
         UIView.animate(withDuration: 0.2) {
             self.colorPickerContainerView.alpha = 0
@@ -569,6 +668,23 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
                 self.colorPickerCancelButton.isHidden = true
                 self.colorPickerDoneButton.isHidden = true
             }
+        }
+    }
+    
+    func setupColorPicker() {
+        colorPickerContainerView.isHidden = false
+        colorPickerContainerView.alpha = 0
+        
+        colorPickerCancelButton.isHidden = false
+        colorPickerCancelButton.alpha = 0
+        
+        colorPickerDoneButton.isHidden = false
+        colorPickerDoneButton.alpha = 0
+        
+        UIView.animate(withDuration: 0.2) {
+            self.colorPickerContainerView.alpha = 1
+            self.colorPickerCancelButton.alpha = 1
+            self.colorPickerDoneButton.alpha = 1
         }
     }
     
@@ -598,7 +714,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     @IBAction func singlePlayReset(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: "Please understand that resetting your single play will permanently erase your current single play canvas, to proceed please type DELETE in all caps.", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Please understand this will permanently erase your canvas, to proceed please type ERASE in all caps.", preferredStyle: .alert)
         
         alert.addTextField { (textField) in
             self.alertTextField = textField
@@ -606,7 +722,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { (action) in
-            if self.alertTextField.text != nil && self.alertTextField.text == "DELETE" {
+            if self.alertTextField.text != nil && self.alertTextField.text == "ERASE" {
                 UserDefaults.standard.removeObject(forKey: "arr_single")
             }
         }))
@@ -770,6 +886,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
         else if selectingCanvasLockColor {
             canvasLockColorColorView.backgroundColor = selectedColor
+        }
+        else if selectingFrameColor {
+            frameColorColorView.backgroundColor = selectedColor
+        }
+        else if selectingCloseDrawPanelColor {
+            closeDrawPanelColorColorView.backgroundColor = selectedColor
         }
     }
     

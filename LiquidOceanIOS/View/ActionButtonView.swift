@@ -365,21 +365,22 @@ class ActionButtonView: UIView {
         
         var paint = ActionButtonView.yellowColor!
         
-        if colorMode != .color {
-            if colorMode == .black {
-                paint = ActionButtonView.blackColor
-            }
-            else if colorMode == .white {
-                paint = ActionButtonView.whiteColor
-            }
+        if colorMode == .color {
+            paint = representingColor
+        }
+        if colorMode == .black {
+            paint = ActionButtonView.blackColor
+        }
+        else if colorMode == .white {
+            paint = ActionButtonView.whiteColor
         }
         
         if selected {
             if colorMode == .color {
-                paint = ActionButtonView.lightYellowColor!
+                paint = Utils.brightenColor(color: representingColor, by: 0.15)
             }
             else  if colorMode == .black {
-                   paint = ActionButtonView.twoThirdGrayColor!
+                paint = ActionButtonView.twoThirdGrayColor!
             }
             else if colorMode == .white {
                 paint = ActionButtonView.thirdGrayColor!

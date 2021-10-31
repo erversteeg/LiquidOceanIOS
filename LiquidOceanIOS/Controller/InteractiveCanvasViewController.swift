@@ -485,6 +485,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         if panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
             paintColorAcceptAction.colorMode = .black
             paintColorCancelAction.colorMode = .black
+            
             closePaintPanelButtonAction.colorMode = .black
             
             colorPaletteTitleLabel.textColor = UIColor.black
@@ -495,6 +496,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             closePaintPanelButtonAction.colorMode = .white
             
             colorPaletteTitleLabel.textColor = UIColor.white
+        }
+        
+        if SessionSettings.instance.paintPanelCloseButtonColor != 0 {
+            closePaintPanelButtonAction.representingColor = SessionSettings.instance.paintPanelCloseButtonColor
+            closePaintPanelButtonAction.colorMode = .color
         }
         
         self.updatePaintColorAcceptColorMode(color: SessionSettings.instance.paintColor)

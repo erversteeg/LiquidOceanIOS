@@ -101,6 +101,8 @@ class SessionSettings: NSObject {
     
     var frameColor: Int32 = 0
     
+    var paintPanelCloseButtonColor: Int32 = 0
+    
     var promptBack = false
     
     var canvasLockBorder = false
@@ -157,6 +159,7 @@ class SessionSettings: NSObject {
         userDefaults().set(paintIndicatorWidth, forKey: "paint_indicator_width")
         userDefaults().set(gridLineColor, forKey: "grid_line_color")
         userDefaults().set(frameColor, forKey: "frame_color")
+        userDefaults().set(paintPanelCloseButtonColor, forKey: "paint_panel_close_button_color")
         userDefaults().set(promptBack, forKey: "prompt_back")
         userDefaults().set(canvasLockBorder, forKey: "canvas_lock_border")
         userDefaults().set(canvasLockColor, forKey: "canvas_lock_color")
@@ -221,6 +224,8 @@ class SessionSettings: NSObject {
         gridLineColor = userDefaultsInt32(forKey: "grid_line_color", defaultVal: 0)
         
         frameColor = userDefaultsInt32(forKey: "frame_color", defaultVal: Utils.int32FromColorHex(hex: "0xFF999999"))
+        
+        paintPanelCloseButtonColor = userDefaultsInt32(forKey: "paint_panel_close_button_color", defaultVal: 0)
         
         promptBack = userDefaultsBool(forKey: "prompt_back", defaultVal: false)
         

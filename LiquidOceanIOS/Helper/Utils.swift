@@ -40,6 +40,22 @@ class Utils: NSObject {
         return UIColor(argb: int32FromColorHex(hex: hex))
     }
     
+    static func brightenColor(color: Int32, by: Float) -> Int32 {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        
+        let uiColor = UIColor(argb: color)
+        uiColor.getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        r = CGFloat(fminf(1.0, Float(r) + Float(r) * by))
+        g = CGFloat(fminf(1.0, Float(g) + Float(g) * by))
+        b = CGFloat(fminf(1.0, Float(b) + Float(b) * by))
+        
+        return UIColor(red: r, green: g, blue: b, alpha: a).argb()
+    }
+    
     static func isNetworkAvailable() -> Bool {
         let reachability = NetworkReachabilityManager()!
         return reachability.isReachable
