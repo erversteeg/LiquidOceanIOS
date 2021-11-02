@@ -99,6 +99,9 @@ class SessionSettings: NSObject {
     
     var gridLineColor: Int32 = 0
     
+    var canvasBackgroundPrimaryColor: Int32 = 0
+    var canvasBackgroundSecondaryColor: Int32 = 0
+    
     var frameColor: Int32 = 0
     
     var paintPanelCloseButtonColor: Int32 = 0
@@ -120,11 +123,20 @@ class SessionSettings: NSObject {
     
     var smallActionButtons = false
     
+    var lockPaintPanel = false
+    
     var pincodeSet = false
     
     var defaultBg = true
     
     var palettes = [Palette]()
+    
+    var restoreDeviceViewportLeft: CGFloat = 0
+    var restoreDeviceViewportTop: CGFloat = 0
+    var restoreDeviceViewportRight: CGFloat = 0
+    var restoreDeviceViewportBottom: CGFloat = 0
+    
+    var restoreCanvasScaleFactor: CGFloat = 0
     
     private var _selectedPaletteIndex = 0
     var selectedPaletteIndex: Int {
@@ -158,6 +170,8 @@ class SessionSettings: NSObject {
         userDefaults().set(paintIndicatorOutline, forKey: "paint_indicator_outline")
         userDefaults().set(paintIndicatorWidth, forKey: "paint_indicator_width")
         userDefaults().set(gridLineColor, forKey: "grid_line_color")
+        userDefaults().set(canvasBackgroundPrimaryColor, forKey: "canvas_background_primary_color")
+        userDefaults().set(canvasBackgroundSecondaryColor, forKey: "canvas_background_secondary_color")
         userDefaults().set(frameColor, forKey: "frame_color")
         userDefaults().set(paintPanelCloseButtonColor, forKey: "paint_panel_close_button_color")
         userDefaults().set(promptBack, forKey: "prompt_back")
@@ -169,10 +183,16 @@ class SessionSettings: NSObject {
         userDefaults().set(rightHanded, forKey: "right_handed")
         userDefaults().set(selectedHand, forKey: "selected_hand")
         userDefaults().set(smallActionButtons, forKey: "small_action_buttons")
+        userDefaults().set(lockPaintPanel, forKey: "lock_paint_panel")
         userDefaults().set(pincodeSet, forKey: "pincode_set")
         userDefaults().set(defaultBg, forKey: "default_bg")
         userDefaults().set(palettesJsonStr(), forKey: "palettes")
         userDefaults().set(selectedPaletteIndex, forKey: "selected_palette_index")
+        userDefaults().set(restoreDeviceViewportLeft, forKey: "restore_device_viewport_left")
+        userDefaults().set(restoreDeviceViewportTop, forKey: "restore_device_viewport_top")
+        userDefaults().set(restoreDeviceViewportRight, forKey: "restore_device_viewport_right")
+        userDefaults().set(restoreDeviceViewportBottom, forKey: "restore_device_viewport_bottom")
+        userDefaults().set(restoreCanvasScaleFactor, forKey: "restore_canvas_scale_factor")
     }
     
     func quickSave() {
@@ -223,6 +243,10 @@ class SessionSettings: NSObject {
         
         gridLineColor = userDefaultsInt32(forKey: "grid_line_color", defaultVal: 0)
         
+        canvasBackgroundPrimaryColor = userDefaultsInt32(forKey: "canvas_background_primary_color", defaultVal: 0)
+        
+        canvasBackgroundSecondaryColor = userDefaultsInt32(forKey: "canvas_background_secondary_color", defaultVal: 0)
+        
         frameColor = userDefaultsInt32(forKey: "frame_color", defaultVal: Utils.int32FromColorHex(hex: "0xFF999999"))
         
         paintPanelCloseButtonColor = userDefaultsInt32(forKey: "paint_panel_close_button_color", defaultVal: 0)
@@ -245,6 +269,8 @@ class SessionSettings: NSObject {
         
         smallActionButtons = userDefaultsBool(forKey: "small_action_buttons", defaultVal: false)
         
+        lockPaintPanel = userDefaultsBool(forKey: "lock_paint_panel", defaultVal: false)
+        
         pincodeSet = userDefaultsBool(forKey: "pincode_set", defaultVal: false)
         
         defaultBg = userDefaultsBool(forKey: "default_bg", defaultVal: true)
@@ -260,6 +286,13 @@ class SessionSettings: NSObject {
         palette.addColor(color: UIColor(hexString: "6385EA").argb())
         
         palettes.append(palette)*/
+        
+        restoreDeviceViewportLeft = userDefaultsCGFloat(forKey: "restore_device_viewport_left", defaultVal: CGFloat(0))
+        restoreDeviceViewportTop = userDefaultsCGFloat(forKey: "restore_device_viewport_top", defaultVal: CGFloat(0))
+        restoreDeviceViewportRight = userDefaultsCGFloat(forKey: "restore_device_viewport_right", defaultVal: CGFloat(0))
+        restoreDeviceViewportBottom = userDefaultsCGFloat(forKey: "restore_device_viewport_bottom", defaultVal: CGFloat(0))
+        
+        restoreCanvasScaleFactor = userDefaultsCGFloat(forKey: "restore_canvas_scale_factor", defaultVal: CGFloat(0))
     }
     
     func userDefaults() -> UserDefaults {
@@ -300,6 +333,15 @@ class SessionSettings: NSObject {
     func userDefaultsInt32(forKey: String, defaultVal: Int32) -> Int32 {
         if userDefaultsHasKey(key: forKey) {
             return userDefaults().object(forKey: forKey) as! Int32
+        }
+        else {
+            return defaultVal
+        }
+    }
+    
+    func userDefaultsCGFloat(forKey: String, defaultVal: CGFloat) -> CGFloat {
+        if userDefaultsHasKey(key: forKey) {
+            return userDefaults().object(forKey: forKey) as! CGFloat
         }
         else {
             return defaultVal

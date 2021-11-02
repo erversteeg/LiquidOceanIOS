@@ -9,13 +9,14 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate, CanvasEdgeTouchDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
     @IBOutlet var paintPanel: UIView!
     
-    @IBOutlet weak var paintPanelButton: ActionButtonView!
+    @IBOutlet weak var paintPanelButton: ActionButtonFrame!
+    @IBOutlet weak var paintPanelAction: ActionButtonView!
     
     @IBOutlet weak var closePaintPanelButton: ActionButtonFrame!
     @IBOutlet weak var closePaintPanelButtonAction: ActionButtonView!
@@ -50,6 +51,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var paletteRemoveColor: ActionButtonFrame!
     @IBOutlet weak var paletteRemoveColorAction: ActionButtonView!
+    
+    @IBOutlet weak var lockPaintPanel: ActionButtonFrame!
+    @IBOutlet weak var lockPaintPanelAction: ActionButtonView!
+    @IBOutlet weak var lockPaintPanelCenterX: NSLayoutConstraint!
     
     @IBOutlet weak var backButton: ActionButtonView!
     
@@ -193,6 +198,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.palettesDelegate = self
         self.surfaceView.gestureDelegate = self
         self.surfaceView.canvasFrameDelegate = self
+        self.surfaceView.canvasEdgeTouchDelegate = self
         
         // surfaceView.setInitalScale()
         
@@ -253,7 +259,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.paintPanel.isHidden = true
         
         // action buttons
-        paintPanelButton.type = .paint
+        paintPanelAction.type = .paint
+        paintPanelButton.actionButtonView = paintPanelAction
         
         closePaintPanelButtonAction.type = .closePaint
         closePaintPanelButton.actionButtonView = closePaintPanelButtonAction
@@ -306,6 +313,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             SessionSettings.instance.backgroundColorIndex += 1
             if SessionSettings.instance.backgroundColorIndex == self.surfaceView.interactiveCanvas.numBackgrounds {
                 SessionSettings.instance.backgroundColorIndex = 0
+            }
+            
+            if SessionSettings.instance.backgroundColorIndex == InteractiveCanvas.backgroundCustom {
+                if SessionSettings.instance.canvasBackgroundPrimaryColor == 0 || SessionSettings.instance.canvasBackgroundSecondaryColor == 0 {
+                    SessionSettings.instance.backgroundColorIndex = 0
+                }
             }
             
             SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
@@ -391,8 +404,27 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.showPaletteColorRemoveAlert(color: SessionSettings.instance.paintColor)
         }
         
-        // summary
+        // lock paint panel
+        if SessionSettings.instance.lockPaintPanel {
+            lockPaintPanelAction.type = .lockClose
+        }
+        else {
+            lockPaintPanelAction.type = .lockOpen
+        }
+        lockPaintPanel.actionButtonView = lockPaintPanelAction
         
+        lockPaintPanel.setOnClickListener {
+            SessionSettings.instance.lockPaintPanel = !SessionSettings.instance.lockPaintPanel
+            
+            if SessionSettings.instance.lockPaintPanel {
+                self.lockPaintPanelAction.type = .lockClose
+            }
+            else {
+                self.lockPaintPanelAction.type = .lockOpen
+            }
+        }
+        
+        // summary
         summaryView.interactiveCanvas = surfaceView.interactiveCanvas
         deviceViewportSummaryView.interactiveCanvas = surfaceView.interactiveCanvas
         
@@ -486,6 +518,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             paintColorAcceptAction.colorMode = .black
             paintColorCancelAction.colorMode = .black
             
+            paletteAddColorAction.colorMode = .black
+            paletteRemoveColorAction.colorMode = .black
+            lockPaintPanelAction.colorMode = .black
+            
             closePaintPanelButtonAction.colorMode = .black
             
             colorPaletteTitleLabel.textColor = UIColor.black
@@ -493,6 +529,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         else {
             paintColorAcceptAction.colorMode = .white
             paintColorCancelAction.colorMode = .white
+            
+            paletteAddColorAction.colorMode = .white
+            paletteRemoveColorAction.colorMode = .white
+            lockPaintPanelAction.colorMode = .white
+            
             closePaintPanelButtonAction.colorMode = .white
             
             colorPaletteTitleLabel.textColor = UIColor.white
@@ -726,8 +767,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             setPaintPanelBackground(adjust: adjust)
 
-            surfaceView.setInitalScale()
-                
+            surfaceView.setInitalPositionAndScale()
+            
             initial = false
         }
     }
@@ -889,6 +930,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.canvasFrameViewController.delegate = self
         }
         else if segue.identifier == "UnwindToMenu" {
+            surfaceView.saveDeviceViewport()
+            
             SessionSettings.instance.save()
             
             StatTracker.instance.achievementListener = nil
@@ -961,7 +1004,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
     }
     
-    func togglePaintPanel(open: Bool) {
+    func togglePaintPanel(open: Bool, softHide: Bool = false) {
         if open {
             self.paintPanelButton.isHidden = true
             
@@ -977,9 +1020,18 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.toggleSummary(show: false)
             
+            toolboxButton.isHidden = false
+            
             self.hideCanvasFrameView()
             
             self.surfaceView.startPainting()
+        }
+        else if softHide {
+            self.paintPanel.isHidden = true
+            
+            self.toolboxButton.isHidden = true
+            
+            toggleToolbox(open: false)
         }
         else {
             self.surfaceView.endPainting(accept: false)
@@ -1277,6 +1329,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             paintQuantityCircle.flashError()
             paintQuantityBar.flashError()
         }
+        
+        if !SessionSettings.instance.lockPaintPanel {
+            self.togglePaintPanel(open: false, softHide: true)
+        }
     }
     
     func setPaintPanelBackground(adjust: Bool) {
@@ -1393,6 +1449,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // palettes view controller delegate
     func notifyPaletteSelected(palette: Palette, index: Int) {
         self.togglePalettesView(show: false)
+        
+        if SessionSettings.instance.selectedPaletteIndex == 0 {
+            self.lockPaintPanelCenterX.constant = 0
+        }
+        else {
+            self.lockPaintPanelCenterX.constant = 20
+        }
     }
     
     func syncPaletteAndColor() {
@@ -1492,6 +1555,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         surfaceView.createCanvasFrame(centerX: centerX, centerY: centerY, width: width, height: height, color: SessionSettings.instance.frameColor)
         
         hideCanvasFrameView()
+    }
+    
+    func onTouchCanvasEdge() {
+        togglePaintPanel(open: true)
     }
 }
 

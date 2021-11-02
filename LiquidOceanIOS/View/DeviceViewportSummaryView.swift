@@ -80,6 +80,38 @@ class DeviceViewportSummaryView: UIView {
         deviceViewport.origin.x += dX
         deviceViewport.origin.y += dY
         
+        let left = deviceViewport.origin.x
+        let top = deviceViewport.origin.y
+        let right = left + deviceViewport.size.width
+        let bottom = top + deviceViewport.size.height
+        
+        var cX: CGFloat = 0
+        var cY: CGFloat = 0
+        
+        let cw = CGFloat(interactiveCanvas.cols)
+        let ch = CGFloat(interactiveCanvas.rows)
+        
+        if left < 0 {
+            cX = -left
+        }
+        if top < 0 {
+            cY = -top
+        }
+        if right > cw  {
+            cX = -(right - cw)
+        }
+        if bottom > ch {
+            cY = -(bottom - ch)
+        }
+        
+        if cX != CGFloat(0) {
+            deviceViewport.origin.x += cX
+        }
+        
+        if cY != CGFloat(0) {
+            deviceViewport.origin.y += cY
+        }
+        
         interactiveCanvas.deviceViewport = deviceViewport
         interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         

@@ -34,6 +34,10 @@ protocol InteractiveCanvasSocketStatusDelegate: AnyObject {
     func notifySocketError()
 }
 
+protocol InteractiveCanvasDeviceViewportResetDelegate: AnyObject {
+    func resetDeviceViewport()
+}
+
 class InteractiveCanvas: NSObject {
     var rows = 1024
     var cols = 1024
@@ -65,6 +69,7 @@ class InteractiveCanvas: NSObject {
     weak var pixelHistoryDelegate: InteractiveCanvasPixelHistoryDelegate?
     weak var recentColorsDelegate: InteractiveCanvasRecentColorsDelegate?
     weak var artExportDelegate: InteractiveCanvasArtExportDelegate?
+    weak var deviceViewportResetDelegate: InteractiveCanvasDeviceViewportResetDelegate?
     
     var startScaleFactor = CGFloat(0.2)
     
@@ -79,8 +84,9 @@ class InteractiveCanvas: NSObject {
     static let backgroundPhotoshop = 3
     static let backgroundClassic = 4
     static let backgroundChess = 5
+    static let backgroundCustom = 6
     
-    let numBackgrounds = 6
+    let numBackgrounds = 7
     
     var restorePoints =  [RestorePoint]()
     var pixelsOut: [RestorePoint]!
@@ -498,6 +504,8 @@ class InteractiveCanvas: NSObject {
                 return (Utils.int32FromColorHex(hex: "0xFF666666"), Utils.int32FromColorHex(hex: "0xFF333333"))
             case InteractiveCanvas.backgroundChess:
                 return (Utils.int32FromColorHex(hex: "0xFFB59870"), Utils.int32FromColorHex(hex: "0xFF000000"))
+            case InteractiveCanvas.backgroundCustom:
+            return (SessionSettings.instance.canvasBackgroundPrimaryColor, SessionSettings.instance.canvasBackgroundSecondaryColor)
             default:
                 return nil
         }
@@ -696,6 +704,14 @@ class InteractiveCanvas: NSObject {
         }
         
         deviceViewport = CGRect(x: left, y: top, width: (right - left), height: (bottom - top))
+        
+        let w = right - left
+        let h = bottom - top
+        
+        // error! reset the canvas viewport
+        if w <= 0 || h <= 0 || w <= h {
+            deviceViewportResetDelegate?.resetDeviceViewport()
+        }
     }
     
     func getScreenSpaceForUnit(x: Int, y: Int) -> CGRect {
@@ -734,36 +750,53 @@ class InteractiveCanvas: NSObject {
         var right = left + deviceViewport.size.width
         var bottom = top + deviceViewport.size.height
         
-        let leftBound = -margin
-        if left + dX < leftBound {
-            let diff = left - leftBound
-            dX = diff
-        }
-        
-        let rightBound = CGFloat(self.cols) + margin
-        if right + dX > rightBound {
-            let diff = rightBound - right
-            dX = diff
-        }
-        
-        let topBound = -margin
-        if top + dY < topBound {
-            let diff = top - topBound
-            dY = diff
-        }
-        
-        let bottomBound = CGFloat(self.rows) + margin
-        if bottom + dY > CGFloat(rows) {
-            let diff = bottomBound - bottom
-            dY = diff
-        }
-        
         left += dX
         right += dX
         top += dY
         bottom += dY
         
+        var cX: CGFloat = 0
+        var cY: CGFloat = 0
+        
+        let cw = CGFloat(cols)
+        let ch = CGFloat(rows)
+        
+        // boundary check
+        let leftBound = -margin
+        let rightBound = cw + margin
+        let topBound = -margin
+        let bottomBound = ch + margin
+        
+        if left < leftBound {
+            cX = leftBound - left
+        }
+        if top < topBound {
+            cY = topBound - top
+        }
+        if right > cw  {
+            cX = -(rightBound - cw)
+        }
+        if bottom > ch {
+            cY = -(bottomBound - ch)
+        }
+        
         deviceViewport = CGRect(x: left, y: top, width: right - left, height: bottom - top)
+        
+        if cX != CGFloat(0) {
+            deviceViewport.origin.x += cX
+        }
+        
+        if cY != CGFloat(0) {
+            deviceViewport.origin.y += cY
+        }
+        
+        let w = right - left
+        let h = bottom - top
+        
+        // error! reset the canvas viewport
+        if w <= 0 || h <= 0 || w <= h {
+            deviceViewportResetDelegate?.resetDeviceViewport()
+        }
         
         drawCallback?.notifyCanvasRedraw()
     }

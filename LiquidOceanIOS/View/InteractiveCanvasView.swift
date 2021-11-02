@@ -39,7 +39,11 @@ protocol CanvasFrameDelegate: AnyObject {
     func notifyCloseCanvasFrameView()
 }
 
-class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveCanvasScaleCallback {
+protocol CanvasEdgeTouchDelegate: AnyObject {
+    func onTouchCanvasEdge()
+}
+
+class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveCanvasScaleCallback, InteractiveCanvasDeviceViewportResetDelegate {
 
     enum Mode {
         case exploring
@@ -70,6 +74,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     weak var palettesDelegate: InteractiveCanvasPalettesDelegate?
     weak var gestureDelegate: InteractiveCanvasGestureDelegate?
     weak var canvasFrameDelegate: CanvasFrameDelegate?
+    weak var canvasEdgeTouchDelegate: CanvasEdgeTouchDelegate?
     
     var objectSelectionStartUnit: CGPoint!
     var objectSelectionStartPoint: CGPoint!
@@ -80,6 +85,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         interactiveCanvas = InteractiveCanvas()
         interactiveCanvas.drawCallback = self
         interactiveCanvas.scaleCallback = self
+        interactiveCanvas.deviceViewportResetDelegate = self
         
         interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         
@@ -135,6 +141,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     // draw
     @objc func didDraw(sender: UIDrawGestureRecognizer) {
         let location = sender.location(in: self)
+        let view = sender.view!
         
         if sender.state == .began {
             if mode == .painting {
@@ -143,9 +150,15 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                     return
                 }
                 
-                interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+                //interactiveCanvas.drawCallback?.notifyCanvasRedraw()
                 
                 paintActionDelegate?.notifyPaintActionStarted()
+                
+                if (location.x > view.frame.size.width - 50 && !SessionSettings.instance.rightHanded) ||
+                    (location.x < 50 && SessionSettings.instance.rightHanded) {
+                    canvasEdgeTouchDelegate?.onTouchCanvasEdge()
+                    return
+                }
                 
                 let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
                 
@@ -243,11 +256,30 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         }
     }
     
-    func setInitalScale() {
-        self.scaleFactor = interactiveCanvas.startScaleFactor
+    func setInitalPositionAndScale() {
+        // scale
+        if SessionSettings.instance.restoreCanvasScaleFactor == CGFloat(0) {
+            self.scaleFactor = interactiveCanvas.startScaleFactor
+        }
+        else {
+            self.scaleFactor = SessionSettings.instance.restoreCanvasScaleFactor
+        }
+        
         self.interactiveCanvas.ppu = Int(CGFloat(interactiveCanvas.basePpu) * self.scaleFactor)
         
-        interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, canvasCenterX: CGFloat(interactiveCanvas.cols / 2), canvasCenterY: CGFloat(interactiveCanvas.rows / 2))
+        // position
+        if SessionSettings.instance.restoreDeviceViewportLeft == CGFloat(0) {
+            interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, canvasCenterX: CGFloat(interactiveCanvas.cols / 2), canvasCenterY: CGFloat(interactiveCanvas.rows / 2))
+        }
+        else {
+            let x = SessionSettings.instance.restoreDeviceViewportLeft
+            let y = SessionSettings.instance.restoreDeviceViewportTop
+            let width = SessionSettings.instance.restoreDeviceViewportRight - x
+            let height = SessionSettings.instance.restoreDeviceViewportBottom - y
+            
+            let restoreDeviceViewport = CGRect(x: x, y: y, width: width, height: height)
+            interactiveCanvas.deviceViewport = restoreDeviceViewport
+        }
     }
     
     func addPan() {
@@ -459,6 +491,24 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         SessionSettings.instance.paintColor = oldColor
         
         endPainting(accept: true)
+    }
+    
+    func saveDeviceViewport() {
+        let deviceViewport = interactiveCanvas.deviceViewport!
+        
+        SessionSettings.instance.restoreDeviceViewportLeft = deviceViewport.origin.x
+        SessionSettings.instance.restoreDeviceViewportTop = deviceViewport.origin.y
+        SessionSettings.instance.restoreDeviceViewportRight = deviceViewport.origin.x + deviceViewport.size.width
+        SessionSettings.instance.restoreDeviceViewportBottom = deviceViewport.origin.y + deviceViewport.size.height
+        
+        SessionSettings.instance.restoreCanvasScaleFactor = scaleFactor
+    }
+    
+    func resetDeviceViewport() {
+        SessionSettings.instance.restoreDeviceViewportLeft = 0
+        SessionSettings.instance.restoreCanvasScaleFactor = 0
+        
+        setInitalPositionAndScale()
     }
     
     // draw callback
