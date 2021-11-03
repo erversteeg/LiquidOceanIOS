@@ -79,6 +79,11 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     var objectSelectionStartUnit: CGPoint!
     var objectSelectionStartPoint: CGPoint!
     
+    var lastPanTranslationX: CGFloat = 0
+    var lastPanTranslationY: CGFloat = 0
+    
+    var startScaleFactor: CGFloat = 0
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
@@ -316,18 +321,29 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     
     // pan
     @objc func didPan(sender: UIPanGestureRecognizer) {
-        let velocity = sender.velocity(in: self)
-        
-        
-        if mode == .exploring {
-            interactiveCanvas.pixelHistoryDelegate?.notifyHidePixelHistory()
-            
-            interactiveCanvas.translateBy(x: -velocity.x, y: -velocity.y)
-            
-            gestureDelegate?.notifyInteractiveCanvasPan()
+        if sender.state == .began {
+            lastPanTranslationX = 0
+            lastPanTranslationY = 0
         }
-        else if mode == .painting {
+        else if sender.state == .changed {
+            let translation = sender.translation(in: self)
             
+            let translateX = lastPanTranslationX - translation.x
+            let translateY = lastPanTranslationY - translation.y
+            
+            if mode == .exploring {
+                interactiveCanvas.pixelHistoryDelegate?.notifyHidePixelHistory()
+                
+                interactiveCanvas.translateBy(x: translateX, y: translateY)
+                
+                gestureDelegate?.notifyInteractiveCanvasPan()
+            }
+            else if mode == .painting {
+                
+            }
+            
+            lastPanTranslationX = translation.x
+            lastPanTranslationY = translation.y
         }
     }
     
@@ -364,19 +380,25 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     
     // pinch
     @objc func didPinch(sender: UIPinchGestureRecognizer) {
-        let scale = sender.scale
-        oldScaleFactor = scaleFactor
-        scaleFactor *= scale
-        
-        scaleFactor = CGFloat(max(interactiveCanvas.minScaleFactor, min(scaleFactor, interactiveCanvas.maxScaleFactor)))
-        
-        oldPpu = interactiveCanvas.ppu
-        interactiveCanvas.ppu = Int((CGFloat(interactiveCanvas.basePpu) * scaleFactor))
-        
-        interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, fromScale: true)
-        gestureDelegate?.notifyInteractiveCanvasScale()
-        
-        interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+        if sender.state == .began {
+            startScaleFactor = scaleFactor
+        }
+        else if sender.state == .changed {
+            let scale = sender.scale
+            
+            oldScaleFactor = scaleFactor
+            scaleFactor = scale * startScaleFactor
+            
+            scaleFactor = CGFloat(max(interactiveCanvas.minScaleFactor, min(scaleFactor, interactiveCanvas.maxScaleFactor)))
+            
+            oldPpu = interactiveCanvas.ppu
+            interactiveCanvas.ppu = Int((CGFloat(interactiveCanvas.basePpu) * scaleFactor))
+            
+            interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, fromScale: true)
+            gestureDelegate?.notifyInteractiveCanvasScale()
+            
+            interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+        }
     }
     
     // scale callback
@@ -536,7 +558,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         if interactiveCanvas.ppu >= interactiveCanvas.gridLineThreshold {
             drawGridLines(ctx: ctx, deviceViewport: deviceViewport, ppu: ppu)
         }
-        print("draw time (1 / " + String(1 / (Date().timeIntervalSince1970 - startTime)) + " secs)")
+        //print("draw time (1 / " + String(1 / (Date().timeIntervalSince1970 - startTime)) + " secs)")
     }
     
     func drawGridLines(ctx: CGContext, deviceViewport: CGRect, ppu: Int) {
