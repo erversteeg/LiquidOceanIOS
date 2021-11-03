@@ -104,6 +104,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var exportButtonTrailing: NSLayoutConstraint!
     @IBOutlet weak var changeBackgroundButtonTrailing: NSLayoutConstraint!
     @IBOutlet weak var gridLinesButtonTrailing: NSLayoutConstraint!
+    @IBOutlet weak var summaryButtonTrailing: NSLayoutConstraint!
     @IBOutlet weak var toolboxButtonTrailing: NSLayoutConstraint!
     
     @IBOutlet weak var recentColorsButtonLeading: NSLayoutConstraint!
@@ -138,6 +139,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var canvasLockLeading: NSLayoutConstraint!
     @IBOutlet weak var canvasLockTrailing: NSLayoutConstraint!
+    
+    @IBOutlet weak var summaryViewLeading: NSLayoutConstraint!
+    @IBOutlet weak var deviceViewportSummaryViewLeading: NSLayoutConstraint!
     
     @IBOutlet weak var palettesView: UIView!
     
@@ -719,12 +723,36 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 
                 NSLayoutConstraint.activate(constraints)
                 
+                // summary view
+                summaryView.translatesAutoresizingMaskIntoConstraints = false
+                
+                summaryViewLeading.isActive = false
+                
+                constraints = [summaryView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -64),
+                               summaryView.bottomAnchor.constraint(equalTo: summaryView.bottomAnchor),
+                               summaryView.widthAnchor.constraint(equalTo: summaryView.widthAnchor),
+                               summaryView.heightAnchor.constraint(equalTo: summaryView.heightAnchor)]
+                
+                NSLayoutConstraint.activate(constraints)
+                
+                // device viewport view
+                deviceViewportSummaryView.translatesAutoresizingMaskIntoConstraints = false
+                
+                deviceViewportSummaryViewLeading.isActive = false
+                
+                constraints = [deviceViewportSummaryView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -64),
+                               deviceViewportSummaryView.bottomAnchor.constraint(equalTo: deviceViewportSummaryView.bottomAnchor),
+                               deviceViewportSummaryView.widthAnchor.constraint(equalTo: deviceViewportSummaryView.widthAnchor),
+                               deviceViewportSummaryView.heightAnchor.constraint(equalTo: deviceViewportSummaryView.heightAnchor)]
+                
+                NSLayoutConstraint.activate(constraints)
+                
                 // toolbox buttons
                 
-                let buttons = [exportButton, changeBackgroundButton, gridLinesButton]
-                let trailingConstraints = [exportButtonTrailing, changeBackgroundButtonTrailing, gridLinesButtonTrailing]
+                let buttons = [exportButton, changeBackgroundButton, gridLinesButton, summaryButton]
+                let trailingConstraints = [exportButtonTrailing, changeBackgroundButtonTrailing, gridLinesButtonTrailing, summaryButtonTrailing]
                 
-                for i in 0...2 {
+                for i in 0...buttons.count - 1 {
                     let button = buttons[i]!
                     let trailingConstraint = trailingConstraints[i]!
                     
@@ -732,7 +760,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                     
                     trailingConstraint.isActive = false
                     
-                    constraints = [button.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+                    constraints = [button.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
                     button.widthAnchor.constraint(equalTo: button.widthAnchor),
                     button.heightAnchor.constraint(equalTo: button.heightAnchor)]
                     
@@ -1020,6 +1048,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.toggleSummary(show: false)
             
+            self.toggleToolbox(open: false)
+            
             toolboxButton.isHidden = false
             
             self.hideCanvasFrameView()
@@ -1252,6 +1282,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     func notifyArtExported(art: [InteractiveCanvas.RestorePoint]) {
         exportViewController.art = art
         exportContainer.isHidden = false
+        
+        self.toggleSummary(show: false)
     }
     
     // achievement listener
@@ -1449,28 +1481,22 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // palettes view controller delegate
     func notifyPaletteSelected(palette: Palette, index: Int) {
         self.togglePalettesView(show: false)
-        
-        if SessionSettings.instance.selectedPaletteIndex == 0 {
-            self.lockPaintPanelCenterX.constant = 0
-        }
-        else {
-            self.lockPaintPanelCenterX.constant = 20
-        }
     }
     
     func syncPaletteAndColor() {
         // set title
         self.colorPaletteTitleLabel.text = SessionSettings.instance.palette.displayName
         
-        // set color palette
+        // sync buttons color palette
         if SessionSettings.instance.selectedPaletteIndex == 0 {
             paletteAddColor.isHidden = true
             paletteRemoveColor.isHidden = true
             
+            self.lockPaintPanelCenterX.constant = 0
+            
             self.setupColorPalette(colors: self.surfaceView.interactiveCanvas.recentColors)
         }
         else {
-            // sync buttons with current color
             if SessionSettings.instance.palette.colors.contains(SessionSettings.instance.paintColor) {
                 paletteAddColor.isHidden = true
                 paletteRemoveColor.isHidden = false
@@ -1479,6 +1505,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 paletteAddColor.isHidden = false
                 paletteRemoveColor.isHidden = true
             }
+            
+            self.lockPaintPanelCenterX.constant = 20
             
             self.setupColorPalette(colors: SessionSettings.instance.palette.colors)
         }

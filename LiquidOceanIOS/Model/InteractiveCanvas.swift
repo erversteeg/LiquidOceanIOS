@@ -329,18 +329,20 @@ class InteractiveCanvas: NSObject {
         do {
             if let jsonArray = try JSONSerialization.jsonObject(with: arrJsonStr.data(using: .utf8)!, options: []) as? [[String: Any]] {
                 
-                for i in 0...jsonArray.count - 1 {
-                    let jsonObject = jsonArray[i]
-                    
-                    let x = jsonObject["x"] as! Int
-                    let y = jsonObject["y"] as! Int
-                    
-                    let color = jsonObject["color"] as! Int32
-                    
-                    arr[y][x] = color
-                    
-                    if color != 0 {
-                        summary.append(RestorePoint(x: x, y: y, color: color, newColor: color))
+                if jsonArray.count > 0 {
+                    for i in 0...jsonArray.count - 1 {
+                        let jsonObject = jsonArray[i]
+                        
+                        let x = jsonObject["x"] as! Int
+                        let y = jsonObject["y"] as! Int
+                        
+                        let color = jsonObject["color"] as! Int32
+                        
+                        arr[y][x] = color
+                        
+                        if color != 0 {
+                            summary.append(RestorePoint(x: x, y: y, color: color, newColor: color))
+                        }
                     }
                 }
             }

@@ -454,7 +454,7 @@ class SessionSettings: NSObject {
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "bird_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "hfs_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "paint_bucket_json")!)
-        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "fire_badge_json")!)
+        //SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "fire_badge_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "fries_json")!)
     }
     

@@ -802,14 +802,33 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         self.performSegue(withIdentifier: showPincode, sender: nil)
     }
     
-    // pincode
+    // canvas import
     @IBAction func canvasImportPressed() {
         self.performSegue(withIdentifier: showCanvasImport, sender: nil)
     }
     
-    // pincode
+    // canvas export
     @IBAction func canvasExportPressed() {
-        self.performSegue(withIdentifier: showCanvasExport, sender: nil)
+        if SessionSettings.instance.userDefaultsHasKey(key: "arr_canvas") {
+            do {
+                let tempDir = NSTemporaryDirectory().appending("canvas_data.json")
+                let tempUrl = URL(fileURLWithPath: tempDir)
+                
+                // set up activity view controller
+                let data = SessionSettings.instance.userDefaultsString(forKey: "arr_canvas", defaultVal: "").data(using: .utf8)!
+                
+                try data.write(to: tempUrl)
+                
+                let activityViewController = UIActivityViewController(activityItems: [tempUrl], applicationActivities: nil)
+                activityViewController.popoverPresentationController?.sourceView = self.view
+
+                // present the view controller
+                self.present(activityViewController, animated: true, completion: nil)
+            }
+            catch {
+                
+            }
+        }
     }
     
     @IBAction func singlePlayReset(_ sender: Any) {
@@ -822,7 +841,10 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { (action) in
             if self.alertTextField.text != nil && self.alertTextField.text == "ERASE CANVAS" {
-                UserDefaults.standard.removeObject(forKey: "arr_single")
+                UserDefaults.standard.removeObject(forKey: "arr_canvas")
+                
+                SessionSettings.instance.restoreDeviceViewportLeft = CGFloat(0)
+                SessionSettings.instance.restoreCanvasScaleFactor = CGFloat(0)
             }
         }))
         
