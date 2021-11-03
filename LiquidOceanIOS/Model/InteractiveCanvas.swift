@@ -121,6 +121,60 @@ class InteractiveCanvas: NSObject {
         }
     }
     
+    static func importCanvasFromJson(jsonString: String) -> Bool {
+        do {
+            let jsonArray = try JSONSerialization.jsonObject(with: jsonString.data(using: .utf8)!, options: []) as! [[String: Any]]
+            
+            for i in 0...jsonArray.count - 1 {
+                let jsonObject = jsonArray[i]
+                
+                let x = jsonObject["x"] as! Int
+                let y = jsonObject["y"] as! Int
+                
+                let _ = jsonObject["color"] as! Int32
+                
+                if x < 0 || x > 1023 || y < 0 || y > 1023 {
+                    return false
+                }
+            }
+        }
+        catch {
+            return false
+        }
+        
+        SessionSettings.instance.userDefaults().set(jsonString, forKey: "arr_canvas")
+        return true
+    }
+    
+    static func exportCanvasToJson(arr: [[Int32]]) -> String {
+        if arr.count == 0 {
+            return ""
+        }
+        
+        let rows = arr.count
+        let cols = arr[0].count
+        
+        var pixelList = [[String: Any]]()
+        for y in 0...rows - 1 {
+            for x in 0...cols - 1 {
+                let color = arr[y][x]
+                
+                if color != 0 {
+                    var dict = [String: Any]()
+                    
+                    dict["x"] = x
+                    dict["y"] = y
+                    dict["color"] = color
+                    
+                    pixelList.append(dict)
+                }
+            }
+        }
+        let data = try! JSONSerialization.data(withJSONObject: pixelList, options: [])
+        
+        return String(data: data, encoding: .utf8)!
+    }
+    
     override init() {
         super.init()
         
@@ -144,7 +198,7 @@ class InteractiveCanvas: NSObject {
         }
         // single play
         else {
-            let dataJsonStr = SessionSettings.instance.userDefaults().object(forKey: "arr_single") as? String
+            let dataJsonStr = SessionSettings.instance.userDefaults().object(forKey: "arr_canvas") as? String
             
             if dataJsonStr == nil {
                 loadDefault()
@@ -270,6 +324,33 @@ class InteractiveCanvas: NSObject {
     }
     
     func initPixels(arrJsonStr: String) {
+        loadDefault()
+        
+        do {
+            if let jsonArray = try JSONSerialization.jsonObject(with: arrJsonStr.data(using: .utf8)!, options: []) as? [[String: Any]] {
+                
+                for i in 0...jsonArray.count - 1 {
+                    let jsonObject = jsonArray[i]
+                    
+                    let x = jsonObject["x"] as! Int
+                    let y = jsonObject["y"] as! Int
+                    
+                    let color = jsonObject["color"] as! Int32
+                    
+                    arr[y][x] = color
+                    
+                    if color != 0 {
+                        summary.append(RestorePoint(x: x, y: y, color: color, newColor: color))
+                    }
+                }
+            }
+        }
+        catch {
+            
+        }
+    }
+    
+    /*func initPixels(arrJsonStr: String) {
         do {
             if let outerArray = try JSONSerialization.jsonObject(with: arrJsonStr.data(using: .utf8)!, options: []) as? [Any] {
                 
@@ -293,7 +374,7 @@ class InteractiveCanvas: NSObject {
         catch {
             
         }
-    }
+    }*/
     
     func initChunkPixelsFromMemory() {
         var chunk = [[Int32]]()
@@ -342,8 +423,7 @@ class InteractiveCanvas: NSObject {
         }
         else {
             do {
-                let data = try JSONSerialization.data(withJSONObject: self.arr, options: [])
-                SessionSettings.instance.userDefaults().set(String(data: data, encoding: .utf8), forKey: "arr_single")
+                SessionSettings.instance.userDefaults().set(InteractiveCanvas.exportCanvasToJson(arr: arr), forKey: "arr_canvas")
             }
             catch {
                 

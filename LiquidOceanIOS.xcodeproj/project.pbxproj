@@ -12,6 +12,8 @@
 		07006C4025D6CEF200DF9A64 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07006C3F25D6CEF200DF9A64 /* MenuViewController.swift */; };
 		07006C4225DCB6D400DF9A64 /* PixelHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07006C4125DCB6D400DF9A64 /* PixelHistoryViewController.swift */; };
 		07006C4425DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07006C4325DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift */; };
+		070DA9DD2732B97800D76775 /* CanvasImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070DA9DC2732B97800D76775 /* CanvasImportViewController.swift */; };
+		070DA9DF2732B98500D76775 /* CanvasExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070DA9DE2732B98500D76775 /* CanvasExportViewController.swift */; };
 		0712053625DEDF1100AE0F52 /* ActionButtonFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */; };
 		0712053825DF2D5100AE0F52 /* RecentColorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053725DF2D5100AE0F52 /* RecentColorsViewController.swift */; };
 		0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */; };
@@ -129,6 +131,8 @@
 		07006C3F25D6CEF200DF9A64 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		07006C4125DCB6D400DF9A64 /* PixelHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelHistoryViewController.swift; sourceTree = "<group>"; };
 		07006C4325DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		070DA9DC2732B97800D76775 /* CanvasImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasImportViewController.swift; sourceTree = "<group>"; };
+		070DA9DE2732B98500D76775 /* CanvasExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasExportViewController.swift; sourceTree = "<group>"; };
 		0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonFrame.swift; sourceTree = "<group>"; };
 		0712053725DF2D5100AE0F52 /* RecentColorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentColorsViewController.swift; sourceTree = "<group>"; };
 		0712053925DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentColorCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -274,6 +278,8 @@
 				073663772608F16600E5403F /* PincodeViewController.swift */,
 				07270EDF272B92B300DB35CE /* PalettesViewController.swift */,
 				07C9CCE5272ECA2900C9D0A1 /* CanvasFrameViewController.swift */,
+				070DA9DC2732B97800D76775 /* CanvasImportViewController.swift */,
+				070DA9DE2732B98500D76775 /* CanvasExportViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -660,9 +666,11 @@
 			files = (
 				07BD25F025D4461400CF812E /* InteractiveCanvas.swift in Sources */,
 				0712053625DEDF1100AE0F52 /* ActionButtonFrame.swift in Sources */,
+				070DA9DD2732B97800D76775 /* CanvasImportViewController.swift in Sources */,
 				0712053825DF2D5100AE0F52 /* RecentColorsViewController.swift in Sources */,
 				07BD25ED25D440DD00CF812E /* InteractiveCanvasView.swift in Sources */,
 				07A9B16E25ED2941009A47DF /* HowtoViewController.swift in Sources */,
+				070DA9DF2732B98500D76775 /* CanvasExportViewController.swift in Sources */,
 				07006C4425DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift in Sources */,
 				07006C4225DCB6D400DF9A64 /* PixelHistoryViewController.swift in Sources */,
 				07FF5F0125DF616A003E19AE /* ExportViewController.swift in Sources */,

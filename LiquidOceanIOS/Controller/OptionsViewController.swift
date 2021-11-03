@@ -109,6 +109,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     
     var showSignIn = "ShowSignIn"
     var showPincode = "ShowPincode"
+    var showCanvasImport = "ShowCanvasImport"
+    var showCanvasExport = "ShowCanvasExport"
     
     var images = [UIImage]()
     
@@ -800,8 +802,18 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         self.performSegue(withIdentifier: showPincode, sender: nil)
     }
     
+    // pincode
+    @IBAction func canvasImportPressed() {
+        self.performSegue(withIdentifier: showCanvasImport, sender: nil)
+    }
+    
+    // pincode
+    @IBAction func canvasExportPressed() {
+        self.performSegue(withIdentifier: showCanvasExport, sender: nil)
+    }
+    
     @IBAction func singlePlayReset(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: "Please understand this will permanently erase your canvas, to proceed please type ERASE in all caps.", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "This will erase your canvas and all of it\'s contents, to proceed please type ERASE CANVAS in all caps.", preferredStyle: .alert)
         
         alert.addTextField { (textField) in
             self.alertTextField = textField
@@ -809,7 +821,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { (action) in
-            if self.alertTextField.text != nil && self.alertTextField.text == "ERASE" {
+            if self.alertTextField.text != nil && self.alertTextField.text == "ERASE CANVAS" {
                 UserDefaults.standard.removeObject(forKey: "arr_single")
             }
         }))
