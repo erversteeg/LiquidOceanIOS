@@ -759,7 +759,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 NSLayoutConstraint.activate(constraints)
                 
                 // palettes view
-                palettesView.translatesAutoresizingMaskIntoConstraints = false
+                /*palettesView.translatesAutoresizingMaskIntoConstraints = false
                 
                 palettesViewTrailing.isActive = false
                 
@@ -768,7 +768,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                                palettesView.widthAnchor.constraint(equalTo: palettesView.widthAnchor),
                                palettesView.heightAnchor.constraint(equalTo: palettesView.heightAnchor)]
                 
-                NSLayoutConstraint.activate(constraints)
+                NSLayoutConstraint.activate(constraints)*/
                 
                 // toolbox buttons
                 
@@ -992,7 +992,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.canvasFrameViewController.delegate = self
         }
         else if segue.identifier == "UnwindToMenu" {
-            surfaceView.saveDeviceViewport()
+            surfaceView.interactiveCanvas.saveDeviceViewport()
             
             SessionSettings.instance.save()
             
@@ -1009,6 +1009,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 
                 singlePlaySaveTimer.invalidate()
             }
+            
+            SessionSettings.instance.interactiveCanvas = nil
         }
     }
     
@@ -1023,20 +1025,17 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         // tablet
         if view.frame.size.height > 600 && !resizedColorPicker {
             colorPickerFrameWidth.constant = 330
-            colorPickerFrameWidth.constant *= 1.4
+            colorPickerFrameWidth.constant *= 2
             
-            colorPickerViewController.hsbWheelWidth.constant *= 1.5
-            colorPickerViewController.hsbWheelHeight.constant *= 1.5
+            colorPickerViewController.hsbWheelWidth.constant *= 2
+            colorPickerViewController.hsbWheelHeight.constant *= 2
             
             colorPickerViewController.hsbWheelXCenter.constant = 0
             colorPickerViewController.hsbWheelYCenter.constant = 0
             
-            colorPickerViewController.brightnessSliderWidth.constant *= 1.5
+            colorPickerViewController.brightnessSliderWidth.constant *= 2
             
             resizedColorPicker = true
-        }
-        else if view.frame.size.height > 600 {
-            colorPickerFrameWidth.constant = 330 * 1.4
         }
         else if view.frame.size.height <= 600 {
             colorPickerFrameWidth.constant = 330
@@ -1061,8 +1060,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func closeColorPicker() {
         self.colorPickerFrame.isHidden = true
-        self.colorPickerFrameWidth.constant = 0
-        
         self.paintColorAccept.isHidden = true
         self.paintColorCancel.isHidden = true
         

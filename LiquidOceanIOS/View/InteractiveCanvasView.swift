@@ -280,6 +280,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
             self.scaleFactor = SessionSettings.instance.restoreCanvasScaleFactor
         }
         
+        self.interactiveCanvas.scaleFactor = self.scaleFactor
         self.interactiveCanvas.ppu = Int(CGFloat(interactiveCanvas.basePpu) * self.scaleFactor)
         
         // position
@@ -400,6 +401,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
             scaleFactor = scale * startScaleFactor
             
             scaleFactor = CGFloat(max(interactiveCanvas.minScaleFactor, min(scaleFactor, interactiveCanvas.maxScaleFactor)))
+            interactiveCanvas.scaleFactor = scaleFactor
             
             oldPpu = interactiveCanvas.ppu
             interactiveCanvas.ppu = Int((CGFloat(interactiveCanvas.basePpu) * scaleFactor))
@@ -527,17 +529,6 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         
         endPainting(accept: true)
         interactiveCanvas.drawCallback?.notifyCanvasRedraw()
-    }
-    
-    func saveDeviceViewport() {
-        let deviceViewport = interactiveCanvas.deviceViewport!
-        
-        SessionSettings.instance.restoreDeviceViewportLeft = deviceViewport.origin.x
-        SessionSettings.instance.restoreDeviceViewportTop = deviceViewport.origin.y
-        SessionSettings.instance.restoreDeviceViewportRight = deviceViewport.origin.x + deviceViewport.size.width
-        SessionSettings.instance.restoreDeviceViewportBottom = deviceViewport.origin.y + deviceViewport.size.height
-        
-        SessionSettings.instance.restoreCanvasScaleFactor = scaleFactor
     }
     
     func resetDeviceViewport() {

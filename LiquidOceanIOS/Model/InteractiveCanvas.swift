@@ -76,6 +76,8 @@ class InteractiveCanvas: NSObject {
     let minScaleFactor = CGFloat(0.07)
     let maxScaleFactor = CGFloat(7)
     
+    var scaleFactor = CGFloat(0.2)
+    
     var recentColors = [Int32]()
     
     static let backgroundBlack = 0
@@ -431,6 +433,15 @@ class InteractiveCanvas: NSObject {
                 
             }
         }
+    }
+    
+    func saveDeviceViewport() {
+        SessionSettings.instance.restoreDeviceViewportLeft = deviceViewport.origin.x
+        SessionSettings.instance.restoreDeviceViewportTop = deviceViewport.origin.y
+        SessionSettings.instance.restoreDeviceViewportRight = deviceViewport.origin.x + deviceViewport.size.width
+        SessionSettings.instance.restoreDeviceViewportBottom = deviceViewport.origin.y + deviceViewport.size.height
+        
+        SessionSettings.instance.restoreCanvasScaleFactor = scaleFactor
     }
     
     func isCanvas(unitPoint: CGPoint) -> Bool {

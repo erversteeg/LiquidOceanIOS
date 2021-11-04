@@ -47,7 +47,7 @@ class ColorPickerOutletsViewController: CustomColorPickerViewController {
         layoutDelegate?.colorPickerDidLayoutSubviews(colorPickerViewController: self)
         
         if view.frame.size.height > 600 {
-            hsbWheelYCenter.constant = 0
+            //hsbWheelYCenter.constant = 0
         }
     }
 }

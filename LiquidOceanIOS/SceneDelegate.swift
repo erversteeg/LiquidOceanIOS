@@ -12,6 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    var lastSaveTime: TimeInterval = 0
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -33,8 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
+        save()
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
@@ -43,14 +43,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
+        save()
 
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-
-
+    
+    func save() {
+        if NSDate().timeIntervalSince1970 - lastSaveTime > 5 {
+            StatTracker.instance.achievementListener = nil
+            
+            let interactiveCanvas = SessionSettings.instance.interactiveCanvas
+            
+            if interactiveCanvas != nil {
+                if interactiveCanvas!.world {
+                    InteractiveCanvasSocket.instance.socket.disconnect()
+                }
+                else {
+                    interactiveCanvas!.save()
+                    interactiveCanvas!.saveDeviceViewport()
+                }
+            }
+            
+            SessionSettings.instance.save()
+            
+            lastSaveTime = NSDate().timeIntervalSince1970
+        }
+    }
 }
 
