@@ -429,8 +429,12 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     
     func endPainting(accept: Bool) {
         if !accept {
-            interactiveCanvas.undoPendingPaint()
-            SessionSettings.instance.dropsAmt += interactiveCanvas.restorePoints.count
+            if interactiveCanvas.restorePoints.count > 0 {
+                interactiveCanvas.undoPendingPaint()
+                SessionSettings.instance.dropsAmt += interactiveCanvas.restorePoints.count
+                
+                interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+            }
         }
         else {
             interactiveCanvas.commitPixels()
@@ -439,7 +443,6 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         interactiveCanvas.clearRestorePoints()
         
         paintDelegate?.notifyPaintingEnded(accept: accept)
-        interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         
         self.mode = .exploring
         
@@ -523,6 +526,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         SessionSettings.instance.paintColor = oldColor
         
         endPainting(accept: true)
+        interactiveCanvas.drawCallback?.notifyCanvasRedraw()
     }
     
     func saveDeviceViewport() {

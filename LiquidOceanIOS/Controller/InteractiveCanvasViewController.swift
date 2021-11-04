@@ -143,6 +143,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var summaryViewLeading: NSLayoutConstraint!
     @IBOutlet weak var deviceViewportSummaryViewLeading: NSLayoutConstraint!
     
+    @IBOutlet weak var palettesViewTrailing: NSLayoutConstraint!
+    
     @IBOutlet weak var palettesView: UIView!
     
     @IBOutlet weak var summaryView: InteractiveCanvasSummaryView!
@@ -174,6 +176,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     var paintPanelBackgroundSet = false
     
     var singlePlaySaveTimer: Timer!
+    
+    var lastViewFrameSize: CGSize!
     
     var pixelHistoryViewController: PixelHistoryViewController!
     weak var recentColorsViewController: RecentColorsViewController!
@@ -601,6 +605,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 self.paintQuantityBar.removeGestureRecognizer(tgr)
             }
         }
+        
+        lastViewFrameSize = CGSize(width: 0, height: 0)
     }
     
     override func viewDidLayoutSubviews() {
@@ -752,6 +758,18 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 
                 NSLayoutConstraint.activate(constraints)
                 
+                // palettes view
+                palettesView.translatesAutoresizingMaskIntoConstraints = false
+                
+                palettesViewTrailing.isActive = false
+                
+                constraints = [palettesView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+                               palettesView.topAnchor.constraint(equalTo: palettesView.topAnchor),
+                               palettesView.widthAnchor.constraint(equalTo: palettesView.widthAnchor),
+                               palettesView.heightAnchor.constraint(equalTo: palettesView.heightAnchor)]
+                
+                NSLayoutConstraint.activate(constraints)
+                
                 // toolbox buttons
                 
                 let buttons = [exportButton, changeBackgroundButton, gridLinesButton, summaryButton]
@@ -806,12 +824,15 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
         
         // rotation
-        setPaintPanelBackground(adjust: false)
-        
-        surfaceView.interactiveCanvas.updateDeviceViewport(screenSize: view!.frame.size)
-        self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
-        
-        self.deviceViewportSummaryView.setNeedsDisplay()
+        if lastViewFrameSize.width != view!.frame.size.width || lastViewFrameSize.height != view!.frame.size.height {
+            setPaintPanelBackground(adjust: false)
+            
+            surfaceView.interactiveCanvas.updateDeviceViewport(screenSize: view!.frame.size)
+            self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+            lastViewFrameSize = view!.frame.size
+            
+            self.deviceViewportSummaryView.setNeedsDisplay()
+        }
     }
     
     override var prefersStatusBarHidden: Bool {

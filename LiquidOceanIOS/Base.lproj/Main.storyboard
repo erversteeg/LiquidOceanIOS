@@ -39,7 +39,7 @@
                                             <constraint firstAttribute="height" constant="200" id="4Mq-C2-OyC"/>
                                             <constraint firstAttribute="width" constant="582" id="8vh-e2-z3F"/>
                                         </constraints>
-                                        <string key="text">It's easy to get started. In draw mode, tap the draw icon to bring up the draw panel. From here you can choose a color. Tap and drag anywhere on the canvas to draw that color. Tap and drag back over any piels that you want to remove. Finalize by tapping the green checkmark, or to cancel, tap the red x.</string>
+                                        <string key="text">It's easy to get started. Enter into the canvas then tap the three dot icon to bring up the color panel. From here you can choose a color and do many other things. Tap and drag anywhere on the canvas to draw the currently selected color. Tap and drag back over any pixels that you want to remove. Finalize by tapping the green checkmark, or to cancel, tap the red x.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -70,7 +70,7 @@
                                             <constraint firstAttribute="width" constant="582" id="2xf-Gn-4MB"/>
                                             <constraint firstAttribute="height" constant="200" id="7ca-ej-mlQ"/>
                                         </constraints>
-                                        <string key="text">The first tool is the export tool. Tap the icon then select or drag around your drawing. A preview will appear with two export options in the upper right. The left icon is to save your drawing locally to your device photos. The right icon is to share your drawing through text, email, and other apps.</string>
+                                        <string key="text">The first tool is the export tool. Tap the icon then select or drag around your drawing. A preview will appear with two export options in the upper right. The left icon is to save your drawing locally to your device photos. The right icon is to share your drawing through text, email, social meida, and other apps.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -252,7 +252,7 @@
                                             <constraint firstAttribute="width" constant="572" id="Ioh-5p-6aq"/>
                                             <constraint firstAttribute="height" constant="200" id="pch-lS-kga"/>
                                         </constraints>
-                                        <string key="text">The default color palette is the Recent Color palette. It is composed of all the colors that you have drawn with recently. To add a new color palette tap on "Recent Color" in the draw panel. Then tap the + button and enter a name for your new palette. The new palette will be added to your list of palettes. Select the new palette by tapping on it in the list. As you use the color picker to select colors you will see a + and - sign under the palette name in the draw panel. Tap the + icon to add the color to your palette or tap the - icon to remove the color from your palette.</string>
+                                        <mutableString key="text">The default color palette is the Recent Color palette. It is composed of all the colors that you have drawn with recently. To add a new color palette tap on "Recent Color" in the draw panel. Then tap the + button and enter a name for your new palette. The new palette will be added to your list of palettes. Select the new palette by tapping on it in the list. As you use the color picker to select colors you will see a + and - sign under the palette name in the color panel. Tap the + icon to add the color to the palette or tap the - icon to remove the color from the palette.</mutableString>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -3601,6 +3601,7 @@
                         <outlet property="paletteRemoveColor" destination="P8k-XK-aMp" id="Ogr-7R-oap"/>
                         <outlet property="paletteRemoveColorAction" destination="2aL-ak-Gh8" id="vCB-Ks-de2"/>
                         <outlet property="palettesView" destination="0bh-it-Xd2" id="Xtd-8L-sSV"/>
+                        <outlet property="palettesViewTrailing" destination="02I-nm-9OL" id="SQg-qr-Lbn"/>
                         <outlet property="pixelHistoryView" destination="0af-Id-wac" id="pV6-j1-63X"/>
                         <outlet property="pixelHistoryViewLeading" destination="Vzr-rr-hEP" id="Q96-5W-mrX"/>
                         <outlet property="pixelHistoryViewTop" destination="CMp-7O-VLW" id="Vwe-K6-V2X"/>
@@ -3874,11 +3875,11 @@
             <objects>
                 <viewController id="4Eu-IR-h8h" customClass="RecentColorsViewController" customModule="LiquidOceanIOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m54-ZD-Z77">
-                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="150" height="70"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0tb-gh-gwe">
-                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="70"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Gov-3c-91k">
                                     <size key="itemSize" width="128" height="128"/>
@@ -3888,7 +3889,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RecentColorCell" id="D19-1N-fc8" customClass="RecentColorCollectionViewCell" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="-14" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="11" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="akD-rd-jML">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -4600,7 +4601,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="Oc8-rR-yNG"/>
+        <segue reference="xNZ-J9-gls"/>
         <segue reference="jzH-A0-0Va"/>
     </inferredMetricsTieBreakers>
     <resources>
