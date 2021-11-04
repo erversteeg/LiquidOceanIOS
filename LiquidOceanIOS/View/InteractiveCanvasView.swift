@@ -84,6 +84,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     
     var startScaleFactor: CGFloat = 0
     
+    var touchedCanvasEdge = false
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
@@ -160,8 +162,9 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 paintActionDelegate?.notifyPaintActionStarted()
                 
                 if (location.x > view.frame.size.width - 50 && !SessionSettings.instance.rightHanded) ||
-                    (location.x < 50 && SessionSettings.instance.rightHanded) {
+                    (location.x < 50 && SessionSettings.instance.rightHanded || touchedCanvasEdge) {
                     canvasEdgeTouchDelegate?.onTouchCanvasEdge()
+                    touchedCanvasEdge = true
                     return
                 }
                 
@@ -206,6 +209,10 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         }
         else if sender.state == .changed {
             if mode == .painting {
+                if touchedCanvasEdge {
+                    return
+                }
+                
                 let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
                 
                 if self.undo {
@@ -257,6 +264,9 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                     }
                     objectSelectionDelegate?.notifyObjectSelectionEnded()
                 }
+            }
+            else if mode == .painting {
+                touchedCanvasEdge = false
             }
         }
     }

@@ -702,6 +702,8 @@
                         <outlet property="howtoLabel" destination="eke-UG-ryz" id="B4W-gY-8Hk"/>
                         <outlet property="leftyLabel" destination="wZh-Wf-mIb" id="du6-sB-fET"/>
                         <outlet property="menuContainer" destination="HgT-su-IqO" id="FOW-TQ-p5D"/>
+                        <outlet property="menuContainerHeight" destination="dJm-sz-GaJ" id="h48-fd-3XJ"/>
+                        <outlet property="menuContainerWidth" destination="NLP-ad-Ve9" id="4zb-xc-2ZZ"/>
                         <outlet property="optionsLabel" destination="Q0v-4q-Uqr" id="GUO-J0-foL"/>
                         <outlet property="rightyLabel" destination="oun-2X-gAO" id="SQf-jS-Fz5"/>
                         <outlet property="singleButton" destination="c6s-X2-qq5" id="OKb-hm-yHw"/>
@@ -4049,6 +4051,7 @@
                     <connections>
                         <outlet property="actualSizeLabel" destination="wff-Ag-cNh" id="Uzc-j0-hbt"/>
                         <outlet property="artSizeSwitch" destination="HCR-md-Wjq" id="j8w-Aa-6gd"/>
+                        <outlet property="artSizeSwitchTop" destination="mSo-b3-BWE" id="ZH2-3o-tM2"/>
                         <outlet property="artView" destination="GIL-ip-Skh" id="DfB-Bi-pcR"/>
                         <outlet property="artViewHeight" destination="MA1-Ll-daa" id="p2c-qZ-RgI"/>
                         <outlet property="artViewWidth" destination="Ubd-MB-MXj" id="pg4-hn-a9D"/>

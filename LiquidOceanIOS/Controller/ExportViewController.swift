@@ -27,6 +27,8 @@ class ExportViewController: UIViewController {
     @IBOutlet weak var actualSizeLabel: UILabel!
     @IBOutlet weak var artSizeSwitch: UISwitch!
     
+    @IBOutlet weak var artSizeSwitchTop: NSLayoutConstraint!
+    
     var _art: [InteractiveCanvas.RestorePoint]?
     var art: [InteractiveCanvas.RestorePoint]? {
         set {
@@ -102,8 +104,12 @@ class ExportViewController: UIViewController {
         
         if view.frame.size.height > 600 {
             artViewWidth.constant = view.frame.size.width - 130
-            artViewHeight.constant = view.frame.size.height - 130
+            artViewHeight.constant = view.frame.size.height - 200
+            
+            artSizeSwitchTop.constant = 45
         }
+        
+        artView.setNeedsDisplay()
     }
     
     @IBAction func artSizeValueChanged(_ sender: UISwitch) {

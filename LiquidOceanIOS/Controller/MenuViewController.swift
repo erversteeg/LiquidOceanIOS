@@ -47,6 +47,9 @@ class MenuViewController: UIViewController, AchievementListener {
     @IBOutlet weak var artView: ArtView!
     @IBOutlet weak var menuContainer: UIView!
     
+    @IBOutlet weak var menuContainerWidth: NSLayoutConstraint!
+    @IBOutlet weak var menuContainerHeight: NSLayoutConstraint!
+    
     var realmId = 0
     
     var showcaseTimer: Timer!
@@ -376,6 +379,10 @@ class MenuViewController: UIViewController, AchievementListener {
     
     func toggleMenuButtons(show: Bool, depth: Int) {
         if depth == 0 {
+            if show {
+                menuContainerHeight.constant = 190
+            }
+            
             self.drawLabel.isHidden = !show
             
             self.optionsLabel.isHidden = !show
@@ -393,8 +400,11 @@ class MenuViewController: UIViewController, AchievementListener {
             self.devButton.isHidden = true
         }
         else if depth == 2 {
-            leftyLabel.isHidden = !show
+            if show {
+                menuContainerHeight.constant = 140
+            }
             
+            leftyLabel.isHidden = !show
             rightyLabel.isHidden = !show
         }
     }

@@ -1475,16 +1475,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
         if result != nil && textField.text!.count == 6 {
             self.setColorFromHexString(hexString: textField.text!)
+            textField.resignFirstResponder()
         }
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if range.location > 5 {
-            return false
-        }
-        else {
-            return true
-        }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     // color picker layout delegate

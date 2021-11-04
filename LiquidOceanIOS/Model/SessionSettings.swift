@@ -435,15 +435,13 @@ class SessionSettings: NSObject {
             artShowcase = [[InteractiveCanvas.RestorePoint]]()
         }
         
-        if var artShowcase = self.artShowcase {
-            if artShowcase.count < 10 {
-                self.artShowcase!.append(art)
-            }
-            else {
-                let rIndex = Int(arc4random() % UInt32(artShowcase.count))
-                artShowcase.remove(at: rIndex)
-                artShowcase.insert(art, at: rIndex)
-            }
+        if artShowcase!.count < 10 {
+            self.artShowcase!.append(art)
+        }
+        else {
+            let rIndex = Int(arc4random() % UInt32(artShowcase!.count))
+            artShowcase!.remove(at: rIndex)
+            artShowcase!.insert(art, at: rIndex)
         }
     }
     
