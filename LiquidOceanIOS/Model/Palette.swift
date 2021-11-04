@@ -16,12 +16,7 @@ class Palette: NSObject {
     
     var displayName: String {
         get {
-            if name.count > 12 {
-                return name.prefix(10) + "..."
-            }
-            else {
-                return name
-            }
+            return name
         }
     }
     

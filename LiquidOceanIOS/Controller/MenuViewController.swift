@@ -65,6 +65,9 @@ class MenuViewController: UIViewController, AchievementListener {
         (gradient1: Utils.int32FromColorHex(hex: "0xff242e8f"), gradient2: Utils.int32FromColorHex(hex: "0xff8f3234")),
         (gradient1: Utils.int32FromColorHex(hex: "0xff898f1d"), gradient2: Utils.int32FromColorHex(hex: "0xff158f86"))]
     
+    var cBackgroundGradientIndex = 0
+    var insertedSublayer = false
+    
     var menuLayer = 0
     
     var defaultLabelColor: Int32 = 0
@@ -186,6 +189,14 @@ class MenuViewController: UIViewController, AchievementListener {
         Animator.animateMenuButtons(views: [[self.drawLabel], [self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        view!.backgroundColor = UIColor.black
+        view.setNeedsDisplay()
+        artView.setNeedsDisplay()
+        
+        setGradient(bounds: CGRect(x: 0, y: 0, width: size.width, height: size.height), index: cBackgroundGradientIndex)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         StatTracker.instance.achievementListener = nil
         
@@ -249,6 +260,7 @@ class MenuViewController: UIViewController, AchievementListener {
             highlightLabel(label: drawLabel)
         }
         else if (sender.state == .ended) {
+            unhighlightLabel(label: drawLabel)
             drawLabelTapped()
         }
     }
@@ -262,6 +274,7 @@ class MenuViewController: UIViewController, AchievementListener {
             highlightLabel(label: optionsLabel)
         }
         else if (sender.state == .ended) {
+            unhighlightLabel(label: optionsLabel)
             optionsLabelTapped()
         }
     }
@@ -275,6 +288,7 @@ class MenuViewController: UIViewController, AchievementListener {
             highlightLabel(label: howtoLabel)
         }
         else if (sender.state == .ended) {
+            unhighlightLabel(label: howtoLabel)
             howtoLabelTapped()
         }
     }
@@ -298,6 +312,7 @@ class MenuViewController: UIViewController, AchievementListener {
             highlightLabel(label: leftyLabel)
         }
         else if (sender.state == .ended) {
+            unhighlightLabel(label: leftyLabel)
             leftyLabelTapped()
         }
     }
@@ -321,6 +336,7 @@ class MenuViewController: UIViewController, AchievementListener {
             highlightLabel(label: rightyLabel)
         }
         else if (sender.state == .ended) {
+            unhighlightLabel(label: rightyLabel)
             rightyLabelTapped()
         }
     }
@@ -335,17 +351,27 @@ class MenuViewController: UIViewController, AchievementListener {
             //SessionSettings.instance.quickSave()
         }
         
-        let randBackground = backgrounds[rIndex]
+        cBackgroundGradientIndex = rIndex
+        
+        setGradient(bounds: view.bounds, index: rIndex)
+    }
+    
+    func setGradient(bounds: CGRect, index: Int) {
+        let background = backgrounds[index]
         
         let gradient = CAGradientLayer()
 
-        gradient.frame = view.bounds
-        gradient.colors = [UIColor(argb: randBackground.gradient1).cgColor, UIColor(argb: randBackground.gradient2).cgColor]
+        gradient.frame = bounds
+        gradient.colors = [UIColor(argb: background.gradient1).cgColor, UIColor(argb: background.gradient2).cgColor]
         
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 1, y: 1)
 
+        if insertedSublayer {
+            view.layer.sublayers![0].removeFromSuperlayer()
+        }
         view.layer.insertSublayer(gradient, at: 0)
+        insertedSublayer = true
     }
     
     func toggleMenuButtons(show: Bool, depth: Int) {

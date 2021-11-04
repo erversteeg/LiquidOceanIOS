@@ -29,6 +29,8 @@ class ColorPickerOutletsViewController: CustomColorPickerViewController {
     @IBOutlet weak var hsbWheelWidth: NSLayoutConstraint!
     @IBOutlet weak var hsbWheelHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var brightnessSliderWidth: NSLayoutConstraint!
+    
     var layoutDelegate: ColorPickerLayoutDelegate?
     
     override func viewDidLoad() {

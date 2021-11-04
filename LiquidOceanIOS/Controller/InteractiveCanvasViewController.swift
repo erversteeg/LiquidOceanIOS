@@ -171,6 +171,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     var paintTextModeAmt = 1
     var paintTextModeHide = 2
     
+    var paintPanelBackgroundSet = false
+    
     var singlePlaySaveTimer: Timer!
     
     var pixelHistoryViewController: PixelHistoryViewController!
@@ -331,10 +333,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.changeBackgroundAction.setNeedsDisplay()
             self.gridLinesAction.setNeedsDisplay()
             self.summaryAction.setNeedsDisplay()
-            self.paintPanelButton.setNeedsDisplay()
+            self.paintPanelAction.setNeedsDisplay()
             self.backButton.setNeedsDisplay()
             self.paletteAddColorAction.setNeedsDisplay()
             self.paletteRemoveColorAction.setNeedsDisplay()
+            
+            self.toolboxActionView.setNeedsDisplay()
+            self.recentColorsActionView.setNeedsDisplay()
             
             self.palettesViewController.addPaletteAction.setNeedsDisplay()
             
@@ -599,6 +604,14 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     }
     
     override func viewDidLayoutSubviews() {
+        let panelRatio = paintPanel.frame.size.width / paintPanel.frame.size.height
+        
+        var adjust = false
+        if panelRatio < 0.4 || panelRatio > 0.6 {
+            paintPanelWidth.constant = paintPanel.frame.size.height * 0.25
+            adjust = true
+        }
+        
         if initial {
             let backX = self.backButton.frame.origin.x
             let paintPanelButtonX = self.paintPanelButton.frame.origin.x + self.paintPanelButton.frame.size.width
@@ -644,14 +657,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             if recentColorsX < 20 {
                 recentColorsContainerLeading.constant = 20
                 recentColorsContainerBottom.constant = 20
-            }
-            
-            let panelRatio = paintPanel.frame.size.width / paintPanel.frame.size.height
-            
-            var adjust = false
-            if panelRatio < 0.4 || panelRatio > 0.6 {
-                paintPanelWidth.constant = paintPanel.frame.size.height * 0.25
-                adjust = true
             }
             
             // right-handed
@@ -799,6 +804,14 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             initial = false
         }
+        
+        // rotation
+        setPaintPanelBackground(adjust: false)
+        
+        surfaceView.interactiveCanvas.updateDeviceViewport(screenSize: view!.frame.size)
+        self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+        
+        self.deviceViewportSummaryView.setNeedsDisplay()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -997,7 +1010,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             colorPickerViewController.hsbWheelXCenter.constant = 0
             colorPickerViewController.hsbWheelYCenter.constant = 0
             
+            colorPickerViewController.brightnessSliderWidth.constant *= 1.5
+            
             resizedColorPicker = true
+        }
+        else if view.frame.size.height > 600 {
+            colorPickerFrameWidth.constant = 330 * 1.4
         }
         else if view.frame.size.height <= 600 {
             colorPickerFrameWidth.constant = 330
@@ -1387,10 +1405,16 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             backgroundImage.contentMode = .topLeft
         }
         else {
-            backgroundImage.contentMode = .scaleToFill
+            backgroundImage.contentMode = .scaleAspectFill
+        }
+        
+        if paintPanelBackgroundSet {
+            self.paintPanel.subviews[0].removeFromSuperview()
         }
         
         self.paintPanel.insertSubview(backgroundImage, at: 0)
+        
+        paintPanelBackgroundSet = true
     }
     
     func themeConfigFromBackground() -> PanelThemeConfig {

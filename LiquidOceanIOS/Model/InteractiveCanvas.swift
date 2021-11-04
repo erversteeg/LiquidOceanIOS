@@ -791,7 +791,7 @@ class InteractiveCanvas: NSObject {
         let h = bottom - top
         
         // error! reset the canvas viewport
-        if w <= 0 || h <= 0 || w <= h {
+        if w <= 0 || h <= 0 {
             deviceViewportResetDelegate?.resetDeviceViewport()
         }
     }
@@ -876,7 +876,7 @@ class InteractiveCanvas: NSObject {
         let h = bottom - top
         
         // error! reset the canvas viewport
-        if w <= 0 || h <= 0 || w <= h {
+        if w <= 0 || h <= 0 {
             deviceViewportResetDelegate?.resetDeviceViewport()
         }
         
