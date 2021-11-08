@@ -17,6 +17,14 @@ class HowtoViewController: UIViewController {
     
     @IBOutlet weak var step1Text: UILabel!
     @IBOutlet weak var step2Text: UILabel!
+    @IBOutlet weak var step3Text: UILabel!
+    @IBOutlet weak var step4Text: UILabel!
+    @IBOutlet weak var step5Text: UILabel!
+    @IBOutlet weak var step6Text: UILabel!
+    @IBOutlet weak var step7Text: UILabel!
+    @IBOutlet weak var step8Text: UILabel!
+    @IBOutlet weak var step9Text: UILabel!
+    @IBOutlet weak var step10Text: UILabel!
     
     @IBOutlet weak var paintAction: ActionButtonView!
     @IBOutlet weak var exportAction: ActionButtonView!
@@ -73,6 +81,12 @@ class HowtoViewController: UIViewController {
             step1Text.isHidden = true
             paintAction.isHidden = true
         }
+        
+        let stepLabels = [step1Text, step2Text, step3Text, step4Text, step5Text,
+                          step6Text, step7Text, step8Text, step9Text, step10Text]
+        for label in stepLabels {
+            setStepBackground(label: label!)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,12 +104,20 @@ class HowtoViewController: UIViewController {
         let gradient = CAGradientLayer()
 
         gradient.frame = view.bounds
-        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff7755d4")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff5576d4")).cgColor]
+        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff5576d4")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff7755d4")).cgColor]
         
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 0, y: 1)
 
         view.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    func setStepBackground(label: UILabel) {
+        label.layer.cornerRadius = 10
+        label.layer.borderWidth = 1
+        label.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
+        
+        label.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x33000000"))
     }
     
     override func viewDidLayoutSubviews() {

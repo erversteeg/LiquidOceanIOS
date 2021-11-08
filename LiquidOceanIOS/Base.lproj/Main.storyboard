@@ -44,15 +44,15 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="W3u-Qq-Gw5">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="W3u-Qq-Gw5" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="107" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="4Mq-C2-OyC"/>
                                             <constraint firstAttribute="width" constant="582" id="8vh-e2-z3F"/>
                                         </constraints>
                                         <string key="text">It's easy to get started. Enter into the canvas then tap the three dot icon to bring up the color panel. From here you can choose a color and do many other things. Tap and drag anywhere on the canvas to draw the currently selected color. Tap and drag back over any pixels that you want to remove. Finalize by tapping the green checkmark, or to cancel, tap the red x.</string>
-                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jgq-qB-7ZJ" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -75,15 +75,15 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="JIy-Bo-zWO">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="JIy-Bo-zWO" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="250" y="567" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="2xf-Gn-4MB"/>
                                             <constraint firstAttribute="height" constant="200" id="7ca-ej-mlQ"/>
                                         </constraints>
                                         <string key="text">The first tool is the export tool. Tap the icon then select or drag around your drawing. A preview will appear with two export options in the upper right. The left icon is to save your drawing locally to your device photos. The right icon is to share your drawing through text, email, social meida, and other apps.</string>
-                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CBF-0O-nFt" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -106,14 +106,14 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The second tool is the background tool. Tap the icon to switch between different canvas backgrounds." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="jSn-YP-tCE">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The second tool is the background tool. Tap the icon to switch between different canvas backgrounds." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="jSn-YP-tCE" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="1027" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="GT1-Cd-LwN"/>
                                             <constraint firstAttribute="width" constant="582" id="ziH-pl-Sbw"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="olG-L1-J4d" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -136,15 +136,15 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4NK-Ap-2vD">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4NK-Ap-2vD" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="250" y="1487" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="gbU-pO-PIx"/>
                                             <constraint firstAttribute="height" constant="200" id="nrt-UL-W8t"/>
                                         </constraints>
                                         <string key="text">The third tool is the grid line toggle tool. Tap the icon to turn on and off grid lines. Grid lines appear when zoomed into the canvas.</string>
-                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nh-aT-CAJ" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -167,14 +167,14 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The fourth and final tool is the Canvas Summary tool. This shows a summary of all the pixels drawn onto the canvas." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="BWO-FU-dZt">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The fourth and final tool is the Canvas Summary tool. This shows a summary of all the pixels drawn onto the canvas." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="BWO-FU-dZt" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="1947" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="Z1g-Zf-tuB"/>
                                             <constraint firstAttribute="height" constant="200" id="mJc-bp-gF5"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89V-cx-YCq" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -197,14 +197,14 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The dot below all the tools is the toolbox toggle. Tap it to show and hide tools." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="AG8-0U-FwQ">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The dot below all the tools is the toolbox toggle. Tap it to show and hide tools." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="AG8-0U-FwQ" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="250" y="2342" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="LEd-6j-8tp"/>
                                             <constraint firstAttribute="width" constant="582" id="Lew-Zf-bYN"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XuQ-8Y-2rA" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -227,14 +227,14 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The dot on the opposite side of the toolbox toggle is the palette toggle. Tap it to show and hide the color palette." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-0s-MBD">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The dot on the opposite side of the toolbox toggle is the palette toggle. Tap it to show and hide the color palette." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-0s-MBD" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="2802" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="LaR-xI-XbB"/>
                                             <constraint firstAttribute="height" constant="200" id="Mqf-wq-pa6"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OgR-vk-nPy" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -257,15 +257,15 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="eep-v7-617">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="eep-v7-617" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="260" y="3262" width="572" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="572" id="Ioh-5p-6aq"/>
                                             <constraint firstAttribute="height" constant="200" id="pch-lS-kga"/>
                                         </constraints>
                                         <string key="text">The default color palette is the Recent Color palette. It is composed of all the colors that you have drawn with recently. To add a new color palette tap on "Recent Color" in the draw panel. Then tap the + button and enter a name for your new palette. The new palette will be added to your list of palettes. Select the new palette by tapping on it in the list. As you use the color picker to select colors you will see a + and - sign under the palette name in the color panel. Tap the + icon to add the color to the palette or tap the - icon to remove the color from the palette.</string>
-                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3r-kx-6ja">
@@ -290,15 +290,15 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="50Y-uP-zJE">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="50Y-uP-zJE" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="3722" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="3TQ-hn-Lx5"/>
                                             <constraint firstAttribute="width" constant="582" id="VRr-U3-qlc"/>
                                         </constraints>
                                         <string key="text">To create a sizing frame for art, press and hold anywhere on the canvas while not drawing. A frame configuration panel will appear. Enter the width and height then tap the Create button to create a frame.</string>
-                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9I-yk-HJY" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -321,15 +321,15 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="gZI-lb-PAx">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="gZI-lb-PAx" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="250" y="4182" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="03n-hw-Egk"/>
                                             <constraint firstAttribute="height" constant="200" id="STf-Mn-bWW"/>
                                         </constraints>
                                         <string key="text">To erase pixels, tap anywhere on the canvas where you haven't drawn yet with the color picker open to pick the transparent color off the canvas. Then draw back over the pixels that you want to erase.</string>
-                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
-                                        <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="niI-0H-Jd2" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -466,8 +466,16 @@
                         <outlet property="paintAction" destination="jgq-qB-7ZJ" id="263-JS-82r"/>
                         <outlet property="recentColorsContainerHeight" destination="M3r-Au-1bl" id="fzy-cj-mXT"/>
                         <outlet property="recentColorsContainerWidth" destination="cOK-nN-aaV" id="XsG-27-qNY"/>
+                        <outlet property="step10Text" destination="gZI-lb-PAx" id="FvH-43-Is0"/>
                         <outlet property="step1Text" destination="W3u-Qq-Gw5" id="XbT-jb-nVh"/>
                         <outlet property="step2Text" destination="JIy-Bo-zWO" id="9JO-uc-3yM"/>
+                        <outlet property="step3Text" destination="jSn-YP-tCE" id="nfs-ej-Q0d"/>
+                        <outlet property="step4Text" destination="4NK-Ap-2vD" id="hle-ed-OqE"/>
+                        <outlet property="step5Text" destination="BWO-FU-dZt" id="Hi0-yA-Q7j"/>
+                        <outlet property="step6Text" destination="AG8-0U-FwQ" id="BzQ-TF-gMa"/>
+                        <outlet property="step7Text" destination="V5B-0s-MBD" id="6OH-1f-Nfv"/>
+                        <outlet property="step8Text" destination="eep-v7-617" id="7uS-fb-lLe"/>
+                        <outlet property="step9Text" destination="50Y-uP-zJE" id="yBu-TW-FsO"/>
                         <outlet property="summaryAction" destination="89V-cx-YCq" id="R78-Bs-nnT"/>
                         <segue destination="HYu-qW-Nhe" kind="unwind" identifier="UnwindToMenu" animates="NO" unwindAction="unwindToViewControllerWithSegue:" id="axW-jb-qk6"/>
                     </connections>
@@ -486,7 +494,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HgT-su-IqO">
-                                <rect key="frame" x="576" y="112" width="260" height="190"/>
+                                <rect key="frame" x="556" y="112" width="260" height="190"/>
                                 <subviews>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MdV-pg-OEF" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="20" y="20" width="220" height="40"/>
@@ -626,7 +634,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJ4-0j-Gbk" customClass="ArtView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                <rect key="frame" x="50" y="57" width="486" height="300"/>
+                                <rect key="frame" x="50" y="57" width="466" height="300"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="WQr-LQ-tuL"/>
@@ -703,7 +711,7 @@
                             <constraint firstItem="AJ4-0j-Gbk" firstAttribute="centerY" secondItem="Z4r-xF-cLC" secondAttribute="centerY" id="3ue-dI-eh7"/>
                             <constraint firstItem="6km-e7-nf8" firstAttribute="top" secondItem="Z4r-xF-cLC" secondAttribute="topMargin" constant="20" id="5yN-Nu-uix"/>
                             <constraint firstItem="AJ4-0j-Gbk" firstAttribute="leading" secondItem="Z4r-xF-cLC" secondAttribute="leading" constant="50" id="8Ce-2j-bnd"/>
-                            <constraint firstAttribute="trailing" secondItem="HgT-su-IqO" secondAttribute="trailing" constant="60" id="Eb8-QY-KiJ"/>
+                            <constraint firstAttribute="trailing" secondItem="HgT-su-IqO" secondAttribute="trailing" constant="80" id="Eb8-QY-KiJ"/>
                             <constraint firstItem="6km-e7-nf8" firstAttribute="centerX" secondItem="Z4r-xF-cLC" secondAttribute="centerX" id="Sc4-7i-YZC"/>
                             <constraint firstItem="bP3-IR-f5V" firstAttribute="leading" secondItem="Z4r-xF-cLC" secondAttribute="leadingMargin" constant="-40" id="cf9-1J-U2y"/>
                             <constraint firstItem="HgT-su-IqO" firstAttribute="leading" secondItem="AJ4-0j-Gbk" secondAttribute="trailing" constant="40" id="gje-ZO-h9d"/>
