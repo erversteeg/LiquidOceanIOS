@@ -13,6 +13,15 @@
 		07006C4225DCB6D400DF9A64 /* PixelHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07006C4125DCB6D400DF9A64 /* PixelHistoryViewController.swift */; };
 		07006C4425DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07006C4325DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift */; };
 		0704FB7427397D3B009799E1 /* PaletteHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0704FB7327397D3B009799E1 /* PaletteHeaderCollectionReusableView.swift */; };
+		0704FB91273984C9009799E1 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0704FB88273984C3009799E1 /* Inter-Bold.ttf */; };
+		0704FB92273984C9009799E1 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0704FB89273984C4009799E1 /* Inter-Regular.ttf */; };
+		0704FB93273984C9009799E1 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0704FB8A273984C5009799E1 /* Inter-ExtraLight.ttf */; };
+		0704FB94273984C9009799E1 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0704FB8B273984C5009799E1 /* Inter-SemiBold.ttf */; };
+		0704FB95273984C9009799E1 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0704FB8C273984C6009799E1 /* Inter-Thin.ttf */; };
+		0704FB96273984C9009799E1 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0704FB8D273984C7009799E1 /* Inter-Black.ttf */; };
+		0704FB97273984C9009799E1 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0704FB8E273984C7009799E1 /* Inter-Medium.ttf */; };
+		0704FB98273984C9009799E1 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0704FB8F273984C8009799E1 /* Inter-Light.ttf */; };
+		0704FB99273984C9009799E1 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0704FB90273984C9009799E1 /* Inter-ExtraBold.ttf */; };
 		070DA9DD2732B97800D76775 /* CanvasImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070DA9DC2732B97800D76775 /* CanvasImportViewController.swift */; };
 		070DA9DF2732B98500D76775 /* CanvasExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070DA9DE2732B98500D76775 /* CanvasExportViewController.swift */; };
 		0712053625DEDF1100AE0F52 /* ActionButtonFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */; };
@@ -133,6 +142,15 @@
 		07006C4125DCB6D400DF9A64 /* PixelHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelHistoryViewController.swift; sourceTree = "<group>"; };
 		07006C4325DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		0704FB7327397D3B009799E1 /* PaletteHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		0704FB88273984C3009799E1 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
+		0704FB89273984C4009799E1 /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
+		0704FB8A273984C5009799E1 /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
+		0704FB8B273984C5009799E1 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		0704FB8C273984C6009799E1 /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Thin.ttf"; sourceTree = "<group>"; };
+		0704FB8D273984C7009799E1 /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Black.ttf"; sourceTree = "<group>"; };
+		0704FB8E273984C7009799E1 /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Medium.ttf"; sourceTree = "<group>"; };
+		0704FB8F273984C8009799E1 /* Inter-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Light.ttf"; sourceTree = "<group>"; };
+		0704FB90273984C9009799E1 /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
 		070DA9DC2732B97800D76775 /* CanvasImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasImportViewController.swift; sourceTree = "<group>"; };
 		070DA9DE2732B98500D76775 /* CanvasExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasExportViewController.swift; sourceTree = "<group>"; };
 		0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonFrame.swift; sourceTree = "<group>"; };
@@ -286,6 +304,22 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		0704FB75273982CE009799E1 /* font */ = {
+			isa = PBXGroup;
+			children = (
+				0704FB8D273984C7009799E1 /* Inter-Black.ttf */,
+				0704FB88273984C3009799E1 /* Inter-Bold.ttf */,
+				0704FB90273984C9009799E1 /* Inter-ExtraBold.ttf */,
+				0704FB8A273984C5009799E1 /* Inter-ExtraLight.ttf */,
+				0704FB8F273984C8009799E1 /* Inter-Light.ttf */,
+				0704FB8E273984C7009799E1 /* Inter-Medium.ttf */,
+				0704FB89273984C4009799E1 /* Inter-Regular.ttf */,
+				0704FB8B273984C5009799E1 /* Inter-SemiBold.ttf */,
+				0704FB8C273984C6009799E1 /* Inter-Thin.ttf */,
+			);
+			path = font;
+			sourceTree = "<group>";
+		};
 		07A305EF25D5B55B003A6CEA /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +408,7 @@
 		07BD25C525D43FB500CF812E /* LiquidOceanIOS */ = {
 			isa = PBXGroup;
 			children = (
+				0704FB75273982CE009799E1 /* font */,
 				07A9B15225EC86B1009A47DF /* json */,
 				07006C4525DEB54600DF9A64 /* Controller */,
 				07A305EF25D5B55B003A6CEA /* Images */,
@@ -556,16 +591,22 @@
 				07FF5F3925E5BDF6003E19AE /* fall_leaves.png in Resources */,
 				07BD25D625D43FB700CF812E /* LaunchScreen.storyboard in Resources */,
 				07FF5F2D25E5BDF6003E19AE /* foil.jpg in Resources */,
+				0704FB99273984C9009799E1 /* Inter-ExtraBold.ttf in Resources */,
 				0788E47D25FBD1D8004FC782 /* iOSDeviceModelMapping.plist in Resources */,
 				07FF5F2625E5BDF6003E19AE /* marble_2.jpg in Resources */,
 				07A9B18925ED6CCD009A47DF /* amb_8.jpg in Resources */,
 				07A9B19325ED6CCD009A47DF /* sf_1.jpg in Resources */,
+				0704FB93273984C9009799E1 /* Inter-ExtraLight.ttf in Resources */,
+				0704FB95273984C9009799E1 /* Inter-Thin.ttf in Resources */,
 				07FF5F2925E5BDF6003E19AE /* crystal_5.jpg in Resources */,
 				07A9B18C25ED6CCD009A47DF /* amb_15.jpg in Resources */,
 				07FF5F3825E5BDF6003E19AE /* water_texture.jpg in Resources */,
+				0704FB91273984C9009799E1 /* Inter-Bold.ttf in Resources */,
 				07FF5F2C25E5BDF6003E19AE /* space_texture.jpg in Resources */,
 				07FF5F3725E5BDF6003E19AE /* crystal_2.jpg in Resources */,
+				0704FB94273984C9009799E1 /* Inter-SemiBold.ttf in Resources */,
 				07A9B18325ED6CCD009A47DF /* amb_12.jpg in Resources */,
+				0704FB96273984C9009799E1 /* Inter-Black.ttf in Resources */,
 				07A9B16325EC8790009A47DF /* fries_json.json in Resources */,
 				07A9B19225ED6CCD009A47DF /* grass.jpg in Resources */,
 				07FF5F3125E5BDF6003E19AE /* crystal_9.jpg in Resources */,
@@ -574,9 +615,11 @@
 				07A9B16725EC8790009A47DF /* bird_json.json in Resources */,
 				07A9B16C25EC8790009A47DF /* contra_json.json in Resources */,
 				07A9B18825ED6CCD009A47DF /* amb_9.jpg in Resources */,
+				0704FB92273984C9009799E1 /* Inter-Regular.ttf in Resources */,
 				07A9B19425ED6CCD009A47DF /* amb_3.jpg in Resources */,
 				07FF5F3325E5BDF6003E19AE /* rainbow_foil.jpg in Resources */,
 				07A9B16225EC8790009A47DF /* mushroom_json.json in Resources */,
+				0704FB97273984C9009799E1 /* Inter-Medium.ttf in Resources */,
 				07FF5F3625E5BDF6003E19AE /* wood_texture_light.jpg in Resources */,
 				07A9B18525ED6CCD009A47DF /* amb_7.jpg in Resources */,
 				07A9B18D25ED6CCD009A47DF /* amb_2.jpg in Resources */,
@@ -601,6 +644,7 @@
 				07A9B16B25EC8790009A47DF /* leaf_json.json in Resources */,
 				07A9B18725ED6CCD009A47DF /* amb_10.jpg in Resources */,
 				07FF5F2A25E5BDF6003E19AE /* crystal_8.jpg in Resources */,
+				0704FB98273984C9009799E1 /* Inter-Light.ttf in Resources */,
 				07A9B18F25ED6CCD009A47DF /* amb_11.jpg in Resources */,
 				07FF5F3025E5BDF6003E19AE /* crystal_10.jpg in Resources */,
 				07A9B18425ED6CCD009A47DF /* amb_4.jpg in Resources */,

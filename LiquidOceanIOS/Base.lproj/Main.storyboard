@@ -9,6 +9,17 @@
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Inter-Bold.ttf">
+            <string>Inter-Bold</string>
+        </array>
+        <array key="Inter-Light.ttf">
+            <string>Inter-Light</string>
+        </array>
+        <array key="Inter-Medium.ttf">
+            <string>Inter-Medium</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Howto View Controller-->
         <scene sceneID="e2N-ht-ycY">
@@ -22,30 +33,30 @@
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Howto" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePD-Wx-iiY">
-                                        <rect key="frame" x="364" y="5" width="168" height="50"/>
+                                        <rect key="frame" x="364" y="0.0" width="168" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="168" id="5Yi-j7-T0y"/>
-                                            <constraint firstAttribute="height" constant="50" id="rEK-XV-86P"/>
+                                            <constraint firstAttribute="height" constant="45" id="rEK-XV-86P"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="W3u-Qq-Gw5">
-                                        <rect key="frame" x="64" y="87" width="582" height="200"/>
+                                        <rect key="frame" x="64" y="107" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="4Mq-C2-OyC"/>
                                             <constraint firstAttribute="width" constant="582" id="8vh-e2-z3F"/>
                                         </constraints>
                                         <string key="text">It's easy to get started. Enter into the canvas then tap the three dot icon to bring up the color panel. From here you can choose a color and do many other things. Tap and drag anywhere on the canvas to draw the currently selected color. Tap and drag back over any pixels that you want to remove. Finalize by tapping the green checkmark, or to cancel, tap the red x.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jgq-qB-7ZJ" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="726" y="162" width="50" height="50"/>
+                                        <rect key="frame" x="726" y="182" width="50" height="50"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="bPX-yv-RfJ"/>
@@ -53,30 +64,30 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export and Share" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNU-rt-djE">
-                                        <rect key="frame" x="198" y="437" width="500" height="50"/>
+                                        <rect key="frame" x="198" y="457" width="500" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="2zY-GM-GpN"/>
                                             <constraint firstAttribute="width" constant="500" id="Keq-Kc-FvK"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="JIy-Bo-zWO">
-                                        <rect key="frame" x="250" y="519" width="582" height="200"/>
+                                        <rect key="frame" x="250" y="567" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="2xf-Gn-4MB"/>
                                             <constraint firstAttribute="height" constant="200" id="7ca-ej-mlQ"/>
                                         </constraints>
                                         <string key="text">The first tool is the export tool. Tap the icon then select or drag around your drawing. A preview will appear with two export options in the upper right. The left icon is to save your drawing locally to your device photos. The right icon is to share your drawing through text, email, social meida, and other apps.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CBF-0O-nFt" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="120" y="594" width="50" height="50"/>
+                                        <rect key="frame" x="120" y="642" width="50" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="K78-rD-av9"/>
@@ -84,29 +95,29 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Background" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6p-iE-202">
-                                        <rect key="frame" x="198" y="869" width="500" height="50"/>
+                                        <rect key="frame" x="198" y="917" width="500" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="XeU-Wg-Vu8"/>
                                             <constraint firstAttribute="width" constant="500" id="aGN-VX-B5W"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The second tool is the background tool. Tap the icon to switch between different canvas backgrounds." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="jSn-YP-tCE">
-                                        <rect key="frame" x="64" y="951" width="582" height="200"/>
+                                        <rect key="frame" x="64" y="1027" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="GT1-Cd-LwN"/>
                                             <constraint firstAttribute="width" constant="582" id="ziH-pl-Sbw"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="olG-L1-J4d" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="726" y="1017.5" width="50" height="67"/>
+                                        <rect key="frame" x="726" y="1093.5" width="50" height="67"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="6Mn-YN-JbM"/>
@@ -114,30 +125,30 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grid Lines" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlD-m5-mCJ">
-                                        <rect key="frame" x="198" y="1301" width="500" height="50"/>
+                                        <rect key="frame" x="198" y="1377" width="500" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="500" id="TVW-GN-Jg1"/>
                                             <constraint firstAttribute="height" constant="50" id="ioB-n3-vrV"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4NK-Ap-2vD">
-                                        <rect key="frame" x="250" y="1383" width="582" height="200"/>
+                                        <rect key="frame" x="250" y="1487" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="gbU-pO-PIx"/>
                                             <constraint firstAttribute="height" constant="200" id="nrt-UL-W8t"/>
                                         </constraints>
                                         <string key="text">The third tool is the grid line toggle tool. Tap the icon to turn on and off grid lines. Grid lines appear when zoomed into the canvas.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nh-aT-CAJ" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="120" y="1474.5" width="50" height="17"/>
+                                        <rect key="frame" x="120" y="1578.5" width="50" height="17"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="DV9-jO-Bao"/>
@@ -145,29 +156,29 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas Summary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fj3-3h-yZ7">
-                                        <rect key="frame" x="198" y="1733" width="500" height="50"/>
+                                        <rect key="frame" x="198" y="1837" width="500" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="500" id="ViQ-oX-eht"/>
                                             <constraint firstAttribute="height" constant="50" id="laI-8D-DGB"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The fourth and final tool is the Canvas Summary tool. This shows a summary of all the pixels drawn onto the canvas." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="BWO-FU-dZt">
-                                        <rect key="frame" x="64" y="1815" width="582" height="200"/>
+                                        <rect key="frame" x="64" y="1947" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="Z1g-Zf-tuB"/>
                                             <constraint firstAttribute="height" constant="200" id="mJc-bp-gF5"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89V-cx-YCq" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="726" y="1890" width="50" height="50"/>
+                                        <rect key="frame" x="726" y="2022" width="50" height="50"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="2K7-YV-yoz"/>
@@ -175,29 +186,29 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Toggle Tools" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHC-Zn-NJ0">
-                                        <rect key="frame" x="198" y="2100" width="500" height="50"/>
+                                        <rect key="frame" x="198" y="2232" width="500" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="500" id="GMO-kT-eS9"/>
                                             <constraint firstAttribute="height" constant="50" id="IRV-XH-60A"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The dot below all the tools is the toolbox toggle. Tap it to show and hide tools." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="AG8-0U-FwQ">
-                                        <rect key="frame" x="250" y="2182" width="582" height="200"/>
+                                        <rect key="frame" x="250" y="2342" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="LEd-6j-8tp"/>
                                             <constraint firstAttribute="width" constant="582" id="Lew-Zf-bYN"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XuQ-8Y-2rA" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="135" y="2272" width="20" height="20"/>
+                                        <rect key="frame" x="135" y="2432" width="20" height="20"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="9ep-Xo-x7e"/>
@@ -205,29 +216,29 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Palette" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xzz-kO-Y7q">
-                                        <rect key="frame" x="198" y="2532" width="500" height="50"/>
+                                        <rect key="frame" x="198" y="2692" width="500" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="500" id="eR4-d3-vm3"/>
                                             <constraint firstAttribute="height" constant="50" id="jYk-9K-af7"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The dot on the opposite side of the toolbox toggle is the palette toggle. Tap it to show and hide the color palette." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-0s-MBD">
-                                        <rect key="frame" x="64" y="2614" width="582" height="200"/>
+                                        <rect key="frame" x="64" y="2802" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="LaR-xI-XbB"/>
                                             <constraint firstAttribute="height" constant="200" id="Mqf-wq-pa6"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OgR-vk-nPy" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="741" y="2704" width="20" height="20"/>
+                                        <rect key="frame" x="741" y="2892" width="20" height="20"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="E3U-p2-HHH"/>
@@ -235,30 +246,30 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Palettes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1pI-A2-lAf">
-                                        <rect key="frame" x="198" y="2964" width="500" height="50"/>
+                                        <rect key="frame" x="198" y="3152" width="500" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="500" id="NfC-ma-1ZG"/>
                                             <constraint firstAttribute="height" constant="50" id="pa6-7d-c2z"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="eep-v7-617">
-                                        <rect key="frame" x="260" y="3046" width="572" height="200"/>
+                                        <rect key="frame" x="260" y="3262" width="572" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="572" id="Ioh-5p-6aq"/>
                                             <constraint firstAttribute="height" constant="200" id="pch-lS-kga"/>
                                         </constraints>
                                         <string key="text">The default color palette is the Recent Color palette. It is composed of all the colors that you have drawn with recently. To add a new color palette tap on "Recent Color" in the draw panel. Then tap the + button and enter a name for your new palette. The new palette will be added to your list of palettes. Select the new palette by tapping on it in the list. As you use the color picker to select colors you will see a + and - sign under the palette name in the color panel. Tap the + icon to add the color to the palette or tap the - icon to remove the color from the palette.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3r-kx-6ja">
-                                        <rect key="frame" x="64" y="3096" width="100" height="100"/>
+                                        <rect key="frame" x="64" y="3312" width="100" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="M3r-Au-1bl"/>
                                             <constraint firstAttribute="width" constant="100" id="cOK-nN-aaV"/>
@@ -268,30 +279,30 @@
                                         </connections>
                                     </containerView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frames" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5pG-lJ-4Q2">
-                                        <rect key="frame" x="198" y="3396" width="500" height="50"/>
+                                        <rect key="frame" x="198" y="3612" width="500" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="aDX-sl-YuC"/>
                                             <constraint firstAttribute="width" constant="500" id="mz9-eP-g18"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="50Y-uP-zJE">
-                                        <rect key="frame" x="64" y="3478" width="582" height="200"/>
+                                        <rect key="frame" x="64" y="3722" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="3TQ-hn-Lx5"/>
                                             <constraint firstAttribute="width" constant="582" id="VRr-U3-qlc"/>
                                         </constraints>
                                         <string key="text">To create a sizing frame for art, press and hold anywhere on the canvas while not drawing. A frame configuration panel will appear. Enter the width and height then tap the Create button to create a frame.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9I-yk-HJY" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="726" y="3548" width="50" height="60"/>
+                                        <rect key="frame" x="726" y="3792" width="50" height="60"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="c2Y-y3-N5b"/>
@@ -299,30 +310,30 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eraser" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5og-ZQ-Y2A">
-                                        <rect key="frame" x="198" y="3828" width="500" height="50"/>
+                                        <rect key="frame" x="198" y="4072" width="500" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="500" id="Pv7-Pa-VaO"/>
                                             <constraint firstAttribute="height" constant="50" id="tFR-nr-eyh"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="gZI-lb-PAx">
-                                        <rect key="frame" x="250" y="3910" width="582" height="200"/>
+                                        <rect key="frame" x="250" y="4182" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="03n-hw-Egk"/>
                                             <constraint firstAttribute="height" constant="200" id="STf-Mn-bWW"/>
                                         </constraints>
                                         <string key="text">To erase pixels, tap anywhere on the canvas where you haven't drawn yet with the color picker open to pick the transparent color off the canvas. Then draw back over the pixels that you want to erase.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="0.99019607840000001" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="niI-0H-Jd2" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="135" y="4000" width="20" height="20"/>
+                                        <rect key="frame" x="135" y="4272" width="20" height="20"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Mi0-aF-cvD"/>
@@ -334,15 +345,15 @@
                                     <constraint firstItem="d9I-yk-HJY" firstAttribute="centerY" secondItem="50Y-uP-zJE" secondAttribute="centerY" id="0Nv-pW-sx6"/>
                                     <constraint firstAttribute="trailing" secondItem="eep-v7-617" secondAttribute="trailing" constant="64" id="2VD-Bh-aRV"/>
                                     <constraint firstItem="Xzz-kO-Y7q" firstAttribute="top" secondItem="AG8-0U-FwQ" secondAttribute="bottom" constant="150" id="2tL-Qd-v9j"/>
-                                    <constraint firstItem="BWO-FU-dZt" firstAttribute="top" secondItem="Fj3-3h-yZ7" secondAttribute="bottom" constant="32" id="3zs-XU-DHC"/>
-                                    <constraint firstItem="jSn-YP-tCE" firstAttribute="top" secondItem="u6p-iE-202" secondAttribute="bottom" constant="32" id="4Hr-nA-Xwx"/>
+                                    <constraint firstItem="BWO-FU-dZt" firstAttribute="top" secondItem="Fj3-3h-yZ7" secondAttribute="bottom" constant="60" id="3zs-XU-DHC"/>
+                                    <constraint firstItem="jSn-YP-tCE" firstAttribute="top" secondItem="u6p-iE-202" secondAttribute="bottom" constant="60" id="4Hr-nA-Xwx"/>
                                     <constraint firstItem="4NK-Ap-2vD" firstAttribute="centerY" secondItem="0nh-aT-CAJ" secondAttribute="centerY" id="4S6-Gk-Rbr"/>
                                     <constraint firstItem="niI-0H-Jd2" firstAttribute="centerY" secondItem="gZI-lb-PAx" secondAttribute="centerY" id="4fC-D1-1iV"/>
                                     <constraint firstItem="jSn-YP-tCE" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="64" id="5Ny-A4-0bf"/>
                                     <constraint firstItem="NfK-oz-Ar6" firstAttribute="trailing" secondItem="jgq-qB-7ZJ" secondAttribute="trailing" constant="120" id="5YW-Vb-kHZ"/>
-                                    <constraint firstItem="gZI-lb-PAx" firstAttribute="top" secondItem="5og-ZQ-Y2A" secondAttribute="bottom" constant="32" id="6dF-FK-pXS"/>
+                                    <constraint firstItem="gZI-lb-PAx" firstAttribute="top" secondItem="5og-ZQ-Y2A" secondAttribute="bottom" constant="60" id="6dF-FK-pXS"/>
                                     <constraint firstItem="u6p-iE-202" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="7Zz-Ez-Rzy"/>
-                                    <constraint firstItem="JIy-Bo-zWO" firstAttribute="top" secondItem="pNU-rt-djE" secondAttribute="bottom" constant="32" id="7zw-5F-KYY"/>
+                                    <constraint firstItem="JIy-Bo-zWO" firstAttribute="top" secondItem="pNU-rt-djE" secondAttribute="bottom" constant="60" id="7zw-5F-KYY"/>
                                     <constraint firstItem="XuQ-8Y-2rA" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="135" id="8PS-BH-bNR"/>
                                     <constraint firstItem="W3u-Qq-Gw5" firstAttribute="leading" secondItem="NfK-oz-Ar6" secondAttribute="leading" constant="64" id="AVE-00-QnI"/>
                                     <constraint firstItem="Fj3-3h-yZ7" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="CgE-lx-Jk5"/>
@@ -357,7 +368,7 @@
                                     <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="d9I-yk-HJY" secondAttribute="trailing" constant="120" id="IDc-In-pZN"/>
                                     <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="OgR-vk-nPy" secondAttribute="trailing" constant="135" id="K9A-zg-2c6"/>
                                     <constraint firstItem="BWO-FU-dZt" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="64" id="Kc6-T1-Teu"/>
-                                    <constraint firstItem="AG8-0U-FwQ" firstAttribute="top" secondItem="JHC-Zn-NJ0" secondAttribute="bottom" constant="32" id="Liv-3m-Ava"/>
+                                    <constraint firstItem="AG8-0U-FwQ" firstAttribute="top" secondItem="JHC-Zn-NJ0" secondAttribute="bottom" constant="60" id="Liv-3m-Ava"/>
                                     <constraint firstItem="jgq-qB-7ZJ" firstAttribute="leading" secondItem="W3u-Qq-Gw5" secondAttribute="trailing" constant="80" id="Lr2-b2-G9o"/>
                                     <constraint firstItem="XuQ-8Y-2rA" firstAttribute="centerY" secondItem="AG8-0U-FwQ" secondAttribute="centerY" id="NRv-3s-0PW"/>
                                     <constraint firstItem="OgR-vk-nPy" firstAttribute="leading" secondItem="V5B-0s-MBD" secondAttribute="trailing" constant="95" id="O9K-t0-Wdo"/>
@@ -377,20 +388,20 @@
                                     <constraint firstItem="5og-ZQ-Y2A" firstAttribute="top" secondItem="50Y-uP-zJE" secondAttribute="bottom" constant="150" id="cPM-4L-Tr3"/>
                                     <constraint firstItem="gZI-lb-PAx" firstAttribute="leading" secondItem="niI-0H-Jd2" secondAttribute="trailing" constant="95" id="cnb-hs-Ouk"/>
                                     <constraint firstItem="NfK-oz-Ar6" firstAttribute="trailing" secondItem="JIy-Bo-zWO" secondAttribute="trailing" constant="64" id="e3M-n0-se5"/>
-                                    <constraint firstItem="eep-v7-617" firstAttribute="top" secondItem="1pI-A2-lAf" secondAttribute="bottom" constant="32" id="eBg-ay-Q6e"/>
+                                    <constraint firstItem="eep-v7-617" firstAttribute="top" secondItem="1pI-A2-lAf" secondAttribute="bottom" constant="60" id="eBg-ay-Q6e"/>
                                     <constraint firstItem="eep-v7-617" firstAttribute="centerY" secondItem="Z3r-kx-6ja" secondAttribute="centerY" id="fZn-Oc-KEu"/>
                                     <constraint firstItem="pNU-rt-djE" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="h1q-7v-1p5"/>
                                     <constraint firstItem="5og-ZQ-Y2A" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="iT2-b5-w8y"/>
-                                    <constraint firstItem="4NK-Ap-2vD" firstAttribute="top" secondItem="YlD-m5-mCJ" secondAttribute="bottom" constant="32" id="j4B-ry-UZ9"/>
-                                    <constraint firstItem="V5B-0s-MBD" firstAttribute="top" secondItem="Xzz-kO-Y7q" secondAttribute="bottom" constant="32" id="kNt-CU-Emw"/>
+                                    <constraint firstItem="4NK-Ap-2vD" firstAttribute="top" secondItem="YlD-m5-mCJ" secondAttribute="bottom" constant="60" id="j4B-ry-UZ9"/>
+                                    <constraint firstItem="V5B-0s-MBD" firstAttribute="top" secondItem="Xzz-kO-Y7q" secondAttribute="bottom" constant="60" id="kNt-CU-Emw"/>
                                     <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="4NK-Ap-2vD" secondAttribute="trailing" constant="64" id="kda-kZ-bwB"/>
                                     <constraint firstItem="JIy-Bo-zWO" firstAttribute="leading" secondItem="CBF-0O-nFt" secondAttribute="trailing" constant="80" id="khq-j3-fH9"/>
                                     <constraint firstItem="5pG-lJ-4Q2" firstAttribute="top" secondItem="eep-v7-617" secondAttribute="bottom" constant="150" id="l6t-KZ-110"/>
                                     <constraint firstItem="YlD-m5-mCJ" firstAttribute="top" secondItem="jSn-YP-tCE" secondAttribute="bottom" constant="150" id="lDS-h5-4u2"/>
                                     <constraint firstItem="OgR-vk-nPy" firstAttribute="centerY" secondItem="V5B-0s-MBD" secondAttribute="centerY" id="lcC-Sl-NIj"/>
-                                    <constraint firstItem="W3u-Qq-Gw5" firstAttribute="top" secondItem="ePD-Wx-iiY" secondAttribute="bottom" constant="32" id="n5B-DZ-fmb"/>
+                                    <constraint firstItem="W3u-Qq-Gw5" firstAttribute="top" secondItem="ePD-Wx-iiY" secondAttribute="bottom" constant="62" id="n5B-DZ-fmb"/>
                                     <constraint firstItem="YlD-m5-mCJ" firstAttribute="centerX" secondItem="z6E-cV-Ty3" secondAttribute="centerX" id="nGa-aG-lHj"/>
-                                    <constraint firstItem="ePD-Wx-iiY" firstAttribute="top" secondItem="VGm-qx-pHc" secondAttribute="top" constant="5" id="oqO-sH-99x"/>
+                                    <constraint firstItem="ePD-Wx-iiY" firstAttribute="top" secondItem="VGm-qx-pHc" secondAttribute="top" id="oqO-sH-99x"/>
                                     <constraint firstItem="V5B-0s-MBD" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="64" id="qLr-Q4-cRo"/>
                                     <constraint firstItem="89V-cx-YCq" firstAttribute="centerY" secondItem="BWO-FU-dZt" secondAttribute="centerY" id="qb0-49-2V5"/>
                                     <constraint firstItem="VGm-qx-pHc" firstAttribute="trailing" secondItem="JIy-Bo-zWO" secondAttribute="trailing" constant="64" id="rA8-l3-8KH"/>
@@ -399,10 +410,10 @@
                                     <constraint firstItem="d9I-yk-HJY" firstAttribute="leading" secondItem="50Y-uP-zJE" secondAttribute="trailing" constant="80" id="uQL-Ba-d81"/>
                                     <constraint firstItem="50Y-uP-zJE" firstAttribute="leading" secondItem="VGm-qx-pHc" secondAttribute="leading" constant="64" id="uY6-gJ-2FG"/>
                                     <constraint firstItem="4NK-Ap-2vD" firstAttribute="leading" secondItem="0nh-aT-CAJ" secondAttribute="trailing" constant="80" id="ulc-j8-K3l"/>
-                                    <constraint firstItem="50Y-uP-zJE" firstAttribute="top" secondItem="5pG-lJ-4Q2" secondAttribute="bottom" constant="32" id="wLq-Eo-L0y"/>
+                                    <constraint firstItem="50Y-uP-zJE" firstAttribute="top" secondItem="5pG-lJ-4Q2" secondAttribute="bottom" constant="60" id="wLq-Eo-L0y"/>
                                     <constraint firstItem="jgq-qB-7ZJ" firstAttribute="centerY" secondItem="W3u-Qq-Gw5" secondAttribute="centerY" id="x9J-qz-K8r"/>
                                     <constraint firstItem="olG-L1-J4d" firstAttribute="leading" secondItem="jSn-YP-tCE" secondAttribute="trailing" constant="80" id="yUr-wt-vXP"/>
-                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="bottom" secondItem="gZI-lb-PAx" secondAttribute="bottom" constant="100" id="yW4-j5-7tt"/>
+                                    <constraint firstItem="VGm-qx-pHc" firstAttribute="bottom" secondItem="gZI-lb-PAx" secondAttribute="bottom" constant="500" id="yW4-j5-7tt"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="VGm-qx-pHc"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="NfK-oz-Ar6"/>
@@ -531,11 +542,11 @@
                                             <constraint firstAttribute="height" constant="50" id="k3x-kp-Faw"/>
                                             <constraint firstAttribute="width" constant="200" id="l0g-ez-CNL"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OPTIONS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0v-4q-Uqr">
                                         <rect key="frame" x="30" y="70" width="210" height="50"/>
@@ -543,11 +554,11 @@
                                             <constraint firstAttribute="height" constant="50" id="atp-XL-drt"/>
                                             <constraint firstAttribute="width" constant="210" id="yAx-g3-q0r"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOWTO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eke-UG-ryz">
                                         <rect key="frame" x="30" y="125" width="200" height="50"/>
@@ -555,11 +566,11 @@
                                             <constraint firstAttribute="height" constant="50" id="0WF-kX-V24"/>
                                             <constraint firstAttribute="width" constant="200" id="5oG-c4-bXt"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LEFTY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZh-Wf-mIb">
                                         <rect key="frame" x="30" y="15" width="190" height="50"/>
@@ -567,11 +578,11 @@
                                             <constraint firstAttribute="height" constant="50" id="Ff2-LH-5O2"/>
                                             <constraint firstAttribute="width" constant="190" id="UsT-xP-LL4"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RIGHTY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oun-2X-gAO">
                                         <rect key="frame" x="30" y="75" width="210" height="50"/>
@@ -579,11 +590,11 @@
                                             <constraint firstAttribute="height" constant="50" id="VxN-ui-D5V"/>
                                             <constraint firstAttribute="width" constant="210" id="Xwu-cl-kRn"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -746,19 +757,19 @@
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Options" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbc-eb-pMK">
-                                        <rect key="frame" x="344" y="3" width="208" height="50"/>
+                                        <rect key="frame" x="344" y="-3" width="208" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="208" id="8bk-pm-Aat"/>
-                                            <constraint firstAttribute="height" constant="50" id="kTB-mc-MKV"/>
+                                            <constraint firstAttribute="height" constant="45" id="kTB-mc-MKV"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9a2-Ln-eCh">
-                                        <rect key="frame" x="398" y="1390" width="100" height="50"/>
+                                        <rect key="frame" x="398" y="1384" width="100" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="FLk-Vf-r8q"/>
                                             <constraint firstAttribute="width" constant="100" id="fND-mY-5q1"/>
@@ -769,7 +780,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEB-rZ-HbD">
-                                        <rect key="frame" x="348" y="1455" width="200" height="50"/>
+                                        <rect key="frame" x="348" y="1449" width="200" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="3db-ma-ebz"/>
                                             <constraint firstAttribute="height" constant="50" id="nUb-gK-ehL"/>
@@ -780,50 +791,53 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlE-7t-BIb">
-                                        <rect key="frame" x="373" y="1370" width="150" height="50"/>
+                                        <rect key="frame" x="373" y="1374" width="150" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="1dp-XI-eDm"/>
                                             <constraint firstAttribute="width" constant="150" id="iwB-he-CgJ"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
                                         <state key="normal" title="Export Canvas"/>
                                         <connections>
                                             <action selector="canvasExportPressed" destination="PmP-As-lpW" eventType="touchUpInside" id="64H-o9-ggp"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GuT-hT-zzn">
-                                        <rect key="frame" x="373" y="1430" width="150" height="50"/>
+                                        <rect key="frame" x="373" y="1434" width="150" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="k0y-ET-U1j"/>
                                             <constraint firstAttribute="width" constant="150" id="o1e-Iq-vv3"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
                                         <state key="normal" title="Import Canvas"/>
                                         <connections>
                                             <action selector="canvasImportPressed" destination="PmP-As-lpW" eventType="touchUpInside" id="PIY-8y-kbS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cef-6d-S8O">
-                                        <rect key="frame" x="373" y="1490" width="150" height="50"/>
+                                        <rect key="frame" x="373" y="1494" width="150" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="6Kk-yA-xLF"/>
                                             <constraint firstAttribute="width" constant="150" id="wqW-df-qNW"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
                                         <state key="normal" title="Erase Canvas"/>
                                         <connections>
                                             <action selector="singlePlayReset:" destination="PmP-As-lpW" eventType="touchUpInside" id="DLC-gd-hxC"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paint Panel Background Texture" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gc3-RK-j2z">
-                                        <rect key="frame" x="64" y="63" width="300" height="40"/>
+                                        <rect key="frame" x="64" y="57" width="500" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="D3L-lL-pmp"/>
-                                            <constraint firstAttribute="width" constant="300" id="i88-iS-M9f"/>
+                                            <constraint firstAttribute="width" constant="500" id="i88-iS-M9f"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                         <color key="textColor" red="0.99019607843137258" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0HD-T3-ygg">
-                                        <rect key="frame" x="64" y="110" width="768" height="200"/>
+                                        <rect key="frame" x="64" y="104" width="768" height="200"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="46O-1l-9iv"/>
@@ -879,7 +893,7 @@
                                         </connections>
                                     </collectionView>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change display name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlN-Qk-8Ro">
-                                        <rect key="frame" x="64" y="1560" width="300" height="40"/>
+                                        <rect key="frame" x="64" y="1564" width="300" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="3hq-vk-eME"/>
                                             <constraint firstAttribute="height" constant="40" id="yjJ-HJ-uQc"/>
@@ -889,7 +903,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-if-o1z">
-                                        <rect key="frame" x="536" y="1560" width="200" height="40"/>
+                                        <rect key="frame" x="536" y="1564" width="200" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="NL1-o9-9UU"/>
                                             <constraint firstAttribute="height" constant="40" id="OgX-it-fa8"/>
@@ -901,7 +915,7 @@
                                         </connections>
                                     </textField>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXz-Gu-sve">
-                                        <rect key="frame" x="779" y="1560" width="70" height="40"/>
+                                        <rect key="frame" x="779" y="1564" width="70" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="9Cs-JK-Axr"/>
                                             <constraint firstAttribute="height" constant="40" id="Rl4-qo-gjy"/>
@@ -913,7 +927,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cxa-sJ-owu">
-                                        <rect key="frame" x="64" y="810" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="804" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Circle color indicator" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJc-pn-Lj5">
                                                 <rect key="frame" x="16" y="8.5" width="200" height="43"/>
@@ -921,7 +935,7 @@
                                                     <constraint firstAttribute="width" constant="200" id="kHm-ep-oMU"/>
                                                     <constraint firstAttribute="height" constant="43" id="zAd-Iz-MRB"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -946,7 +960,7 @@
                                         </constraints>
                                     </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mjN-7G-HGz">
-                                        <rect key="frame" x="64" y="810" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="804" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show paint meter bar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tP5-2L-M4H">
                                                 <rect key="frame" x="16" y="8.5" width="200" height="43"/>
@@ -954,7 +968,7 @@
                                                     <constraint firstAttribute="height" constant="43" id="ooU-by-OfV"/>
                                                     <constraint firstAttribute="width" constant="200" id="y5q-h2-eAW"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -979,7 +993,7 @@
                                         </constraints>
                                     </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZo-Dm-5e2">
-                                        <rect key="frame" x="64" y="880" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="874" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show paint meter circle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffp-HE-t5c">
                                                 <rect key="frame" x="16" y="8.5" width="250" height="43"/>
@@ -1012,7 +1026,7 @@
                                         </constraints>
                                     </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1jo-Dv-ZE0">
-                                        <rect key="frame" x="64" y="950" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="944" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paint meter color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAM-zQ-jBh">
                                                 <rect key="frame" x="16" y="8.5" width="200" height="43"/>
@@ -1058,7 +1072,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Jn-Nf-vr3">
-                                        <rect key="frame" x="64" y="390" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="384" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas Lock Border" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vg-3I-eI5">
                                                 <rect key="frame" x="16" y="8.5" width="200" height="43"/>
@@ -1066,7 +1080,7 @@
                                                     <constraint firstAttribute="width" constant="200" id="Pfg-bV-ygv"/>
                                                     <constraint firstAttribute="height" constant="43" id="Uhl-ce-MkO"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1091,7 +1105,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nPG-P6-BAO">
-                                        <rect key="frame" x="64" y="320" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="314" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right-handed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rf-cg-374">
                                                 <rect key="frame" x="16" y="8.5" width="200" height="43"/>
@@ -1099,7 +1113,7 @@
                                                     <constraint firstAttribute="height" constant="43" id="DMc-dU-TmC"/>
                                                     <constraint firstAttribute="width" constant="200" id="gtd-KS-ElB"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1124,7 +1138,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bCL-gC-y0h">
-                                        <rect key="frame" x="64" y="460" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="454" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas Lock Color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIB-BY-JQZ">
                                                 <rect key="frame" x="16" y="8.5" width="200" height="43"/>
@@ -1132,7 +1146,7 @@
                                                     <constraint firstAttribute="width" constant="200" id="8ve-T2-6T1"/>
                                                     <constraint firstAttribute="height" constant="43" id="X7g-wr-KFp"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1150,7 +1164,7 @@
                                                     <constraint firstAttribute="height" constant="36" id="EiY-bf-oF8"/>
                                                     <constraint firstAttribute="width" constant="50" id="yCt-jQ-yKO"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
                                                 <state key="normal" title="Reset"/>
                                                 <connections>
                                                     <action selector="resetButtonPressed:" destination="PmP-As-lpW" eventType="touchUpInside" id="8Nl-Dj-GEb"/>
@@ -1170,15 +1184,15 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb9-h5-Mah">
-                                        <rect key="frame" x="64" y="530" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="524" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas grid line color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrY-eh-P8l">
-                                                <rect key="frame" x="16" y="8.5" width="200" height="43"/>
+                                                <rect key="frame" x="16" y="8.5" width="400" height="43"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="HMt-4g-5OE"/>
+                                                    <constraint firstAttribute="width" constant="400" id="HMt-4g-5OE"/>
                                                     <constraint firstAttribute="height" constant="43" id="jWS-Sn-4Oy"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1196,7 +1210,7 @@
                                                     <constraint firstAttribute="width" constant="50" id="i2G-aG-5dI"/>
                                                     <constraint firstAttribute="height" constant="36" id="rf6-fk-Rce"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
                                                 <state key="normal" title="Reset"/>
                                                 <connections>
                                                     <action selector="resetButtonPressed:" destination="PmP-As-lpW" eventType="touchUpInside" id="byh-eL-bPo"/>
@@ -1216,7 +1230,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2bo-3m-NSe">
-                                        <rect key="frame" x="64" y="600" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="594" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas background primary color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwF-nB-Of8">
                                                 <rect key="frame" x="16" y="8.5" width="350" height="43"/>
@@ -1224,7 +1238,7 @@
                                                     <constraint firstAttribute="width" constant="350" id="Ad7-96-cNY"/>
                                                     <constraint firstAttribute="height" constant="43" id="GLX-Rc-pe7"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1242,7 +1256,7 @@
                                                     <constraint firstAttribute="width" constant="50" id="9UU-KI-85u"/>
                                                     <constraint firstAttribute="height" constant="36" id="9VH-oT-Cgr"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
                                                 <state key="normal" title="Reset"/>
                                                 <connections>
                                                     <action selector="resetButtonPressed:" destination="PmP-As-lpW" eventType="touchUpInside" id="ryd-6v-38O"/>
@@ -1262,7 +1276,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AME-LP-3MV">
-                                        <rect key="frame" x="64" y="670" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="664" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas background secondary color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNk-d8-aRx">
                                                 <rect key="frame" x="16" y="8.5" width="350" height="43"/>
@@ -1270,7 +1284,7 @@
                                                     <constraint firstAttribute="height" constant="43" id="oyj-4j-OAf"/>
                                                     <constraint firstAttribute="width" constant="350" id="tZR-Ob-bo6"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1288,7 +1302,7 @@
                                                     <constraint firstAttribute="height" constant="36" id="T0P-8s-hdV"/>
                                                     <constraint firstAttribute="width" constant="50" id="sd7-Uh-qkn"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
                                                 <state key="normal" title="Reset"/>
                                                 <connections>
                                                     <action selector="resetButtonPressed:" destination="PmP-As-lpW" eventType="touchUpInside" id="HWG-dK-1f3"/>
@@ -1308,7 +1322,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jBc-fL-ijQ">
-                                        <rect key="frame" x="64" y="740" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="734" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frame color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CSB-Gv-Nee">
                                                 <rect key="frame" x="16" y="8.5" width="200" height="43"/>
@@ -1316,7 +1330,7 @@
                                                     <constraint firstAttribute="width" constant="200" id="2vg-Jg-grB"/>
                                                     <constraint firstAttribute="height" constant="43" id="Cah-bl-qKq"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1334,7 +1348,7 @@
                                                     <constraint firstAttribute="height" constant="36" id="6TE-Y1-AO7"/>
                                                     <constraint firstAttribute="width" constant="50" id="Ze0-1o-ipn"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
                                                 <state key="normal" title="Reset"/>
                                                 <connections>
                                                     <action selector="resetButtonPressed:" destination="PmP-As-lpW" eventType="touchUpInside" id="n5C-WX-CjX"/>
@@ -1354,15 +1368,15 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xYN-DJ-wVQ">
-                                        <rect key="frame" x="64" y="880" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="874" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Square color indicator" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTl-D4-YSx">
-                                                <rect key="frame" x="16" y="8.5" width="200" height="43"/>
+                                                <rect key="frame" x="16" y="8.5" width="400" height="43"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="pe9-L3-ejP"/>
+                                                    <constraint firstAttribute="width" constant="400" id="pe9-L3-ejP"/>
                                                     <constraint firstAttribute="height" constant="43" id="quu-hS-2fO"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1387,15 +1401,15 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N5g-mC-KdK">
-                                        <rect key="frame" x="64" y="950" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="944" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color indicator outline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiU-y2-mbJ">
-                                                <rect key="frame" x="16" y="8.5" width="200" height="43"/>
+                                                <rect key="frame" x="16" y="8.5" width="400" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="43" id="74k-8r-vxm"/>
-                                                    <constraint firstAttribute="width" constant="200" id="I2p-5F-rtI"/>
+                                                    <constraint firstAttribute="width" constant="400" id="I2p-5F-rtI"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1420,7 +1434,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j5k-LU-HJw">
-                                        <rect key="frame" x="64" y="1230" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="1224" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prompt Back" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbk-gT-af0">
                                                 <rect key="frame" x="16" y="8.5" width="200" height="43"/>
@@ -1428,7 +1442,7 @@
                                                     <constraint firstAttribute="width" constant="200" id="0AA-AU-dJ2"/>
                                                     <constraint firstAttribute="height" constant="43" id="JEX-gS-VI6"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1453,7 +1467,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gE-Cx-qwQ">
-                                        <rect key="frame" x="64" y="1160" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="1154" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Small action buttons" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ykE-fD-SE2">
                                                 <rect key="frame" x="16" y="8.5" width="200" height="43"/>
@@ -1461,7 +1475,7 @@
                                                     <constraint firstAttribute="width" constant="200" id="QGi-Uf-R45"/>
                                                     <constraint firstAttribute="height" constant="43" id="jkD-vU-R1x"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1486,7 +1500,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BPP-Jg-wWE">
-                                        <rect key="frame" x="64" y="1300" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="1294" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recent colors" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eh2-iq-msO">
                                                 <rect key="frame" x="16" y="8.5" width="200" height="43"/>
@@ -1494,116 +1508,116 @@
                                                     <constraint firstAttribute="height" constant="43" id="GGP-Pj-rs3"/>
                                                     <constraint firstAttribute="width" constant="200" id="GWs-kg-FD2"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="32" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJP-I7-TFB">
-                                                <rect key="frame" x="702" y="5" width="50" height="50"/>
+                                                <rect key="frame" x="702" y="7" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="HxR-6h-SsH"/>
                                                     <constraint firstAttribute="height" constant="50" id="pvT-yV-1Dz"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nzm-5T-dsA">
-                                                <rect key="frame" x="652" y="5" width="50" height="50"/>
+                                                <rect key="frame" x="652" y="7" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="yEC-oT-1Mg"/>
                                                     <constraint firstAttribute="width" constant="50" id="yep-IJ-X4A"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLq-EX-PGn">
-                                                <rect key="frame" x="602" y="5" width="50" height="50"/>
+                                                <rect key="frame" x="602" y="7" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="XGp-di-Irg"/>
                                                     <constraint firstAttribute="height" constant="50" id="jvf-Bf-Pba"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAg-ep-FQi">
-                                                <rect key="frame" x="552" y="5" width="50" height="50"/>
+                                                <rect key="frame" x="552" y="7" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="O73-wB-eVr"/>
                                                     <constraint firstAttribute="height" constant="50" id="trR-dG-icx"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oqh-eM-Qma">
-                                                <rect key="frame" x="502" y="5" width="50" height="50"/>
+                                                <rect key="frame" x="502" y="7" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="7Ay-Fq-Jf3"/>
                                                     <constraint firstAttribute="height" constant="50" id="vg9-0G-DAg"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Shg-sf-i1c">
-                                                <rect key="frame" x="452" y="5" width="50" height="50"/>
+                                                <rect key="frame" x="452" y="7" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="TKx-OQ-Wm1"/>
                                                     <constraint firstAttribute="width" constant="50" id="iGj-h7-Z6K"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MUa-ai-V5m">
-                                                <rect key="frame" x="402" y="5" width="50" height="50"/>
+                                                <rect key="frame" x="402" y="7" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="Hwx-Xs-LJZ"/>
                                                     <constraint firstAttribute="width" constant="50" id="LBt-ot-Cye"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2C-CT-McW">
-                                                <rect key="frame" x="352" y="5" width="50" height="50"/>
+                                                <rect key="frame" x="352" y="7" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="OHw-82-8Ee"/>
                                                     <constraint firstAttribute="width" constant="50" id="foe-2E-S7v"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="yAg-ep-FQi" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" id="1Of-Uv-eP3"/>
+                                            <constraint firstItem="yAg-ep-FQi" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" constant="2" id="1Of-Uv-eP3"/>
                                             <constraint firstItem="Shg-sf-i1c" firstAttribute="leading" secondItem="MUa-ai-V5m" secondAttribute="trailing" id="2fT-4n-SFg"/>
                                             <constraint firstAttribute="trailing" secondItem="CJP-I7-TFB" secondAttribute="trailing" constant="16" id="2sJ-ge-9ni"/>
                                             <constraint firstItem="Eh2-iq-msO" firstAttribute="leading" secondItem="BPP-Jg-wWE" secondAttribute="leading" constant="16" id="5ug-jp-jLq"/>
                                             <constraint firstItem="Nzm-5T-dsA" firstAttribute="leading" secondItem="dLq-EX-PGn" secondAttribute="trailing" id="8tm-Lk-9W9"/>
-                                            <constraint firstItem="dLq-EX-PGn" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" id="C1X-cS-EKq"/>
-                                            <constraint firstItem="CJP-I7-TFB" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" id="ELj-ir-rpm"/>
+                                            <constraint firstItem="dLq-EX-PGn" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" constant="2" id="C1X-cS-EKq"/>
+                                            <constraint firstItem="CJP-I7-TFB" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" constant="2" id="ELj-ir-rpm"/>
                                             <constraint firstItem="dLq-EX-PGn" firstAttribute="leading" secondItem="yAg-ep-FQi" secondAttribute="trailing" id="ExJ-Z1-tv2"/>
                                             <constraint firstAttribute="height" constant="60" id="HzH-1l-kY9"/>
-                                            <constraint firstItem="E2C-CT-McW" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" id="Iqv-Ze-aEO"/>
-                                            <constraint firstItem="Shg-sf-i1c" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" id="T6w-TL-fZh"/>
+                                            <constraint firstItem="E2C-CT-McW" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" constant="2" id="Iqv-Ze-aEO"/>
+                                            <constraint firstItem="Shg-sf-i1c" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" constant="2" id="T6w-TL-fZh"/>
                                             <constraint firstItem="Oqh-eM-Qma" firstAttribute="leading" secondItem="Shg-sf-i1c" secondAttribute="trailing" id="VTZ-y8-mZR"/>
                                             <constraint firstItem="MUa-ai-V5m" firstAttribute="leading" secondItem="E2C-CT-McW" secondAttribute="trailing" id="a5b-XN-Jx9"/>
-                                            <constraint firstItem="Nzm-5T-dsA" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" id="bCc-kR-Wfa"/>
+                                            <constraint firstItem="Nzm-5T-dsA" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" constant="2" id="bCc-kR-Wfa"/>
                                             <constraint firstItem="Eh2-iq-msO" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" id="jpD-dN-Y5V"/>
-                                            <constraint firstItem="MUa-ai-V5m" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" id="lZg-At-qdL"/>
+                                            <constraint firstItem="MUa-ai-V5m" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" constant="2" id="lZg-At-qdL"/>
                                             <constraint firstItem="yAg-ep-FQi" firstAttribute="leading" secondItem="Oqh-eM-Qma" secondAttribute="trailing" id="vQQ-pX-m4i"/>
-                                            <constraint firstItem="Oqh-eM-Qma" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" id="vi5-FT-Cxu"/>
+                                            <constraint firstItem="Oqh-eM-Qma" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" constant="2" id="vi5-FT-Cxu"/>
                                             <constraint firstItem="CJP-I7-TFB" firstAttribute="leading" secondItem="Nzm-5T-dsA" secondAttribute="trailing" id="wvs-oZ-c8o"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnN-jm-H46">
-                                        <rect key="frame" x="64" y="1020" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="1014" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color indicator size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8g-vD-5PN">
                                                 <rect key="frame" x="16" y="8.5" width="200" height="43"/>
@@ -1611,7 +1625,7 @@
                                                     <constraint firstAttribute="height" constant="43" id="x84-LV-sjc"/>
                                                     <constraint firstAttribute="width" constant="200" id="xil-Qe-b9W"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1651,7 +1665,7 @@
                                                     <constraint firstAttribute="width" constant="24" id="LFZ-hc-SJf"/>
                                                     <constraint firstAttribute="height" constant="24" id="vcl-5w-wPb"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1670,7 +1684,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bbf-jJ-jMM">
-                                        <rect key="frame" x="64" y="1090" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="1084" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Close draw panel button color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meO-s4-8zR">
                                                 <rect key="frame" x="16" y="8.5" width="300" height="43"/>
@@ -1678,7 +1692,7 @@
                                                     <constraint firstAttribute="height" constant="43" id="5c1-6J-fnV"/>
                                                     <constraint firstAttribute="width" constant="300" id="RgG-LO-408"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1696,7 +1710,7 @@
                                                     <constraint firstAttribute="height" constant="36" id="Hd2-sK-cV1"/>
                                                     <constraint firstAttribute="width" constant="50" id="KMc-tg-za7"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
                                                 <state key="normal" title="Reset"/>
                                                 <connections>
                                                     <action selector="resetButtonPressed:" destination="PmP-As-lpW" eventType="touchUpInside" id="1tH-RN-uQK"/>
@@ -1735,14 +1749,14 @@
                                     <constraint firstItem="AME-LP-3MV" firstAttribute="top" secondItem="2bo-3m-NSe" secondAttribute="bottom" constant="10" id="CXv-Fc-MmJ"/>
                                     <constraint firstItem="YlN-Qk-8Ro" firstAttribute="top" secondItem="cef-6d-S8O" secondAttribute="bottom" constant="20" id="E5i-fT-g4i"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="BPP-Jg-wWE" secondAttribute="trailing" constant="64" id="FoS-wN-SdJ"/>
-                                    <constraint firstItem="nlE-7t-BIb" firstAttribute="top" secondItem="BPP-Jg-wWE" secondAttribute="bottom" constant="10" id="GAX-kl-Ses"/>
+                                    <constraint firstItem="nlE-7t-BIb" firstAttribute="top" secondItem="BPP-Jg-wWE" secondAttribute="bottom" constant="20" id="GAX-kl-Ses"/>
                                     <constraint firstItem="Cb9-h5-Mah" firstAttribute="top" secondItem="bCL-gC-y0h" secondAttribute="bottom" constant="10" id="IBh-Yn-bRT"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="cnN-jm-H46" secondAttribute="trailing" constant="64" id="Iif-qd-PRd"/>
                                     <constraint firstItem="hbc-eb-pMK" firstAttribute="centerX" secondItem="OLn-mO-5pb" secondAttribute="centerX" id="IuE-wb-hxq"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="xYN-DJ-wVQ" secondAttribute="trailing" constant="64" id="KuN-m1-IhG"/>
                                     <constraint firstItem="Cxa-sJ-owu" firstAttribute="top" secondItem="jBc-fL-ijQ" secondAttribute="bottom" constant="10" id="Lq6-NB-SmD"/>
                                     <constraint firstItem="nlE-7t-BIb" firstAttribute="centerX" secondItem="OLn-mO-5pb" secondAttribute="centerX" id="MTV-eS-ub4"/>
-                                    <constraint firstItem="hbc-eb-pMK" firstAttribute="top" secondItem="wXC-tb-hwY" secondAttribute="top" constant="3" id="MWX-83-lVu"/>
+                                    <constraint firstItem="hbc-eb-pMK" firstAttribute="top" secondItem="wXC-tb-hwY" secondAttribute="top" constant="-3" id="MWX-83-lVu"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="Cb9-h5-Mah" secondAttribute="trailing" constant="64" id="MWx-6D-b08"/>
                                     <constraint firstItem="cnN-jm-H46" firstAttribute="leading" secondItem="wXC-tb-hwY" secondAttribute="leading" constant="64" id="OeG-of-4jw"/>
                                     <constraint firstItem="Cb9-h5-Mah" firstAttribute="leading" secondItem="wXC-tb-hwY" secondAttribute="leading" constant="64" id="Ol0-2U-5Qt"/>
@@ -1759,7 +1773,7 @@
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="1jo-Dv-ZE0" secondAttribute="trailing" constant="64" id="Tu9-Pq-Vg1"/>
                                     <constraint firstItem="bCL-gC-y0h" firstAttribute="top" secondItem="8Jn-Nf-vr3" secondAttribute="bottom" constant="10" id="XCK-UH-k3P"/>
                                     <constraint firstItem="AME-LP-3MV" firstAttribute="leading" secondItem="PgH-F1-oec" secondAttribute="leading" constant="64" id="Yc9-TG-fI5"/>
-                                    <constraint firstItem="Gc3-RK-j2z" firstAttribute="top" secondItem="hbc-eb-pMK" secondAttribute="bottom" constant="10" id="Yhe-hC-3dx"/>
+                                    <constraint firstItem="Gc3-RK-j2z" firstAttribute="top" secondItem="hbc-eb-pMK" secondAttribute="bottom" constant="15" id="Yhe-hC-3dx"/>
                                     <constraint firstItem="2bo-3m-NSe" firstAttribute="leading" secondItem="PgH-F1-oec" secondAttribute="leading" constant="64" id="Z0Z-qa-USs"/>
                                     <constraint firstItem="8Jn-Nf-vr3" firstAttribute="top" secondItem="nPG-P6-BAO" secondAttribute="bottom" constant="10" id="Z8Q-Zu-cVA"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="2bo-3m-NSe" secondAttribute="trailing" constant="64" id="cI3-vK-Rnw"/>
@@ -1804,118 +1818,109 @@
                             <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5B2-Rh-IAd">
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXQ-Yc-iGu">
-                                        <rect key="frame" x="0.0" y="50" width="896" height="24"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Deviant Art">
-                                                <attributes>
-                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" metaFont="systemBold" size="20"/>
-                                                    <font key="NSOriginalFont" metaFont="systemBold" size="20"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    <integer key="NSUnderline" value="1"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deviant Art" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXQ-Yc-iGu">
+                                        <rect key="frame" x="0.0" y="50" width="896" height="24.5"/>
+                                        <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="20"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FrostBo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7W1-Ez-pEy">
-                                        <rect key="frame" x="348" y="99" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="99.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="H8P-go-pPM"/>
                                             <constraint firstAttribute="width" constant="200" id="L49-TH-Xuq"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dori-Stock" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YGH-zd-HE6">
-                                        <rect key="frame" x="348" y="133" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="133.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="5vj-EL-zZw"/>
                                             <constraint firstAttribute="height" constant="24" id="BkL-B3-1U1"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tmm-textures" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4i-Ol-Pcf">
-                                        <rect key="frame" x="348" y="167" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="167.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="Lvm-jb-c6O"/>
                                             <constraint firstAttribute="width" constant="200" id="ekD-TX-rd8"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FantasyStock" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31I-cD-WCu">
-                                        <rect key="frame" x="348" y="201" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="201.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="0ix-9w-c4k"/>
                                             <constraint firstAttribute="height" constant="24" id="63C-si-fAb"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="silver-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0C-9m-FL5">
-                                        <rect key="frame" x="348" y="235" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="235.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="Gi9-lG-xDm"/>
                                             <constraint firstAttribute="height" constant="24" id="T3k-I2-6vQ"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AStoKo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJi-ge-l74">
-                                        <rect key="frame" x="348" y="269" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="269.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="8jo-yN-CaN"/>
                                             <constraint firstAttribute="height" constant="24" id="EI1-HH-EqS"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="jaqx-textures" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HcD-2J-AT3">
-                                        <rect key="frame" x="348" y="303" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="303.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="eS1-yc-rVr"/>
                                             <constraint firstAttribute="width" constant="200" id="lwO-ZY-uP1"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project-GimpBC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="urR-3l-5VX">
-                                        <rect key="frame" x="348" y="337" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="337.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="BWt-Ov-6st"/>
                                             <constraint firstAttribute="width" constant="200" id="SC5-ME-1UF"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sirius-sdz" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Df-pj-e5l">
-                                        <rect key="frame" x="348" y="371" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="371.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="Tdd-Bm-KVc"/>
                                             <constraint firstAttribute="height" constant="24" id="wjA-8z-adc"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZ8-2v-WGM">
-                                        <rect key="frame" x="398" y="420" width="100" height="24"/>
+                                        <rect key="frame" x="398" y="420.5" width="100" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="97n-pz-yKz"/>
                                             <constraint firstAttribute="width" constant="100" id="Gly-KU-4Xk"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1987,7 +1992,7 @@
                                     <constraint firstAttribute="height" constant="36" id="btf-Zd-lKh"/>
                                     <constraint firstAttribute="width" constant="47" id="zPu-jq-GUi"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
                                     <action selector="colorSelectDonePressed:" destination="PmP-As-lpW" eventType="touchUpInside" id="EDf-2T-zMr"/>
@@ -1999,7 +2004,7 @@
                                     <constraint firstAttribute="height" constant="36" id="5I3-ed-Hp4"/>
                                     <constraint firstAttribute="width" constant="80" id="cO8-GA-M5v"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="colorPickerCancelPressed:" destination="PmP-As-lpW" eventType="touchUpInside" id="1mh-pI-oac"/>
@@ -3268,74 +3273,74 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recent Color" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="sh0-as-rgT">
-                                        <rect key="frame" x="29.5" y="10" width="141" height="40"/>
+                                        <rect key="frame" x="20" y="10" width="160" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="cIA-TP-Pwy"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="32"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TsI-8M-V1b" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="65" y="60" width="30" height="30"/>
+                                        <rect key="frame" x="60" y="60" width="40" height="40"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4aY-mC-okY" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                <rect key="frame" x="10" y="10" width="20" height="20"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="A4q-4q-pBq"/>
-                                                    <constraint firstAttribute="height" constant="30" id="POF-oD-z3p"/>
+                                                    <constraint firstAttribute="width" constant="20" id="A4q-4q-pBq"/>
+                                                    <constraint firstAttribute="height" constant="20" id="POF-oD-z3p"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="4aY-mC-okY" firstAttribute="centerX" secondItem="TsI-8M-V1b" secondAttribute="centerX" id="gXY-gC-Bt2"/>
-                                            <constraint firstAttribute="height" constant="30" id="jad-LO-U2q"/>
-                                            <constraint firstAttribute="width" constant="30" id="lzz-gW-c4b"/>
+                                            <constraint firstAttribute="height" constant="40" id="jad-LO-U2q"/>
+                                            <constraint firstAttribute="width" constant="40" id="lzz-gW-c4b"/>
                                             <constraint firstItem="4aY-mC-okY" firstAttribute="centerY" secondItem="TsI-8M-V1b" secondAttribute="centerY" id="uRE-IF-yY0"/>
                                         </constraints>
                                     </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8k-XK-aMp" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="65" y="60" width="30" height="30"/>
+                                        <rect key="frame" x="60" y="60" width="40" height="40"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2aL-ak-Gh8" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="13.5" width="30" height="3"/>
+                                                <rect key="frame" x="10" y="18" width="20" height="4"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="OCf-ew-SNq"/>
-                                                    <constraint firstAttribute="height" constant="3" id="WMc-dE-rsb"/>
+                                                    <constraint firstAttribute="width" constant="20" id="OCf-ew-SNq"/>
+                                                    <constraint firstAttribute="height" constant="4" id="WMc-dE-rsb"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="Xsx-fX-oHo"/>
+                                            <constraint firstAttribute="width" constant="40" id="Xsx-fX-oHo"/>
                                             <constraint firstItem="2aL-ak-Gh8" firstAttribute="centerX" secondItem="P8k-XK-aMp" secondAttribute="centerX" id="d6I-Sq-PxD"/>
-                                            <constraint firstAttribute="height" constant="30" id="n81-O0-cdE"/>
+                                            <constraint firstAttribute="height" constant="40" id="n81-O0-cdE"/>
                                             <constraint firstItem="2aL-ak-Gh8" firstAttribute="centerY" secondItem="P8k-XK-aMp" secondAttribute="centerY" id="r0N-I1-0qV"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jNa-xs-oRH" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="106.5" y="60" width="27" height="30"/>
+                                        <rect key="frame" x="100" y="60" width="40" height="40"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5AY-BO-vwv" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="27" height="30"/>
+                                                <rect key="frame" x="11" y="10" width="18" height="20"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="hbP-Fl-BIs"/>
-                                                    <constraint firstAttribute="width" constant="27" id="nxK-df-sqC"/>
+                                                    <constraint firstAttribute="height" constant="20" id="hbP-Fl-BIs"/>
+                                                    <constraint firstAttribute="width" constant="18" id="nxK-df-sqC"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="5AY-BO-vwv" firstAttribute="centerY" secondItem="jNa-xs-oRH" secondAttribute="centerY" id="35R-pm-DNQ"/>
-                                            <constraint firstAttribute="height" constant="30" id="gee-Em-xDj"/>
+                                            <constraint firstAttribute="height" constant="40" id="gee-Em-xDj"/>
                                             <constraint firstItem="5AY-BO-vwv" firstAttribute="centerX" secondItem="jNa-xs-oRH" secondAttribute="centerX" id="nYS-uo-ni7"/>
-                                            <constraint firstAttribute="width" constant="27" id="tVV-lr-TK3"/>
+                                            <constraint firstAttribute="width" constant="40" id="tVV-lr-TK3"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -3345,7 +3350,7 @@
                                     <constraint firstItem="jNa-xs-oRH" firstAttribute="top" secondItem="sh0-as-rgT" secondAttribute="bottom" constant="10" id="31S-nL-PMa"/>
                                     <constraint firstItem="Byt-rq-kKV" firstAttribute="top" secondItem="tjQ-fj-IaW" secondAttribute="top" constant="15" id="35C-sp-TMN"/>
                                     <constraint firstItem="sh0-as-rgT" firstAttribute="top" secondItem="tjQ-fj-IaW" secondAttribute="top" constant="10" id="7Xp-x2-GyX"/>
-                                    <constraint firstItem="sh0-as-rgT" firstAttribute="leading" secondItem="tjQ-fj-IaW" secondAttribute="leading" constant="29.5" id="9OP-Hq-CcN"/>
+                                    <constraint firstItem="sh0-as-rgT" firstAttribute="leading" secondItem="tjQ-fj-IaW" secondAttribute="leading" constant="20" id="9OP-Hq-CcN"/>
                                     <constraint firstItem="1GZ-U0-nZS" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" constant="32" id="Dfk-td-bvN"/>
                                     <constraint firstItem="gi1-s8-Ps3" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" id="GGl-Qc-XbH"/>
                                     <constraint firstItem="py9-Zf-Ycq" firstAttribute="bottom" secondItem="uOR-fl-NRH" secondAttribute="bottom" id="HHz-5z-os1"/>
@@ -3361,13 +3366,12 @@
                                     <constraint firstItem="Byt-rq-kKV" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" id="YjI-7X-fj9"/>
                                     <constraint firstAttribute="width" constant="200" id="Yjv-8R-2E5"/>
                                     <constraint firstAttribute="bottom" secondItem="1GZ-U0-nZS" secondAttribute="bottom" constant="20" id="Ymb-lK-v1W"/>
-                                    <constraint firstItem="sh0-as-rgT" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" id="ZOz-y8-QdK"/>
                                     <constraint firstAttribute="bottom" secondItem="uOR-fl-NRH" secondAttribute="bottom" constant="20" id="cdL-dn-0cw"/>
                                     <constraint firstItem="gi1-s8-Ps3" firstAttribute="leading" relation="lessThanOrEqual" secondItem="tjQ-fj-IaW" secondAttribute="leading" constant="15" id="cvS-a7-Hj5"/>
                                     <constraint firstItem="uOR-fl-NRH" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" constant="-32" id="dfu-ba-pc7"/>
                                     <constraint firstItem="jNa-xs-oRH" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" constant="20" id="fav-G6-l9C"/>
                                     <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="gi1-s8-Ps3" secondAttribute="trailing" constant="15" id="gG9-zU-DmP"/>
-                                    <constraint firstAttribute="trailing" secondItem="sh0-as-rgT" secondAttribute="trailing" constant="29.5" id="gRr-ZO-fCl"/>
+                                    <constraint firstAttribute="trailing" secondItem="sh0-as-rgT" secondAttribute="trailing" constant="20" id="gRr-ZO-fCl"/>
                                     <constraint firstItem="gi1-s8-Ps3" firstAttribute="centerY" secondItem="tjQ-fj-IaW" secondAttribute="centerY" id="jEN-Uk-RYO"/>
                                     <constraint firstAttribute="bottom" secondItem="K85-Mp-3IN" secondAttribute="bottom" constant="20" id="jF6-q0-3Lj"/>
                                     <constraint firstItem="K85-Mp-3IN" firstAttribute="centerX" secondItem="tjQ-fj-IaW" secondAttribute="centerX" id="jUz-Q9-Aji"/>
@@ -3741,7 +3745,7 @@
                                     <constraint firstAttribute="height" constant="40" id="haS-Gq-QcB"/>
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="24"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" returnKeyType="done"/>
                             </textField>
                         </subviews>
@@ -4176,56 +4180,58 @@
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas Import" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fP5-rh-QcG">
-                                        <rect key="frame" x="248" y="5" width="400" height="50"/>
+                                        <rect key="frame" x="248" y="-3" width="400" height="45"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="Nl3-YR-H28"/>
+                                            <constraint firstAttribute="height" constant="45" id="Nl3-YR-H28"/>
                                             <constraint firstAttribute="width" constant="400" id="kAP-5L-Mdg"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <size key="shadowOffset" width="2" height="2"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcM-TF-aD4">
-                                        <rect key="frame" x="64" y="75" width="768" height="50"/>
+                                        <rect key="frame" x="64" y="62" width="768" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="dFD-3Y-BrF"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pastebin URL (pastebin.com/code)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l1N-RB-d3e">
-                                        <rect key="frame" x="64" y="145" width="400" height="50"/>
+                                        <rect key="frame" x="64" y="132" width="400" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="7Dq-hd-Q8T"/>
                                             <constraint firstAttribute="width" constant="400" id="8mD-vV-lOa"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H4R-cv-Hy1">
-                                        <rect key="frame" x="582" y="145" width="250" height="50"/>
+                                        <rect key="frame" x="582" y="132" width="250" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="Bit-7P-GyB"/>
                                             <constraint firstAttribute="height" constant="50" id="bSp-Fw-RuI"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         <connections>
                                             <outlet property="delegate" destination="HgM-xJ-vQq" id="T0E-dR-dMb"/>
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RqN-zS-tnY">
-                                        <rect key="frame" x="348" y="205" width="200" height="50"/>
+                                        <rect key="frame" x="348" y="192" width="200" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="DPY-Ee-15z"/>
                                             <constraint firstAttribute="height" constant="50" id="pvw-tO-DxP"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Import"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Import">
+                                            <fontDescription key="titleFontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="importButtonPressed:" destination="HgM-xJ-vQq" eventType="touchUpInside" id="n39-lj-ejO"/>
                                         </connections>
@@ -4236,7 +4242,7 @@
                                     <constraint firstItem="OFz-Sm-Td1" firstAttribute="trailing" secondItem="kcM-TF-aD4" secondAttribute="trailing" constant="64" id="A7Q-Jw-u7c"/>
                                     <constraint firstItem="fP5-rh-QcG" firstAttribute="centerX" secondItem="uhp-Gs-zHd" secondAttribute="centerX" id="FGw-qS-kVr"/>
                                     <constraint firstItem="RqN-zS-tnY" firstAttribute="centerX" secondItem="uhp-Gs-zHd" secondAttribute="centerX" id="GmM-OY-Y3l"/>
-                                    <constraint firstItem="fP5-rh-QcG" firstAttribute="top" secondItem="xyM-ci-LU1" secondAttribute="top" constant="5" id="IZ9-8K-eHc"/>
+                                    <constraint firstItem="fP5-rh-QcG" firstAttribute="top" secondItem="xyM-ci-LU1" secondAttribute="top" constant="-3" id="IZ9-8K-eHc"/>
                                     <constraint firstItem="l1N-RB-d3e" firstAttribute="leading" secondItem="OFz-Sm-Td1" secondAttribute="leading" constant="64" id="Jpa-3r-p7i"/>
                                     <constraint firstItem="kcM-TF-aD4" firstAttribute="leading" secondItem="OFz-Sm-Td1" secondAttribute="leading" constant="64" id="Wkw-Uf-PML"/>
                                     <constraint firstItem="OFz-Sm-Td1" firstAttribute="trailing" secondItem="H4R-cv-Hy1" secondAttribute="trailing" constant="64" id="YZl-Hp-mhM"/>
@@ -4399,9 +4405,11 @@
                                                                                 <constraint firstAttribute="height" constant="40" id="1oU-pA-k8U"/>
                                                                                 <constraint firstAttribute="width" constant="260" id="8zV-6h-Y3Q"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                                                            <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="24"/>
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
+                                                                            <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                                            <size key="shadowOffset" width="1" height="1"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Colors" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Pe-SS-oPO">
                                                                             <rect key="frame" x="230" y="44" width="150" height="40"/>
@@ -4409,7 +4417,7 @@
                                                                                 <constraint firstAttribute="height" constant="40" id="AbB-bT-lCf"/>
                                                                                 <constraint firstAttribute="width" constant="150" id="gWu-GH-Ino"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                                            <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="24"/>
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
@@ -4468,21 +4476,21 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Palettes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T5d-OE-qKn">
-                                            <rect key="frame" x="100" y="5" width="200" height="40"/>
+                                            <rect key="frame" x="100" y="3" width="200" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="200" id="H73-bv-XHn"/>
                                                 <constraint firstAttribute="height" constant="40" id="qis-oF-hgN"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                            <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="32"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            <size key="shadowOffset" width="2" height="2"/>
+                                            <size key="shadowOffset" width="1" height="1"/>
                                         </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="T5d-OE-qKn" firstAttribute="centerX" secondItem="Y3x-QW-Ji2" secondAttribute="centerX" id="JFx-aa-dFI"/>
-                                        <constraint firstItem="T5d-OE-qKn" firstAttribute="top" secondItem="Y3x-QW-Ji2" secondAttribute="top" constant="5" id="or7-iu-Kpe"/>
+                                        <constraint firstItem="T5d-OE-qKn" firstAttribute="top" secondItem="Y3x-QW-Ji2" secondAttribute="top" constant="3" id="or7-iu-Kpe"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="titleLabel" destination="T5d-OE-qKn" id="QzR-pe-Klk"/>
@@ -4501,7 +4509,7 @@
                                     <constraint firstAttribute="width" constant="374" id="d8g-RR-0Gy"/>
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="24"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="xhr-id-nsP" id="V0Z-o9-rOG"/>
@@ -4561,59 +4569,59 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas Frame" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eCg-kX-Hq8">
-                                <rect key="frame" x="0.0" y="5" width="400" height="40"/>
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="YKn-lr-o1Q"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="32"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <size key="shadowOffset" width="2" height="2"/>
+                                <size key="shadowOffset" width="1" height="1"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Width" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UvX-wd-1O5">
-                                <rect key="frame" x="20" y="53" width="164" height="44"/>
+                                <rect key="frame" x="20" y="56" width="164" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="D7I-9U-t1h"/>
                                     <constraint firstAttribute="width" constant="164" id="Dbb-HK-J5Z"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IA5-vc-rWm">
-                                <rect key="frame" x="20" y="105" width="164" height="44"/>
+                                <rect key="frame" x="20" y="108" width="164" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="164" id="YHh-3G-OuO"/>
                                     <constraint firstAttribute="height" constant="44" id="jd3-Zi-3Iv"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="px" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LKR-gg-AGB">
-                                <rect key="frame" x="320" y="60" width="60" height="30"/>
+                                <rect key="frame" x="320" y="63" width="60" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="Eyp-Ak-Wqt"/>
                                     <constraint firstAttribute="height" constant="30" id="IzV-Wb-M88"/>
                                 </constraints>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="GZ0-j0-94q" id="ZJl-wO-fVO"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="px" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fi9-Dj-WfV">
-                                <rect key="frame" x="320" y="112" width="60" height="30"/>
+                                <rect key="frame" x="320" y="115" width="60" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="pv7-tj-gyn"/>
                                     <constraint firstAttribute="width" constant="60" id="tlC-dY-a9N"/>
                                 </constraints>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="GZ0-j0-94q" id="Ke8-tZ-SZj"/>
@@ -4625,7 +4633,9 @@
                                     <constraint firstAttribute="height" constant="32" id="DzC-pw-FpX"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="CREATE"/>
+                                <buttonConfiguration key="configuration" style="filled" title="CREATE">
+                                    <fontDescription key="titleFontDescription" name="Inter-Medium" family="Inter" pointSize="15"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="createButtonPressed:" destination="GZ0-j0-94q" eventType="touchUpInside" id="Zgh-68-2vt"/>
                                 </connections>
@@ -4642,12 +4652,12 @@
                             <constraint firstItem="fi9-Dj-WfV" firstAttribute="centerY" secondItem="IA5-vc-rWm" secondAttribute="centerY" id="JzH-l8-xb5"/>
                             <constraint firstItem="eCg-kX-Hq8" firstAttribute="leading" secondItem="2CF-Ub-38P" secondAttribute="leading" id="U6U-uc-VtL"/>
                             <constraint firstAttribute="trailing" secondItem="LKR-gg-AGB" secondAttribute="trailing" constant="20" id="Xh2-n9-Yb1"/>
-                            <constraint firstItem="eCg-kX-Hq8" firstAttribute="top" secondItem="2CF-Ub-38P" secondAttribute="top" constant="5" id="Xja-Te-dTn"/>
+                            <constraint firstItem="eCg-kX-Hq8" firstAttribute="top" secondItem="2CF-Ub-38P" secondAttribute="top" id="Xja-Te-dTn"/>
                             <constraint firstAttribute="trailing" secondItem="BCW-To-aRg" secondAttribute="trailing" constant="20" id="Ybz-xQ-TrZ"/>
                             <constraint firstItem="LKR-gg-AGB" firstAttribute="centerY" secondItem="UvX-wd-1O5" secondAttribute="centerY" id="opP-Rk-HGb"/>
                             <constraint firstItem="IA5-vc-rWm" firstAttribute="leading" secondItem="2CF-Ub-38P" secondAttribute="leading" constant="20" id="pM7-JQ-4lR"/>
                             <constraint firstItem="BCW-To-aRg" firstAttribute="leading" secondItem="2CF-Ub-38P" secondAttribute="leading" constant="20" id="qy9-uS-ytz"/>
-                            <constraint firstItem="UvX-wd-1O5" firstAttribute="top" secondItem="eCg-kX-Hq8" secondAttribute="bottom" constant="8" id="zDo-4B-OZi"/>
+                            <constraint firstItem="UvX-wd-1O5" firstAttribute="top" secondItem="eCg-kX-Hq8" secondAttribute="bottom" constant="16" id="zDo-4B-OZi"/>
                         </constraints>
                     </view>
                     <connections>
