@@ -50,7 +50,9 @@ class ExportViewController: UIViewController {
     
     var delegate: ExportViewControllerDelegate?
     
-    @IBOutlet weak var backButton: ActionButtonView!
+    @IBOutlet weak var backButton: ActionButtonFrame!
+    @IBOutlet weak var backAction: ActionButtonView!
+    
     @IBOutlet weak var backButtonLeading: NSLayoutConstraint!
     
     @IBOutlet weak var artView: ArtView!
@@ -58,7 +60,8 @@ class ExportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        backButton.type = .backSolid
+        backButton.actionButtonView = backAction
+        backAction.type = .backSolid
         
         backButton.setOnClickListener {
             self.delegate?.notifyExportViewControllerBackPressed()

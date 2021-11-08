@@ -19,13 +19,30 @@ class CanvasFrameViewController: UIViewController, UITextFieldDelegate {
     var x: Int!
     var y: Int!
     
+    var panelThemeConfig: PanelThemeConfig!
+    
     weak var canvasFrameViewTop: NSLayoutConstraint!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var widthLabel: UILabel!
+    @IBOutlet weak var heightLabel: UILabel!
     
     @IBOutlet weak var widthTextField: UITextField!
     @IBOutlet weak var heightTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if panelThemeConfig.actionButtonColor == UIColor.black.argb() {
+            titleLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF111111"))
+            titleLabel.shadowColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x7F333333"))
+            
+            widthLabel.textColor = UIColor.black
+            widthTextField.textColor = UIColor.black
+            
+            heightLabel.textColor = UIColor.black
+            heightTextField.textColor = UIColor.black
+        }
 
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(sender:)))
         lpgr.minimumPressDuration = 0
@@ -68,15 +85,25 @@ class CanvasFrameViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setBackground() {
-        let gradient = CAGradientLayer()
-
-        gradient.frame = view.bounds
-        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff000000")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff333333")).cgColor]
+        let backgroundImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
         
-        gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 0, y: 1)
-
-        view.layer.insertSublayer(gradient, at: 0)
+        var textureImage: UIImage!
+        if SessionSettings.instance.panelBackgroundName == "" {
+            textureImage = UIImage(named: "wood_texture_light.jpg")
+        }
+        else {
+            textureImage = UIImage(named: SessionSettings.instance.panelBackgroundName)
+        }
+        
+        let scale = view.frame.size.width / textureImage.size.width
+        textureImage = Utils.scaleImage(image: textureImage, scaleFactor: scale)
+        
+        textureImage = Utils.clipImageToRect(image: textureImage, rect: CGRect(x: 0, y: textureImage.size.height - view.frame.size.height, width: view.frame.size.width, height: view.frame.size.height))
+        
+        backgroundImageView.contentMode = .topLeft
+        backgroundImageView.image = textureImage
+        
+        view.insertSubview(backgroundImageView, at: 0)
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {

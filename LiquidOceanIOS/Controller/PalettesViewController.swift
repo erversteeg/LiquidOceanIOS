@@ -52,10 +52,15 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
         }
     }
     
+    var panelThemeConfig: PanelThemeConfig!
+    
     override func viewDidLoad() {
         addPaletteAction.type = .add
-        addPaletteAction.darkIcons = false
         addPaletteButton.actionButtonView = addPaletteAction
+        
+        if panelThemeConfig.actionButtonColor == UIColor.black.argb() {
+            addPaletteAction.colorMode = .black
+        }
         
         addPaletteButton.setOnClickListener {
             self.startNameInput()
@@ -144,6 +149,9 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
         if SessionSettings.instance.selectedPaletteIndex == indexPath.item {
             cell.nameLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xffdf7126"))
         }
+        else if panelThemeConfig.actionButtonColor == UIColor.black.argb() {
+            cell.nameLabel.textColor = UIColor.black
+        }
         else {
             cell.nameLabel.textColor = UIColor.white
         }
@@ -160,6 +168,13 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
             }
         }
         
+        if panelThemeConfig.actionButtonColor == UIColor.black.argb() {
+            cell.numColorsLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xCC000000"))
+        }
+        else {
+            cell.numColorsLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xCCFFFFFF"))
+        }
+        
         //cell.delegate = self
         
         //cell.onRecycle(indexPath: indexPath)
@@ -172,9 +187,18 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: palettesHeaderViewReuseId, for: indexPath)
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: palettesHeaderViewReuseId, for: indexPath) as! PaletteHeaderCollectionReusableView
         
         view.isHidden = hideTitle
+        
+        if panelThemeConfig.actionButtonColor == UIColor.black.argb() {
+            view.titleLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF111111"))
+            view.titleLabel.shadowColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x7F333333"))
+        }
+        else {
+            view.titleLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xDDFFFFFF"))
+            view.titleLabel.shadowColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x7F000000"))
+        }
         
         return view
     }
@@ -187,15 +211,25 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     func setBackground() {
-        let gradient = CAGradientLayer()
-
-        gradient.frame = view.bounds
-        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff000000")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff333333")).cgColor]
+        let backgroundImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
         
-        gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 0, y: 1)
-
-        view.layer.insertSublayer(gradient, at: 0)
+        var textureImage: UIImage!
+        if SessionSettings.instance.panelBackgroundName == "" {
+            textureImage = UIImage(named: "wood_texture_light.jpg")
+        }
+        else {
+            textureImage = UIImage(named: SessionSettings.instance.panelBackgroundName)
+        }
+        
+        let scale = view.frame.size.width / textureImage.size.width
+        textureImage = Utils.scaleImage(image: textureImage, scaleFactor: scale)
+        
+        textureImage = Utils.clipImageToRect(image: textureImage, rect: CGRect(x: 0, y: textureImage.size.height / 2 - view.frame.size.height / 2, width: view.frame.size.width, height: view.frame.size.height))
+        
+        backgroundImageView.contentMode = .topLeft
+        backgroundImageView.image = textureImage
+        
+        view.insertSubview(backgroundImageView, at: 0)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -12,6 +12,7 @@
 		07006C4025D6CEF200DF9A64 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07006C3F25D6CEF200DF9A64 /* MenuViewController.swift */; };
 		07006C4225DCB6D400DF9A64 /* PixelHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07006C4125DCB6D400DF9A64 /* PixelHistoryViewController.swift */; };
 		07006C4425DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07006C4325DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift */; };
+		0704FB7427397D3B009799E1 /* PaletteHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0704FB7327397D3B009799E1 /* PaletteHeaderCollectionReusableView.swift */; };
 		070DA9DD2732B97800D76775 /* CanvasImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070DA9DC2732B97800D76775 /* CanvasImportViewController.swift */; };
 		070DA9DF2732B98500D76775 /* CanvasExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070DA9DE2732B98500D76775 /* CanvasExportViewController.swift */; };
 		0712053625DEDF1100AE0F52 /* ActionButtonFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */; };
@@ -131,6 +132,7 @@
 		07006C3F25D6CEF200DF9A64 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		07006C4125DCB6D400DF9A64 /* PixelHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelHistoryViewController.swift; sourceTree = "<group>"; };
 		07006C4325DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		0704FB7327397D3B009799E1 /* PaletteHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		070DA9DC2732B97800D76775 /* CanvasImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasImportViewController.swift; sourceTree = "<group>"; };
 		070DA9DE2732B98500D76775 /* CanvasExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasExportViewController.swift; sourceTree = "<group>"; };
 		0712053525DEDF1100AE0F52 /* ActionButtonFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonFrame.swift; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 				07270EE3272C333A00DB35CE /* PaletteCollectionViewCell.swift */,
 				07D0ED23272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift */,
 				07D0ED25272DFC9000755C1D /* DeviceViewportSummaryView.swift */,
+				0704FB7327397D3B009799E1 /* PaletteHeaderCollectionReusableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 				07006C3C25D607D500DF9A64 /* UIDrawGestureRecognizer.swift in Sources */,
 				0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */,
 				07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */,
+				0704FB7427397D3B009799E1 /* PaletteHeaderCollectionReusableView.swift in Sources */,
 				0736637A260E148700E5403F /* AchievementIcon.swift in Sources */,
 				07FF5F0725E42C1C003E19AE /* ActionButtonReusableView.swift in Sources */,
 				07006C3E25D6C2D500DF9A64 /* PaintQuantityBar.swift in Sources */,

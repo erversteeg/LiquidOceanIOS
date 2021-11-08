@@ -60,4 +60,31 @@ class Utils: NSObject {
         let reachability = NetworkReachabilityManager()!
         return reachability.isReachable
     }
+    
+    static func scaleImage(image: UIImage, scaleFactor: CGFloat) -> UIImage {
+        let imageFrame = CGRect(x: 0, y: 0, width: image.size.width * scaleFactor, height: image.size.height * scaleFactor)
+        
+        UIGraphicsBeginImageContextWithOptions(imageFrame.size, false, 1.0)
+        image.draw(in: imageFrame)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
+    
+    static func clipImageToRect(image: UIImage, rect: CGRect) -> UIImage {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+        imageView.image = image
+        
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 1.0)
+        let ctx = UIGraphicsGetCurrentContext()!
+        ctx.translateBy(x: -rect.origin.x, y: -rect.origin.y)
+        imageView.layer.render(in: ctx)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
 }

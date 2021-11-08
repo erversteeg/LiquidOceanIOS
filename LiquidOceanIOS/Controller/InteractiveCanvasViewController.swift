@@ -56,7 +56,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var lockPaintPanelAction: ActionButtonView!
     @IBOutlet weak var lockPaintPanelCenterX: NSLayoutConstraint!
     
-    @IBOutlet weak var backButton: ActionButtonView!
+    @IBOutlet weak var backButton: ActionButtonFrame!
+    @IBOutlet weak var backAction: ActionButtonView!
     
     @IBOutlet weak var exportButton: ActionButtonFrame!
     @IBOutlet weak var exportAction: ActionButtonView!
@@ -215,7 +216,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         panelThemeConfig = themeConfigFromBackground()
         
         // back button
-        self.backButton.type = .back
+        backButton.actionButtonView = backAction
+        self.backAction.type = .back
         self.backButton.setOnClickListener {
             if !self.surfaceView.isExporting() {
                 if SessionSettings.instance.promptBack {
@@ -986,10 +988,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         else if segue.identifier == "PalettesEmbed" {
             self.palettesViewController = segue.destination as? PalettesViewController
             self.palettesViewController.delegate = self
+            self.palettesViewController.panelThemeConfig = themeConfigFromBackground()
         }
         else if segue.identifier == "CanvasFrameEmbed" {
             self.canvasFrameViewController = segue.destination as? CanvasFrameViewController
             self.canvasFrameViewController.delegate = self
+            self.canvasFrameViewController.panelThemeConfig = themeConfigFromBackground()
         }
         else if segue.identifier == "UnwindToMenu" {
             surfaceView.interactiveCanvas.saveDeviceViewport()
@@ -1059,6 +1063,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     }
     
     func closeColorPicker() {
+        self.colorPickerFrameWidth.constant = 0
+        
         self.colorPickerFrame.isHidden = true
         self.paintColorAccept.isHidden = true
         self.paintColorCancel.isHidden = true

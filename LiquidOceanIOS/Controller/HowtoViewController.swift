@@ -10,7 +10,9 @@ import UIKit
 
 class HowtoViewController: UIViewController {
 
+    @IBOutlet weak var backButton: ActionButtonFrame!
     @IBOutlet weak var backAction: ActionButtonView!
+    
     @IBOutlet weak var howtoTitleLabel: UILabel!
     
     @IBOutlet weak var step1Text: UILabel!
@@ -38,8 +40,10 @@ class HowtoViewController: UIViewController {
         
         setBackground()
         
+        backButton.actionButtonView = backAction
         backAction.type = .backSolid
-        backAction.setOnClickListener {
+        
+        backButton.setOnClickListener {
             self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
         }
         

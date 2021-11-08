@@ -10,6 +10,7 @@ import UIKit
 
 class CanvasImportViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var backButton: ActionButtonFrame!
     @IBOutlet weak var backAction: ActionButtonView!
     
     @IBOutlet weak var statusLabel: UILabel!
@@ -22,9 +23,10 @@ class CanvasImportViewController: UIViewController, UITextFieldDelegate {
 
         setBackground()
         
+        backButton.actionButtonView = backAction
         backAction.type = .backSolid
         
-        backAction.setOnClickListener {
+        backButton.setOnClickListener {
             self.performSegue(withIdentifier: "UnwindToOptions", sender: nil)
         }
     }

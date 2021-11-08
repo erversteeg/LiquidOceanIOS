@@ -20,6 +20,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     
     @IBOutlet weak var optionsTitleLabel: UILabel!
     
+    @IBOutlet weak var backButton: ActionButtonFrame!
     @IBOutlet weak var backAction: ActionButtonView!
     
     @IBOutlet weak var signInButton: UIButton!
@@ -133,9 +134,10 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         setBackground()
         
+        backButton.actionButtonView = backAction
         backAction.type = .backSolid
         
-        backAction.setOnClickListener {
+        backButton.setOnClickListener {
             if (!self.creditsScrollView.isHidden) {
                 self.creditsScrollView.isHidden = true
             }
