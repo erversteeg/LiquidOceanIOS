@@ -151,6 +151,9 @@ class SessionSettings: NSObject {
     
     var palette: Palette!
     
+    var toolboxOpen = false
+    var paintPanelOpen = false
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -193,6 +196,8 @@ class SessionSettings: NSObject {
         userDefaults().set(restoreDeviceViewportRight, forKey: "restore_device_viewport_right")
         userDefaults().set(restoreDeviceViewportBottom, forKey: "restore_device_viewport_bottom")
         userDefaults().set(restoreCanvasScaleFactor, forKey: "restore_canvas_scale_factor")
+        userDefaults().set(toolboxOpen, forKey: "toolbox_open")
+        userDefaults().set(paintPanelOpen, forKey: "paint_panel_open")
     }
     
     func quickSave() {
@@ -293,6 +298,9 @@ class SessionSettings: NSObject {
         restoreDeviceViewportBottom = userDefaultsCGFloat(forKey: "restore_device_viewport_bottom", defaultVal: CGFloat(0))
         
         restoreCanvasScaleFactor = userDefaultsCGFloat(forKey: "restore_canvas_scale_factor", defaultVal: CGFloat(0))
+        
+        toolboxOpen = userDefaultsBool(forKey: "toolbox_open", defaultVal: true)
+        paintPanelOpen = userDefaultsBool(forKey: "paint_panel_open", defaultVal: false)
     }
     
     func userDefaults() -> UserDefaults {

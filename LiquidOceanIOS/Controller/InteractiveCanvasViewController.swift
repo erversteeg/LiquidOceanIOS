@@ -1097,6 +1097,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.hideCanvasFrameView()
             
             self.surfaceView.startPainting()
+            
+            SessionSettings.instance.paintPanelOpen = true
         }
         else if softHide {
             self.paintPanel.isHidden = true
@@ -1120,6 +1122,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             }
             
             self.togglePalettesView(show: false)
+            
+            SessionSettings.instance.paintPanelOpen = false
         }
     }
     
@@ -1160,6 +1164,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                     [summaryButton]], cascade: false, moveOut: true, inverse: false)
             }
         }
+        SessionSettings.instance.toolboxOpen = open
     }
     
     func toggleRecentColors(open: Bool) {
@@ -1189,7 +1194,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     override func viewDidAppear(_ animated: Bool) {
         self.surfaceView.backgroundColor = UIColor.red
         
-        self.toggleToolbox(open: true)
+        self.toggleToolbox(open: SessionSettings.instance.toolboxOpen)
+        self.togglePaintPanel(open: SessionSettings.instance.paintPanelOpen)
     }
     
     // paint delegate
