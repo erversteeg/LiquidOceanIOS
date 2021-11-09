@@ -43,13 +43,31 @@ protocol CanvasEdgeTouchDelegate: AnyObject {
     func onTouchCanvasEdge()
 }
 
-class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveCanvasScaleCallback, InteractiveCanvasDeviceViewportResetDelegate {
+protocol InteractiveCanvasSelectedObjectViewDelegate: AnyObject {
+    func showSelectedObjectYesAndNoButtons(screenPoint: CGPoint)
+    func hideSelectedObjectYesAndNoButtons()
+    
+    func selectedObjectEnded()
+}
+
+protocol InteractiveCanvasSelectedObjectMoveViewDelegate: AnyObject {
+    func showSelectedObjectMoveButtons(bounds: CGRect)
+    func updateSelectedObjectMoveButtons(bounds: CGRect)
+    
+    func hideSelectedObjectMoveButtons()
+    
+    func selectedObjectMoveEnded()
+}
+
+class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveCanvasScaleCallback, InteractiveCanvasDeviceViewportResetDelegate, InteractiveCanvasSelectedObjectDelegate {
 
     enum Mode {
         case exploring
         case painting
         case paintSelection
         case exporting
+        case objectMoveSelection
+        case objectMoving
     }
     
     var mode: Mode = .exploring
@@ -75,6 +93,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     weak var gestureDelegate: InteractiveCanvasGestureDelegate?
     weak var canvasFrameDelegate: CanvasFrameDelegate?
     weak var canvasEdgeTouchDelegate: CanvasEdgeTouchDelegate?
+    weak var selectedObjectView: InteractiveCanvasSelectedObjectViewDelegate?
+    weak var selectedObjectMoveView: InteractiveCanvasSelectedObjectMoveViewDelegate?
     
     var objectSelectionStartUnit: CGPoint!
     var objectSelectionStartPoint: CGPoint!
@@ -93,6 +113,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         interactiveCanvas.drawCallback = self
         interactiveCanvas.scaleCallback = self
         interactiveCanvas.deviceViewportResetDelegate = self
+        interactiveCanvas.selectedObjectDelegate = self
         
         interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         
@@ -196,7 +217,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                     paintDelegate?.notifyPaintColorUpdate()
                 }
             }
-            else if mode == .exporting {
+            else if mode == .exporting || mode == .objectMoveSelection {
                 let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
                 
                 if interactiveCanvas.isCanvas(unitPoint: unitPoint) {
@@ -231,7 +252,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                     paintDelegate?.notifyPaintingEnded(accept: false)
                 }
             }
-            else if mode == .exporting {
+            else if mode == .exporting || mode == .objectMoveSelection {
                 let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
                 
                 if interactiveCanvas.isCanvas(unitPoint: unitPoint) {
@@ -246,12 +267,21 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
             }
         }
         else if sender.state == .ended {
-            if mode == .exporting {
+            if mode == .exporting || mode == .objectMoveSelection {
                 let unitPoint = interactiveCanvas.unitForScreenPoint(x: location.x, y: location.y)
                 
                 if interactiveCanvas.isCanvas(unitPoint: unitPoint) {
                     if unitPoint.x == objectSelectionStartUnit.x && unitPoint.y == objectSelectionStartUnit.y {
-                        interactiveCanvas.exportSelection(unitPoint: unitPoint)
+                        if mode == .exporting {
+                            interactiveCanvas.exportSelection(unitPoint: unitPoint)
+                        }
+                        else if mode == .objectMoveSelection {
+                            let valid = interactiveCanvas.startMoveSelection(unitPoint: unitPoint)
+                            
+                            if valid {
+                                startObjectMove()
+                            }
+                        }
                     }
                     else {
                         let minX = fmin(unitPoint.x, objectSelectionStartUnit.x)
@@ -260,7 +290,19 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                         let maxX = fmax(unitPoint.x, objectSelectionStartUnit.x)
                         let maxY = fmax(unitPoint.y, objectSelectionStartUnit.y)
                         
-                        interactiveCanvas.exportSelection(startUnit: CGPoint(x: minX, y: minY), endUnit: CGPoint(x: maxX, y: maxY))
+                        let startUnit = CGPoint(x: minX, y: minY)
+                        let endUnit = CGPoint(x: maxX, y: maxY)
+                        
+                        if mode == .exporting {
+                            interactiveCanvas.exportSelection(startUnit: startUnit, endUnit: endUnit)
+                        }
+                        else if mode == .objectMoveSelection {
+                            let valid = interactiveCanvas.startMoveSelection(startUnit: startUnit, endUnit: endUnit)
+                            
+                            if valid {
+                                startObjectMove()
+                            }
+                        }
                     }
                     objectSelectionDelegate?.notifyObjectSelectionEnded()
                 }
@@ -299,15 +341,21 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     }
     
     func addPan() {
-        self.addGestureRecognizer(self.panGestureRecognizer)
+        if !hasGestureRecognizer(gestureRecognizer: self.panGestureRecognizer) {
+            self.addGestureRecognizer(self.panGestureRecognizer)
+        }
     }
     
     func addTap() {
-        self.addGestureRecognizer(self.tapGestureRecognizer)
+        if !hasGestureRecognizer(gestureRecognizer: self.tapGestureRecognizer) {
+            self.addGestureRecognizer(self.tapGestureRecognizer)
+        }
     }
     
     func addLongPress() {
-        self.addGestureRecognizer(self.longPressGestureRecognizer)
+        if !hasGestureRecognizer(gestureRecognizer: self.longPressGestureRecognizer) {
+            self.addGestureRecognizer(self.longPressGestureRecognizer)
+        }
     }
     
     func removePan() {
@@ -323,11 +371,27 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     }
     
     func addDraw() {
-        self.addGestureRecognizer(self.drawGestureRecognizer)
+        if !hasGestureRecognizer(gestureRecognizer: self.drawGestureRecognizer) {
+            self.addGestureRecognizer(self.drawGestureRecognizer)
+        }
     }
     
     func removeDraw() {
         self.removeGestureRecognizer(self.drawGestureRecognizer)
+    }
+    
+    func hasGestureRecognizer(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizers == nil {
+            return false
+        }
+        
+        for gr in self.gestureRecognizers! {
+            if gr == gestureRecognizer {
+                return true
+            }
+        }
+        
+        return false
     }
     
     // pan
@@ -344,14 +408,14 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
             
             if mode == .exploring {
                 interactiveCanvas.pixelHistoryDelegate?.notifyHidePixelHistory()
-                
-                interactiveCanvas.translateBy(x: translateX, y: translateY)
-                
-                gestureDelegate?.notifyInteractiveCanvasPan()
             }
             else if mode == .painting {
                 
             }
+            
+            interactiveCanvas.translateBy(x: translateX, y: translateY)
+            
+            gestureDelegate?.notifyInteractiveCanvasPan()
             
             lastPanTranslationX = translation.x
             lastPanTranslationY = translation.y
@@ -420,6 +484,10 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     }
     
     func startPainting() {
+        if mode == .objectMoveSelection || mode == .objectMoving {
+            interactiveCanvas.cancelMoveSelectedObject()
+        }
+        
         self.mode = .painting
         
         removePan()
@@ -483,8 +551,44 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         removeDraw()
     }
     
+    func startObjectMoveSelection() {
+        mode = .objectMoveSelection
+        
+        removePan()
+        removeTap()
+        removeLongPress()
+        
+        addDraw()
+    }
+    
+    func startObjectMove() {
+        mode = .objectMoving
+        
+        addPan()
+        
+        removeDraw()
+    }
+    
+    func endObjectMove() {
+        mode = .exploring
+        
+        addPan()
+        addTap()
+        addLongPress()
+        
+        removeDraw()
+    }
+    
     func isExporting() -> Bool {
         return mode == .exporting
+    }
+    
+    func isObjectMoving() -> Bool {
+        return mode == .objectMoving
+    }
+    
+    func isObjectMoveSelection() -> Bool {
+        return mode == .objectMoveSelection
     }
     
     func createCanvasFrame(centerX: Int, centerY: Int, width: Int, height: Int, color: Int32) {
@@ -536,6 +640,69 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         SessionSettings.instance.restoreCanvasScaleFactor = 0
         
         setInitalPositionAndScale()
+    }
+    
+    private func screenBoundsForSelectedObject() -> CGRect {
+        let selectedStartUnit = interactiveCanvas.cSelectedStartUnit!
+        let selectedStartUnitScreen = interactiveCanvas.screenPointForUnit(unitPoint: selectedStartUnit)
+        
+        let selectedEndUnit = interactiveCanvas.cSelectedEndUnit!
+        let selectedEndUnitScreen = interactiveCanvas.screenPointForUnit(unitPoint: selectedEndUnit)
+        
+        let width = selectedEndUnitScreen.x - selectedStartUnitScreen.x + CGFloat(interactiveCanvas.ppu)
+        let height = selectedEndUnitScreen.y - selectedStartUnitScreen.y + CGFloat(interactiveCanvas.ppu)
+        
+        var bounds = CGRect(x: selectedStartUnitScreen.x, y: selectedStartUnitScreen.y, width: width, height: height)
+        
+        let minWidth: CGFloat = 60
+        let minHeight: CGFloat = 60
+        
+        if width < minWidth {
+            let diff = minWidth - width
+            bounds = CGRect(x: bounds.origin.x - diff / 2, y: bounds.origin.y, width: 60, height: bounds.size.height)
+        }
+        
+        if height < minHeight {
+            let diff = minHeight - height
+            bounds = CGRect(x: bounds.origin.x, y: bounds.origin.y - diff / 2, width: bounds.width, height: 60)
+        }
+        
+        return bounds
+    }
+    
+    // selected object delegate
+    func onObjectSelected() {
+        
+    }
+    
+    func onSelectedObjectMoveStart() {
+        let bounds = screenBoundsForSelectedObject()
+        selectedObjectMoveView?.showSelectedObjectMoveButtons(bounds: bounds)
+    }
+    
+    func onSelectedObjectMoved() {
+        let bounds = screenBoundsForSelectedObject()
+        selectedObjectMoveView?.updateSelectedObjectMoveButtons(bounds: bounds)
+        
+        let cX = bounds.origin.x + bounds.size.width / 2
+        let cY = bounds.origin.y + bounds.size.height / 2
+        
+        if interactiveCanvas.hasSelectedObjectMoved() {
+            selectedObjectView?.showSelectedObjectYesAndNoButtons(screenPoint: CGPoint(x: cX, y: cY))
+        }
+        else {
+            selectedObjectView?.hideSelectedObjectYesAndNoButtons()
+        }
+    }
+    
+    func onSelectedObjectMoveEnd() {
+        endObjectMove()
+        
+        selectedObjectMoveView?.hideSelectedObjectMoveButtons()
+        selectedObjectMoveView?.selectedObjectMoveEnded()
+        
+        selectedObjectView?.hideSelectedObjectYesAndNoButtons()
+        selectedObjectView?.selectedObjectEnded()
     }
     
     // draw callback
@@ -601,6 +768,8 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         let rangeX = endUnitIndexX - startUnitIndexX
         let rangeY = endUnitIndexY - startUnitIndexY
         
+        let isObjectSelected = interactiveCanvas.selectedPixels != nil
+        
         let backgroundColors = interactiveCanvas.getBackgroundColors(index: SessionSettings.instance.backgroundColorIndex)!
         
         let primaryBackground = UIColor(argb: backgroundColors.primary).cgColor
@@ -611,30 +780,49 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 let unitX = x + startUnitIndexX
                 let unitY = y + startUnitIndexY
                 
+                var fillColor: CGColor!
+                
                 if unitX >= 0 && unitX < interactiveCanvas.cols && unitY >= 0 && unitY < interactiveCanvas.rows {
                     let color = interactiveCanvas.arr[unitY][unitX]
-
+                    
                     if color == 0 {
                         if ((unitX + unitY) % 2 == 0) {
-                            ctx.setFillColor(primaryBackground)
+                            fillColor = primaryBackground
                         }
                         else {
-                            ctx.setFillColor(secondaryBackground)
+                            fillColor = secondaryBackground
                         }
-                        
-                        ctx.addRect(interactiveCanvas.getScreenSpaceForUnit(x: unitX, y: unitY))
-                        ctx.drawPath(using: .fill)
-                        
                     }
                     else {
-                        ctx.setFillColor(UIColor(argb: color).cgColor)
-                        ctx.addRect(interactiveCanvas.getScreenSpaceForUnit(x: unitX, y: unitY))
-                        ctx.drawPath(using: .fill)
+                        fillColor = UIColor(argb: color).cgColor
                     }
                 }
                 else {
-                    ctx.setFillColor(UIColor.black.cgColor)
-                    ctx.addRect(interactiveCanvas.getScreenSpaceForUnit(x: unitX, y: unitY))
+                    fillColor = UIColor.black.cgColor
+                    
+                }
+                
+                if isObjectSelected {
+                    let newColor = Utils.brightenColor(color: UIColor(cgColor: fillColor).argb(), by: -0.5)
+                    fillColor = UIColor(argb: newColor).cgColor
+                }
+                
+                ctx.setFillColor(fillColor)
+                ctx.addRect(interactiveCanvas.getScreenSpaceForUnit(x: unitX, y: unitY))
+                ctx.drawPath(using: .fill)
+            }
+        }
+        
+        // selected object
+        if isObjectSelected {
+            let selectedPixels = interactiveCanvas.selectedPixels!
+            for pixel in selectedPixels {
+                let x = pixel.x
+                let y = pixel.y
+                
+                if x >= startUnitIndexX && x <= endUnitIndexX && y >= startUnitIndexY && y <= endUnitIndexY {
+                    ctx.setFillColor(UIColor(argb: pixel.color).cgColor)
+                    ctx.addRect(interactiveCanvas.getScreenSpaceForUnit(x: x, y: y))
                     ctx.drawPath(using: .fill)
                 }
             }

@@ -113,6 +113,8 @@ class DeviceViewportSummaryView: UIView {
         }
         
         interactiveCanvas.deviceViewport = deviceViewport
+        interactiveCanvas.notifyDeviceViewportUpdate()
+        
         interactiveCanvas.drawCallback?.notifyCanvasRedraw()
         
         setNeedsDisplay()

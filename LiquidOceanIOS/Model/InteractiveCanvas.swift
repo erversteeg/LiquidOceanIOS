@@ -38,6 +38,14 @@ protocol InteractiveCanvasDeviceViewportResetDelegate: AnyObject {
     func resetDeviceViewport()
 }
 
+protocol InteractiveCanvasSelectedObjectDelegate: AnyObject {
+    func onObjectSelected()
+    
+    func onSelectedObjectMoveStart()
+    func onSelectedObjectMoved()
+    func onSelectedObjectMoveEnd()
+}
+
 class InteractiveCanvas: NSObject {
     var rows = 1024
     var cols = 1024
@@ -70,6 +78,7 @@ class InteractiveCanvas: NSObject {
     weak var recentColorsDelegate: InteractiveCanvasRecentColorsDelegate?
     weak var artExportDelegate: InteractiveCanvasArtExportDelegate?
     weak var deviceViewportResetDelegate: InteractiveCanvasDeviceViewportResetDelegate?
+    weak var selectedObjectDelegate: InteractiveCanvasSelectedObjectDelegate?
     
     var startScaleFactor = CGFloat(0.2)
     
@@ -98,6 +107,35 @@ class InteractiveCanvas: NSObject {
     var summary = [RestorePoint]()
     
     var screenSpaceRect = CGRect()
+    
+    private var _selectedPixels: [RestorePoint]?
+    var selectedPixels: [RestorePoint]? {
+        set {
+            _selectedPixels = newValue
+            
+            if newValue != nil {
+                startSelectedPixels = copyPixels(pixels: _selectedPixels!)
+            }
+        }
+        get {
+            return _selectedPixels
+        }
+    }
+    
+    var startSelectedPixels: [RestorePoint]!
+    
+    var startSelectedStartUnit: CGPoint!
+    var startSelectedEndUnit: CGPoint!
+    
+    var cSelectedStartUnit: CGPoint!
+    var cSelectedEndUnit: CGPoint!
+    
+    enum Direction {
+        case up
+        case down
+        case left
+        case right
+    }
     
     class RestorePoint {
         var x: Int
@@ -445,7 +483,7 @@ class InteractiveCanvas: NSObject {
     }
     
     func isCanvas(unitPoint: CGPoint) -> Bool {
-        return unitPoint.x > 0 && unitPoint.y > 0 && unitPoint.x < CGFloat(cols) && unitPoint.y < CGFloat(rows)
+        return unitPoint.x >= 0 && unitPoint.y >= 0 && unitPoint.x < CGFloat(cols) && unitPoint.y < CGFloat(rows)
     }
     
     func isBackground(unitPoint: CGPoint) -> Bool {
@@ -638,7 +676,193 @@ class InteractiveCanvas: NSObject {
         return nil
     }
     
+    // object move
+    func startMoveSelection(startUnit: CGPoint, endUnit: CGPoint) -> Bool {
+        if !isCanvas(unitPoint: startUnit) || !isCanvas(unitPoint: endUnit) {
+            return false
+        }
+        
+        let pixels = getPixels(startUnit: startUnit, endUnit: endUnit)
+        if pixels.isEmpty {
+            return false
+        }
+        
+        selectedPixels = pixels
+        
+        let startAndEndUnits = getStartAndEndUnits(pixels: selectedPixels!)
+        
+        startSelectedStartUnit = startAndEndUnits.start
+        cSelectedStartUnit = CGPoint(x: startSelectedStartUnit.x, y: startSelectedStartUnit.y)
+        
+        startSelectedEndUnit = startAndEndUnits.end
+        cSelectedEndUnit = CGPoint(x: startSelectedEndUnit.x, y: startSelectedEndUnit.y)
+        
+        selectedObjectDelegate?.onObjectSelected()
+        selectedObjectDelegate?.onSelectedObjectMoveStart()
+        
+        drawCallback?.notifyCanvasRedraw()
+        
+        return true
+    }
+    
+    func startMoveSelection(unitPoint: CGPoint) -> Bool {
+        if !isCanvas(unitPoint: unitPoint) {
+            return false
+        }
+        
+        let pixels = getPixelsInForm(unitPoint: unitPoint)
+        if pixels.isEmpty {
+            return false
+        }
+        
+        selectedPixels = pixels
+        
+        let startAndEndUnits = getStartAndEndUnits(pixels: selectedPixels!)
+        
+        startSelectedStartUnit = startAndEndUnits.start
+        cSelectedStartUnit = CGPoint(x: startSelectedStartUnit.x, y: startSelectedStartUnit.y)
+        
+        startSelectedEndUnit = startAndEndUnits.end
+        cSelectedEndUnit = CGPoint(x: startSelectedEndUnit.x, y: startSelectedEndUnit.y)
+        
+        selectedObjectDelegate?.onObjectSelected()
+        selectedObjectDelegate?.onSelectedObjectMoveStart()
+        
+        drawCallback?.notifyCanvasRedraw()
+        
+        return true
+    }
+    
+    func moveSelection(direction: Direction) {
+        if (selectedPixels != nil) {
+            let selectedPixels = selectedPixels!
+            let moved = movePixels(pixels: selectedPixels, direction: direction)
+            
+            if moved {
+                selectedObjectDelegate?.onSelectedObjectMoved()
+                drawCallback?.notifyCanvasRedraw()
+            }
+        }
+    }
+    
+    func endMoveSelection(confirm: Bool) {
+        if confirm {
+            for pixel in startSelectedPixels {
+                let x = pixel.x
+                let y = pixel.y
+                
+                arr[y][x] = 0
+            }
+            
+            if selectedPixels != nil {
+                let selectedPixels = selectedPixels!
+                for pixel in selectedPixels {
+                    let x = pixel.x
+                    let y = pixel.y
+                    
+                    arr[y][x] = pixel.color
+                }
+            }
+        }
+        
+        selectedPixels = nil
+        
+        selectedObjectDelegate?.onSelectedObjectMoveEnd()
+        drawCallback?.notifyCanvasRedraw()
+    }
+    
+    func cancelMoveSelectedObject() {
+        endMoveSelection(confirm: false)
+    }
+    
+    func hasSelectedObjectMoved() -> Bool {
+        return startSelectedStartUnit.x != cSelectedStartUnit.x || startSelectedStartUnit.y != cSelectedStartUnit.y
+    }
+    
+    func movePixels(pixels: [RestorePoint], direction: Direction) -> Bool {
+        // check bounds
+        for pixel in pixels {
+            let x = pixel.x
+            let y = pixel.y
+            
+            switch direction {
+                case .up:
+                    if y < 1 {
+                        return false
+                    }
+                case .down:
+                    if y > rows - 2 {
+                        return false
+                    }
+                case .left:
+                    if x < 1 {
+                        return false
+                    }
+                case .right:
+                    if x > cols - 2 {
+                        return false
+                    }
+            }
+        }
+        
+        // move pixels
+        for pixel in pixels {
+            switch direction {
+                case .up:
+                    pixel.y -= 1
+                    break
+                case .down:
+                    pixel.y += 1
+                    break
+                case .left:
+                    pixel.x -= 1
+                    break
+                case .right:
+                    pixel.x += 1
+                    break
+            }
+        }
+        
+        switch direction {
+            case .up:
+                cSelectedStartUnit.y -= 1
+                cSelectedEndUnit.y -= 1
+                break
+            case .down:
+                cSelectedStartUnit.y += 1
+                cSelectedEndUnit.y += 1
+                break
+            case .left:
+                cSelectedStartUnit.x -= 1
+                cSelectedEndUnit.x -= 1
+                break
+            case .right:
+                cSelectedStartUnit.x += 1
+                cSelectedEndUnit.x += 1
+                break
+        }
+        
+        return true
+    }
+    
+    // export
     func exportSelection(startUnit: CGPoint, endUnit: CGPoint) {
+        if !isCanvas(unitPoint: startUnit) || !isCanvas(unitPoint: endUnit) {
+            return
+        }
+        
+        artExportDelegate?.notifyArtExported(art: getPixels(startUnit: startUnit, endUnit: endUnit))
+    }
+    
+    func exportSelection(unitPoint: CGPoint) {
+        if !isCanvas(unitPoint: unitPoint) {
+            return
+        }
+        
+        self.artExportDelegate?.notifyArtExported(art: getPixelsInForm(unitPoint: unitPoint))
+    }
+    
+    func getPixels(startUnit: CGPoint, endUnit: CGPoint) -> [RestorePoint] {
         var pixelsOut = [RestorePoint]()
         
         var numLeadingCols = 0
@@ -715,20 +939,44 @@ class InteractiveCanvas: NSObject {
             }
         }
         
-        if (startX + numLeadingCols) < (endX - numTrailingCols) &&
-            (startY + numLeadingRows) < (endY - numTrailingRows) {
-            for x in (startX + numLeadingCols)...(endX - numTrailingCols) {
-                for y in (startY + numLeadingRows)...(endY - numTrailingRows) {
-                    pixelsOut.append(RestorePoint(x: x, y: y, color: arr[y][x], newColor: arr[y][x]))
-                }
+        if (endX - numTrailingCols) < (startX + numLeadingCols) || (endY - numTrailingRows) < (startY + numLeadingRows) {
+            return pixelsOut
+        }
+        
+        for x in (startX + numLeadingCols)...(endX - numTrailingCols) {
+            for y in (startY + numLeadingRows)...(endY - numTrailingRows) {
+                pixelsOut.append(RestorePoint(x: x, y: y, color: arr[y][x], newColor: arr[y][x]))
             }
         }
         
-        artExportDelegate?.notifyArtExported(art: pixelsOut)
+        return pixelsOut
     }
     
-    func exportSelection(unitPoint: CGPoint) {
-        self.artExportDelegate?.notifyArtExported(art: getPixelsInForm(unitPoint: unitPoint))
+    func getStartAndEndUnits(pixels: [RestorePoint]) -> (start: CGPoint, end: CGPoint) {
+        var minX = CGFloat(cols)
+        var maxX: CGFloat = -1
+        var minY = CGFloat(rows)
+        var maxY: CGFloat = -1
+        
+        for pixel in pixels {
+            let x = CGFloat(pixel.x)
+            let y = CGFloat(pixel.y)
+            
+            if x < minX {
+                minX = x
+            }
+            if x > maxX {
+                maxX = x
+            }
+            if y < minY {
+                minY = y
+            }
+            if y > maxY {
+                maxY = y
+            }
+        }
+        
+        return (CGPoint(x: minX, y: minY), CGPoint(x: maxX, y: maxY))
     }
     
     private func getPixelsInForm(unitPoint: CGPoint) -> [RestorePoint] {
@@ -768,6 +1016,22 @@ class InteractiveCanvas: NSObject {
         
     }
     
+    func copyPixels(pixels: [RestorePoint]) -> [RestorePoint] {
+        var pixelsCopy = [RestorePoint]()
+        
+        for pixel in pixels {
+            pixelsCopy.append(RestorePoint(x: pixel.x, y: pixel.y, color: pixel.color, newColor: pixel.newColor))
+        }
+        
+        return pixelsCopy
+    }
+    
+    func notifyDeviceViewportUpdate() {
+        if selectedPixels != nil {
+            selectedObjectDelegate?.onSelectedObjectMoved()
+        }
+    }
+    
     func updateDeviceViewport(screenSize: CGSize, fromScale: Bool = false) {
         updateDeviceViewport(screenSize: screenSize, canvasCenterX: deviceViewport.origin.x + deviceViewport.size.width / 2, canvasCenterY: deviceViewport.origin.y + deviceViewport.size.height / 2, fromScale: fromScale)
     }
@@ -805,6 +1069,13 @@ class InteractiveCanvas: NSObject {
         if w <= 0 || h <= 0 {
             deviceViewportResetDelegate?.resetDeviceViewport()
         }
+        
+        if fromScale {
+            // selected object
+            if selectedPixels != nil {
+                selectedObjectDelegate?.onSelectedObjectMoved()
+            }
+        }
     }
     
     func getScreenSpaceForUnit(x: Int, y: Int) -> CGRect {
@@ -813,8 +1084,8 @@ class InteractiveCanvas: NSObject {
         
         screenSpaceRect.origin.x = round(max(offsetX, 0.0))
         screenSpaceRect.origin.y = round(max(offsetY, 0.0))
-        screenSpaceRect.size.width = round(offsetX + CGFloat(ppu))
-        screenSpaceRect.size.height = round(offsetY + CGFloat(ppu))
+        screenSpaceRect.size.width = round(CGFloat(ppu))
+        screenSpaceRect.size.height = round(CGFloat(ppu))
         
         return screenSpaceRect
     }
@@ -830,6 +1101,16 @@ class InteractiveCanvas: NSObject {
         let absY = absYPx / CGFloat(ppu)
         
         return CGPoint(x: floor(absX), y: floor(absY))
+    }
+    
+    func screenPointForUnit(unitPoint: CGPoint) -> CGPoint {
+        let topViewportPx = deviceViewport.origin.y * CGFloat(ppu)
+        let leftViewportPx = deviceViewport.origin.x * CGFloat(ppu)
+        
+        let absXPx = unitPoint.x * CGFloat(ppu)
+        let absYPx = unitPoint.y * CGFloat(ppu)
+        
+        return CGPoint(x: absXPx - leftViewportPx, y: absYPx - topViewportPx)
     }
     
     func translateBy(x: CGFloat, y: CGFloat) {
@@ -889,6 +1170,11 @@ class InteractiveCanvas: NSObject {
         // error! reset the canvas viewport
         if w <= 0 || h <= 0 {
             deviceViewportResetDelegate?.resetDeviceViewport()
+        }
+        
+        // selected object
+        if selectedPixels != nil {
+            selectedObjectDelegate?.onSelectedObjectMoved()
         }
         
         drawCallback?.notifyCanvasRedraw()

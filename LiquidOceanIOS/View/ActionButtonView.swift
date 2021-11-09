@@ -77,6 +77,7 @@ class ActionButtonView: UIView {
         case frame
         case lockOpen
         case lockClose
+        case solid
     }
     
     var selectable = true
@@ -153,6 +154,23 @@ class ActionButtonView: UIView {
         }
         get {
             return _colorMode
+        }
+    }
+    
+    enum ToggleState {
+        case none
+        case single
+        case double
+    }
+    
+    private var _toggleState = ToggleState.none
+    var toggleState: ToggleState {
+        set {
+            _toggleState = newValue
+            setNeedsDisplay()
+        }
+        get {
+            _toggleState
         }
     }
     
@@ -319,6 +337,9 @@ class ActionButtonView: UIView {
         }
         else if type == .lockClose {
             drawLockCloseAction()
+        }
+        else if type == .solid {
+            drawSolidAction()
         }
     }
     
@@ -668,6 +689,15 @@ class ActionButtonView: UIView {
         
         if selected {
             paint = ActionButtonView.lightYellowColor!
+        }
+        
+        if toggleState != .none {
+            if toggleState == .single {
+                paint = ActionButtonView.lightYellowColor
+            }
+            else if toggleState == .double {
+                paint = ActionButtonView.lightGreenColor
+            }
         }
         
         let context = UIGraphicsGetCurrentContext()!
@@ -2091,6 +2121,24 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 5, y: 8, color: paint)
         drawPixel(ctx: context, x: 6, y: 8, color: paint)
         drawPixel(ctx: context, x: 7, y: 8, color: paint)
+    }
+    
+    func drawSolidAction() {
+        rows = 1
+        cols = 1
+        
+        var paint = ActionButtonView.semiColor!
+        if SessionSettings.instance.darkIcons && !isStatic {
+            paint = ActionButtonView.semiDarkColor!
+        }
+        
+        if selected {
+            paint = ActionButtonView.lightYellowColor!
+        }
+        
+        let context = UIGraphicsGetCurrentContext()!
+        
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
     }
     
     func rectForPixel(x: Int, y: Int) -> CGRect {

@@ -25,6 +25,7 @@ class HowtoViewController: UIViewController {
     @IBOutlet weak var step8Text: UILabel!
     @IBOutlet weak var step9Text: UILabel!
     @IBOutlet weak var step10Text: UILabel!
+    @IBOutlet weak var step11Text: UILabel!
     
     @IBOutlet weak var paintAction: ActionButtonView!
     @IBOutlet weak var exportAction: ActionButtonView!
@@ -35,6 +36,7 @@ class HowtoViewController: UIViewController {
     @IBOutlet weak var dotAction2: ActionButtonView!
     @IBOutlet weak var frameAction: ActionButtonView!
     @IBOutlet weak var dotAction3: ActionButtonView!
+    @IBOutlet weak var exportAction2: ActionButtonView!
     
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
     
@@ -64,6 +66,7 @@ class HowtoViewController: UIViewController {
         dotAction2.isStatic = true
         frameAction.isStatic = true
         dotAction3.isStatic = true
+        exportAction2.isStatic = true
         
         paintAction.type = .paint
         exportAction.type = .export
@@ -74,6 +77,7 @@ class HowtoViewController: UIViewController {
         dotAction2.type = .dot
         frameAction.type = .frame
         dotAction3.type = .dot
+        exportAction2.type = .export
         
         if view.frame.size.height <= 600 {
             howtoTitleLabel.isHidden = true
@@ -83,7 +87,8 @@ class HowtoViewController: UIViewController {
         }
         
         let stepLabels = [step1Text, step2Text, step3Text, step4Text, step5Text,
-                          step6Text, step7Text, step8Text, step9Text, step10Text]
+                          step6Text, step7Text, step8Text, step9Text, step10Text,
+                            step11Text]
         for label in stepLabels {
             setStepBackground(label: label!)
         }

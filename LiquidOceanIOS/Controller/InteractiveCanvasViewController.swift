@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate, CanvasEdgeTouchDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate, CanvasEdgeTouchDelegate, InteractiveCanvasSelectedObjectViewDelegate, InteractiveCanvasSelectedObjectMoveViewDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -156,6 +156,35 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var summaryButton: ActionButtonFrame!
     @IBOutlet weak var summaryAction: ActionButtonView!
     
+    @IBOutlet weak var objectMoveUpButton: ActionButtonFrame!
+    @IBOutlet weak var objectMoveUpAction: ActionButtonView!
+    @IBOutlet weak var objectMoveUpButtonTop: NSLayoutConstraint!
+    @IBOutlet weak var objectMoveUpButtonLeading: NSLayoutConstraint!
+    
+    @IBOutlet weak var objectMoveDownButton: ActionButtonFrame!
+    @IBOutlet weak var objectMoveDownAction: ActionButtonView!
+    @IBOutlet weak var objectMoveDownButtonTop: NSLayoutConstraint!
+    @IBOutlet weak var objectMoveDownButtonLeading: NSLayoutConstraint!
+    
+    @IBOutlet weak var objectMoveLeftButton: ActionButtonFrame!
+    @IBOutlet weak var objectMoveLeftAction: ActionButtonView!
+    @IBOutlet weak var objectMoveLeftButtonTop: NSLayoutConstraint!
+    @IBOutlet weak var objectMoveLeftButtonLeading: NSLayoutConstraint!
+    
+    @IBOutlet weak var objectMoveRightButton: ActionButtonFrame!
+    @IBOutlet weak var objectMoveRightAction: ActionButtonView!
+    @IBOutlet weak var objectMoveRightButtonTop: NSLayoutConstraint!
+    @IBOutlet weak var objectMoveRightButtonLeading: NSLayoutConstraint!
+    
+    @IBOutlet weak var selectedObjectYesButton: ActionButtonFrame!
+    @IBOutlet weak var selectedObjectYesAction: ActionButtonView!
+    @IBOutlet weak var selectedObjectNoButton: ActionButtonFrame!
+    @IBOutlet weak var selectedObjectNoAction: ActionButtonView!
+    
+    @IBOutlet weak var selectedObjectYesNoContainer: UIView!
+    @IBOutlet weak var selectedObjectYesNoContainerTop: NSLayoutConstraint!
+    @IBOutlet weak var selectedObjectYesNoContainerLeading: NSLayoutConstraint!
+    
     var panelThemeConfig: PanelThemeConfig!
     
     var world = false
@@ -210,6 +239,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.gestureDelegate = self
         self.surfaceView.canvasFrameDelegate = self
         self.surfaceView.canvasEdgeTouchDelegate = self
+        self.surfaceView.selectedObjectView = self
+        self.surfaceView.selectedObjectMoveView = self
         
         // surfaceView.setInitalScale()
         
@@ -219,19 +250,32 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         backButton.actionButtonView = backAction
         self.backAction.type = .back
         self.backButton.setOnClickListener {
-            if !self.surfaceView.isExporting() {
+            
+            if self.surfaceView.isExporting() {
+                self.exportAction.toggleState = .none
+                self.surfaceView.endExporting()
+                
+                self.exportAction.layer.borderWidth = 0
+            }
+            else if self.surfaceView.isObjectMoveSelection() || self.surfaceView.isObjectMoving() {
+                if self.surfaceView.isObjectMoving() {
+                    self.surfaceView.interactiveCanvas.cancelMoveSelectedObject()
+                }
+                else {
+                    self.surfaceView.startExporting()
+                    
+                    self.exportAction.toggleState = .single
+                    self.exportAction.layer.borderWidth = 1
+                    self.exportAction.layer.borderColor = UIColor(argb: ActionButtonView.lightYellowColor).cgColor
+                }
+            }
+            else {
                 if SessionSettings.instance.promptBack {
                     self.promptBack()
                 }
                 else {
                     self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
                 }
-            }
-            else {
-                self.exportAction.selected = false
-                self.exportAction.layer.borderWidth = 0
-                
-                self.surfaceView.endExporting()
             }
         }
         
@@ -314,10 +358,24 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         // export
         self.exportButton.setOnClickListener {
-            self.surfaceView.startExporting()
-            self.exportAction.selected = true
-            self.exportAction.layer.borderColor = UIColor(argb: ActionButtonView.lightYellowColor).cgColor
-            self.exportAction.layer.borderWidth = 1
+            if (self.exportAction.toggleState == .none) {
+                self.surfaceView.startExporting()
+                self.exportAction.toggleState = .single
+                self.exportAction.layer.borderColor = UIColor(argb: ActionButtonView.lightYellowColor).cgColor
+                self.exportAction.layer.borderWidth = 1
+            }
+            else if (self.exportAction.toggleState == .single) {
+                self.surfaceView.endExporting()
+                self.surfaceView.startObjectMoveSelection()
+                self.exportAction.toggleState = .double
+                self.exportAction.layer.borderColor = UIColor(argb: ActionButtonView.lightGreenColor).cgColor
+            }
+            else if (self.exportAction.toggleState == .double) {
+                self.surfaceView.endObjectMove()
+                self.surfaceView.interactiveCanvas.cancelMoveSelectedObject()
+                self.exportAction.toggleState = .none
+                self.exportAction.layer.borderWidth = 0
+            }
         }
         
         // change background
@@ -346,6 +404,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.toolboxActionView.setNeedsDisplay()
             self.recentColorsActionView.setNeedsDisplay()
+            
+            self.objectMoveUpAction.setNeedsDisplay()
+            self.objectMoveDownAction.setNeedsDisplay()
+            self.objectMoveLeftAction.setNeedsDisplay()
+            self.objectMoveRightAction.setNeedsDisplay()
             
             self.palettesViewController.addPaletteAction.setNeedsDisplay()
             
@@ -834,6 +897,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             lastViewFrameSize = view!.frame.size
             
             self.deviceViewportSummaryView.setNeedsDisplay()
+            self.surfaceView.interactiveCanvas.notifyDeviceViewportUpdate()
         }
     }
     
@@ -1320,7 +1384,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     func notifyExportViewControllerBackPressed() {
         exportContainer.isHidden = true
         
-        self.exportAction.selected = false
+        self.exportAction.toggleState = .none
         self.exportAction.layer.borderWidth = 0
         
         surfaceView.endExporting()
@@ -1638,6 +1702,123 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func onTouchCanvasEdge() {
         togglePaintPanel(open: true)
+    }
+    
+    // selected object view
+    func showSelectedObjectYesAndNoButtons(screenPoint: CGPoint) {
+        selectedObjectYesButton.actionButtonView = selectedObjectYesAction
+        selectedObjectNoButton.actionButtonView = selectedObjectNoAction
+        
+        selectedObjectYesAction.type = .yes
+        selectedObjectYesAction.colorMode = .color
+        
+        selectedObjectNoAction.type = .no
+        selectedObjectNoAction.colorMode = .color
+        
+        selectedObjectYesNoContainerLeading.constant = screenPoint.x - selectedObjectYesNoContainer.frame.size.width / 2
+        selectedObjectYesNoContainerTop.constant = screenPoint.y - selectedObjectYesNoContainer.frame.size.height / 2
+        
+        selectedObjectYesButton.setOnClickListener {
+            self.surfaceView.interactiveCanvas.endMoveSelection(confirm: true)
+        }
+        
+        selectedObjectNoButton.setOnClickListener {
+            self.surfaceView.interactiveCanvas.endMoveSelection(confirm: false)
+        }
+        
+        selectedObjectYesNoContainer.layer.cornerRadius = 10
+        selectedObjectYesNoContainer.layer.borderWidth = 1
+        selectedObjectYesNoContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
+        
+        selectedObjectYesNoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x33000000"))
+        
+        selectedObjectYesNoContainer.isHidden = false
+    }
+    
+    func hideSelectedObjectYesAndNoButtons() {
+        selectedObjectYesNoContainer.isHidden = true
+    }
+    
+    func selectedObjectEnded() {
+        
+    }
+    
+    // selected object move view
+    func showSelectedObjectMoveButtons(bounds: CGRect) {
+        let buttons = [objectMoveUpButton, objectMoveDownButton, objectMoveLeftButton, objectMoveRightButton]
+        let actions = [objectMoveUpAction, objectMoveDownAction, objectMoveLeftAction, objectMoveRightAction]
+        
+        for i in 0...buttons.count - 1 {
+            let button = buttons[i]!
+            let action = actions[i]!
+            
+            button.actionButtonView = action
+            action.type = .solid
+            button.isHidden = false
+        }
+        
+        objectMoveUpButton.setOnClickListener {
+            self.surfaceView.interactiveCanvas.moveSelection(direction: .up)
+        }
+        
+        objectMoveDownButton.setOnClickListener {
+            self.surfaceView.interactiveCanvas.moveSelection(direction: .down)
+        }
+        
+        objectMoveLeftButton.setOnClickListener {
+            self.surfaceView.interactiveCanvas.moveSelection(direction: .left)
+        }
+        
+        objectMoveRightButton.setOnClickListener {
+            self.surfaceView.interactiveCanvas.moveSelection(direction: .right)
+        }
+        
+        let cX = bounds.origin.x + bounds.width / 2
+        let cY = bounds.origin.y + bounds.height / 2
+        
+        //objectMoveLeftButton.backgroundColor = UIColor.red
+        //objectMoveRightButton.backgroundColor = UIColor.yellow
+        
+        objectMoveUpButtonLeading.constant = cX - objectMoveUpButton.frame.size.width / 2
+        objectMoveUpButtonTop.constant = bounds.origin.y - objectMoveUpButton.frame.size.height - 20
+        
+        objectMoveDownButtonLeading.constant = cX - objectMoveDownButton.frame.size.width / 2
+        objectMoveDownButtonTop.constant = bounds.origin.y + bounds.size.height + 20
+        
+        objectMoveLeftButtonLeading.constant = bounds.origin.x - 20 - objectMoveLeftButton.frame.size.width
+        objectMoveLeftButtonTop.constant = cY - objectMoveLeftButton.frame.size.height / 2
+        
+        objectMoveRightButtonLeading.constant = bounds.origin.x + bounds.size.width + 20
+        objectMoveRightButtonTop.constant = cY - objectMoveRightButton.frame.size.height / 2
+    }
+    
+    func updateSelectedObjectMoveButtons(bounds: CGRect) {
+        let cX = bounds.origin.x + bounds.width / 2
+        let cY = bounds.origin.y + bounds.height / 2
+        
+        objectMoveUpButtonLeading.constant = cX - objectMoveUpButton.frame.size.width / 2
+        objectMoveUpButtonTop.constant = bounds.origin.y - objectMoveUpButton.frame.size.height - 20
+        
+        objectMoveDownButtonLeading.constant = cX - objectMoveDownButton.frame.size.width / 2
+        objectMoveDownButtonTop.constant = bounds.origin.y + bounds.size.height + 20
+        
+        objectMoveLeftButtonLeading.constant = bounds.origin.x - 20 - objectMoveLeftButton.frame.size.width
+        objectMoveLeftButtonTop.constant = cY - objectMoveLeftButton.frame.size.height / 2
+        
+        objectMoveRightButtonLeading.constant = bounds.origin.x + bounds.size.width + 20
+        objectMoveRightButtonTop.constant = cY - objectMoveRightButton.frame.size.height / 2
+    }
+    
+    func hideSelectedObjectMoveButtons() {
+        objectMoveUpButton.isHidden = true
+        objectMoveDownButton.isHidden = true
+        objectMoveLeftButton.isHidden = true
+        objectMoveRightButton.isHidden = true
+    }
+    
+    func selectedObjectMoveEnded() {
+        self.exportAction.toggleState = .none
+        self.exportAction.layer.borderWidth = 0
     }
 }
 
