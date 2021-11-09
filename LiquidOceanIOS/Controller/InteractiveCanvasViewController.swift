@@ -400,7 +400,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.gridLinesAction.setNeedsDisplay()
             self.summaryAction.setNeedsDisplay()
             self.paintPanelAction.setNeedsDisplay()
-            self.backButton.setNeedsDisplay()
+            self.backAction.setNeedsDisplay()
             self.paletteAddColorAction.setNeedsDisplay()
             self.paletteRemoveColorAction.setNeedsDisplay()
             
@@ -1108,6 +1108,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             colorPickerViewController.brightnessSliderWidth.constant *= 2
             
             resizedColorPicker = true
+        }
+        else if view.frame.size.height > 600 {
+            colorPickerFrameWidth.constant = 330 * 2
         }
         else if view.frame.size.height <= 600 {
             colorPickerFrameWidth.constant = 330

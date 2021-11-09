@@ -4275,7 +4275,7 @@
                                     <constraint firstAttribute="height" constant="29" id="jki-I8-bDG"/>
                                     <constraint firstAttribute="width" constant="155" id="rT7-Fa-Mcl"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -4295,7 +4295,7 @@
                                     <constraint firstAttribute="width" constant="167" id="L3n-Tm-Xfx"/>
                                     <constraint firstAttribute="height" constant="29" id="RQA-We-4oK"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -4426,9 +4426,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H4R-cv-Hy1">
-                                        <rect key="frame" x="582" y="132" width="250" height="50"/>
+                                        <rect key="frame" x="632" y="132" width="200" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="250" id="Bit-7P-GyB"/>
+                                            <constraint firstAttribute="width" constant="200" id="Bit-7P-GyB"/>
                                             <constraint firstAttribute="height" constant="50" id="bSp-Fw-RuI"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="14"/>

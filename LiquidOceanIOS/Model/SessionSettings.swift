@@ -237,7 +237,7 @@ class SessionSettings: NSObject {
         
         googleAuth = userDefaultsBool(forKey: "google_auth", defaultVal: false)
         
-        panelBackgroundName = userDefaultsString(forKey: "panel_background", defaultVal: "metal_floor_1.jpg")
+        panelBackgroundName = userDefaultsString(forKey: "panel_background", defaultVal: "amb_9.jpg")
         
         showGridLines = userDefaultsBool(forKey: "show_grid_lines", defaultVal: true)
         

@@ -41,8 +41,11 @@ class CanvasImportViewController: UIViewController, UITextFieldDelegate {
                 let tokens = urlStr.split(separator: "/")
                 if tokens.count > 0 {
                     let code = String(tokens[tokens.count - 1])
-                    if code.count > 5 {
+                    if code.count == 8 {
                         getAndImportCanvasData(code: code)
+                    }
+                    else {
+                        showStatusText(text: "Code doesn\'t seem to be the right length.")
                     }
                 }
                 else {
@@ -51,8 +54,11 @@ class CanvasImportViewController: UIViewController, UITextFieldDelegate {
             }
             else {
                 let code = urlStr
-                if code.count > 5 {
+                if code.count == 8 {
                     getAndImportCanvasData(code: code)
+                }
+                else {
+                    showStatusText(text: "Code doesn\'t seem to be the right length.")
                 }
             }
         }
@@ -129,7 +135,14 @@ class CanvasImportViewController: UIViewController, UITextFieldDelegate {
             }
             
             DispatchQueue.main.async {
-                completionHandler(String(data: data!, encoding: .utf8))
+                if let httpResponse = response as? HTTPURLResponse {
+                    if (httpResponse.statusCode == 404) {
+                        self.showStatusText(text: "Pastebin code didn\'t find anything.")
+                    }
+                    else {
+                        completionHandler(String(data: data!, encoding: .utf8))
+                    }
+                }
             }
         })
 
