@@ -219,6 +219,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        SessionSettings.instance.canvasOpen = true
+        
         surfaceView.interactiveCanvas.realmId = realmId
         surfaceView.interactiveCanvas.world = world
         
@@ -1079,6 +1081,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             }
             
             SessionSettings.instance.interactiveCanvas = nil
+            
+            SessionSettings.instance.canvasOpen = false
         }
     }
     

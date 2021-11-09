@@ -192,6 +192,12 @@ class MenuViewController: UIViewController, AchievementListener {
         Animator.animateMenuButtons(views: [[self.drawLabel], [self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if SessionSettings.instance.canvasOpen {
+            self.performSegue(withIdentifier: self.showSinglePlay, sender: nil)
+        }
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         view!.backgroundColor = UIColor.black
         view.setNeedsDisplay()

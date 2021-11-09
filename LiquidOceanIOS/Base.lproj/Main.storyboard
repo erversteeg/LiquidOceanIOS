@@ -3428,26 +3428,6 @@
                                     <constraint firstItem="dAw-EJ-sTU" firstAttribute="centerY" secondItem="tjQ-fj-IaW" secondAttribute="centerY" id="tUu-wr-tlD"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vhR-03-8Ib" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                <rect key="frame" x="20" y="10" width="56" height="40"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gRO-zv-odw" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="35" height="25"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="eWS-JU-V7v"/>
-                                            <constraint firstAttribute="width" constant="35" id="zfO-rL-dLe"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="gRO-zv-odw" firstAttribute="leading" secondItem="vhR-03-8Ib" secondAttribute="leading" id="Z8G-wD-ohi"/>
-                                    <constraint firstAttribute="width" constant="56" id="bAl-zd-zyM"/>
-                                    <constraint firstItem="gRO-zv-odw" firstAttribute="top" secondItem="vhR-03-8Ib" secondAttribute="top" id="kwf-oj-qM2"/>
-                                    <constraint firstAttribute="height" constant="40" id="sMT-tH-gdn"/>
-                                </constraints>
-                            </view>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0af-Id-wac">
                                 <rect key="frame" x="328" y="68" width="400" height="240"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3696,6 +3676,26 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="HGg-dw-KOC"/>
                                     <constraint firstAttribute="width" constant="300" id="gmp-o0-RvR"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vhR-03-8Ib" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                <rect key="frame" x="20" y="10" width="56" height="40"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gRO-zv-odw" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="25"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="eWS-JU-V7v"/>
+                                            <constraint firstAttribute="width" constant="35" id="zfO-rL-dLe"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="gRO-zv-odw" firstAttribute="leading" secondItem="vhR-03-8Ib" secondAttribute="leading" id="Z8G-wD-ohi"/>
+                                    <constraint firstAttribute="width" constant="56" id="bAl-zd-zyM"/>
+                                    <constraint firstItem="gRO-zv-odw" firstAttribute="top" secondItem="vhR-03-8Ib" secondAttribute="top" id="kwf-oj-qM2"/>
+                                    <constraint firstAttribute="height" constant="40" id="sMT-tH-gdn"/>
                                 </constraints>
                             </view>
                         </subviews>
