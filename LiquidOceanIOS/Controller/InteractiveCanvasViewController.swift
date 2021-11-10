@@ -9,7 +9,7 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate, CanvasEdgeTouchDelegate, InteractiveCanvasSelectedObjectViewDelegate, InteractiveCanvasSelectedObjectMoveViewDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate, CanvasEdgeTouchDelegate, InteractiveCanvasSelectedObjectViewDelegate, InteractiveCanvasSelectedObjectMoveViewDelegate, MenuButtonDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -25,7 +25,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var paintColorIndicator: PaintColorIndicator!
     
-    @IBOutlet weak var paintPanelTrailing: NSLayoutConstraint!
+    @IBOutlet var paintPanelLeading: NSLayoutConstraint!
+    @IBOutlet var paintPanelTrailing: NSLayoutConstraint!
     
     @IBOutlet weak var paintPanelWidth: NSLayoutConstraint!
     
@@ -56,8 +57,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var lockPaintPanelAction: ActionButtonView!
     @IBOutlet weak var lockPaintPanelCenterX: NSLayoutConstraint!
     
-    @IBOutlet weak var backButton: ActionButtonFrame!
-    @IBOutlet weak var backAction: ActionButtonView!
+    @IBOutlet weak var menuButton: ActionButtonFrame!
+    @IBOutlet weak var menuAction: ActionButtonView!
     
     @IBOutlet weak var exportButton: ActionButtonFrame!
     @IBOutlet weak var exportAction: ActionButtonView!
@@ -71,8 +72,15 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var toolboxButton: ActionButtonFrame!
     @IBOutlet weak var toolboxActionView: ActionButtonView!
     
+    @IBOutlet var toolboxActionLeading: NSLayoutConstraint!
+    @IBOutlet var toolboxActionTrailing: NSLayoutConstraint!
+    
     @IBOutlet weak var recentColorsButton: ActionButtonFrame!
     @IBOutlet weak var recentColorsActionView: ActionButtonView!
+    
+    @IBOutlet var recentColorsActionLeading: NSLayoutConstraint!
+    @IBOutlet var recentColorsActionTrailing: NSLayoutConstraint!
+    
     @IBOutlet weak var recentColorsContainer: UIView!
     
     @IBOutlet weak var pixelHistoryView: UIView!
@@ -102,15 +110,27 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var backButtonLeading: NSLayoutConstraint!
     @IBOutlet weak var paintPanelButtonTrailing: NSLayoutConstraint!
     
-    @IBOutlet weak var exportButtonTrailing: NSLayoutConstraint!
-    @IBOutlet weak var changeBackgroundButtonTrailing: NSLayoutConstraint!
-    @IBOutlet weak var gridLinesButtonTrailing: NSLayoutConstraint!
-    @IBOutlet weak var summaryButtonTrailing: NSLayoutConstraint!
-    @IBOutlet weak var toolboxButtonTrailing: NSLayoutConstraint!
+    @IBOutlet var exportButtonLeading: NSLayoutConstraint!
+    @IBOutlet var exportButtonTrailing: NSLayoutConstraint!
     
-    @IBOutlet weak var recentColorsButtonLeading: NSLayoutConstraint!
+    @IBOutlet var changeBackgroundButtonLeading: NSLayoutConstraint!
+    @IBOutlet var changeBackgroundButtonTrailing: NSLayoutConstraint!
     
-    @IBOutlet weak var recentColorsContainerLeading: NSLayoutConstraint!
+    @IBOutlet var gridLinesButtonLeading: NSLayoutConstraint!
+    @IBOutlet var gridLinesButtonTrailing: NSLayoutConstraint!
+    
+    @IBOutlet var summaryButtonLeading: NSLayoutConstraint!
+    @IBOutlet var summaryButtonTrailing: NSLayoutConstraint!
+    
+    @IBOutlet var toolboxButtonLeading: NSLayoutConstraint!
+    @IBOutlet var toolboxButtonTrailing: NSLayoutConstraint!
+    
+    @IBOutlet var recentColorsButtonLeading: NSLayoutConstraint!
+    @IBOutlet var recentColorsButtonTrailing: NSLayoutConstraint!
+    
+    @IBOutlet var recentColorsContainerLeading: NSLayoutConstraint!
+    @IBOutlet var recentColorsContainerTrailing: NSLayoutConstraint!
+    
     @IBOutlet weak var recentColorsContainerBottom: NSLayoutConstraint!
     
     @IBOutlet weak var pixelHistoryViewTop: NSLayoutConstraint!
@@ -121,7 +141,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var paintInfoContainerTop: NSLayoutConstraint!
     
-    @IBOutlet weak var colorPIckerFrameLeading: NSLayoutConstraint!
+    @IBOutlet var colorPIckerFrameLeading: NSLayoutConstraint!
+    @IBOutlet var colorPickerFrameTrailing: NSLayoutConstraint!
     
     @IBOutlet weak var paintYesActionWidth: NSLayoutConstraint!
     @IBOutlet weak var paintYesActionHeight: NSLayoutConstraint!
@@ -141,8 +162,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var canvasLockLeading: NSLayoutConstraint!
     @IBOutlet weak var canvasLockTrailing: NSLayoutConstraint!
     
-    @IBOutlet weak var summaryViewLeading: NSLayoutConstraint!
-    @IBOutlet weak var deviceViewportSummaryViewLeading: NSLayoutConstraint!
+    @IBOutlet var summaryViewLeading: NSLayoutConstraint!
+    @IBOutlet var summaryViewTrailing: NSLayoutConstraint!
+    
+    @IBOutlet var deviceViewportSummaryViewLeading: NSLayoutConstraint!
+    @IBOutlet var deviceViewportSummaryViewTrailing: NSLayoutConstraint!
     
     @IBOutlet weak var palettesViewTrailing: NSLayoutConstraint!
     
@@ -155,6 +179,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var summaryButton: ActionButtonFrame!
     @IBOutlet weak var summaryAction: ActionButtonView!
+    
+    @IBOutlet weak var menuContainer: UIView!
     
     @IBOutlet weak var objectMoveUpButton: ActionButtonFrame!
     @IBOutlet weak var objectMoveUpAction: ActionButtonView!
@@ -185,6 +211,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var selectedObjectYesNoContainerTop: NSLayoutConstraint!
     @IBOutlet weak var selectedObjectYesNoContainerLeading: NSLayoutConstraint!
     
+    @IBOutlet weak var menuContainerCenterX: NSLayoutConstraint!
+    @IBOutlet weak var menuContainerCenterY: NSLayoutConstraint!
+    
+    let showOptions = "ShowOptions"
+    let showHowto = "ShowHowto"
+    
     var panelThemeConfig: PanelThemeConfig!
     
     var world = false
@@ -209,12 +241,16 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     var lastViewFrameSize: CGSize!
     
+    var lastPanTranslationX: CGFloat = 0
+    var lastPanTranslationY: CGFloat = 0
+    
     var pixelHistoryViewController: PixelHistoryViewController!
     weak var recentColorsViewController: RecentColorsViewController!
     weak var exportViewController: ExportViewController!
     weak var colorPickerViewController: ColorPickerOutletsViewController!
     weak var palettesViewController: PalettesViewController!
     weak var canvasFrameViewController: CanvasFrameViewController!
+    weak var menuViewController: MenuViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -227,8 +263,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         // paintQuantityMeter.world = world
         
         SessionSettings.instance.interactiveCanvas = self.surfaceView.interactiveCanvas
-        
-        SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
         
         surfaceView.paintActionDelegate = self
         surfaceView.objectSelectionDelegate = self
@@ -246,12 +280,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         // surfaceView.setInitalScale()
         
-        panelThemeConfig = themeConfigFromBackground()
-        
         // back button
-        backButton.actionButtonView = backAction
-        self.backAction.type = .back
-        self.backButton.setOnClickListener {
+        menuButton.actionButtonView = menuAction
+        self.menuAction.type = .menu
+        self.menuButton.setOnClickListener {
             
             if self.surfaceView.isExporting() {
                 self.exportAction.toggleState = .none
@@ -272,12 +304,13 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 }
             }
             else {
-                if SessionSettings.instance.promptBack {
+                /*if SessionSettings.instance.promptBack {
                     self.promptBack()
                 }
                 else {
                     self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
-                }
+                }*/
+                self.toggleMenu(show: self.menuContainer.isHidden)
             }
         }
         
@@ -400,7 +433,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.gridLinesAction.setNeedsDisplay()
             self.summaryAction.setNeedsDisplay()
             self.paintPanelAction.setNeedsDisplay()
-            self.backAction.setNeedsDisplay()
+            self.menuAction.setNeedsDisplay()
             self.paletteAddColorAction.setNeedsDisplay()
             self.paletteRemoveColorAction.setNeedsDisplay()
             
@@ -586,54 +619,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.surfaceView.startPainting()
         }
         
-        // bocker lock
-        if SessionSettings.instance.canvasLockBorder {
-            canvasLockView.layer.borderWidth = 4
-            canvasLockView.layer.borderColor = UIColor(argb: SessionSettings.instance.canvasLockColor).cgColor
-            canvasLockView.layer.cornerRadius = 40
-        }
-        
-        // panel theme config
-        if panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
-            paintColorAcceptAction.colorMode = .black
-            paintColorCancelAction.colorMode = .black
-            
-            paletteAddColorAction.colorMode = .black
-            paletteRemoveColorAction.colorMode = .black
-            lockPaintPanelAction.colorMode = .black
-            
-            closePaintPanelButtonAction.colorMode = .black
-            
-            colorPaletteTitleLabel.textColor = UIColor.black
-        }
-        else {
-            paintColorAcceptAction.colorMode = .white
-            paintColorCancelAction.colorMode = .white
-            
-            paletteAddColorAction.colorMode = .white
-            paletteRemoveColorAction.colorMode = .white
-            lockPaintPanelAction.colorMode = .white
-            
-            closePaintPanelButtonAction.colorMode = .white
-            
-            colorPaletteTitleLabel.textColor = UIColor.white
-        }
-        
-        if SessionSettings.instance.paintPanelCloseButtonColor != 0 {
-            closePaintPanelButtonAction.representingColor = SessionSettings.instance.paintPanelCloseButtonColor
-            closePaintPanelButtonAction.colorMode = .color
-        }
-        
-        self.updatePaintColorAcceptColorMode(color: SessionSettings.instance.paintColor)
-        
         self.paintColorAcceptAction.touchDelegate = self.paintColorIndicator
-        
-        self.paintQuantityCircle.panelThemeConfig = panelThemeConfig
-        self.paintQuantityBar.panelThemeConfig = panelThemeConfig
-        
-        self.paintColorIndicator.panelThemeConfig = panelThemeConfig
-        
-        self.colorPicker(self.colorPickerViewController.colorPicker, selectedColor: self.colorPickerViewController.selectedColor, usingControl: self.colorPickerViewController.colorPicker.radialHsbPalette!)
         
         var tgr = UITapGestureRecognizer(target: self, action: #selector(didTapColorPaletteTitle))
         colorPaletteTitleLabel.addGestureRecognizer(tgr)
@@ -673,11 +659,24 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             }
         }
         
+        var pgr = UIPanGestureRecognizer(target: self, action: #selector(didPanMenuContainer(sender:)))
+        menuContainer.addGestureRecognizer(pgr)
+        
         lastViewFrameSize = CGSize(width: 0, height: 0)
+        
+        applyOptions(fromUnwind: false)
     }
     
     override func viewDidLayoutSubviews() {
-        let panelRatio = paintPanel.frame.size.width / paintPanel.frame.size.height
+        if initial {
+            layoutSubviews()
+            
+            initial = false
+        }
+    }
+    
+    func layoutSubviews() {
+        /*let panelRatio = paintPanel.frame.size.width / paintPanel.frame.size.height
         
         var adjust = false
         if panelRatio < 0.4 || panelRatio > 0.6 {
@@ -685,210 +684,193 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             adjust = true
         }
         
-        if initial {
-            let backX = self.backButton.frame.origin.x
-            let paintPanelButtonX = self.paintPanelButton.frame.origin.x + self.paintPanelButton.frame.size.width
-            
-            let exportButtonX = self.exportButton.frame.origin.x + self.exportButton.frame.size.width
-            let changeBackgroundButtonX = self.changeBackgroundButton.frame.origin.x + self.changeBackgroundButton.frame.size.width
-            let gridLinesButtonX = self.gridLinesButton.frame.origin.x + self.gridLinesButton.frame.size.width
-            
-            let toolboxButtonX = self.toolboxButton.frame.origin.x + self.toolboxButton.frame.size.width
-            
-            let recentColorsButtonX = self.recentColorsButton.frame.origin.x
-            
-            let recentColorsX = self.recentColorsContainer.frame.origin.x
-            
-            if paintPanelButtonX > self.view.frame.size.width {
-                paintPanelButtonTrailing.constant += 30
-            }
-            
-            if exportButtonX > self.view.frame.size.width {
-                exportButtonTrailing.constant += 30
-            }
-            
-            if changeBackgroundButtonX > self.view.frame.size.width {
-                changeBackgroundButtonTrailing.constant += 30
-            }
-            
-            if gridLinesButtonX > self.view.frame.size.width {
-                gridLinesButtonTrailing.constant += 30
-            }
-            
-            if toolboxButtonX > self.view.frame.size.width {
-                toolboxButtonTrailing.constant += 30
-            }
-            
-            if backX < 0 {
-                backButtonLeading.constant += 30
-            }
-            
-            if recentColorsButtonX < 0 {
-                recentColorsButtonLeading.constant += 30
-            }
-            
-            if recentColorsX < 20 {
-                recentColorsContainerLeading.constant = 20
-                recentColorsContainerBottom.constant = 20
-            }
-            
-            // right-handed
-            if SessionSettings.instance.rightHanded {
-                
-                canvasLockLeading.constant = paintPanelWidth.constant
-                canvasLockTrailing.constant = 0
-                
-                // paint panel
-                paintPanel.translatesAutoresizingMaskIntoConstraints = false
-                
-                paintPanelTrailing.isActive = false
-                
-                var constraints = [paintPanel.leftAnchor.constraint(equalTo: view.leftAnchor),
-                                   paintPanel.topAnchor.constraint(equalTo: view.topAnchor),
-                                   paintPanel.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                                   paintPanel.widthAnchor.constraint(equalTo: paintPanel.widthAnchor)]
-                
-                NSLayoutConstraint.activate(constraints)
-                
-                // close paint panel
-                closePaintPanelButton.transform = CGAffineTransform.init(rotationAngle: CGFloat(180 * Double.pi / 180.0))
-                
-                // color picker frame
-                colorPickerFrame.translatesAutoresizingMaskIntoConstraints = false
-                
-                colorPIckerFrameLeading.isActive = false
-                
-                constraints = [colorPickerFrame.rightAnchor.constraint(equalTo: view.rightAnchor),
-                                   colorPickerFrame.topAnchor.constraint(equalTo: view.topAnchor),
-                                   colorPickerFrame.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                                   colorPickerFrame.widthAnchor.constraint(equalTo: colorPickerFrame.widthAnchor)]
-                
-                NSLayoutConstraint.activate(constraints)
-                
-                // toolbox button
-                toolboxButton.translatesAutoresizingMaskIntoConstraints = false
-                
-                toolboxButtonTrailing.isActive = false
-                
-                constraints = [toolboxButton.leftAnchor.constraint(equalTo: view.leftAnchor),
-                                toolboxButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                                toolboxButton.widthAnchor.constraint(equalTo: toolboxButton.widthAnchor),
-                                toolboxButton.heightAnchor.constraint(equalTo: toolboxButton.heightAnchor)]
-                
-                NSLayoutConstraint.activate(constraints)
-                
-                // recent colors button
-                recentColorsButton.translatesAutoresizingMaskIntoConstraints = false
-                
-                recentColorsButtonLeading.isActive = false
-                
-                constraints = [recentColorsButton.rightAnchor.constraint(equalTo: colorPickerFrame.leftAnchor),
-                                recentColorsButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                                recentColorsButton.widthAnchor.constraint(equalTo: recentColorsButton.widthAnchor),
-                                recentColorsButton.heightAnchor.constraint(equalTo: recentColorsButton.heightAnchor)]
-                
-                NSLayoutConstraint.activate(constraints)
-                
-                // recent colors container
-                recentColorsContainer.translatesAutoresizingMaskIntoConstraints = false
-                
-                recentColorsContainerLeading.isActive = false
-                
-                constraints = [recentColorsContainer.rightAnchor.constraint(equalTo: colorPickerFrame.leftAnchor, constant: -40),
-                                recentColorsContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 21),
-                                recentColorsContainer.widthAnchor.constraint(equalTo: recentColorsContainer.widthAnchor),
-                                recentColorsContainer.heightAnchor.constraint(equalTo: recentColorsContainer.heightAnchor)]
-                
-                NSLayoutConstraint.activate(constraints)
-                
-                // summary view
-                summaryView.translatesAutoresizingMaskIntoConstraints = false
-                
-                summaryViewLeading.isActive = false
-                
-                constraints = [summaryView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -64),
-                               summaryView.bottomAnchor.constraint(equalTo: summaryView.bottomAnchor),
-                               summaryView.widthAnchor.constraint(equalTo: summaryView.widthAnchor),
-                               summaryView.heightAnchor.constraint(equalTo: summaryView.heightAnchor)]
-                
-                NSLayoutConstraint.activate(constraints)
-                
-                // device viewport view
-                deviceViewportSummaryView.translatesAutoresizingMaskIntoConstraints = false
-                
-                deviceViewportSummaryViewLeading.isActive = false
-                
-                constraints = [deviceViewportSummaryView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -64),
-                               deviceViewportSummaryView.bottomAnchor.constraint(equalTo: deviceViewportSummaryView.bottomAnchor),
-                               deviceViewportSummaryView.widthAnchor.constraint(equalTo: deviceViewportSummaryView.widthAnchor),
-                               deviceViewportSummaryView.heightAnchor.constraint(equalTo: deviceViewportSummaryView.heightAnchor)]
-                
-                NSLayoutConstraint.activate(constraints)
-                
-                // palettes view
-                /*palettesView.translatesAutoresizingMaskIntoConstraints = false
-                
-                palettesViewTrailing.isActive = false
-                
-                constraints = [palettesView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
-                               palettesView.topAnchor.constraint(equalTo: palettesView.topAnchor),
-                               palettesView.widthAnchor.constraint(equalTo: palettesView.widthAnchor),
-                               palettesView.heightAnchor.constraint(equalTo: palettesView.heightAnchor)]
-                
-                NSLayoutConstraint.activate(constraints)*/
-                
-                // toolbox buttons
-                
-                let buttons = [exportButton, changeBackgroundButton, gridLinesButton, summaryButton]
-                let trailingConstraints = [exportButtonTrailing, changeBackgroundButtonTrailing, gridLinesButtonTrailing, summaryButtonTrailing]
-                
-                for i in 0...buttons.count - 1 {
-                    let button = buttons[i]!
-                    let trailingConstraint = trailingConstraints[i]!
-                    
-                    button.translatesAutoresizingMaskIntoConstraints = false
-                    
-                    trailingConstraint.isActive = false
-                    
-                    constraints = [button.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-                    button.widthAnchor.constraint(equalTo: button.widthAnchor),
-                    button.heightAnchor.constraint(equalTo: button.heightAnchor)]
-                    
-                    NSLayoutConstraint.activate(constraints)
-                }
-                
-                // paint qty bar
-                paintQuantityBar.transform = CGAffineTransform.init(rotationAngle: CGFloat(180 * Double.pi / 180.0))
-            }
-            else {
-                canvasLockLeading.constant = 0
-                canvasLockTrailing.constant = paintPanelWidth.constant
-            }
-            
-            // small action buttons
-            if SessionSettings.instance.smallActionButtons {
-                paintColorAcceptActionWidth.constant = paintColorAcceptActionWidth.constant * 0.833
-                paintColorAcceptActionHeight.constant = paintColorAcceptActionHeight.constant * 0.833
-                
-                paintYesActionWidth.constant = paintYesActionWidth.constant * 0.833
-                paintYesActionHeight.constant = paintYesActionHeight.constant * 0.833
-                
-                paintNoActionWidth.constant = paintNoActionWidth.constant * 0.833
-                paintNoActionHeight.constant = paintNoActionHeight.constant * 0.833
-                
-                paintColorCancelActionWidth.constant = paintColorCancelActionWidth.constant * 0.833
-                paintColorCancelActionHeight.constant = paintColorCancelActionHeight.constant * 0.833
-                
-                closePaintPanelActionWidth.constant = closePaintPanelActionWidth.constant * 0.833
-                closePaintPanelActionHeight.constant = closePaintPanelActionHeight.constant * 0.833
-            }
-            
-            setPaintPanelBackground(adjust: adjust)
-
-            surfaceView.setInitalPositionAndScale()
-            
-            initial = false
+        let backX = self.menuButton.frame.origin.x
+        let paintPanelButtonX = self.paintPanelButton.frame.origin.x + self.paintPanelButton.frame.size.width
+        
+        let exportButtonX = self.exportButton.frame.origin.x + self.exportButton.frame.size.width
+        let changeBackgroundButtonX = self.changeBackgroundButton.frame.origin.x + self.changeBackgroundButton.frame.size.width
+        let gridLinesButtonX = self.gridLinesButton.frame.origin.x + self.gridLinesButton.frame.size.width
+        
+        let toolboxButtonX = self.toolboxButton.frame.origin.x + self.toolboxButton.frame.size.width
+        
+        let recentColorsButtonX = self.recentColorsButton.frame.origin.x
+        
+        let recentColorsX = self.recentColorsContainer.frame.origin.x
+        
+        if paintPanelButtonX > self.view.frame.size.width {
+            paintPanelButtonTrailing.constant += 30
         }
+        
+        if exportButtonX > self.view.frame.size.width {
+            exportButtonTrailing.constant += 30
+        }
+        
+        if changeBackgroundButtonX > self.view.frame.size.width {
+            changeBackgroundButtonTrailing.constant += 30
+        }
+        
+        if gridLinesButtonX > self.view.frame.size.width {
+            gridLinesButtonTrailing.constant += 30
+        }
+        
+        if toolboxButtonX > self.view.frame.size.width {
+            toolboxButtonTrailing.constant += 30
+        }
+        
+        if backX < 0 {
+            backButtonLeading.constant += 30
+        }
+        
+        if recentColorsButtonX < 0 {
+            recentColorsButtonLeading.constant += 30
+        }
+        
+        if recentColorsX < 20 {
+            recentColorsContainerLeading.constant = 20
+            recentColorsContainerBottom.constant = 20
+        }*/
+        
+        // right-handed
+        if SessionSettings.instance.rightHanded {
+            canvasLockLeading.constant = paintPanelWidth.constant
+            canvasLockTrailing.constant = 0
+            
+            // paint panel
+            paintPanelTrailing.isActive = false
+            paintPanelLeading.isActive = true
+            
+            // close paint panel
+            closePaintPanelButton.transform = CGAffineTransform.init(rotationAngle: CGFloat(180 * Double.pi / 180.0))
+            
+            // color picker frame
+            colorPIckerFrameLeading.isActive = false
+            colorPickerFrameTrailing.isActive = true
+            
+            // toolbox button
+            toolboxButtonLeading.isActive = true
+            toolboxButtonTrailing.isActive = false
+            
+            // toolbox action
+            toolboxActionLeading.isActive = true
+            toolboxActionTrailing.isActive = false
+            
+            // recent colors button
+            recentColorsButtonLeading.isActive = false
+            recentColorsButtonTrailing.isActive = true
+            
+            // recent colors action
+            recentColorsActionLeading.isActive = false
+            recentColorsActionTrailing.isActive = true
+            
+            // recent colors container
+            recentColorsContainerLeading.isActive = false
+            recentColorsContainerTrailing.isActive = true
+            
+            // summary view
+            summaryViewLeading.isActive = false
+            summaryViewTrailing.isActive = true
+            
+            // device viewport view
+            deviceViewportSummaryViewLeading.isActive = false
+            deviceViewportSummaryViewTrailing.isActive = true
+            
+            // toolbox buttons
+            let leadingConstraints = [exportButtonLeading, changeBackgroundButtonLeading, gridLinesButtonLeading, summaryButtonLeading]
+            let trailingConstraints = [exportButtonTrailing, changeBackgroundButtonTrailing, gridLinesButtonTrailing, summaryButtonTrailing]
+            
+            for i in 0...trailingConstraints.count - 1 {
+                let leadingConstraint = leadingConstraints[i]!
+                let trailingConstraint = trailingConstraints[i]!
+                
+                leadingConstraint.isActive = true
+                trailingConstraint.isActive = false
+            }
+            
+            // paint qty bar
+            paintQuantityBar.transform = CGAffineTransform.init(rotationAngle: CGFloat(180 * Double.pi / 180.0))
+        }
+        // left-handed
+        else {
+            canvasLockLeading.constant = 0
+            canvasLockTrailing.constant = paintPanelWidth.constant
+            
+            // paint panel
+            paintPanel.translatesAutoresizingMaskIntoConstraints = false
+            
+            paintPanelLeading.isActive = false
+            paintPanelTrailing.isActive = true
+            
+            // close paint panel
+            closePaintPanelButton.transform = CGAffineTransform.init(rotationAngle: CGFloat(0 * Double.pi / 180.0))
+            
+            // color picker frame
+            colorPIckerFrameLeading.isActive = true
+            colorPickerFrameTrailing.isActive = false
+            
+            // toolbox button
+            toolboxButtonLeading.isActive = false
+            toolboxButtonTrailing.isActive = true
+            
+            // toolbox action
+            toolboxActionLeading.isActive = false
+            toolboxActionTrailing.isActive = true
+            
+            // recent colors button
+            recentColorsButtonLeading.isActive = true
+            recentColorsButtonTrailing.isActive = false
+            
+            // recent colors action
+            recentColorsActionLeading.isActive = true
+            recentColorsActionTrailing.isActive = false
+            
+            // recent colors container
+            recentColorsContainerLeading.isActive = true
+            recentColorsContainerTrailing.isActive = false
+            
+            // summary view
+            summaryViewLeading.isActive = true
+            summaryViewTrailing.isActive = false
+            
+            // device viewport view
+            deviceViewportSummaryViewLeading.isActive = true
+            deviceViewportSummaryViewTrailing.isActive = false
+            
+            // toolbox buttons
+            let leadingConstraints = [exportButtonLeading, changeBackgroundButtonLeading, gridLinesButtonLeading, summaryButtonLeading]
+            let trailingConstraints = [exportButtonTrailing, changeBackgroundButtonTrailing, gridLinesButtonTrailing, summaryButtonTrailing]
+            
+            for i in 0...leadingConstraints.count - 1 {
+                let leadingConstraint = leadingConstraints[i]!
+                let trailingConstraint = trailingConstraints[i]!
+                
+                leadingConstraint.isActive = false
+                trailingConstraint.isActive = true
+            }
+            
+            // paint qty bar
+            paintQuantityBar.transform = CGAffineTransform.init(rotationAngle: CGFloat(0 * Double.pi / 180.0))
+        }
+        
+        // small action buttons
+        if SessionSettings.instance.smallActionButtons {
+            paintColorAcceptActionWidth.constant = paintColorAcceptActionWidth.constant * 0.833
+            paintColorAcceptActionHeight.constant = paintColorAcceptActionHeight.constant * 0.833
+            
+            paintYesActionWidth.constant = paintYesActionWidth.constant * 0.833
+            paintYesActionHeight.constant = paintYesActionHeight.constant * 0.833
+            
+            paintNoActionWidth.constant = paintNoActionWidth.constant * 0.833
+            paintNoActionHeight.constant = paintNoActionHeight.constant * 0.833
+            
+            paintColorCancelActionWidth.constant = paintColorCancelActionWidth.constant * 0.833
+            paintColorCancelActionHeight.constant = paintColorCancelActionHeight.constant * 0.833
+            
+            closePaintPanelActionWidth.constant = closePaintPanelActionWidth.constant * 0.833
+            closePaintPanelActionHeight.constant = closePaintPanelActionHeight.constant * 0.833
+        }
+        
+        setPaintPanelBackground(adjust: false)
+        surfaceView.setInitalPositionAndScale()
         
         // rotation
         if lastViewFrameSize.width != view!.frame.size.width || lastViewFrameSize.height != view!.frame.size.height {
@@ -903,8 +885,111 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
     }
     
+    override func unwind(for unwindSegue: UIStoryboardSegue, towards subsequentVC: UIViewController) {
+        applyOptions(fromUnwind: true)
+    }
+    
+    func applyOptions(fromUnwind: Bool) {
+        SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
+        
+        panelThemeConfig = themeConfigFromBackground()
+        
+        // bold action buttons
+        let boldActionButtons = SessionSettings.instance.boldActionButtons
+        
+        menuAction.bold = boldActionButtons
+        paintPanelAction.bold = boldActionButtons
+        exportAction.bold = boldActionButtons
+        changeBackgroundAction.bold = boldActionButtons
+        gridLinesAction.bold = boldActionButtons
+        summaryAction.bold = boldActionButtons
+        toolboxActionView.bold = boldActionButtons
+        recentColorsActionView.bold = boldActionButtons
+        
+        // panel theme config
+        if panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
+            paintColorAcceptAction.colorMode = .black
+            paintColorCancelAction.colorMode = .black
+            
+            paletteAddColorAction.colorMode = .black
+            paletteRemoveColorAction.colorMode = .black
+            lockPaintPanelAction.colorMode = .black
+            
+            closePaintPanelButtonAction.colorMode = .black
+            
+            colorPaletteTitleLabel.textColor = UIColor.black
+        }
+        else {
+            paintColorAcceptAction.colorMode = .white
+            paintColorCancelAction.colorMode = .white
+            
+            paletteAddColorAction.colorMode = .white
+            paletteRemoveColorAction.colorMode = .white
+            lockPaintPanelAction.colorMode = .white
+            
+            closePaintPanelButtonAction.colorMode = .white
+            
+            colorPaletteTitleLabel.textColor = UIColor.white
+        }
+        
+        self.updatePaintColorAcceptColorMode(color: SessionSettings.instance.paintColor)
+        
+        self.paintQuantityCircle.panelThemeConfig = panelThemeConfig
+        self.paintQuantityBar.panelThemeConfig = panelThemeConfig
+        
+        self.paintColorIndicator.panelThemeConfig = panelThemeConfig
+        
+        self.colorPicker(self.colorPickerViewController.colorPicker, selectedColor: self.colorPickerViewController.selectedColor, usingControl: self.colorPickerViewController.colorPicker.radialHsbPalette!)
+        
+        // bocker lock
+        if SessionSettings.instance.canvasLockBorder {
+            canvasLockView.layer.borderWidth = 4
+            canvasLockView.layer.borderColor = UIColor(argb: SessionSettings.instance.canvasLockColor).cgColor
+            canvasLockView.layer.cornerRadius = 40
+        }
+        
+        // close button color
+        if SessionSettings.instance.paintPanelCloseButtonColor != 0 {
+            closePaintPanelButtonAction.representingColor = SessionSettings.instance.paintPanelCloseButtonColor
+            closePaintPanelButtonAction.colorMode = .color
+        }
+        
+        if fromUnwind {
+            layoutSubviews()
+            
+            palettesViewController.updatePanelThemeConfig(panelThemeConfig: panelThemeConfig)
+            canvasFrameViewController.updatePanelThemeConfig(panelThemeConfig: panelThemeConfig)
+        }
+        
+        self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+        
+    @objc func didPanMenuContainer(sender: UIPanGestureRecognizer) {
+        if sender.state == .began {
+            lastPanTranslationX = 0
+            lastPanTranslationY = 0
+        }
+        else if sender.state == .changed {
+            let translation = sender.translation(in: sender.view!)
+            
+            let translateX = lastPanTranslationX - translation.x
+            let translateY = lastPanTranslationY - translation.y
+            
+            if menuContainer.frame.origin.x - translateX >= 0 && menuContainer.frame.origin.x + menuContainer.frame.size.width - translateX <= view.frame.size.width {
+                menuContainerCenterX.constant -= translateX
+            }
+            
+            if menuContainer.frame.origin.y - translateY >= 0 && menuContainer.frame.origin.y + menuContainer.frame.size.height - translateY <= view.frame.size.height {
+                menuContainerCenterY.constant -= translateY
+            }
+            
+            lastPanTranslationX = translation.x
+            lastPanTranslationY = translation.y
+        }
     }
     
     @objc func didTapPaintQuantityBar() {
@@ -1061,6 +1146,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.canvasFrameViewController.delegate = self
             self.canvasFrameViewController.panelThemeConfig = themeConfigFromBackground()
         }
+        else if segue.identifier == "MenuEmbed" {
+            menuViewController = segue.destination as? MenuViewController
+            menuViewController.menuButtonDelegate = self
+        }
         else if segue.identifier == "UnwindToMenu" {
             surfaceView.interactiveCanvas.saveDeviceViewport()
             
@@ -1153,7 +1242,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.pixelHistoryView.isHidden = true
             
-            self.backButton.isHidden = true
+            self.menuButton.isHidden = true
             
             if SessionSettings.instance.canvasLockBorder {
                 self.canvasLockView.isHidden = false
@@ -1183,7 +1272,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.paintPanelButton.isHidden = false
             
-            self.backButton.isHidden = false
+            self.menuButton.isHidden = false
             
             self.toggleRecentColors(open: false)
             
@@ -1261,16 +1350,42 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
         }
     }
+    
+    func toggleMenu(show: Bool) {
+        menuContainer.isHidden = !show
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         self.surfaceView.backgroundColor = UIColor.red
         
-        self.toggleToolbox(open: SessionSettings.instance.toolboxOpen)
-        self.togglePaintPanel(open: SessionSettings.instance.paintPanelOpen)
+        if !SessionSettings.instance.selectedHand {
+            self.toggleMenu(show: true)
+        }
+        else {
+            self.toggleToolbox(open: SessionSettings.instance.toolboxOpen)
+            self.togglePaintPanel(open: SessionSettings.instance.paintPanelOpen)
+        }
+    }
+    
+    // menu button delegate
+    func menuButtonPressed(menuButtonType: MenuButtonType) {
+        if menuButtonType == .options {
+            self.performSegue(withIdentifier: showOptions, sender: nil)
+        }
+        else if menuButtonType == .howto {
+            self.performSegue(withIdentifier: showHowto, sender: nil)
+        }
+        else if menuButtonType == .lefty {
+            self.applyOptions(fromUnwind: true)
+        }
+        else if menuButtonType == .righty {
+            self.applyOptions(fromUnwind: true)
+        }
+        
+        self.toggleMenu(show: false)
     }
     
     // paint delegate
-    
     func notifyPaintingStarted() {
         self.closePaintPanelButton.isHidden = true
         self.paintYes.isHidden = false

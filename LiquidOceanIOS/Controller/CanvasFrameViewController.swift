@@ -30,6 +30,8 @@ class CanvasFrameViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var widthTextField: UITextField!
     @IBOutlet weak var heightTextField: UITextField!
     
+    var backgroundSet = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,6 +53,27 @@ class CanvasFrameViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidLayoutSubviews() {
+        setBackground()
+    }
+    
+    func updatePanelThemeConfig(panelThemeConfig: PanelThemeConfig) {
+        self.panelThemeConfig = panelThemeConfig
+        
+        if panelThemeConfig.actionButtonColor == UIColor.black.argb() {
+            titleLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF111111"))
+            titleLabel.shadowColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x7F333333"))
+            
+            widthLabel.textColor = UIColor.black
+            heightLabel.textColor = UIColor.black
+        }
+        else {
+            titleLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xDDFFFFFF"))
+            titleLabel.shadowColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x7F000000"))
+            
+            widthLabel.textColor = UIColor.white
+            heightLabel.textColor = UIColor.white
+        }
+        
         setBackground()
     }
     
@@ -103,7 +126,13 @@ class CanvasFrameViewController: UIViewController, UITextFieldDelegate {
         backgroundImageView.contentMode = .topLeft
         backgroundImageView.image = textureImage
         
+        if backgroundSet {
+            view.subviews[0].removeFromSuperview()
+        }
+        
         view.insertSubview(backgroundImageView, at: 0)
+        
+        backgroundSet = true
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {

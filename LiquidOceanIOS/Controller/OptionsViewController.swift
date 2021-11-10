@@ -83,8 +83,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet weak var paletteSizePlusAction: ActionButtonView!
     @IBOutlet weak var paletteSizePlusFrame: ActionButtonFrame!
     
-    @IBOutlet weak var promptBackContainer: UIView!
-    @IBOutlet weak var promptBackSwitch: UISwitch!
+    @IBOutlet weak var boldActionButtonsContainer: UIView!
+    @IBOutlet weak var boldActionButtonsSwitch: UISwitch!
     
     @IBOutlet weak var recentColorsContainer: UIView!
     @IBOutlet weak var recentColorsAmtLabel1: UILabel!
@@ -112,6 +112,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     var showPincode = "ShowPincode"
     var showCanvasImport = "ShowCanvasImport"
     var showCanvasExport = "ShowCanvasExport"
+    let unwindToCanvas = "UnwindToCanvas"
     
     var images = [UIImage]()
     
@@ -142,7 +143,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
                 self.creditsScrollView.isHidden = true
             }
             else {
-                self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+                self.performSegue(withIdentifier: self.unwindToCanvas, sender: nil)
             }
         }
         
@@ -270,10 +271,10 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         paletteSizeMinusAction.type = .dotLight
         paletteSizePlusAction.type = .dotLight
         
-        // prompt back
-        promptBackContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        promptBackContainer.layer.borderWidth = 2
-        promptBackSwitch.isOn = SessionSettings.instance.promptBack
+        // bold action buttons
+        boldActionButtonsContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
+        boldActionButtonsContainer.layer.borderWidth = 2
+        boldActionButtonsSwitch.isOn = SessionSettings.instance.boldActionButtons
         
         // recent colors
         recentColorsContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
@@ -391,8 +392,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         else if sender == paletteOutlineSwitch {
             SessionSettings.instance.paintIndicatorOutline = sender.isOn
         }
-        else if sender == promptBackSwitch {
-            SessionSettings.instance.promptBack = sender.isOn
+        else if sender == boldActionButtonsSwitch {
+            SessionSettings.instance.boldActionButtons = sender.isOn
         }
         else if sender == canvasLockBorderSwitch {
             SessionSettings.instance.canvasLockBorder = sender.isOn

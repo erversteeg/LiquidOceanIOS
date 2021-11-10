@@ -52,6 +52,7 @@ class ActionButtonView: UIView {
         case howto
         case back
         case backSolid
+        case menu
         case export
         case exportSolid
         case changeBackground
@@ -176,6 +177,17 @@ class ActionButtonView: UIView {
     
     var isStatic = false
     
+    private var _bold = false
+    var bold: Bool {
+        set {
+            _bold = newValue
+            setNeedsDisplay()
+        }
+        get {
+            return _bold
+        }
+    }
+    
     var clickHandler: (() -> Void)?
     
     required override init(frame: CGRect) {
@@ -262,6 +274,9 @@ class ActionButtonView: UIView {
         }
         else if type == .backSolid {
             drawBackSolidAction()
+        }
+        else if type == .menu {
+            drawMenuAction()
         }
         else if type == .export {
             drawExportAction()
@@ -449,22 +464,32 @@ class ActionButtonView: UIView {
         self.rows = 2
         self.cols = 2
         
-        var primaryColor = ActionButtonView.semiColor!
-        //var accentColor = ActionButtonView.altGreenColor!
+        var paint: Int32 = 0
         
-        if SessionSettings.instance.darkIcons && !isStatic {
-            primaryColor = ActionButtonView.semiDarkColor!
+        if !bold && !isStatic {
+            paint = ActionButtonView.semiLightColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkLightColor!
+            }
+        }
+        else {
+            paint = ActionButtonView.semiColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkColor!
+            }
         }
         
-        if selected && selectable {
-            primaryColor = ActionButtonView.lightYellowColor!
+        if selected && !isStatic {
+            paint = ActionButtonView.lightYellowColor!
         }
         
         let context = UIGraphicsGetCurrentContext()!
         
-        drawPixel(ctx: context, x: 0, y: 0, color: primaryColor)
-        drawPixel(ctx: context, x: 1, y: 0, color: primaryColor)
-        drawPixel(ctx: context, x: 1, y: 1, color: primaryColor)
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 1, color: paint)
     }
     
     func drawYesAction() {
@@ -632,6 +657,42 @@ class ActionButtonView: UIView {
         drawPixel(ctx: context, x: 2, y: 4, color: paint)
     }
     
+    func drawMenuAction() {
+        self.rows = 2
+        self.cols = 2
+       
+        var paint: Int32 = 0
+        
+        if !bold && !isStatic {
+            paint = ActionButtonView.semiLightColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkLightColor!
+            }
+        }
+        else {
+            paint = ActionButtonView.semiColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkColor!
+            }
+        }
+        
+        if selected && !isStatic {
+            paint = ActionButtonView.lightYellowColor!
+        }
+       
+        let context = UIGraphicsGetCurrentContext()!
+       
+        // row 1
+        drawPixel(ctx: context, x: 0, y: 0, color: paint)
+        drawPixel(ctx: context, x: 1, y: 0, color: paint)
+       
+        // row 2
+        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 1, y: 1, color: paint)
+    }
+    
     func drawRecentColorAction() {
         self.rows = 4
         self.cols = 4
@@ -654,40 +715,52 @@ class ActionButtonView: UIView {
         let context = UIGraphicsGetCurrentContext()!
         
         // row 1
-        drawPixel(ctx: context, x: 0, y: 0, color: paint)
-        drawPixel(ctx: context, x: 1, y: 0, color: paint)
-        drawPixel(ctx: context, x: 2, y: 0, color: paint)
-        drawPixel(ctx: context, x: 3, y: 0, color: paint)
+        drawPixel(ctx: context, x: 0, y: 0, color: colorPaint)
+        drawPixel(ctx: context, x: 1, y: 0, color: colorPaint)
+        drawPixel(ctx: context, x: 2, y: 0, color: colorPaint)
+        drawPixel(ctx: context, x: 3, y: 0, color: colorPaint)
         
         // row 2
-        drawPixel(ctx: context, x: 0, y: 1, color: paint)
+        drawPixel(ctx: context, x: 0, y: 1, color: colorPaint)
         drawPixel(ctx: context, x: 1, y: 1, color: colorPaint)
         drawPixel(ctx: context, x: 2, y: 1, color: colorPaint)
-        drawPixel(ctx: context, x: 3, y: 1, color: paint)
+        drawPixel(ctx: context, x: 3, y: 1, color: colorPaint)
         
         // row 3
-        drawPixel(ctx: context, x: 0, y: 2, color: paint)
+        drawPixel(ctx: context, x: 0, y: 2, color: colorPaint)
         drawPixel(ctx: context, x: 1, y: 2, color: colorPaint)
         drawPixel(ctx: context, x: 2, y: 2, color: colorPaint)
-        drawPixel(ctx: context, x: 3, y: 2, color: paint)
+        drawPixel(ctx: context, x: 3, y: 2, color: colorPaint)
         
         // row 4
-        drawPixel(ctx: context, x: 0, y: 3, color: paint)
-        drawPixel(ctx: context, x: 1, y: 3, color: paint)
-        drawPixel(ctx: context, x: 2, y: 3, color: paint)
-        drawPixel(ctx: context, x: 3, y: 3, color: paint)
+        drawPixel(ctx: context, x: 0, y: 3, color: colorPaint)
+        drawPixel(ctx: context, x: 1, y: 3, color: colorPaint)
+        drawPixel(ctx: context, x: 2, y: 3, color: colorPaint)
+        drawPixel(ctx: context, x: 3, y: 3, color: colorPaint)
     }
     
     func drawExportAction() {
         rows = 3
         cols = 3
         
-        var paint = ActionButtonView.semiColor!
-        if SessionSettings.instance.darkIcons && !isStatic {
-            paint = ActionButtonView.semiDarkColor!
+        var paint: Int32 = 0
+        
+        if !bold && !isStatic {
+            paint = ActionButtonView.semiLightColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkLightColor!
+            }
+        }
+        else {
+            paint = ActionButtonView.semiColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkColor!
+            }
         }
         
-        if selected {
+        if selected && !isStatic {
             paint = ActionButtonView.lightYellowColor!
         }
         
@@ -855,12 +928,24 @@ class ActionButtonView: UIView {
         rows = 4
         cols = 3
         
-        var paint = ActionButtonView.semiColor!
-        if SessionSettings.instance.darkIcons && !isStatic {
-            paint = ActionButtonView.semiDarkColor!
+        var paint: Int32 = 0
+        
+        if !bold && !isStatic {
+            paint = ActionButtonView.semiLightColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkLightColor!
+            }
+        }
+        else {
+            paint = ActionButtonView.semiColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkColor!
+            }
         }
         
-        if selected {
+        if selected && !isStatic {
             paint = ActionButtonView.lightYellowColor!
         }
         
@@ -891,12 +976,24 @@ class ActionButtonView: UIView {
         rows = 1
         cols = 3
         
-        var paint = ActionButtonView.semiColor!
-        if SessionSettings.instance.darkIcons && !isStatic {
-            paint = ActionButtonView.semiDarkColor!
+        var paint: Int32 = 0
+        
+        if !bold && !isStatic {
+            paint = ActionButtonView.semiLightColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkLightColor!
+            }
+        }
+        else {
+            paint = ActionButtonView.semiColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkColor!
+            }
         }
         
-        if selected {
+        if selected && !isStatic {
             paint = ActionButtonView.lightYellowColor!
         }
         
@@ -911,12 +1008,24 @@ class ActionButtonView: UIView {
         rows = 3
         cols = 3
         
-        var paint = ActionButtonView.semiColor!
-        if SessionSettings.instance.darkIcons && !isStatic {
-            paint = ActionButtonView.semiDarkColor!
+        var paint: Int32 = 0
+        
+        if !bold && !isStatic {
+            paint = ActionButtonView.semiLightColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkLightColor!
+            }
+        }
+        else {
+            paint = ActionButtonView.semiColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkColor!
+            }
         }
         
-        if selected {
+        if selected && !isStatic {
             paint = ActionButtonView.lightYellowColor!
         }
         
@@ -988,12 +1097,24 @@ class ActionButtonView: UIView {
         rows = 1
         cols = 1
         
-        var paint = ActionButtonView.semiColor!
-        if SessionSettings.instance.darkIcons && !isStatic {
-            paint = ActionButtonView.semiDarkColor!
+        var paint: Int32 = 0
+        
+        if !bold && !isStatic {
+            paint = ActionButtonView.semiLightColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkLightColor!
+            }
+        }
+        else {
+            paint = ActionButtonView.semiColor!
+            
+            if SessionSettings.instance.darkIcons && !isStatic {
+                paint = ActionButtonView.semiDarkColor!
+            }
         }
         
-        if selected {
+        if selected && !isStatic {
             paint = ActionButtonView.lightYellowColor!
         }
         

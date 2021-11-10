@@ -8,6 +8,17 @@
 
 import UIKit
 
+protocol MenuButtonDelegate: AnyObject {
+    func menuButtonPressed(menuButtonType: MenuButtonType)
+}
+
+enum MenuButtonType {
+    case options
+    case howto
+    case lefty
+    case righty
+}
+
 class MenuViewController: UIViewController, AchievementListener {
 
     let showSinglePlay = "ShowSinglePlay"
@@ -15,8 +26,6 @@ class MenuViewController: UIViewController, AchievementListener {
     let showStats = "ShowStats"
     let showOptions = "ShowOptions"
     let showHowto = "ShowHowto"
-    
-    @IBOutlet weak var drawLabel: UILabel!
     
     @IBOutlet weak var optionsLabel: UILabel!
     
@@ -50,6 +59,8 @@ class MenuViewController: UIViewController, AchievementListener {
     @IBOutlet weak var menuContainerWidth: NSLayoutConstraint!
     @IBOutlet weak var menuContainerHeight: NSLayoutConstraint!
     
+    weak var menuButtonDelegate: MenuButtonDelegate?
+    
     var realmId = 0
     
     var showcaseTimer: Timer!
@@ -63,7 +74,6 @@ class MenuViewController: UIViewController, AchievementListener {
         (gradient1: Utils.int32FromColorHex(hex: "0xfffa8202"), gradient2: Utils.int32FromColorHex(hex: "0xff18bdfa")),
         (gradient1: Utils.int32FromColorHex(hex: "0xff821794"), gradient2: Utils.int32FromColorHex(hex: "0xff99e046")),
         (gradient1: Utils.int32FromColorHex(hex: "0xff6f46e0"), gradient2: Utils.int32FromColorHex(hex: "0xffe0d121")),
-        (gradient1: Utils.int32FromColorHex(hex: "0xffe02819"), gradient2: Utils.int32FromColorHex(hex: "0xffe026d1")),
         (gradient1: Utils.int32FromColorHex(hex: "0xff3b943f"), gradient2: Utils.int32FromColorHex(hex: "0xff4f1fe0")),
         (gradient1: Utils.int32FromColorHex(hex: "0xff242e8f"), gradient2: Utils.int32FromColorHex(hex: "0xff8f3234")),
         (gradient1: Utils.int32FromColorHex(hex: "0xff898f1d"), gradient2: Utils.int32FromColorHex(hex: "0xff158f86"))]
@@ -81,11 +91,12 @@ class MenuViewController: UIViewController, AchievementListener {
         // self.view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
         randomGradientBackground()
         
-        defaultLabelColor = drawLabel.textColor.argb()
+        //defaultLabelColor = drawLabel.textColor.argb()
+        defaultLabelColor = optionsLabel.textColor.argb()
         
-        menuContainer.layer.cornerRadius = 10
+        /*menuContainer.layer.cornerRadius = 10
         menuContainer.layer.borderWidth = 1
-        menuContainer.layer.borderColor = Utils.UIColorFromColorHex(hex: "0xFF333333").cgColor
+        menuContainer.layer.borderColor = Utils.UIColorFromColorHex(hex: "0xFF333333").cgColor*/
         
         singleButtonBottomLayer.type = .single
         singleButtonBottomLayer.selectable = false
@@ -112,7 +123,7 @@ class MenuViewController: UIViewController, AchievementListener {
                 self.toggleMenuButtons(show: true, depth: 0)
                 self.toggleMenuButtons(show: false, depth: 1)
                 
-                Animator.animateMenuButtons(views: [[self.drawLabel], [self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
+                Animator.animateMenuButtons(views: [[self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
                 
                 self.backAction.isHidden = true
             }
@@ -126,10 +137,10 @@ class MenuViewController: UIViewController, AchievementListener {
             self.menuLayer -= 1
         }
         
-        var touchGr = UITouchGestureRecognizer(target: self, action: #selector(drawLabelTouched(sender:)))
-        drawLabel.addGestureRecognizer(touchGr)
+        //var touchGr = UITouchGestureRecognizer(target: self, action: #selector(drawLabelTouched(sender:)))
+        //drawLabel.addGestureRecognizer(touchGr)
         
-        touchGr = UITouchGestureRecognizer(target: self, action: #selector(optionsLabelTouched(sender:)))
+        var touchGr = UITouchGestureRecognizer(target: self, action: #selector(optionsLabelTouched(sender:)))
         optionsLabel.addGestureRecognizer(touchGr)
         
         touchGr = UITouchGestureRecognizer(target: self, action: #selector(howtoLabelTouched(sender:)))
@@ -186,15 +197,22 @@ class MenuViewController: UIViewController, AchievementListener {
         startPixels()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    /*override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        Animator.animateMenuButtons(views: [[self.drawLabel], [self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
-    }
+        Animator.animateMenuButtons(views: [[self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
+    }*/
     
     override func viewDidAppear(_ animated: Bool) {
-        if SessionSettings.instance.canvasOpen {
+        /*if SessionSettings.instance.canvasOpen {
             self.performSegue(withIdentifier: self.showSinglePlay, sender: nil)
+        }*/
+        
+        if !SessionSettings.instance.selectedHand {
+            self.showHandButtons()
+        }
+        else {
+            self.showMenuButtons()
         }
     }
     
@@ -203,7 +221,7 @@ class MenuViewController: UIViewController, AchievementListener {
         view.setNeedsDisplay()
         artView.setNeedsDisplay()
         
-        setGradient(bounds: CGRect(x: 0, y: 0, width: size.width, height: size.height), index: cBackgroundGradientIndex)
+        /*setGradient(bounds: CGRect(x: 0, y: 0, width: size.width, height: size.height), index: cBackgroundGradientIndex)*/
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -226,23 +244,7 @@ class MenuViewController: UIViewController, AchievementListener {
     }
     
     @IBAction func unwindToViewController(segue: UIStoryboardSegue) {
-        self.toggleMenuButtons(show: true, depth: 0)
-        self.toggleMenuButtons(show: false, depth: 1)
-        self.toggleMenuButtons(show: false, depth: 2)
         
-        let labels = [drawLabel, optionsLabel, howtoLabel]
-        for label in labels {
-            unhighlightLabel(label: label!)
-        }
-        
-        Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false, inverse: false)
-        
-        menuLayer = 0
-        self.backAction.isHidden = true
-        
-        startShowcase()
-        
-        startPixels()
     }
     
     func highlightLabel(label: UILabel) {
@@ -264,7 +266,7 @@ class MenuViewController: UIViewController, AchievementListener {
         }
     }
     
-    @objc func drawLabelTouched(sender: UITouchGestureRecognizer) {
+    /*@objc func drawLabelTouched(sender: UITouchGestureRecognizer) {
         if (sender.state == .began) {
             highlightLabel(label: drawLabel)
         }
@@ -272,10 +274,11 @@ class MenuViewController: UIViewController, AchievementListener {
             unhighlightLabel(label: drawLabel)
             drawLabelTapped()
         }
-    }
+    }*/
     
     func optionsLabelTapped() {
-        self.performSegue(withIdentifier: self.showOptions, sender: nil)
+        //self.performSegue(withIdentifier: self.showOptions, sender: nil)
+        menuButtonDelegate?.menuButtonPressed(menuButtonType: .options)
     }
     
     @objc func optionsLabelTouched(sender: UITouchGestureRecognizer) {
@@ -289,7 +292,8 @@ class MenuViewController: UIViewController, AchievementListener {
     }
     
     func howtoLabelTapped() {
-        self.performSegue(withIdentifier: self.showHowto, sender: nil)
+        //self.performSegue(withIdentifier: self.showHowto, sender: nil)
+        menuButtonDelegate?.menuButtonPressed(menuButtonType: .howto)
     }
     
     @objc func howtoLabelTouched(sender: UITouchGestureRecognizer) {
@@ -308,12 +312,13 @@ class MenuViewController: UIViewController, AchievementListener {
         
         //SessionSettings.instance.quickSave()
         
-        if self.realmId == 0 {
+        /*if self.realmId == 0 {
             self.performSegue(withIdentifier: self.showSinglePlay, sender: nil)
         }
         else {
             self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
-        }
+        }*/
+        menuButtonDelegate?.menuButtonPressed(menuButtonType: .lefty)
     }
     
     @objc func leftyLabelTouched(sender: UITouchGestureRecognizer) {
@@ -332,12 +337,13 @@ class MenuViewController: UIViewController, AchievementListener {
         
         //SessionSettings.instance.quickSave()
         
-        if self.realmId == 0 {
+        /*if self.realmId == 0 {
             self.performSegue(withIdentifier: self.showSinglePlay, sender: nil)
         }
         else {
             self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
-        }
+        }*/
+        menuButtonDelegate?.menuButtonPressed(menuButtonType: .righty)
     }
     
     @objc func rightyLabelTouched(sender: UITouchGestureRecognizer) {
@@ -362,7 +368,7 @@ class MenuViewController: UIViewController, AchievementListener {
         
         cBackgroundGradientIndex = rIndex
         
-        setGradient(bounds: view.bounds, index: rIndex)
+        setGradient(bounds: CGRect(x: 0, y: 0, width: 500, height: 300), index: rIndex)
     }
     
     func setGradient(bounds: CGRect, index: Int) {
@@ -385,11 +391,7 @@ class MenuViewController: UIViewController, AchievementListener {
     
     func toggleMenuButtons(show: Bool, depth: Int) {
         if depth == 0 {
-            if show {
-                menuContainerHeight.constant = 190
-            }
-            
-            self.drawLabel.isHidden = !show
+            //self.drawLabel.isHidden = !show
             
             self.optionsLabel.isHidden = !show
             
@@ -406,13 +408,17 @@ class MenuViewController: UIViewController, AchievementListener {
             self.devButton.isHidden = true
         }
         else if depth == 2 {
-            if show {
-                menuContainerHeight.constant = 140
-            }
-            
             leftyLabel.isHidden = !show
             rightyLabel.isHidden = !show
         }
+    }
+    
+    func showMenuButtons() {
+        toggleMenuButtons(show: true, depth: 0)
+        
+        Animator.animateMenuButtons(views: [[optionsLabel], [howtoLabel]], cascade: true, moveOut: false, inverse: false)
+        
+        menuLayer += 2
     }
     
     func showHandButtons() {

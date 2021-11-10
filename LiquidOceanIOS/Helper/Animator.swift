@@ -62,11 +62,7 @@ class Animator: NSObject {
         
         view.alpha = 0
         
-        var rA = Int(rand() * 256) / 3 + 25
-        
-        if rand() < 0.15 {
-            rA = 255
-        }
+        let rA = Int(rand() * 256) / 5
         
         let rR = Int(rand() * 256)
         let rG = Int(rand() * 256)

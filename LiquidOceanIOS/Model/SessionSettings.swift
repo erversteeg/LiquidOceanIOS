@@ -108,6 +108,8 @@ class SessionSettings: NSObject {
     
     var promptBack = false
     
+    var boldActionButtons = true
+    
     var canvasLockBorder = false
     var canvasLockColor: Int32 = 0
     
@@ -180,6 +182,7 @@ class SessionSettings: NSObject {
         userDefaults().set(frameColor, forKey: "frame_color")
         userDefaults().set(paintPanelCloseButtonColor, forKey: "paint_panel_close_button_color")
         userDefaults().set(promptBack, forKey: "prompt_back")
+        userDefaults().set(boldActionButtons, forKey: "bold_action_buttons")
         userDefaults().set(canvasLockBorder, forKey: "canvas_lock_border")
         userDefaults().set(canvasLockColor, forKey: "canvas_lock_color")
         userDefaults().set(showPaintBar, forKey: "show_paint_bar")
@@ -260,6 +263,8 @@ class SessionSettings: NSObject {
         paintPanelCloseButtonColor = userDefaultsInt32(forKey: "paint_panel_close_button_color", defaultVal: 0)
         
         promptBack = userDefaultsBool(forKey: "prompt_back", defaultVal: false)
+        
+        boldActionButtons = userDefaultsBool(forKey: "bold_action_buttons", defaultVal: true)
         
         canvasLockBorder = userDefaultsBool(forKey: "canvas_lock_border", defaultVal: false)
         

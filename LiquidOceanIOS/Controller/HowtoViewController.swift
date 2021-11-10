@@ -45,6 +45,8 @@ class HowtoViewController: UIViewController {
     
     weak var recentColorsViewController: RecentColorsViewController!
     
+    let unwindToCanvas = "UnwindToCanvas"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,7 +56,7 @@ class HowtoViewController: UIViewController {
         backAction.type = .backSolid
         
         backButton.setOnClickListener {
-            self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+            self.performSegue(withIdentifier: self.unwindToCanvas, sender: nil)
         }
         
         paintAction.isStatic = true

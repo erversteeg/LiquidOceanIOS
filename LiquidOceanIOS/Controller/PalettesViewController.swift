@@ -54,13 +54,11 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
     
     var panelThemeConfig: PanelThemeConfig!
     
+    var backgroundSet = false
+    
     override func viewDidLoad() {
         addPaletteAction.type = .add
         addPaletteButton.actionButtonView = addPaletteAction
-        
-        if panelThemeConfig.actionButtonColor == UIColor.black.argb() {
-            addPaletteAction.colorMode = .black
-        }
         
         addPaletteButton.setOnClickListener {
             self.startNameInput()
@@ -70,6 +68,22 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
         lpgr.delaysTouchesBegan = true
         lpgr.delegate = self
         collectionView.addGestureRecognizer(lpgr)
+    }
+    
+    func updatePanelThemeConfig(panelThemeConfig: PanelThemeConfig) {
+        self.panelThemeConfig = panelThemeConfig
+        
+        if panelThemeConfig.actionButtonColor == UIColor.black.argb() {
+            addPaletteAction.colorMode = .black
+            paletteNameTextField.textColor = UIColor.black
+        }
+        else {
+            addPaletteAction.colorMode = .white
+            paletteNameTextField.textColor = UIColor.white
+        }
+        
+        setBackground()
+        collectionView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -229,7 +243,12 @@ class PalettesViewController: UIViewController, UICollectionViewDataSource, UICo
         backgroundImageView.contentMode = .topLeft
         backgroundImageView.image = textureImage
         
+        if backgroundSet {
+            view.subviews[0].removeFromSuperview()
+        }
         view.insertSubview(backgroundImageView, at: 0)
+        
+        backgroundSet = true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
