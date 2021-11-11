@@ -448,8 +448,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.palettesViewController.addPaletteAction.setNeedsDisplay()
             
-            self.summaryView.setNeedsDisplay()
-            
             self.recentColorsViewController.collectionView.reloadData()
             
             self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
@@ -924,6 +922,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         self.surfaceView.interactiveCanvas.updateRecentColors()
         self.setupColorPalette(colors: self.surfaceView.interactiveCanvas.recentColors)
+        
+        self.summaryView.setNeedsDisplay()
+        self.deviceViewportSummaryView.setNeedsDisplay()
         
         if fromUnwind {
             layoutSubviews()

@@ -158,6 +158,7 @@ class SessionSettings: NSObject {
     
     var reloadCanvas = false
     var saveCanvas = false
+    var replaceCanvas = false
     
     var colorPaletteSize = 4
     

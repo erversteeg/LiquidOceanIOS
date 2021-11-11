@@ -150,9 +150,11 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
                 self.creditsScrollView.isHidden = true
             }
             else {
-                if SessionSettings.instance.reloadCanvas {
+                if SessionSettings.instance.reloadCanvas && !SessionSettings.instance.replaceCanvas {
                     SessionSettings.instance.saveCanvas = true
                 }
+                SessionSettings.instance.replaceCanvas = false
+                
                 self.performSegue(withIdentifier: self.unwindToCanvas, sender: nil)
             }
         }
@@ -895,6 +897,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
                 SessionSettings.instance.restoreCanvasScaleFactor = CGFloat(0)
                 
                 SessionSettings.instance.reloadCanvas = true
+                SessionSettings.instance.replaceCanvas = true
             }
         }))
         

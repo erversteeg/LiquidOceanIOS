@@ -238,6 +238,8 @@ class InteractiveCanvas: NSObject {
         }
         // single play
         else {
+            summary = [RestorePoint]()
+            
             let dataJsonStr = SessionSettings.instance.userDefaults().object(forKey: "arr_canvas") as? String
             
             if dataJsonStr == nil {

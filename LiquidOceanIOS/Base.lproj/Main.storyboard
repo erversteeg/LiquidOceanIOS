@@ -4075,13 +4075,14 @@
                             <constraint firstItem="9uX-r8-HM3" firstAttribute="trailing" secondItem="UQc-ZZ-5IN" secondAttribute="trailing" id="20w-dT-0F3"/>
                             <constraint firstItem="UQc-ZZ-5IN" firstAttribute="centerY" secondItem="5r5-D9-GHB" secondAttribute="centerY" id="63x-7h-xiz"/>
                             <constraint firstItem="9uX-r8-HM3" firstAttribute="bottom" secondItem="YOo-Z8-O9P" secondAttribute="bottom" id="Ale-Lc-a4h"/>
+                            <constraint firstItem="BU5-Yu-uP0" firstAttribute="top" secondItem="5r5-D9-GHB" secondAttribute="top" constant="19" id="E3V-Eo-HHs"/>
                             <constraint firstItem="q2Z-sl-HLi" firstAttribute="top" secondItem="UQc-ZZ-5IN" secondAttribute="bottom" constant="32" id="FPD-5j-Zn7"/>
                             <constraint firstItem="UQc-ZZ-5IN" firstAttribute="centerX" secondItem="5r5-D9-GHB" secondAttribute="centerX" id="NNE-pj-7tC"/>
                             <constraint firstItem="q2Z-sl-HLi" firstAttribute="centerX" secondItem="5r5-D9-GHB" secondAttribute="centerX" id="PEr-do-HPe"/>
                             <constraint firstItem="YOo-Z8-O9P" firstAttribute="top" secondItem="BU5-Yu-uP0" secondAttribute="top" id="T83-Me-5Gl"/>
+                            <constraint firstItem="YOo-Z8-O9P" firstAttribute="top" secondItem="5r5-D9-GHB" secondAttribute="topMargin" constant="19" id="YAj-iL-AW3"/>
                             <constraint firstItem="YOo-Z8-O9P" firstAttribute="leading" secondItem="BU5-Yu-uP0" secondAttribute="trailing" constant="15" id="lE6-uC-VgP"/>
                             <constraint firstItem="UQc-ZZ-5IN" firstAttribute="leading" secondItem="BU5-Yu-uP0" secondAttribute="leading" id="lcf-Q4-qqe"/>
-                            <constraint firstItem="UQc-ZZ-5IN" firstAttribute="top" secondItem="BU5-Yu-uP0" secondAttribute="bottom" constant="20" id="rcu-Zz-8Ha"/>
                         </constraints>
                     </view>
                     <connections>

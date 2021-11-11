@@ -116,6 +116,7 @@ class CanvasImportViewController: UIViewController, UITextFieldDelegate {
             SessionSettings.instance.restoreCanvasScaleFactor = CGFloat(0)
             
             SessionSettings.instance.reloadCanvas = true
+            SessionSettings.instance.replaceCanvas = true
             
             showStatusText(text: "Canvas data imported!", color: ActionButtonView.greenColor)
         }
