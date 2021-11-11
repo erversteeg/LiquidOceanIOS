@@ -3150,6 +3150,26 @@
                                     <segue destination="4Eu-IR-h8h" kind="embed" identifier="RecentColorsEmbed" id="xNZ-J9-gls"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vhR-03-8Ib" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gRO-zv-odw" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                        <rect key="frame" x="17" y="17" width="21" height="21"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="eWS-JU-V7v"/>
+                                            <constraint firstAttribute="width" constant="21" id="zfO-rL-dLe"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="gRO-zv-odw" firstAttribute="leading" secondItem="vhR-03-8Ib" secondAttribute="leading" constant="17" id="Z8G-wD-ohi"/>
+                                    <constraint firstAttribute="width" constant="60" id="bAl-zd-zyM"/>
+                                    <constraint firstItem="gRO-zv-odw" firstAttribute="top" secondItem="vhR-03-8Ib" secondAttribute="top" constant="17" id="kwf-oj-qM2"/>
+                                    <constraint firstAttribute="height" constant="60" id="sMT-tH-gdn"/>
+                                </constraints>
+                            </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tjQ-fj-IaW">
                                 <rect key="frame" x="696" y="0.0" width="200" height="414"/>
                                 <subviews>
@@ -3680,26 +3700,6 @@
                                     <segue destination="MHS-hk-8CL" kind="embed" identifier="MenuEmbed" id="aVI-Vb-GxK"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vhR-03-8Ib" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gRO-zv-odw" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="17" y="17" width="21" height="21"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="eWS-JU-V7v"/>
-                                            <constraint firstAttribute="width" constant="21" id="zfO-rL-dLe"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="gRO-zv-odw" firstAttribute="leading" secondItem="vhR-03-8Ib" secondAttribute="leading" constant="17" id="Z8G-wD-ohi"/>
-                                    <constraint firstAttribute="width" constant="60" id="bAl-zd-zyM"/>
-                                    <constraint firstItem="gRO-zv-odw" firstAttribute="top" secondItem="vhR-03-8Ib" secondAttribute="top" constant="17" id="kwf-oj-qM2"/>
-                                    <constraint firstAttribute="height" constant="60" id="sMT-tH-gdn"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3716,6 +3716,7 @@
                             <constraint firstItem="tjQ-fj-IaW" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="6Q3-Ni-uh4"/>
                             <constraint firstAttribute="trailing" secondItem="hfq-Br-pXl" secondAttribute="trailing" constant="64" id="70h-Uj-IPc"/>
                             <constraint firstItem="UYW-Te-7QB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="7Yu-Jz-Xaf"/>
+                            <constraint firstItem="UYW-Te-7QB" firstAttribute="leading" secondItem="tjQ-fj-IaW" secondAttribute="trailing" id="8Qe-b7-EjC"/>
                             <constraint firstItem="hsl-8Q-RoJ" firstAttribute="top" secondItem="Fyk-ME-JTp" secondAttribute="bottom" id="9f6-sk-arB"/>
                             <constraint firstItem="Dcg-RG-ceO" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="9u6-th-pc3"/>
                             <constraint firstItem="BCY-AR-gsM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="64" id="9zf-cW-SSa"/>
@@ -3738,8 +3739,9 @@
                             <constraint firstItem="tjQ-fj-IaW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="QZU-0q-YRz"/>
                             <constraint firstItem="DcD-dU-48h" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QyE-k3-clE"/>
                             <constraint firstItem="Tzt-c9-dyw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="RtT-4c-xd6"/>
-                            <constraint firstAttribute="trailing" secondItem="UYW-Te-7QB" secondAttribute="trailing" constant="200" id="SMr-fv-78B"/>
+                            <constraint firstItem="tjQ-fj-IaW" firstAttribute="leading" secondItem="UYW-Te-7QB" secondAttribute="trailing" id="SMr-fv-78B"/>
                             <constraint firstAttribute="trailing" secondItem="ZmC-9f-OkI" secondAttribute="trailing" constant="17" id="SdG-YV-QTf"/>
+                            <constraint firstAttribute="trailing" secondItem="UYW-Te-7QB" secondAttribute="trailing" id="SoR-45-8CS"/>
                             <constraint firstAttribute="bottom" secondItem="tjQ-fj-IaW" secondAttribute="bottom" id="T2S-q7-raM"/>
                             <constraint firstItem="Xy2-vk-Qhk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VgR-ke-MNW"/>
                             <constraint firstItem="0af-Id-wac" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="328" id="Vzr-rr-hEP"/>
@@ -3778,6 +3780,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="8Qe-b7-EjC"/>
+                                <exclude reference="SoR-45-8CS"/>
                                 <exclude reference="DY5-I4-pWG"/>
                                 <exclude reference="rGS-2t-gvc"/>
                                 <exclude reference="70h-Uj-IPc"/>
@@ -3803,7 +3807,9 @@
                         <outlet property="canvasFrameViewLeading" destination="BiG-YW-U0X" id="hMB-4L-KaD"/>
                         <outlet property="canvasFrameViewTop" destination="KPc-XP-DtV" id="uee-JC-NZT"/>
                         <outlet property="canvasLockLeading" destination="cgX-kE-orb" id="wSx-tb-K48"/>
+                        <outlet property="canvasLockLeadingRight" destination="8Qe-b7-EjC" id="ubx-sk-MPW"/>
                         <outlet property="canvasLockTrailing" destination="SMr-fv-78B" id="cCE-dm-KRX"/>
+                        <outlet property="canvasLockTrailingRight" destination="SoR-45-8CS" id="U1C-r5-EbL"/>
                         <outlet property="canvasLockView" destination="UYW-Te-7QB" id="VMS-EO-PCb"/>
                         <outlet property="changeBackgroundAction" destination="EGr-k4-4TI" id="Rtn-C1-soa"/>
                         <outlet property="changeBackgroundButton" destination="hsl-8Q-RoJ" id="6xY-my-8JF"/>

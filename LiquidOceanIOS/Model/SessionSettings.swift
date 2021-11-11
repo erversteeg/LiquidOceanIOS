@@ -133,10 +133,8 @@ class SessionSettings: NSObject {
     
     var palettes = [Palette]()
     
-    var restoreDeviceViewportLeft: CGFloat = 0
-    var restoreDeviceViewportTop: CGFloat = 0
-    var restoreDeviceViewportRight: CGFloat = 0
-    var restoreDeviceViewportBottom: CGFloat = 0
+    var restoreDeviceViewportCenterX: CGFloat = 0
+    var restoreDeviceViewportCenterY: CGFloat = 0
     
     var restoreCanvasScaleFactor: CGFloat = 0
     
@@ -157,6 +155,8 @@ class SessionSettings: NSObject {
     var paintPanelOpen = false
     
     var canvasOpen = false
+    
+    var reloadCanvas = false
     
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
@@ -196,10 +196,8 @@ class SessionSettings: NSObject {
         userDefaults().set(defaultBg, forKey: "default_bg")
         userDefaults().set(palettesJsonStr(), forKey: "palettes")
         userDefaults().set(selectedPaletteIndex, forKey: "selected_palette_index")
-        userDefaults().set(restoreDeviceViewportLeft, forKey: "restore_device_viewport_left")
-        userDefaults().set(restoreDeviceViewportTop, forKey: "restore_device_viewport_top")
-        userDefaults().set(restoreDeviceViewportRight, forKey: "restore_device_viewport_right")
-        userDefaults().set(restoreDeviceViewportBottom, forKey: "restore_device_viewport_bottom")
+        userDefaults().set(restoreDeviceViewportCenterX, forKey: "restore_device_viewport_center_x")
+        userDefaults().set(restoreDeviceViewportCenterY, forKey: "restore_device_viewport_center_y")
         userDefaults().set(restoreCanvasScaleFactor, forKey: "restore_canvas_scale_factor")
         userDefaults().set(toolboxOpen, forKey: "toolbox_open")
         userDefaults().set(paintPanelOpen, forKey: "paint_panel_open")
@@ -300,10 +298,8 @@ class SessionSettings: NSObject {
         
         palettes.append(palette)*/
         
-        restoreDeviceViewportLeft = userDefaultsCGFloat(forKey: "restore_device_viewport_left", defaultVal: CGFloat(0))
-        restoreDeviceViewportTop = userDefaultsCGFloat(forKey: "restore_device_viewport_top", defaultVal: CGFloat(0))
-        restoreDeviceViewportRight = userDefaultsCGFloat(forKey: "restore_device_viewport_right", defaultVal: CGFloat(0))
-        restoreDeviceViewportBottom = userDefaultsCGFloat(forKey: "restore_device_viewport_bottom", defaultVal: CGFloat(0))
+        restoreDeviceViewportCenterX = userDefaultsCGFloat(forKey: "restore_device_viewport_center_x", defaultVal: CGFloat(0))
+        restoreDeviceViewportCenterY = userDefaultsCGFloat(forKey: "restore_device_viewport_center_y", defaultVal: CGFloat(0))
         
         restoreCanvasScaleFactor = userDefaultsCGFloat(forKey: "restore_canvas_scale_factor", defaultVal: CGFloat(0))
         
@@ -465,11 +461,11 @@ class SessionSettings: NSObject {
     
     func defaultArtShowcase() {
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "leaf_json")!)
-        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "water_drop_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "doughnut_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "bird_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "hfs_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "paint_bucket_json")!)
+        SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "water_drop_json")!)
         //SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "fire_badge_json")!)
         SessionSettings.instance.addToShowcase(art: ArtView.artFromJsonFile(named: "fries_json")!)
     }

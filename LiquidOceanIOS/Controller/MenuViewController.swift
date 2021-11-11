@@ -415,6 +415,7 @@ class MenuViewController: UIViewController, AchievementListener {
     
     func showMenuButtons() {
         toggleMenuButtons(show: true, depth: 0)
+        toggleMenuButtons(show: false, depth: 2)
         
         Animator.animateMenuButtons(views: [[optionsLabel], [howtoLabel]], cascade: true, moveOut: false, inverse: false)
         

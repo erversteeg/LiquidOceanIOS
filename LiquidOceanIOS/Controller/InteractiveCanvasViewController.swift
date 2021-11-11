@@ -162,6 +162,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var canvasLockLeading: NSLayoutConstraint!
     @IBOutlet weak var canvasLockTrailing: NSLayoutConstraint!
     
+    @IBOutlet weak var canvasLockLeadingRight: NSLayoutConstraint!
+    @IBOutlet weak var canvasLockTrailingRight: NSLayoutConstraint!
+    
     @IBOutlet var summaryViewLeading: NSLayoutConstraint!
     @IBOutlet var summaryViewTrailing: NSLayoutConstraint!
     
@@ -673,67 +676,31 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             initial = false
         }
+        
+        // rotation
+        if lastViewFrameSize.width != view!.frame.size.width || lastViewFrameSize.height != view!.frame.size.height {
+            setPaintPanelBackground(adjust: false)
+            
+            surfaceView.interactiveCanvas.updateDeviceViewport(screenSize: view!.frame.size)
+            self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+            lastViewFrameSize = view!.frame.size
+            
+            self.deviceViewportSummaryView.setNeedsDisplay()
+            self.surfaceView.interactiveCanvas.notifyDeviceViewportUpdate()
+            
+            self.paintColorIndicator.setNeedsDisplay()
+        }
     }
     
     func layoutSubviews() {
-        /*let panelRatio = paintPanel.frame.size.width / paintPanel.frame.size.height
-        
-        var adjust = false
-        if panelRatio < 0.4 || panelRatio > 0.6 {
-            paintPanelWidth.constant = paintPanel.frame.size.height * 0.25
-            adjust = true
-        }
-        
-        let backX = self.menuButton.frame.origin.x
-        let paintPanelButtonX = self.paintPanelButton.frame.origin.x + self.paintPanelButton.frame.size.width
-        
-        let exportButtonX = self.exportButton.frame.origin.x + self.exportButton.frame.size.width
-        let changeBackgroundButtonX = self.changeBackgroundButton.frame.origin.x + self.changeBackgroundButton.frame.size.width
-        let gridLinesButtonX = self.gridLinesButton.frame.origin.x + self.gridLinesButton.frame.size.width
-        
-        let toolboxButtonX = self.toolboxButton.frame.origin.x + self.toolboxButton.frame.size.width
-        
-        let recentColorsButtonX = self.recentColorsButton.frame.origin.x
-        
-        let recentColorsX = self.recentColorsContainer.frame.origin.x
-        
-        if paintPanelButtonX > self.view.frame.size.width {
-            paintPanelButtonTrailing.constant += 30
-        }
-        
-        if exportButtonX > self.view.frame.size.width {
-            exportButtonTrailing.constant += 30
-        }
-        
-        if changeBackgroundButtonX > self.view.frame.size.width {
-            changeBackgroundButtonTrailing.constant += 30
-        }
-        
-        if gridLinesButtonX > self.view.frame.size.width {
-            gridLinesButtonTrailing.constant += 30
-        }
-        
-        if toolboxButtonX > self.view.frame.size.width {
-            toolboxButtonTrailing.constant += 30
-        }
-        
-        if backX < 0 {
-            backButtonLeading.constant += 30
-        }
-        
-        if recentColorsButtonX < 0 {
-            recentColorsButtonLeading.constant += 30
-        }
-        
-        if recentColorsX < 20 {
-            recentColorsContainerLeading.constant = 20
-            recentColorsContainerBottom.constant = 20
-        }*/
-        
-        // right-handed
         if SessionSettings.instance.rightHanded {
-            canvasLockLeading.constant = paintPanelWidth.constant
-            canvasLockTrailing.constant = 0
+            // right-handed
+            
+            canvasLockLeading.isActive = false
+            canvasLockTrailing.isActive = false
+            
+            canvasLockLeadingRight.isActive = true
+            canvasLockTrailingRight.isActive = true
             
             // paint panel
             paintPanelTrailing.isActive = false
@@ -789,14 +756,16 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             // paint qty bar
             paintQuantityBar.transform = CGAffineTransform.init(rotationAngle: CGFloat(180 * Double.pi / 180.0))
         }
-        // left-handed
         else {
-            canvasLockLeading.constant = 0
-            canvasLockTrailing.constant = paintPanelWidth.constant
+            // left-handed
+            
+            canvasLockLeading.isActive = true
+            canvasLockTrailing.isActive = true
+            
+            canvasLockLeadingRight.isActive = false
+            canvasLockTrailingRight.isActive = false
             
             // paint panel
-            paintPanel.translatesAutoresizingMaskIntoConstraints = false
-            
             paintPanelLeading.isActive = false
             paintPanelTrailing.isActive = true
             
@@ -871,22 +840,17 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         setPaintPanelBackground(adjust: false)
         surfaceView.setInitalPositionAndScale()
-        
-        // rotation
-        if lastViewFrameSize.width != view!.frame.size.width || lastViewFrameSize.height != view!.frame.size.height {
-            setPaintPanelBackground(adjust: false)
-            
-            surfaceView.interactiveCanvas.updateDeviceViewport(screenSize: view!.frame.size)
-            self.surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
-            lastViewFrameSize = view!.frame.size
-            
-            self.deviceViewportSummaryView.setNeedsDisplay()
-            self.surfaceView.interactiveCanvas.notifyDeviceViewportUpdate()
-        }
     }
     
     override func unwind(for unwindSegue: UIStoryboardSegue, towards subsequentVC: UIViewController) {
         applyOptions(fromUnwind: true)
+        
+        if SessionSettings.instance.reloadCanvas {
+            surfaceView.interactiveCanvas.reload()
+            surfaceView.interactiveCanvas.drawCallback?.notifyCanvasRedraw()
+            
+            SessionSettings.instance.reloadCanvas = false
+        }
     }
     
     func applyOptions(fromUnwind: Bool) {
@@ -1173,6 +1137,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             SessionSettings.instance.canvasOpen = false
         }
+        else if segue.identifier == "ShowOptions" || segue.identifier == "ShowHowto" {
+            segue.destination.isModalInPresentation = true
+        }
     }
     
     // paint color indicator
@@ -1238,6 +1205,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         if open {
             self.paintPanelButton.isHidden = true
             
+            self.paintPanelWidth.constant = 200
+            
             self.paintPanel.isHidden = false
             
             self.pixelHistoryView.isHidden = true
@@ -1256,12 +1225,16 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.hideCanvasFrameView()
             
+            toggleMenu(show: false)
+            
             self.surfaceView.startPainting()
             
             SessionSettings.instance.paintPanelOpen = true
         }
         else if softHide {
             self.paintPanel.isHidden = true
+            
+            self.paintPanelWidth.constant = 0
             
             self.toolboxButton.isHidden = true
             
@@ -1377,11 +1350,14 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
         else if menuButtonType == .lefty {
             self.applyOptions(fromUnwind: true)
+            self.menuViewController.showMenuButtons()
         }
         else if menuButtonType == .righty {
             self.applyOptions(fromUnwind: true)
+            self.menuViewController.showMenuButtons()
         }
         
+        self.surfaceView.interactiveCanvas.saveDeviceViewport()
         self.toggleMenu(show: false)
     }
     

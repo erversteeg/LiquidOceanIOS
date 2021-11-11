@@ -256,9 +256,6 @@ class InteractiveCanvas: NSObject {
             arr[y][x] = shortTermPixel.restorePoint.color
         }
         
-        // both
-        ppu = basePpu
-        
         let recentColorsJsonStr = SessionSettings.instance.userDefaultsString(forKey: "recent_colors", defaultVal: "")
         
         do {
@@ -444,6 +441,7 @@ class InteractiveCanvas: NSObject {
     }
     
     func loadDefault() {
+        arr = [[Int32]]()
         for i in 0...rows - 1 {
             var innerArr = [Int32]()
             for j in 0...cols - 1 {
@@ -474,10 +472,8 @@ class InteractiveCanvas: NSObject {
     }
     
     func saveDeviceViewport() {
-        SessionSettings.instance.restoreDeviceViewportLeft = deviceViewport.origin.x
-        SessionSettings.instance.restoreDeviceViewportTop = deviceViewport.origin.y
-        SessionSettings.instance.restoreDeviceViewportRight = deviceViewport.origin.x + deviceViewport.size.width
-        SessionSettings.instance.restoreDeviceViewportBottom = deviceViewport.origin.y + deviceViewport.size.height
+        SessionSettings.instance.restoreDeviceViewportCenterX = deviceViewport.origin.x + deviceViewport.width / 2
+        SessionSettings.instance.restoreDeviceViewportCenterY = deviceViewport.origin.y + deviceViewport.height / 2
         
         SessionSettings.instance.restoreCanvasScaleFactor = scaleFactor
     }
@@ -1024,6 +1020,10 @@ class InteractiveCanvas: NSObject {
         }
         
         return pixelsCopy
+    }
+    
+    func reload() {
+        initType()
     }
     
     func notifyDeviceViewportUpdate() {

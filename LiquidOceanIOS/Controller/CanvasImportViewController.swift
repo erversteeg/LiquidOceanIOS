@@ -112,8 +112,10 @@ class CanvasImportViewController: UIViewController, UITextFieldDelegate {
             showStatusText(text: "Error reading canvas data.")
         }
         else {
-            SessionSettings.instance.restoreDeviceViewportLeft = CGFloat(0)
+            SessionSettings.instance.restoreDeviceViewportCenterX = CGFloat(0)
             SessionSettings.instance.restoreCanvasScaleFactor = CGFloat(0)
+            
+            SessionSettings.instance.reloadCanvas = true
             
             showStatusText(text: "Canvas data imported!", color: ActionButtonView.greenColor)
         }

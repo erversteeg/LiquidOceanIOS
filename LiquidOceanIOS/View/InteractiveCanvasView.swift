@@ -326,17 +326,11 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         self.interactiveCanvas.ppu = Int(CGFloat(interactiveCanvas.basePpu) * self.scaleFactor)
         
         // position
-        if SessionSettings.instance.restoreDeviceViewportLeft == CGFloat(0) {
+        if SessionSettings.instance.restoreDeviceViewportCenterX == CGFloat(0) {
             interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, canvasCenterX: CGFloat(interactiveCanvas.cols / 2), canvasCenterY: CGFloat(interactiveCanvas.rows / 2))
         }
         else {
-            let x = SessionSettings.instance.restoreDeviceViewportLeft
-            let y = SessionSettings.instance.restoreDeviceViewportTop
-            let width = SessionSettings.instance.restoreDeviceViewportRight - x
-            let height = SessionSettings.instance.restoreDeviceViewportBottom - y
-            
-            let restoreDeviceViewport = CGRect(x: x, y: y, width: width, height: height)
-            interactiveCanvas.deviceViewport = restoreDeviceViewport
+            interactiveCanvas.updateDeviceViewport(screenSize: frame.size, canvasCenterX: SessionSettings.instance.restoreDeviceViewportCenterX, canvasCenterY: SessionSettings.instance.restoreDeviceViewportCenterY)
         }
     }
     
@@ -636,7 +630,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
     }
     
     func resetDeviceViewport() {
-        SessionSettings.instance.restoreDeviceViewportLeft = 0
+        SessionSettings.instance.restoreDeviceViewportCenterX = 0
         SessionSettings.instance.restoreCanvasScaleFactor = 0
         
         setInitalPositionAndScale()

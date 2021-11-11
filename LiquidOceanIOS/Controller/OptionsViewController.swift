@@ -846,8 +846,10 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             if self.alertTextField.text != nil && self.alertTextField.text == "ERASE CANVAS" {
                 UserDefaults.standard.removeObject(forKey: "arr_canvas")
                 
-                SessionSettings.instance.restoreDeviceViewportLeft = CGFloat(0)
+                SessionSettings.instance.restoreDeviceViewportCenterX = CGFloat(0)
                 SessionSettings.instance.restoreCanvasScaleFactor = CGFloat(0)
+                
+                SessionSettings.instance.reloadCanvas = true
             }
         }))
         
