@@ -157,6 +157,9 @@ class SessionSettings: NSObject {
     var canvasOpen = false
     
     var reloadCanvas = false
+    var saveCanvas = false
+    
+    var colorPaletteSize = 4
     
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
@@ -202,6 +205,7 @@ class SessionSettings: NSObject {
         userDefaults().set(toolboxOpen, forKey: "toolbox_open")
         userDefaults().set(paintPanelOpen, forKey: "paint_panel_open")
         userDefaults().set(canvasOpen, forKey: "canvas_open")
+        userDefaults().set(colorPaletteSize, forKey: "palette_size")
     }
     
     func quickSave() {
@@ -307,6 +311,8 @@ class SessionSettings: NSObject {
         paintPanelOpen = userDefaultsBool(forKey: "paint_panel_open", defaultVal: false)
         
         canvasOpen = userDefaultsBool(forKey: "canvas_open", defaultVal: false)
+        
+        colorPaletteSize = userDefaultsInt(forKey: "palette_size", defaultVal: 4)
     }
     
     func userDefaults() -> UserDefaults {

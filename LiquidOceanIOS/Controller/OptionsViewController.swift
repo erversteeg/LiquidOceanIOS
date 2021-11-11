@@ -76,15 +76,22 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet weak var paletteOutlineContainer: UIView!
     @IBOutlet weak var paletteOutlineSwitch: UISwitch!
     
+    @IBOutlet weak var colorIndicatorWidthContainer: UIView!
+    @IBOutlet weak var colorIndicatorWidthLabel: UILabel!
+    @IBOutlet weak var colorIndicatorWidthMinusAction: ActionButtonView!
+    @IBOutlet weak var colorIndicatorWidthMinusFrame: ActionButtonFrame!
+    @IBOutlet weak var colorIndicatorWidthPlusAction: ActionButtonView!
+    @IBOutlet weak var colorIndicatorWidthPlusFrame: ActionButtonFrame!
+    
+    @IBOutlet weak var boldActionButtonsContainer: UIView!
+    @IBOutlet weak var boldActionButtonsSwitch: UISwitch!
+    
     @IBOutlet weak var paletteSizeContainer: UIView!
     @IBOutlet weak var paletteSizeLabel: UILabel!
     @IBOutlet weak var paletteSizeMinusAction: ActionButtonView!
     @IBOutlet weak var paletteSizeMinusFrame: ActionButtonFrame!
     @IBOutlet weak var paletteSizePlusAction: ActionButtonView!
     @IBOutlet weak var paletteSizePlusFrame: ActionButtonFrame!
-    
-    @IBOutlet weak var boldActionButtonsContainer: UIView!
-    @IBOutlet weak var boldActionButtonsSwitch: UISwitch!
     
     @IBOutlet weak var recentColorsContainer: UIView!
     @IBOutlet weak var recentColorsAmtLabel1: UILabel!
@@ -143,6 +150,9 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
                 self.creditsScrollView.isHidden = true
             }
             else {
+                if SessionSettings.instance.reloadCanvas {
+                    SessionSettings.instance.saveCanvas = true
+                }
                 self.performSegue(withIdentifier: self.unwindToCanvas, sender: nil)
             }
         }
@@ -260,16 +270,59 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         paletteOutlineContainer.layer.borderWidth = 2
         paletteOutlineSwitch.isOn = SessionSettings.instance.paintIndicatorOutline
         
-        // palette size
+        // color indicator size
+        colorIndicatorWidthContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
+        colorIndicatorWidthContainer.layer.borderWidth = 2
+        colorIndicatorWidthLabel.text = String(SessionSettings.instance.paintIndicatorWidth)
+        
+        colorIndicatorWidthMinusFrame.actionButtonView = colorIndicatorWidthMinusAction
+        colorIndicatorWidthPlusFrame.actionButtonView = colorIndicatorWidthPlusAction
+        
+        colorIndicatorWidthMinusAction.type = .dotLight
+        colorIndicatorWidthPlusAction.type = .dotLight
+        
+        colorIndicatorWidthMinusFrame.setOnClickListener {
+            var value = Int(self.colorIndicatorWidthLabel.text!)! - 1
+            if value == 0 { value = 1 }
+            
+            self.colorIndicatorWidthLabel.text = String(value)
+            SessionSettings.instance.paintIndicatorWidth = value
+        }
+        
+        colorIndicatorWidthPlusFrame.setOnClickListener {
+            var value = Int(self.colorIndicatorWidthLabel.text!)! + 1
+            if value == 6 { value = 5 }
+            
+            self.colorIndicatorWidthLabel.text = String(value)
+            SessionSettings.instance.paintIndicatorWidth = value
+        }
+        
+        // color palette size
         paletteSizeContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
         paletteSizeContainer.layer.borderWidth = 2
-        paletteSizeLabel.text = String(SessionSettings.instance.paintIndicatorWidth)
+        paletteSizeLabel.text = String(SessionSettings.instance.colorPaletteSize)
         
         paletteSizeMinusFrame.actionButtonView = paletteSizeMinusAction
         paletteSizePlusFrame.actionButtonView = paletteSizePlusAction
         
         paletteSizeMinusAction.type = .dotLight
         paletteSizePlusAction.type = .dotLight
+        
+        paletteSizeMinusFrame.setOnClickListener {
+            var value = Int(self.paletteSizeLabel.text!)! - 1
+            if value == 0 { value = 1 }
+            
+            self.paletteSizeLabel.text = String(value)
+            SessionSettings.instance.colorPaletteSize = value
+        }
+        
+        paletteSizePlusFrame.setOnClickListener {
+            var value = Int(self.paletteSizeLabel.text!)! + 1
+            if value == 16 { value = 15 }
+            
+            self.paletteSizeLabel.text = String(value)
+            SessionSettings.instance.colorPaletteSize = value
+        }
         
         // bold action buttons
         boldActionButtonsContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
@@ -290,22 +343,6 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         self.recentColorsAmtLabel6.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel6(sender:))))
         self.recentColorsAmtLabel7.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel7(sender:))))
         self.recentColorsAmtLabel8.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel8(sender:))))
-        
-        paletteSizeMinusFrame.setOnClickListener {
-            var value = Int(self.paletteSizeLabel.text!)! - 1
-            if value == 0 { value = 1 }
-            
-            self.paletteSizeLabel.text = String(value)
-            SessionSettings.instance.paintIndicatorWidth = value
-        }
-        
-        paletteSizePlusFrame.setOnClickListener {
-            var value = Int(self.paletteSizeLabel.text!)! + 1
-            if value == 6 { value = 5 }
-            
-            self.paletteSizeLabel.text = String(value)
-            SessionSettings.instance.paintIndicatorWidth = value
-        }
         
         // right-handed
         rightHandedContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
@@ -573,6 +610,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @objc func tappedRecentColorLabel1(sender: UITapGestureRecognizer) {
         let view = sender.view!
         SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
+        SessionSettings.instance.reloadCanvas = true
         
         selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
     }
@@ -580,49 +618,56 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @objc func tappedRecentColorLabel2(sender: UITapGestureRecognizer) {
         let view = sender.view!
         SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
-           
+        SessionSettings.instance.reloadCanvas = true
+        
         selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
     }
     
     @objc func tappedRecentColorLabel3(sender: UITapGestureRecognizer) {
         let view = sender.view!
         SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
-           
+        SessionSettings.instance.reloadCanvas = true
+        
         selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
     }
     
     @objc func tappedRecentColorLabel4(sender: UITapGestureRecognizer) {
         let view = sender.view!
         SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
-           
+        SessionSettings.instance.reloadCanvas = true
+        
         selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
     }
     
     @objc func tappedRecentColorLabel5(sender: UITapGestureRecognizer) {
         let view = sender.view!
         SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
-           
+        SessionSettings.instance.reloadCanvas = true
+        
         selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
     }
     
     @objc func tappedRecentColorLabel6(sender: UITapGestureRecognizer) {
         let view = sender.view!
         SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
-           
+        SessionSettings.instance.reloadCanvas = true
+        
         selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
     }
     
     @objc func tappedRecentColorLabel7(sender: UITapGestureRecognizer) {
         let view = sender.view!
         SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
-           
+        SessionSettings.instance.reloadCanvas = true
+        
         selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
     }
     
     @objc func tappedRecentColorLabel8(sender: UITapGestureRecognizer) {
         let view = sender.view!
         SessionSettings.instance.numRecentColors = Int((view as! UILabel).text!)!
-           
+        SessionSettings.instance.reloadCanvas = true
+        
         selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
     }
     

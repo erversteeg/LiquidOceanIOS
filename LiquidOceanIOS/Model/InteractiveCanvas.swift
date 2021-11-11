@@ -256,6 +256,8 @@ class InteractiveCanvas: NSObject {
             arr[y][x] = shortTermPixel.restorePoint.color
         }
         
+        recentColors = [Int32]()
+        
         let recentColorsJsonStr = SessionSettings.instance.userDefaultsString(forKey: "recent_colors", defaultVal: "")
         
         do {
@@ -566,7 +568,7 @@ class InteractiveCanvas: NSObject {
         self.recentColorsDelegate?.notifyNewRecentColors(recentColors: self.recentColors)
     }
     
-    private func updateRecentColors() {
+    func updateRecentColors() {
         var colorIndex = -1
         for restorePoint in self.restorePoints {
             var contains = false

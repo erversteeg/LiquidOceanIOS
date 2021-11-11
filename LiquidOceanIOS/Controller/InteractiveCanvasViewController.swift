@@ -159,11 +159,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var closePaintPanelActionWidth: NSLayoutConstraint!
     @IBOutlet weak var closePaintPanelActionHeight: NSLayoutConstraint!
     
-    @IBOutlet weak var canvasLockLeading: NSLayoutConstraint!
-    @IBOutlet weak var canvasLockTrailing: NSLayoutConstraint!
+    @IBOutlet var canvasLockLeading: NSLayoutConstraint!
+    @IBOutlet var canvasLockTrailing: NSLayoutConstraint!
     
-    @IBOutlet weak var canvasLockLeadingRight: NSLayoutConstraint!
-    @IBOutlet weak var canvasLockTrailingRight: NSLayoutConstraint!
+    @IBOutlet var canvasLockLeadingRight: NSLayoutConstraint!
+    @IBOutlet var canvasLockTrailingRight: NSLayoutConstraint!
     
     @IBOutlet var summaryViewLeading: NSLayoutConstraint!
     @IBOutlet var summaryViewTrailing: NSLayoutConstraint!
@@ -391,8 +391,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.recentColorsButton.setOnClickListener {
             self.toggleRecentColors(open: self.recentColorsContainer.isHidden)
         }
-        
-        self.setupColorPalette(colors: self.surfaceView.interactiveCanvas.recentColors)
         
         // export
         self.exportButton.setOnClickListener {
@@ -843,7 +841,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     }
     
     override func unwind(for unwindSegue: UIStoryboardSegue, towards subsequentVC: UIViewController) {
-        applyOptions(fromUnwind: true)
+        if SessionSettings.instance.saveCanvas {
+            surfaceView.interactiveCanvas.save()
+            
+            SessionSettings.instance.saveCanvas = false
+        }
         
         if SessionSettings.instance.reloadCanvas {
             surfaceView.interactiveCanvas.reload()
@@ -851,6 +853,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             SessionSettings.instance.reloadCanvas = false
         }
+        
+        applyOptions(fromUnwind: true)
     }
     
     func applyOptions(fromUnwind: Bool) {
@@ -917,6 +921,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             closePaintPanelButtonAction.representingColor = SessionSettings.instance.paintPanelCloseButtonColor
             closePaintPanelButtonAction.colorMode = .color
         }
+        
+        self.surfaceView.interactiveCanvas.updateRecentColors()
+        self.setupColorPalette(colors: self.surfaceView.interactiveCanvas.recentColors)
         
         if fromUnwind {
             layoutSubviews()
@@ -1457,8 +1464,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     }
     
     func setupColorPalette(colors: [Int32]) {
-        let itemWidth = self.recentColorsViewController.itemWidth
-        let itemHeight = self.recentColorsViewController.itemWidth
+        let itemWidth = CGFloat(10 * SessionSettings.instance.colorPaletteSize)
+        let itemHeight = itemWidth
+        
+        self.recentColorsViewController.itemWidth = itemWidth
         let margin = self.recentColorsViewController.itemMargin
         
         self.recentColorsContainerWidth.constant = itemWidth * 4 + margin * 3
