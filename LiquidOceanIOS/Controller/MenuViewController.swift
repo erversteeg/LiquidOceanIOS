@@ -27,8 +27,8 @@ class MenuViewController: UIViewController, AchievementListener {
     let showOptions = "ShowOptions"
     let showHowto = "ShowHowto"
     
+    @IBOutlet weak var connectLabel: UILabel!
     @IBOutlet weak var optionsLabel: UILabel!
-    
     @IBOutlet weak var howtoLabel: UILabel!
     
     @IBOutlet weak var singleButtonBottomLayer: ActionButtonView!
@@ -123,7 +123,7 @@ class MenuViewController: UIViewController, AchievementListener {
                 self.toggleMenuButtons(show: true, depth: 0)
                 self.toggleMenuButtons(show: false, depth: 1)
                 
-                Animator.animateMenuButtons(views: [[self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
+                Animator.animateMenuButtons(views: [[self.connectLabel], [self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
                 
                 self.backAction.isHidden = true
             }
@@ -140,7 +140,10 @@ class MenuViewController: UIViewController, AchievementListener {
         //var touchGr = UITouchGestureRecognizer(target: self, action: #selector(drawLabelTouched(sender:)))
         //drawLabel.addGestureRecognizer(touchGr)
         
-        var touchGr = UITouchGestureRecognizer(target: self, action: #selector(optionsLabelTouched(sender:)))
+        var touchGr = UITouchGestureRecognizer(target: self, action: #selector(connectLabelTouched(sender:)))
+        connectLabel.addGestureRecognizer(touchGr)
+        
+        touchGr = UITouchGestureRecognizer(target: self, action: #selector(optionsLabelTouched(sender:)))
         optionsLabel.addGestureRecognizer(touchGr)
         
         touchGr = UITouchGestureRecognizer(target: self, action: #selector(howtoLabelTouched(sender:)))
@@ -276,9 +279,24 @@ class MenuViewController: UIViewController, AchievementListener {
         }
     }*/
     
+    func connectLabelTapped() {
+        self.performSegue(withIdentifier: showLoadingScreen, sender: nil)
+    }
+    
+    @objc func connectLabelTouched(sender: UITouchGestureRecognizer) {
+        if (sender.state == .began) {
+            highlightLabel(label: connectLabel)
+        }
+        else if (sender.state == .ended) {
+            unhighlightLabel(label: connectLabel)
+            connectLabelTapped()
+        }
+    }
+    
     func optionsLabelTapped() {
         //self.performSegue(withIdentifier: self.showOptions, sender: nil)
         menuButtonDelegate?.menuButtonPressed(menuButtonType: .options)
+        self.performSegue(withIdentifier: showOptions, sender: nil)
     }
     
     @objc func optionsLabelTouched(sender: UITouchGestureRecognizer) {
@@ -294,6 +312,7 @@ class MenuViewController: UIViewController, AchievementListener {
     func howtoLabelTapped() {
         //self.performSegue(withIdentifier: self.showHowto, sender: nil)
         menuButtonDelegate?.menuButtonPressed(menuButtonType: .howto)
+        self.performSegue(withIdentifier: showHowto, sender: nil)
     }
     
     @objc func howtoLabelTouched(sender: UITouchGestureRecognizer) {
@@ -368,7 +387,7 @@ class MenuViewController: UIViewController, AchievementListener {
         
         cBackgroundGradientIndex = rIndex
         
-        setGradient(bounds: CGRect(x: 0, y: 0, width: 500, height: 300), index: rIndex)
+        setGradient(bounds: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height), index: rIndex)
     }
     
     func setGradient(bounds: CGRect, index: Int) {
@@ -392,6 +411,8 @@ class MenuViewController: UIViewController, AchievementListener {
     func toggleMenuButtons(show: Bool, depth: Int) {
         if depth == 0 {
             //self.drawLabel.isHidden = !show
+            
+            self.connectLabel.isHidden = !show
             
             self.optionsLabel.isHidden = !show
             
