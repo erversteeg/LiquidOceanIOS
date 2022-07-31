@@ -279,6 +279,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                 
                 let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
             
+                SessionSettings.instance.deviceId = jsonDict["id"] as! Int
                 SessionSettings.instance.dropsAmt = jsonDict["paint_qty"] as? Int
                 SessionSettings.instance.sentUniqueId = true
                 
@@ -419,6 +420,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
             
                 SessionSettings.instance.sentUniqueId = true
                 
+                SessionSettings.instance.deviceId = jsonDict["id"] as! Int
                 SessionSettings.instance.dropsAmt = jsonDict["paint_qty"] as? Int
                 SessionSettings.instance.xp = jsonDict["xp"] as! Int
                 SessionSettings.instance.displayName = jsonDict["name"] as! String

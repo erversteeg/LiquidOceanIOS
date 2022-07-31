@@ -19,6 +19,7 @@ class SessionSettings: NSObject {
     
     var interactiveCanvas: InteractiveCanvas?
     var uniqueId: String!
+    var deviceId: Int = 0
     
     var chunk1: [[Int32]]!
     var chunk2: [[Int32]]!

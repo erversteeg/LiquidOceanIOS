@@ -352,16 +352,36 @@ class InteractiveCanvas: NSObject {
             self.drawCallback?.notifyCanvasRedraw()
         }
         
-        socket.on("add_paint_canvas_setup") { (data, ack) in
+        socket.on("canvas_error") { (data, ack) in
+            
+        }
+        
+        socket.on("pixel_receive") { (data, ack) in
+            self.receivePixel(pixelInfo: data[0] as! String)
+        }
+        
+        socket.on("add_paint") { (data, ack) in
             if !self.receivedPaintRecently {
-                SessionSettings.instance.dropsAmt = Int(fmin(Double(SessionSettings.instance.dropsAmt + 50), 1000.0))
+                SessionSettings.instance.dropsAmt = data[0] as? Int
                 
                 self.receivedPaintRecently = true
-                Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { (tmr) in
+                Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { (tmr) in
                     self.receivedPaintRecently = false
                 }
             }
         }
+    }
+    
+    func receivePixel(pixelInfo: String) {
+        let t = pixelInfo.components(separatedBy: "&")
+        let pixelId = Int(t[0])!
+        let color = Int32(exactly: Int(t[2])!)!
+        
+        let x = pixelId % 1024
+        let y = pixelId / 1024
+        
+        arr[y][x] = color
+        drawCallback?.notifyCanvasRedraw()
     }
     
     func initPixels(arrJsonStr: String) {
@@ -529,32 +549,9 @@ class InteractiveCanvas: NSObject {
     
     func commitPixels() {
         if world {
-            print(SessionSettings.instance.paintColor)
-            
-            var pixelInfoArr = [[String: Int32]]()
-            
             for restorePoint in self.restorePoints {
-                var map = [String: Int32]()
-                
-                if realmId == 1 {
-                    map["id"] = Int32((restorePoint.y * cols + restorePoint.x) + 1 + (512 * 512))
-                }
-                else {
-                    map["id"] = Int32((restorePoint.y * cols + restorePoint.x) + 1)
-                }
-                map["color"] = restorePoint.newColor
-                
-                pixelInfoArr.append(map)
+                InteractiveCanvasSocket.instance.socket.emit("pixel_send", buildPixelString(x: restorePoint.x, y: restorePoint.y, deviceId: SessionSettings.instance.deviceId, color: restorePoint.newColor), completion: nil)
             }
-            
-            var reqObj = [String: Any]()
-            
-            reqObj["uuid"] = SessionSettings.instance.uniqueId
-            reqObj["pixels"] = pixelInfoArr
-            
-            print(reqObj)
-            
-            InteractiveCanvasSocket.instance.socket.emit("pixels_event", reqObj)
             
             StatTracker.instance.reportEvent(eventType: .pixelPaintedWorld, amt: restorePoints.count)
         }
@@ -568,6 +565,11 @@ class InteractiveCanvas: NSObject {
         
         updateRecentColors()
         self.recentColorsDelegate?.notifyNewRecentColors(recentColors: self.recentColors)
+    }
+    
+    func buildPixelString(x: Int, y: Int, deviceId: Int, color: Int32) -> String {
+        let pixelId = y * cols + x
+        return "\(pixelId)&\(deviceId)&\(color)"
     }
     
     func updateRecentColors() {
