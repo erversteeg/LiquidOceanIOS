@@ -14,6 +14,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
     //let baseUrl = "https://192.168.200.69:5000"
     let baseUrl = "https://ericversteeg.com:5000"
+    let baseUrlAlt = "https://ericversteeg.com:5030"
     let key1 = "8AHI!VR7299G7cq3YsP359HDkKz682oNT3QHh?yyehuvkyzdm674w45o"
     
     static let instance = URLSessionHandler()
@@ -652,7 +653,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     
     func downloadPixelHistory(pixelId: Int, completionHandler: @escaping (Bool, [AnyObject]) -> Void) {
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/canvas/pixels/" + String(pixelId) + "/history")!)
+        var request = URLRequest(url: URL(string: baseUrlAlt + "/api/v1/canvas/pixels/" + String(pixelId) + "/history")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 

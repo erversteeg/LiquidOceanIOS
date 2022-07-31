@@ -85,6 +85,8 @@ class MenuViewController: UIViewController, AchievementListener {
     
     var defaultLabelColor: Int32 = 0
     
+    var fromInteractiveCanvas = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -302,8 +304,12 @@ class MenuViewController: UIViewController, AchievementListener {
     
     func optionsLabelTapped() {
         //self.performSegue(withIdentifier: self.showOptions, sender: nil)
-        menuButtonDelegate?.menuButtonPressed(menuButtonType: .options)
-        self.performSegue(withIdentifier: showOptions, sender: nil)
+        if fromInteractiveCanvas {
+            menuButtonDelegate?.menuButtonPressed(menuButtonType: .options)
+        }
+        else {
+            self.performSegue(withIdentifier: showOptions, sender: nil)
+        }
     }
     
     @objc func optionsLabelTouched(sender: UITouchGestureRecognizer) {
@@ -318,8 +324,12 @@ class MenuViewController: UIViewController, AchievementListener {
     
     func howtoLabelTapped() {
         //self.performSegue(withIdentifier: self.showHowto, sender: nil)
-        menuButtonDelegate?.menuButtonPressed(menuButtonType: .howto)
-        self.performSegue(withIdentifier: showHowto, sender: nil)
+        if fromInteractiveCanvas {
+            menuButtonDelegate?.menuButtonPressed(menuButtonType: .howto)
+        }
+        else {
+            self.performSegue(withIdentifier: showHowto, sender: nil)
+        }
     }
     
     @objc func howtoLabelTouched(sender: UITouchGestureRecognizer) {
@@ -336,6 +346,8 @@ class MenuViewController: UIViewController, AchievementListener {
         SessionSettings.instance.rightHanded = false
         SessionSettings.instance.selectedHand = true
         
+        self.showMenuButtons()
+        
         //SessionSettings.instance.quickSave()
         
         /*if self.realmId == 0 {
@@ -344,7 +356,7 @@ class MenuViewController: UIViewController, AchievementListener {
         else {
             self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
         }*/
-        menuButtonDelegate?.menuButtonPressed(menuButtonType: .lefty)
+        //menuButtonDelegate?.menuButtonPressed(menuButtonType: .lefty)
     }
     
     @objc func leftyLabelTouched(sender: UITouchGestureRecognizer) {
@@ -361,6 +373,8 @@ class MenuViewController: UIViewController, AchievementListener {
         SessionSettings.instance.rightHanded = true
         SessionSettings.instance.selectedHand = true
         
+        self.showMenuButtons()
+        
         //SessionSettings.instance.quickSave()
         
         /*if self.realmId == 0 {
@@ -369,7 +383,7 @@ class MenuViewController: UIViewController, AchievementListener {
         else {
             self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
         }*/
-        menuButtonDelegate?.menuButtonPressed(menuButtonType: .righty)
+        //menuButtonDelegate?.menuButtonPressed(menuButtonType: .righty)
     }
     
     @objc func rightyLabelTouched(sender: UITouchGestureRecognizer) {
@@ -394,7 +408,12 @@ class MenuViewController: UIViewController, AchievementListener {
         
         cBackgroundGradientIndex = rIndex
         
-        setGradient(bounds: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height), index: rIndex)
+        if fromInteractiveCanvas {
+            setGradient(bounds: CGRect(x: 0, y: 0, width: 500, height: 300), index: rIndex)
+        }
+        else {
+            setGradient(bounds: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height), index: rIndex)
+        }
     }
     
     func setGradient(bounds: CGRect, index: Int) {

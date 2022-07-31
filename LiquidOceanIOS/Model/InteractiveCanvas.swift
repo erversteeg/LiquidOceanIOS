@@ -648,10 +648,7 @@ class InteractiveCanvas: NSObject {
         let x = Int(unitPoint.x)
         let y = Int(unitPoint.y)
         
-        var pixelId = y * cols + x + 1
-        if realmId == 1 {
-            pixelId += (512 * 512)
-        }
+        var pixelId = y * cols + x
         
         URLSessionHandler.instance.downloadPixelHistory(pixelId: pixelId, completionHandler: completionHandler)
     }

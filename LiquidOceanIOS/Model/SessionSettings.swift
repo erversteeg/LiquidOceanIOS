@@ -43,7 +43,7 @@ class SessionSettings: NSObject {
     
     var paintColor: Int32!
     
-    var maxPaintAmt = 1000
+    var maxPaintAmt = 1
     
     var darkIcons = false
     
@@ -126,7 +126,7 @@ class SessionSettings: NSObject {
     
     var smallActionButtons = false
     
-    var lockPaintPanel = false
+    var lockPaintPanel = true
     
     var pincodeSet = false
     
@@ -196,7 +196,7 @@ class SessionSettings: NSObject {
         userDefaults().set(rightHanded, forKey: "right_handed")
         userDefaults().set(selectedHand, forKey: "selected_hand")
         userDefaults().set(smallActionButtons, forKey: "small_action_buttons")
-        userDefaults().set(lockPaintPanel, forKey: "lock_paint_panel")
+        //userDefaults().set(lockPaintPanel, forKey: "lock_paint_panel")
         userDefaults().set(pincodeSet, forKey: "pincode_set")
         userDefaults().set(defaultBg, forKey: "default_bg")
         userDefaults().set(palettesJsonStr(), forKey: "palettes")
@@ -286,7 +286,7 @@ class SessionSettings: NSObject {
         
         smallActionButtons = userDefaultsBool(forKey: "small_action_buttons", defaultVal: false)
         
-        lockPaintPanel = userDefaultsBool(forKey: "lock_paint_panel", defaultVal: false)
+        //lockPaintPanel = userDefaultsBool(forKey: "lock_paint_panel", defaultVal: false)
         
         pincodeSet = userDefaultsBool(forKey: "pincode_set", defaultVal: false)
         

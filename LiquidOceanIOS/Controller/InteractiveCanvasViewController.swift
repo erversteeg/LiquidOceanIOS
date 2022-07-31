@@ -1123,6 +1123,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         else if segue.identifier == "MenuEmbed" {
             menuViewController = segue.destination as? MenuViewController
             menuViewController.menuButtonDelegate = self
+            menuViewController.fromInteractiveCanvas = true
         }
         else if segue.identifier == "UnwindToMenu" {
             surfaceView.interactiveCanvas.saveDeviceViewport()
