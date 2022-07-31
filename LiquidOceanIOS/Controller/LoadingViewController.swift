@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class LoadingViewController: UIViewController, InteractiveCanvasSocketConnectionDelegate {
+class LoadingViewController: UIViewController, InteractiveCanvasSocketConnectionDelegate, QueueSocketDelegate {
 
     var showInteractiveCanvas = "ShowInteractiveCanvas"
     
@@ -67,6 +67,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     var doneLoadingChunk4 = false
     
     var doneConnectingSocket = false
+    var doneConnectingQueue = false
     
     var timer: Timer!
     var lastDotsStr = ""
@@ -78,9 +79,32 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        realmId = 1
+        
         setBackground()
         
         artView.showBackground = false
+        
+        QueueSocket.instance.startSocket()
+        QueueSocket.instance.queueSocketDelegate = self
+        
+        let rIndex = Int(arc4random() % UInt32(gameTips.count))
+        gameTipLabel.text = gameTips[rIndex]
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { (tmr) in
+            if self.lastDotsStr.count < 3 {
+                self.lastDotsStr = self.lastDotsStr + "."
+            }
+            else {
+                self.lastDotsStr = ""
+            }
+            self.dotsLabel.text = self.lastDotsStr
+        }
+        
+        downloadFinished()
+    }
+    
+    func getCanvas() {
         if realmId == 2 {
             artView.jsonFile = "mc_tool_json"
             
@@ -103,31 +127,6 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         }
         
         getTopContributors()
-        
-        InteractiveCanvasSocket.instance.startSocket()
-        InteractiveCanvasSocket.instance.socketConnectionDelegate = self
-        
-        SessionSettings.instance.updateShortTermPixels()
-        
-        let rIndex = Int(arc4random() % UInt32(gameTips.count))
-        gameTipLabel.text = gameTips[rIndex]
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { (tmr) in
-            if self.lastDotsStr.count < 3 {
-                self.lastDotsStr = self.lastDotsStr + "."
-            }
-            else {
-                self.lastDotsStr = ""
-            }
-            self.dotsLabel.text = self.lastDotsStr
-        }
-        
-        if realmId == 1 {
-            statusLabel.text = String(format: "Loading %d / 7", getNumLoaded())
-        }
-        else {
-            statusLabel.text = String(format: "Loading %d / 4", getNumLoaded())
-        }
     }
     
     func downloadCanvasChunkPixels() {
@@ -285,7 +284,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     
     func downloadFinished() {
         if realmId == 1 {
-            statusLabel.text = String(format: "Loading %d / 7", getNumLoaded())
+            statusLabel.text = String(format: "Loading %d / 8", getNumLoaded())
         }
         else {
             statusLabel.text = String(format: "Loading %d / 4", getNumLoaded())
@@ -332,6 +331,10 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             num += 1
         }
         
+        if doneConnectingQueue {
+            num += 1
+        }
+        
         return num
     }
     
@@ -339,11 +342,11 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         if realmId == 1 {
             return doneSyncDevice && doneLoadingTopContributors && doneLoadingChunk1 &&
                 doneLoadingChunk2 && doneLoadingChunk3 && doneLoadingChunk4 &&
-                doneConnectingSocket
+                doneConnectingSocket && doneConnectingQueue
         }
         else {
             return doneLoadingPixels && doneSyncDevice && doneLoadingTopContributors &&
-                doneConnectingSocket
+                doneConnectingSocket && doneConnectingQueue
         }
         
     }
@@ -400,9 +403,34 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     func notifySocketConnect() {
         doneConnectingSocket = true
         InteractiveCanvasSocket.instance.socketConnectionDelegate = nil
+        
+        getCanvas()
     }
     
     func notifySocketConnectionError() {
         showError(type: errorTypeSocket)
+    }
+    
+    // queue socket delegate
+    func notifyQueueConnect() {
+        doneConnectingQueue = true
+        downloadFinished()
+    }
+    
+    func notifyQueueConnectError() {
+        doneConnectingQueue = false
+        showError(type: errorTypeSocket)
+    }
+    
+    func notifyAddedToQueue(pos: Int) {
+        print("Queue pos = " + String(pos))
+    }
+    
+    func notifyServiceReady() {
+        QueueSocket.instance.queueSocketDelegate = nil
+        QueueSocket.instance.disconnect()
+            
+        InteractiveCanvasSocket.instance.socketConnectionDelegate = self
+        InteractiveCanvasSocket.instance.startSocket()
     }
 }

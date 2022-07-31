@@ -27,7 +27,7 @@ class MenuViewController: UIViewController, AchievementListener {
     let showOptions = "ShowOptions"
     let showHowto = "ShowHowto"
     
-    @IBOutlet weak var connectLabel: UILabel!
+    @IBOutlet weak var connectLabel: UILabel?
     @IBOutlet weak var optionsLabel: UILabel!
     @IBOutlet weak var howtoLabel: UILabel!
     
@@ -123,7 +123,12 @@ class MenuViewController: UIViewController, AchievementListener {
                 self.toggleMenuButtons(show: true, depth: 0)
                 self.toggleMenuButtons(show: false, depth: 1)
                 
-                Animator.animateMenuButtons(views: [[self.connectLabel], [self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
+                if self.connectLabel != nil {
+                    Animator.animateMenuButtons(views: [[self.connectLabel!], [self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
+                }
+                else {
+                    Animator.animateMenuButtons(views: [[self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
+                }
                 
                 self.backAction.isHidden = true
             }
@@ -140,14 +145,16 @@ class MenuViewController: UIViewController, AchievementListener {
         //var touchGr = UITouchGestureRecognizer(target: self, action: #selector(drawLabelTouched(sender:)))
         //drawLabel.addGestureRecognizer(touchGr)
         
-        var touchGr = UITouchGestureRecognizer(target: self, action: #selector(connectLabelTouched(sender:)))
-        connectLabel.addGestureRecognizer(touchGr)
-        
-        touchGr = UITouchGestureRecognizer(target: self, action: #selector(optionsLabelTouched(sender:)))
+        var touchGr = UITouchGestureRecognizer(target: self, action: #selector(optionsLabelTouched(sender:)))
         optionsLabel.addGestureRecognizer(touchGr)
         
         touchGr = UITouchGestureRecognizer(target: self, action: #selector(howtoLabelTouched(sender:)))
         howtoLabel.addGestureRecognizer(touchGr)
+        
+        if connectLabel != nil {
+            touchGr = UITouchGestureRecognizer(target: self, action: #selector(connectLabelTouched(sender:)))
+            connectLabel!.addGestureRecognizer(touchGr)
+        }
         
         touchGr = UITouchGestureRecognizer(target: self, action: #selector(leftyLabelTouched(sender:)))
         leftyLabel.addGestureRecognizer(touchGr)
@@ -285,10 +292,10 @@ class MenuViewController: UIViewController, AchievementListener {
     
     @objc func connectLabelTouched(sender: UITouchGestureRecognizer) {
         if (sender.state == .began) {
-            highlightLabel(label: connectLabel)
+            highlightLabel(label: connectLabel!)
         }
         else if (sender.state == .ended) {
-            unhighlightLabel(label: connectLabel)
+            unhighlightLabel(label: connectLabel!)
             connectLabelTapped()
         }
     }
@@ -412,7 +419,7 @@ class MenuViewController: UIViewController, AchievementListener {
         if depth == 0 {
             //self.drawLabel.isHidden = !show
             
-            self.connectLabel.isHidden = !show
+            self.connectLabel?.isHidden = !show
             
             self.optionsLabel.isHidden = !show
             

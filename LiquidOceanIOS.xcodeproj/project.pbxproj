@@ -77,6 +77,7 @@
 		07A9B19325ED6CCD009A47DF /* sf_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B18125ED6CCD009A47DF /* sf_1.jpg */; };
 		07A9B19425ED6CCD009A47DF /* amb_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07A9B18225ED6CCD009A47DF /* amb_3.jpg */; };
 		07A9B19625EDAB8F009A47DF /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A9B19525EDAB8F009A47DF /* ColorPickerViewController.swift */; };
+		07BBBABA2896E3B3008A6B9E /* QueueSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BBBAB92896E3B3008A6B9E /* QueueSocket.swift */; };
 		07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25C625D43FB500CF812E /* AppDelegate.swift */; };
 		07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25C825D43FB500CF812E /* SceneDelegate.swift */; };
 		07BD25CB25D43FB500CF812E /* InteractiveCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BD25CA25D43FB500CF812E /* InteractiveCanvasViewController.swift */; };
@@ -208,6 +209,7 @@
 		07A9B18125ED6CCD009A47DF /* sf_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sf_1.jpg; sourceTree = "<group>"; };
 		07A9B18225ED6CCD009A47DF /* amb_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amb_3.jpg; sourceTree = "<group>"; };
 		07A9B19525EDAB8F009A47DF /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
+		07BBBAB92896E3B3008A6B9E /* QueueSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueSocket.swift; sourceTree = "<group>"; };
 		07BD25C325D43FB500CF812E /* LiquidOceanIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiquidOceanIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07BD25C625D43FB500CF812E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07BD25C825D43FB500CF812E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 				07FF5F0825E4354B003E19AE /* StatTracker.swift */,
 				078AF006260119DE00AB4CE4 /* InteractiveCanvasSocket.swift */,
 				07270EE1272C214300DB35CE /* Palette.swift */,
+				07BBBAB92896E3B3008A6B9E /* QueueSocket.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -720,6 +723,7 @@
 				0712053825DF2D5100AE0F52 /* RecentColorsViewController.swift in Sources */,
 				07BD25ED25D440DD00CF812E /* InteractiveCanvasView.swift in Sources */,
 				07A9B16E25ED2941009A47DF /* HowtoViewController.swift in Sources */,
+				07BBBABA2896E3B3008A6B9E /* QueueSocket.swift in Sources */,
 				070DA9DF2732B98500D76775 /* CanvasExportViewController.swift in Sources */,
 				07006C4425DCB98E00DF9A64 /* PixelHistoryCollectionViewCell.swift in Sources */,
 				07006C4225DCB6D400DF9A64 /* PixelHistoryViewController.swift in Sources */,

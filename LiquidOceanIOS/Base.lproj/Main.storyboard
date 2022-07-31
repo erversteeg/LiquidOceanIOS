@@ -5252,7 +5252,7 @@
                         <outlet property="worldButtonBottomLayer" destination="Lrd-76-YgO" id="LHb-7Y-AqU"/>
                         <segue destination="PmP-As-lpW" kind="show" identifier="ShowOptions" animates="NO" id="DhC-cG-tnL"/>
                         <segue destination="cM5-dv-LHE" kind="show" identifier="ShowHowto" animates="NO" id="cg6-8E-NGn"/>
-                        <segue destination="J7C-7P-Zxh" kind="show" identifier="ShowLoading" id="Vsq-h8-k99"/>
+                        <segue destination="J7C-7P-Zxh" kind="show" identifier="ShowLoading" animates="NO" id="Vsq-h8-k99"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fn0-ff-rqq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

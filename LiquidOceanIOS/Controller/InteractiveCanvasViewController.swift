@@ -260,6 +260,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         SessionSettings.instance.canvasOpen = true
         
+        realmId = 1
+        
         surfaceView.interactiveCanvas.realmId = realmId
         surfaceView.interactiveCanvas.world = world
         
@@ -638,12 +640,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         StatTracker.instance.achievementListener = self
         
-        InteractiveCanvasSocket.instance.socketStatusDelegate = self
+        //InteractiveCanvasSocket.instance.socketStatusDelegate = self
         
         if world {
-            self.startServerStatusChecks()
+            //self.startServerStatusChecks()
             
-            getPaintTimerInfo()
+            //getPaintTimerInfo()
         }
         else {
             singlePlaySaveTimer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true, block: { (tmr) in
@@ -1029,7 +1031,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.present(alert, animated: true, completion: nil)
     }
     
-    func getPaintTimerInfo() {
+    /*func getPaintTimerInfo() {
         if panelThemeConfig.inversePaintEventInfo {
             self.paintEventInfoContainer.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
             self.paintEventTimeLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF000000"))
@@ -1071,7 +1073,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 }
             }
         }
-    }
+    }*/
     
     func setDefaultColorsClickListeners() {
         colorPickerViewController.defaultBlackButton.setOnClickListener {
