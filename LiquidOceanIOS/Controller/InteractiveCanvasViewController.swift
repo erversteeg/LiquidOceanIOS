@@ -224,6 +224,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     var world = false
     var realmId = 0
+    var server: Server!
     
     var statusCheckTimer: Timer?
     
@@ -997,28 +998,28 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.togglePalettesView(show: false)
     }
     
-    func startServerStatusChecks() {
-        statusCheckTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (tmr) in
-            let connected = Utils.isNetworkAvailable()
-            if !connected {
-                DispatchQueue.main.async {
-                    self.showDisconnectedMessage(type: 0)
-                }
-            }
-            else {
-                URLSessionHandler.instance.sendApiStatusCheck { (success) -> (Void) in
-                    if !success {
-                        self.showDisconnectedMessage(type: 1)
-                    }
-                    else {
-                        if self.world {
-                            InteractiveCanvasSocket.instance.sendSocketStatusCheck()
-                        }
-                    }
-                }
-            }
-        })
-    }
+//    func startServerStatusChecks() {
+//        statusCheckTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (tmr) in
+//            let connected = Utils.isNetworkAvailable()
+//            if !connected {
+//                DispatchQueue.main.async {
+//                    self.showDisconnectedMessage(type: 0)
+//                }
+//            }
+//            else {
+//                URLSessionHandler.instance.sendApiStatusCheck { (success) -> (Void) in
+//                    if !success {
+//                        self.showDisconnectedMessage(type: 1)
+//                    }
+//                    else {
+//                        if self.world {
+//                            InteractiveCanvasSocket.instance.sendSocketStatusCheck()
+//                        }
+//                    }
+//                }
+//            }
+//        })
+//    }
     
     func showDisconnectedMessage(type: Int) {
         // create the alert

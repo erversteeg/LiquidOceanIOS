@@ -11,6 +11,8 @@ import Alamofire
 
 class LoadingViewController: UIViewController, InteractiveCanvasSocketConnectionDelegate, QueueSocketDelegate {
 
+    var server: Server!
+    
     var showInteractiveCanvas = "ShowInteractiveCanvas"
     
     @IBOutlet var connectingLabel: UILabel!
@@ -56,6 +58,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     
     var errorTypeServer = "server"
     var errorTypeSocket = "socket"
+    var errorTypeAccessKey = "access-key"
     
     var doneLoadingPixels = false
     var doneSyncDevice = false
@@ -85,23 +88,44 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         
         artView.showBackground = false
         
-        QueueSocket.instance.startSocket()
-        QueueSocket.instance.queueSocketDelegate = self
-        
-        let rIndex = Int(arc4random() % UInt32(gameTips.count))
-        gameTipLabel.text = gameTips[rIndex]
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { (tmr) in
-            if self.lastDotsStr.count < 3 {
-                self.lastDotsStr = self.lastDotsStr + "."
-            }
-            else {
-                self.lastDotsStr = ""
-            }
-            self.dotsLabel.text = self.lastDotsStr
+        var accessKey = ""
+        if server.isAdmin {
+            accessKey = server.adminKey
+        }
+        else {
+            accessKey = server.accessKey
         }
         
-        downloadFinished()
+        URLSessionHandler.instance.findServer(accessKey: accessKey) { success, server in
+            SessionSettings.instance.removeServer(server: self.server)
+            
+            if (server == nil) {
+                self.showError(type: self.errorTypeAccessKey)
+                return
+            }
+            
+            SessionSettings.instance.addServer(server: server!)
+            
+            QueueSocket.instance.startSocket(server: server!)
+            QueueSocket.instance.queueSocketDelegate = self
+            
+            self.server = server!
+            
+            let rIndex = Int(arc4random() % UInt32(self.gameTips.count))
+            self.gameTipLabel.text = self.gameTips[rIndex]
+            
+            self.timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { (tmr) in
+                if self.lastDotsStr.count < 3 {
+                    self.lastDotsStr = self.lastDotsStr + "."
+                }
+                else {
+                    self.lastDotsStr = ""
+                }
+                self.dotsLabel.text = self.lastDotsStr
+            }
+            
+            self.downloadFinished()
+        }
     }
     
     func getCanvas() {
@@ -130,7 +154,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     }
     
     func downloadCanvasChunkPixels() {
-        URLSessionHandler.instance.downloadCanvasChunkPixels(chunk: 1) { (success) in
+        URLSessionHandler.instance.downloadCanvasChunkPixels(server: server, chunk: 1) { (success) in
             if success {
                 self.doneLoadingChunk1 = true
                 self.downloadFinished()
@@ -139,7 +163,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 self.showError(type: self.errorTypeServer)
             }
         }
-        URLSessionHandler.instance.downloadCanvasChunkPixels(chunk: 2) { (success) in
+        URLSessionHandler.instance.downloadCanvasChunkPixels(server: server, chunk: 2) { (success) in
             if success {
                 self.doneLoadingChunk2 = true
                 self.downloadFinished()
@@ -148,7 +172,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 self.showError(type: self.errorTypeServer)
             }
         }
-        URLSessionHandler.instance.downloadCanvasChunkPixels(chunk: 3) { (success) in
+        URLSessionHandler.instance.downloadCanvasChunkPixels(server: server, chunk: 3) { (success) in
             if success {
                 self.doneLoadingChunk3 = true
                 self.downloadFinished()
@@ -157,7 +181,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 self.showError(type: self.errorTypeServer)
             }
         }
-        URLSessionHandler.instance.downloadCanvasChunkPixels(chunk: 4) { (success) in
+        URLSessionHandler.instance.downloadCanvasChunkPixels(server: server, chunk: 4) { (success) in
             if success {
                 self.doneLoadingChunk4 = true
                 self.downloadFinished()
@@ -170,7 +194,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
 
     func downloadCanvasPixels() {
         
-        URLSessionHandler.instance.downloadCanvasPixels { (success) in
+        URLSessionHandler.instance.downloadCanvasPixels(server: server) { (success) in
             if success {
                 self.doneLoadingPixels = true
                 
@@ -183,7 +207,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     }
     
     func getTopContributors() {
-        URLSessionHandler.instance.downloadTopContributors { (topContributors) in
+        URLSessionHandler.instance.downloadTopContributors(server: server) { (topContributors) in
             let topContributorNameViews1 = [self.topContributorName1, self.topContributorName2, self.topContributorName3, self.topContributorName4, self.topContributorName5]
             let topContributorNameViews2 = [self.topContributorName6, self.topContributorName7, self.topContributorName8, self.topContributorName9, self.topContributorName10]
             
@@ -257,7 +281,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     }
     
     func getDeviceInfo() {
-        URLSessionHandler.instance.getDeviceInfo { (success) -> (Void) in
+        URLSessionHandler.instance.getDeviceInfo(server: server) { (success) -> (Void) in
             if success {
                 self.doneSyncDevice = true
                 
@@ -270,7 +294,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     }
     
     func sendDeviceId() {
-        URLSessionHandler.instance.sendDeviceId { (success) -> (Void) in
+        URLSessionHandler.instance.sendDeviceId(server: server) { (success) -> (Void) in
             if success {
                 self.doneSyncDevice = true
                 
@@ -356,6 +380,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             let vc = segue.destination as! InteractiveCanvasViewController
             vc.world = true
             vc.realmId = realmId
+            vc.server = server
         }
         
         timer.invalidate()
@@ -382,6 +407,9 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             }
             else if type == errorTypeSocket {
                 msg = "Socket connection error"
+            }
+            else if type == errorTypeAccessKey {
+                msg = "Access key has changed"
             }
             
             // create the alert
@@ -431,6 +459,6 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         QueueSocket.instance.disconnect()
             
         InteractiveCanvasSocket.instance.socketConnectionDelegate = self
-        InteractiveCanvasSocket.instance.startSocket()
+        InteractiveCanvasSocket.instance.startSocket(server: server)
     }
 }

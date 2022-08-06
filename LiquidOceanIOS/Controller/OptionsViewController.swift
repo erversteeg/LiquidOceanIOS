@@ -404,13 +404,13 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if SessionSettings.instance.changedGoogleAuth {
-            URLSessionHandler.instance.getDeviceInfo { (success) -> (Void) in
-                if success {
-                    self.changeNameTextField.text = SessionSettings.instance.displayName
-                }
-            }
-        }
+//        if SessionSettings.instance.changedGoogleAuth {
+//            URLSessionHandler.instance.getDeviceInfo { (success) -> (Void) in
+//                if success {
+//                    self.changeNameTextField.text = SessionSettings.instance.displayName
+//                }
+//            }
+//        }
     }
     
     @IBAction func switchChanged(_ sender: UISwitch) {
@@ -905,7 +905,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     @IBAction func changeNamePressed(_ sender: Any) {
-        URLSessionHandler.instance.updateDisplayName(name: self.checkedName) { (success) -> (Void) in
+        let server = SessionSettings.instance.lastVisitedServer
+        if (server == nil) {
+            return
+        }
+        
+        URLSessionHandler.instance.updateDisplayName(server: server!, name: self.checkedName) { (success) -> (Void) in
             if success {
                 SessionSettings.instance.displayName = self.checkedName
                 
@@ -1009,7 +1014,13 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
                 return false
             }
             
-            URLSessionHandler.instance.sendNameCheck(name: name!.trimmingCharacters(in: .whitespacesAndNewlines)) { (success) -> (Void) in
+            let server = SessionSettings.instance.lastVisitedServer
+            
+            if server == nil {
+                return false
+            }
+            
+            URLSessionHandler.instance.sendNameCheck(server: server!, name: name!.trimmingCharacters(in: .whitespacesAndNewlines)) { (success) -> (Void) in
                 if success {
                     self.changeNameButton.isEnabled = true
                     self.checkedName = name!.trimmingCharacters(in: .whitespacesAndNewlines)

@@ -59,6 +59,8 @@ class InteractiveCanvas: NSObject {
     
     var deviceViewport: CGRect!
     
+    var server: Server!
+    
     private var _world: Bool = false
     var world: Bool {
         set {
@@ -650,7 +652,7 @@ class InteractiveCanvas: NSObject {
         
         var pixelId = y * cols + x
         
-        URLSessionHandler.instance.downloadPixelHistory(pixelId: pixelId, completionHandler: completionHandler)
+        URLSessionHandler.instance.downloadPixelHistory(server: server, pixelId: pixelId, completionHandler: completionHandler)
     }
     
     // restore points

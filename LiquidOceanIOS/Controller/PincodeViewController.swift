@@ -133,16 +133,16 @@ class PincodeViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        URLSessionHandler.instance.setPincode(pincode: pincodeInput) { (success, data) in
-            if success {
-                SessionSettings.instance.pincodeSet = true
-                
-                self.statusLabel.text = "Pincode changed. Go to options -> Sign-in to access your account from any device."
-            }
-            else {
-                self.statusLabel.text = "Server or connection error"
-            }
-        }
+//        URLSessionHandler.instance.setPincode(pincode: pincodeInput) { (success, data) in
+//            if success {
+//                SessionSettings.instance.pincodeSet = true
+//
+//                self.statusLabel.text = "Pincode changed. Go to options -> Sign-in to access your account from any device."
+//            }
+//            else {
+//                self.statusLabel.text = "Server or connection error"
+//            }
+//        }
     }
     
     func changePincode() {
@@ -175,21 +175,21 @@ class PincodeViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        URLSessionHandler.instance.changePincode(oldPincode: oldPincodeInput, pincode: pincodeInput) { (success, data) in
-            
-            if success {
-                if data["error"] != nil {
-                    self.statusLabel.text = "Pincode is incorrect"
-                }
-                else {
-                    SessionSettings.instance.pincodeSet = true
-                    
-                    self.statusLabel.text = "Pincode changed. Go to options -> Sign-in to access your account from any device."
-                }
-            }
-            else {
-                self.statusLabel.text = "Server or connection error"
-            }
-        }
+//        URLSessionHandler.instance.changePincode(oldPincode: oldPincodeInput, pincode: pincodeInput) { (success, data) in
+//            
+//            if success {
+//                if data["error"] != nil {
+//                    self.statusLabel.text = "Pincode is incorrect"
+//                }
+//                else {
+//                    SessionSettings.instance.pincodeSet = true
+//                    
+//                    self.statusLabel.text = "Pincode changed. Go to options -> Sign-in to access your account from any device."
+//                }
+//            }
+//            else {
+//                self.statusLabel.text = "Server or connection error"
+//            }
+//        }
     }
 }

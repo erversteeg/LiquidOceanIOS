@@ -139,11 +139,11 @@ class StatTracker: NSObject {
     }
     
     private func sendDeviceStats(eventType: EventType, amt: Int) {
-        URLSessionHandler.instance.sendDeviceStat(eventType: eventType, amt: amt) { (success) -> (Void) in
-            if success {
-                
-            }
-        }
+//        URLSessionHandler.instance.sendDeviceStat(server: server, eventType: eventType, amt: amt) { (success) -> (Void) in
+//            if success {
+//
+//            }
+//        }
     }
     
     private func checkAchievements(eventType: EventType, oldVal: Int, newVal: Int) {

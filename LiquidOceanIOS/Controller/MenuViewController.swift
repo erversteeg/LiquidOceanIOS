@@ -87,8 +87,19 @@ class MenuViewController: UIViewController, AchievementListener {
     
     var fromInteractiveCanvas = false
     
+    var selectedServer: Server!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        URLSessionHandler.instance.findServer(accessKey: "TEST1") { success, server in
+            if server != nil {
+                print(server!.name)
+                if !SessionSettings.instance.hasServer(accessKey: "TEST1") {
+                    SessionSettings.instance.addServer(server: server!)
+                }
+            }
+        }
         
         // self.view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
         randomGradientBackground()
@@ -249,6 +260,7 @@ class MenuViewController: UIViewController, AchievementListener {
         else if segue.identifier == self.showLoadingScreen {
             let vc = segue.destination as! LoadingViewController
             vc.realmId = realmId
+            vc.server = selectedServer
         }
         
         showcaseTimer.invalidate()
@@ -289,6 +301,7 @@ class MenuViewController: UIViewController, AchievementListener {
     }*/
     
     func connectLabelTapped() {
+        selectedServer = SessionSettings.instance.servers.first!
         self.performSegue(withIdentifier: showLoadingScreen, sender: nil)
     }
     

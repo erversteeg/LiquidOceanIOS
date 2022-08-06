@@ -13,15 +13,15 @@ import CFNetwork
 class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
     //let baseUrl = "https://192.168.200.69:5000"
-    let baseUrl = "https://ericversteeg.com:5000"
-    let baseUrlAlt = "https://ericversteeg.com:5030"
+    let serversUrl = "https://ericversteeg.com:5050/"
+    let key0 = "MYCEJUCNZ6AVZAVDZBHKJJYM6OIWQVDOC1OU7RZP"
     let key1 = "8AHI!VR7299G7cq3YsP359HDkKz682oNT3QHh?yyehuvkyzdm674w45o"
     
     static let instance = URLSessionHandler()
     
-    func downloadCanvasPixels(completionHandler: @escaping (Bool) -> Void) {
+    func downloadCanvasPixels(server: Server, completionHandler: @escaping (Bool) -> Void) {
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/canvas/2/pixels")!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/canvas/2/pixels")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -51,9 +51,9 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func downloadCanvasChunkPixels(chunk: Int, completionHandler: @escaping (Bool) -> Void) {
+    func downloadCanvasChunkPixels(server: Server, chunk: Int, completionHandler: @escaping (Bool) -> Void) {
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/canvas/1/pixels/" + String(chunk))!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/canvas/1/pixels/" + String(chunk))!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -108,9 +108,9 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func downloadTopContributors(completionHandler: @escaping ([[String: Any]]?) -> Void) {
+    func downloadTopContributors(server: Server, completionHandler: @escaping ([[String: Any]]?) -> Void) {
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/top/contributors")!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/top/contributors")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -143,9 +143,9 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func pincodeAuth(name: String, pincode: String, completionHandler: @escaping (Bool, [String: AnyObject]) -> Void) {
+    func pincodeAuth(server: Server, name: String, pincode: String, completionHandler: @escaping (Bool, [String: AnyObject]) -> Void) {
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/pincode/auth")!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/pincode/auth")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "POST"
 
@@ -180,9 +180,9 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func setPincode(pincode: String, completionHandler: @escaping (Bool, [String: AnyObject]) -> Void) {
+    func setPincode(server: Server, pincode: String, completionHandler: @escaping (Bool, [String: AnyObject]) -> Void) {
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + SessionSettings.instance.uniqueId)!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/" + SessionSettings.instance.uniqueId)!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "POST"
 
@@ -217,9 +217,9 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func changePincode(oldPincode: String, pincode: String, completionHandler: @escaping (Bool, [String: AnyObject]) -> Void) {
+    func changePincode(server: Server, oldPincode: String, pincode: String, completionHandler: @escaping (Bool, [String: AnyObject]) -> Void) {
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + SessionSettings.instance.uniqueId + "/pincode")!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/" + SessionSettings.instance.uniqueId + "/pincode")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "POST"
 
@@ -254,10 +254,10 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func sendDeviceId(completionHandler: @escaping (Bool) -> (Void)) {
+    func sendDeviceId(server: Server, completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/register")!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/register")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "POST"
 
@@ -296,10 +296,10 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func sendDeviceStat(eventType: StatTracker.EventType, amt: Int, completionHandler: @escaping (Bool) -> (Void)) {
+    func sendDeviceStat(server: Server, eventType: StatTracker.EventType, amt: Int, completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + uniqueId)!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/" + uniqueId)!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "POST"
 
@@ -355,10 +355,10 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func updateDisplayName(name: String, completionHandler: @escaping (Bool) -> (Void)) {
+    func updateDisplayName(server: Server, name: String, completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + uniqueId)!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/" + uniqueId)!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "POST"
 
@@ -393,10 +393,10 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func getDeviceInfo(completionHandler: @escaping (Bool) -> (Void)) {
+    func getDeviceInfo(server: Server, completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + uniqueId + "/info")!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/" + uniqueId + "/info")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -452,8 +452,8 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func sendApiStatusCheck(completionHandler: @escaping (Bool) -> (Void)) {
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/status")!)
+    func sendApiStatusCheck(server: Server, completionHandler: @escaping (Bool) -> (Void)) {
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/status")!)
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 10
         config.timeoutIntervalForResource = 10
@@ -495,8 +495,8 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func sendNameCheck(name: String, completionHandler: @escaping (Bool) -> (Void)) {
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/checkname/" + name)!)
+    func sendNameCheck(server: Server, name: String, completionHandler: @escaping (Bool) -> (Void)) {
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/checkname/" + name)!)
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 10
         config.timeoutIntervalForResource = 10
@@ -546,8 +546,8 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func getPaintTimerInfo(completionHandler: @escaping (Bool, Double) -> (Void)) {
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/paint/time/sync")!)
+    func getPaintTimerInfo(server: Server, completionHandler: @escaping (Bool, Double) -> (Void)) {
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/paint/time/sync")!)
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 10
         config.timeoutIntervalForResource = 10
@@ -588,10 +588,10 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func sendGoogleToken(token: String, completionHandler: @escaping (Bool) -> (Void)) {
+    func sendGoogleToken(server: Server, token: String, completionHandler: @escaping (Bool) -> (Void)) {
         let uniqueId = SessionSettings.instance.uniqueId!
         
-        var request = URLRequest(url: URL(string: baseUrl + "/api/v1/devices/" + uniqueId + "/google/auth")!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/" + uniqueId + "/google/auth")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "POST"
 
@@ -651,9 +651,9 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func downloadPixelHistory(pixelId: Int, completionHandler: @escaping (Bool, [AnyObject]) -> Void) {
+    func downloadPixelHistory(server: Server, pixelId: Int, completionHandler: @escaping (Bool, [AnyObject]) -> Void) {
         
-        var request = URLRequest(url: URL(string: baseUrlAlt + "/api/v1/canvas/pixels/" + String(pixelId) + "/history")!)
+        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/canvas/pixels/" + String(pixelId) + "/history")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -678,6 +678,58 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                 
                 DispatchQueue.main.async {
                     completionHandler(true, jsonDict["data"] as! [AnyObject])
+                }
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
+    func findServer(accessKey: String, completionHandler: @escaping (Bool, Server?) -> Void) {
+        
+        var request = URLRequest(url: URL(string: serversUrl + "api/v1/find/server/" + accessKey)!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "GET"
+
+        // var params = ["username":"username", "password":"password"] as Dictionary<String, String>
+
+        // request.HTTPBody = try? JSONSerialization.dataWithJSONObject(params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key0, forHTTPHeaderField: "key0")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(false, nil)
+                    }
+                    return
+                }
+                
+                let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: AnyObject]
+                
+                DispatchQueue.main.async {
+                    let server = Server()
+                    
+                    server.name = jsonDict["name"] as! String
+                    server.baseUrl = jsonDict["base_url"] as! String
+                    server.pixelInterval = jsonDict["pixel_interval"] as! Int
+                    server.maxPixels = jsonDict["max_pixels"] as! Int
+                    server.isAdmin = jsonDict["is_admin"] as! Bool
+                    
+                    if server.isAdmin {
+                        server.adminKey = jsonDict["admin_key"] as! String
+                    }
+                    else {
+                        server.accessKey = jsonDict["access_key"] as! String
+                    }
+                    
+                    completionHandler(true, server)
                 }
             }
             catch {

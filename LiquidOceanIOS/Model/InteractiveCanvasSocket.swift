@@ -27,11 +27,11 @@ class InteractiveCanvasSocket: NSObject, URLSessionDelegate {
     var checkStatusReceived = false
     var checkEventTimeout = 20.0
     
-    func startSocket() {
+    func startSocket(server: Server) {
         // socket init
         //manager = SocketManager(socketURL: URL(string: "https://192.168.200.69:5010")!, config: [.log(true), .compress, .selfSigned(true), .sessionDelegate(self)])
         
-        manager = SocketManager(socketURL: URL(string: "https://ericversteeg.com:5010")!, config: [.log(true), .reconnectAttempts(3)])
+        manager = SocketManager(socketURL: URL(string: server.socketUrl())!, config: [.log(true), .reconnectAttempts(3)])
         
         socket = manager.defaultSocket
         

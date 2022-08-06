@@ -71,37 +71,37 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        URLSessionHandler.instance.pincodeAuth(name: nameInput, pincode: pincodeInput) { (success, data) in
-            if success {
-                if data["error"] != nil {
-                    self.statusLabel.text = "Display name or password is incorrect"
-                }
-                else {
-                    SessionSettings.instance.pincodeSet = true
-                    
-                    SessionSettings.instance.uniqueId = data["uuid"] as? String
-                    SessionSettings.instance.dropsAmt = data["paint_qty"] as? Int
-                    SessionSettings.instance.xp = data["xp"] as! Int
-                    
-                    SessionSettings.instance.displayName = data["name"] as! String
-                    
-                    SessionSettings.instance.sentUniqueId = true
-                    
-                    StatTracker.instance.numPixelsPaintedWorld = data["wt"] as! Int
-                    StatTracker.instance.numPixelsPaintedSingle = data["st"] as! Int
-                    StatTracker.instance.totalPaintAccrued = data["tp"] as! Int
-                    StatTracker.instance.numPixelOverwritesIn = data["oi"] as! Int
-                    StatTracker.instance.numPixelOverwritesOut = data["oo"] as! Int
-                    
-                    StatTracker.instance.save()
-                    
-                    self.statusLabel.text = "Successfully signed in"
-                }
-            }
-            else {
-                self.statusLabel.text = "Server or connection error"
-            }
-        }
+//        URLSessionHandler.instance.pincodeAuth(name: nameInput, pincode: pincodeInput) { (success, data) in
+//            if success {
+//                if data["error"] != nil {
+//                    self.statusLabel.text = "Display name or password is incorrect"
+//                }
+//                else {
+//                    SessionSettings.instance.pincodeSet = true
+//
+//                    SessionSettings.instance.uniqueId = data["uuid"] as? String
+//                    SessionSettings.instance.dropsAmt = data["paint_qty"] as? Int
+//                    SessionSettings.instance.xp = data["xp"] as! Int
+//
+//                    SessionSettings.instance.displayName = data["name"] as! String
+//
+//                    SessionSettings.instance.sentUniqueId = true
+//
+//                    StatTracker.instance.numPixelsPaintedWorld = data["wt"] as! Int
+//                    StatTracker.instance.numPixelsPaintedSingle = data["st"] as! Int
+//                    StatTracker.instance.totalPaintAccrued = data["tp"] as! Int
+//                    StatTracker.instance.numPixelOverwritesIn = data["oi"] as! Int
+//                    StatTracker.instance.numPixelOverwritesOut = data["oo"] as! Int
+//
+//                    StatTracker.instance.save()
+//
+//                    self.statusLabel.text = "Successfully signed in"
+//                }
+//            }
+//            else {
+//                self.statusLabel.text = "Server or connection error"
+//            }
+//        }
     }
     
     func setBackground() {

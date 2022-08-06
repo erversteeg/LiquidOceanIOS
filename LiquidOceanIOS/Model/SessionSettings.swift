@@ -163,6 +163,9 @@ class SessionSettings: NSObject {
     
     var colorPaletteSize = 4
     
+    var servers: [Server] = []
+    var lastVisitedServer: Server? = nil
+    
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -315,6 +318,8 @@ class SessionSettings: NSObject {
         canvasOpen = userDefaultsBool(forKey: "canvas_open", defaultVal: false)
         
         colorPaletteSize = userDefaultsInt(forKey: "palette_size", defaultVal: 4)
+        
+        initServerList()
     }
     
     func userDefaults() -> UserDefaults {
@@ -518,5 +523,66 @@ class SessionSettings: NSObject {
         }
         
         return palettes
+    }
+    
+    private func initServerList() {
+        let jsonStr = userDefaultsString(forKey: "server_list_json", defaultVal: "[]")
+        
+        do {
+            let jsonArray = try JSONSerialization.jsonObject(with: jsonStr.data(using: .utf8)!, options: []) as! [[String: AnyObject]]
+            
+            for jsonObj in jsonArray {
+                let server = Server()
+                
+                server.name = jsonObj["name"] as! String
+                server.baseUrl = jsonObj["base_url"] as! String
+                server.pixelInterval = jsonObj["pixel_interval"] as! Int
+                server.maxPixels = jsonObj["max_pixels"] as! Int
+                server.isAdmin = jsonObj["is_admin"] as! Bool
+                
+                if server.isAdmin {
+                    server.adminKey = jsonObj["admin_key"] as! String
+                }
+                else {
+                    server.accessKey = jsonObj["access_key"] as! String
+                }
+                
+                servers.append(server)
+            }
+        }
+        catch {
+            
+        }
+    }
+    
+    func addServer(server: Server) {
+        servers.append(server)
+        saveServers()
+    }
+    
+    func removeServer(server: Server) {
+        servers.remove(at: servers.firstIndex(of: server)!)
+        saveServers()
+    }
+    
+    func hasServer(accessKey: String) -> Bool {
+        for server in servers {
+            if accessKey == server.adminKey || accessKey == server.accessKey {
+                return true
+            }
+        }
+        return false
+    }
+    
+    private func saveServers() {
+        var jsonArray = [[String: Any]]()
+        
+        for server in servers {
+            jsonArray.append(server.toDictionary())
+        }
+        
+        let jsonData = try! JSONSerialization.data(withJSONObject: jsonArray, options: [])
+        
+        userDefaults().set(String(data: jsonData, encoding: .utf8)!, forKey: "server_list_json")
     }
 }
