@@ -19,7 +19,8 @@ enum MenuButtonType {
     case righty
 }
 
-class MenuViewController: UIViewController, AchievementListener {
+class MenuViewController: UIViewController, AchievementListener, UICollectionViewDataSource,
+                            UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
 
     let showSinglePlay = "ShowSinglePlay"
     let showLoadingScreen = "ShowLoading"
@@ -46,6 +47,7 @@ class MenuViewController: UIViewController, AchievementListener {
     
     @IBOutlet weak var backAction: ActionButtonView!
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
+    @IBOutlet weak var addAction: ActionButtonView?
     
     @IBOutlet weak var achievementBanner: UIView!
     
@@ -58,6 +60,12 @@ class MenuViewController: UIViewController, AchievementListener {
     
     @IBOutlet weak var menuContainerWidth: NSLayoutConstraint!
     @IBOutlet weak var menuContainerHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var serversCollectionView: UICollectionView!
+    
+    @IBOutlet weak var addServerContainer: UIView!
+    
+    @IBOutlet weak var accessKeyTextField: UITextField!
     
     weak var menuButtonDelegate: MenuButtonDelegate?
     
@@ -92,14 +100,14 @@ class MenuViewController: UIViewController, AchievementListener {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        URLSessionHandler.instance.findServer(accessKey: "TEST1") { success, server in
-            if server != nil {
-                print(server!.name)
-                if !SessionSettings.instance.hasServer(accessKey: "TEST1") {
-                    SessionSettings.instance.addServer(server: server!)
-                }
-            }
-        }
+//        URLSessionHandler.instance.findServer(accessKey: "TEST1") { success, server in
+//            if server != nil {
+//                print(server!.name)
+//                if !SessionSettings.instance.hasServer(accessKey: "TEST1") {
+//                    SessionSettings.instance.addServer(server: server!)
+//                }
+//            }
+//        }
         
         // self.view.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xFF333333"))
         randomGradientBackground()
@@ -131,8 +139,20 @@ class MenuViewController: UIViewController, AchievementListener {
         
         backAction.type = .backSolid
         
+        if (addAction != nil) {
+            addAction!.type = .add
+        }
+        
         self.backAction.setOnClickListener {
-            if self.menuLayer == 1 {
+            if !self.addServerContainer.isHidden || !self.serversCollectionView.isHidden {
+                self.addServerContainer.isHidden = true
+                self.serversCollectionView.isHidden = true
+                
+                self.toggleMenuButtons(show: true, depth: 0)
+                self.backAction.isHidden = true
+                self.addAction!.isHidden = true
+            }
+            else if self.menuLayer == 1 {
                 self.toggleMenuButtons(show: true, depth: 0)
                 self.toggleMenuButtons(show: false, depth: 1)
                 
@@ -153,6 +173,12 @@ class MenuViewController: UIViewController, AchievementListener {
             }
             
             self.menuLayer -= 1
+        }
+        
+        if (addAction != nil) {
+            self.addAction!.setOnClickListener {
+                self.showAddServerView()
+            }
         }
         
         //var touchGr = UITouchGestureRecognizer(target: self, action: #selector(drawLabelTouched(sender:)))
@@ -301,8 +327,7 @@ class MenuViewController: UIViewController, AchievementListener {
     }*/
     
     func connectLabelTapped() {
-        selectedServer = SessionSettings.instance.servers.first!
-        self.performSegue(withIdentifier: showLoadingScreen, sender: nil)
+        showConnectView()
     }
     
     @objc func connectLabelTouched(sender: UITouchGestureRecognizer) {
@@ -313,6 +338,35 @@ class MenuViewController: UIViewController, AchievementListener {
             unhighlightLabel(label: connectLabel!)
             connectLabelTapped()
         }
+    }
+    
+    func showConnectView() {
+        toggleMenuButtons(show: false, depth: 0)
+        addAction!.isHidden = false
+        serversCollectionView.isHidden = true
+        addServerContainer.isHidden = true
+        
+        backAction.isHidden = false
+        
+        if SessionSettings.instance.servers.count == 0 {
+            addServerContainer.isHidden = false
+        }
+        else {
+            addAction!.isHidden = false
+            
+            serversCollectionView.isHidden = false
+            serversCollectionView.reloadData()
+        }
+    }
+    
+    func showAddServerView() {
+        toggleMenuButtons(show: false, depth: 0)
+        serversCollectionView.isHidden = true
+        
+        addAction!.isHidden = true
+        backAction.isHidden = false
+        
+        addServerContainer.isHidden = false
     }
     
     func optionsLabelTapped() {
@@ -621,5 +675,64 @@ class MenuViewController: UIViewController, AchievementListener {
         }
 
         return iOSDevices.value(forKey: identifier) as! String
+    }
+    
+    // servers colleciton data source
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return SessionSettings.instance.servers.count
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ServerCell", for: indexPath) as! ServerCell
+        
+        let server = SessionSettings.instance.servers[indexPath.item]
+        
+        if server.isAdmin {
+            cell.nameLabel.text = "Admin"
+        }
+        else {
+            cell.nameLabel.text = server.name
+        }
+        
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 260, height: 50)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.selectedServer = SessionSettings.instance.servers[indexPath.item]
+        self.performSegue(withIdentifier: showLoadingScreen, sender: nil)
+    }
+    
+    @IBAction func addServer() {
+        let accessKey = accessKeyTextField.text!
+        
+        if accessKey.count != 5 && accessKey.count != 8 || SessionSettings.instance.hasServer(accessKey: accessKey) {
+            return
+        }
+    
+        URLSessionHandler.instance.findServer(accessKey: accessKey) { success, server in
+            if server != nil {
+                print(server!.name)
+                SessionSettings.instance.addServer(server: server!)
+                
+                self.showConnectView()
+            }
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
