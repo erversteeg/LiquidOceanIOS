@@ -47,6 +47,8 @@ class HowtoViewController: UIViewController {
     
     let unwindToCanvas = "UnwindToCanvas"
     
+    var fromCanvas = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,7 +58,12 @@ class HowtoViewController: UIViewController {
         backAction.type = .backSolid
         
         backButton.setOnClickListener {
-            self.performSegue(withIdentifier: self.unwindToCanvas, sender: nil)
+            if self.fromCanvas {
+                self.performSegue(withIdentifier: self.unwindToCanvas, sender: nil)
+            }
+            else {
+                self.presentingViewController?.dismiss(animated: false, completion: nil)
+            }
         }
         
         paintAction.isStatic = true

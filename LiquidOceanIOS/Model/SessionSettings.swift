@@ -13,6 +13,10 @@ protocol PaintQtyDelegate {
     func notifyPaintQtyChanged(qty: Int)
 }
 
+protocol SceneDelegateDeleage {
+    func sceneWillEnterForeground()
+}
+
 class SessionSettings: NSObject {
 
     static var instance = SessionSettings()
@@ -165,6 +169,11 @@ class SessionSettings: NSObject {
     
     var servers: [Server] = []
     var lastVisitedServer: Server? = nil
+    
+    var canvasPaused = false
+    var canvasPauseTime = 0.0
+    
+    var sceneDelegateDelegate: SceneDelegateDeleage? = nil
     
     func save() {        
         userDefaults().set(uniqueId, forKey: "installation_id")

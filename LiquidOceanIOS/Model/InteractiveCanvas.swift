@@ -363,13 +363,8 @@ class InteractiveCanvas: NSObject {
         }
         
         socket.on("add_paint") { (data, ack) in
-            if !self.receivedPaintRecently {
-                SessionSettings.instance.dropsAmt = data[0] as? Int
-                
-                self.receivedPaintRecently = true
-                Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { (tmr) in
-                    self.receivedPaintRecently = false
-                }
+            if SessionSettings.instance.dropsAmt < SessionSettings.instance.maxPaintAmt {
+                SessionSettings.instance.dropsAmt += data[0] as! Int
             }
         }
     }

@@ -9,7 +9,8 @@
 import UIKit
 import FlexColorPicker
 
-class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate, CanvasEdgeTouchDelegate, InteractiveCanvasSelectedObjectViewDelegate, InteractiveCanvasSelectedObjectMoveViewDelegate, MenuButtonDelegate {
+class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate, CanvasEdgeTouchDelegate, InteractiveCanvasSelectedObjectViewDelegate, InteractiveCanvasSelectedObjectMoveViewDelegate, MenuButtonDelegate,
+    InteractiveCanvasSocketConnectionDelegate, SceneDelegateDeleage {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -219,6 +220,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     let showOptions = "ShowOptions"
     let showHowto = "ShowHowto"
+    let unwindToLoading = "UnwindToLoading"
     
     var panelThemeConfig: PanelThemeConfig!
     
@@ -260,9 +262,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         super.viewDidLoad()
         
         SessionSettings.instance.canvasOpen = true
+        SessionSettings.instance.sceneDelegateDelegate = self
         
         realmId = 1
         
+        surfaceView.interactiveCanvas.server = server
         surfaceView.interactiveCanvas.realmId = realmId
         surfaceView.interactiveCanvas.world = world
         
@@ -841,7 +845,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         surfaceView.setInitalPositionAndScale()
     }
     
-    override func unwind(for unwindSegue: UIStoryboardSegue, towards subsequentVC: UIViewController) {
+    @IBAction func unwind( _ seg: UIStoryboardSegue) {
         if SessionSettings.instance.saveCanvas {
             surfaceView.interactiveCanvas.save()
             
@@ -1149,8 +1153,15 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             SessionSettings.instance.canvasOpen = false
         }
-        else if segue.identifier == "ShowOptions" || segue.identifier == "ShowHowto" {
+        else if segue.identifier == "ShowOptions" {
             segue.destination.isModalInPresentation = true
+            
+            (segue.destination as! OptionsViewController).fromCanvas = true
+        }
+        else if segue.identifier == "ShowHowto" {
+            segue.destination.isModalInPresentation = true
+            
+            (segue.destination as! HowtoViewController).fromCanvas = true
         }
     }
     
@@ -1931,6 +1942,47 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     func selectedObjectMoveEnded() {
         self.exportAction.toggleState = .none
         self.exportAction.layer.borderWidth = 0
+    }
+    
+    // socket connection delegate
+    func notifySocketConnect() {
+        print("Socket reconnected from background!")
+        surfaceView.interactiveCanvas.registerForSocketEvents(socket: InteractiveCanvasSocket.instance.socket)
+        
+        URLSessionHandler.instance.getRecentPixels(server: SessionSettings.instance.lastVisitedServer!, since: SessionSettings.instance.canvasPauseTime) { jsonArray in
+            if jsonArray != nil {
+                for pixelInfo in jsonArray! {
+                    self.surfaceView.interactiveCanvas.receivePixel(pixelInfo: pixelInfo)
+                }
+            }
+            else {
+                self.performSegue(withIdentifier: self.unwindToLoading, sender: nil)
+            }
+        }
+        
+        URLSessionHandler.instance.getPaintQty(server: SessionSettings.instance.lastVisitedServer!, uuid: SessionSettings.instance.uniqueId) { jsonObj in
+            if jsonObj != nil {
+                let paintQty = jsonObj!["paint_qty"] as! Int
+                SessionSettings.instance.dropsAmt = paintQty
+            }
+            else {
+                self.performSegue(withIdentifier: self.unwindToLoading, sender: nil)
+            }
+        }
+    }
+    
+    func notifySocketConnectionError() {
+        self.performSegue(withIdentifier: unwindToLoading, sender: nil)
+    }
+    
+    // scene delegate delegate
+    func sceneWillEnterForeground() {
+        if SessionSettings.instance.canvasPaused {
+            InteractiveCanvasSocket.instance.socketConnectionDelegate = self
+            InteractiveCanvasSocket.instance.startSocket(server: SessionSettings.instance.lastVisitedServer!)
+            
+            SessionSettings.instance.canvasPaused = false
+        }
     }
 }
 

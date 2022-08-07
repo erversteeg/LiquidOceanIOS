@@ -517,7 +517,7 @@
                         <outlet property="step8Text" destination="eep-v7-617" id="7uS-fb-lLe"/>
                         <outlet property="step9Text" destination="50Y-uP-zJE" id="yBu-TW-FsO"/>
                         <outlet property="summaryAction" destination="89V-cx-YCq" id="R78-Bs-nnT"/>
-                        <segue destination="HYu-qW-Nhe" kind="unwind" identifier="UnwindToCanvas" animates="NO" unwindAction="unwindToViewControllerWithSegue:" id="hgR-9t-ZhB"/>
+                        <segue destination="HYu-qW-Nhe" kind="unwind" identifier="UnwindToCanvas" animates="NO" unwindAction="unwind:" id="hgR-9t-ZhB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R32-Di-DcA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -771,7 +771,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dj7-Gk-d20" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1196" y="154"/>
+            <point key="canvasLocation" x="-1161" y="378"/>
         </scene>
         <!--Options View Controller-->
         <scene sceneID="yCs-ib-1z8">
@@ -2210,7 +2210,7 @@
                         <segue destination="Low-bt-D08" kind="show" identifier="ShowPincode" animates="NO" id="tWr-hC-bp4"/>
                         <segue destination="HgM-xJ-vQq" kind="show" identifier="ShowCanvasImport" animates="NO" id="96B-v8-Y0E"/>
                         <segue destination="siR-1i-RLu" kind="show" identifier="ShowCanvasExport" animates="NO" id="qBk-Xd-1FU"/>
-                        <segue destination="DRi-oG-a07" kind="unwind" identifier="UnwindToCanvas" animates="NO" unwindAction="unwindToViewControllerWithSegue:" id="gXH-rc-UEh"/>
+                        <segue destination="DRi-oG-a07" kind="unwind" identifier="UnwindToCanvas" animates="NO" unwindAction="unwind:" id="gXH-rc-UEh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zyv-sj-fPJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2691,8 +2691,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading 0/2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXl-z6-hei">
-                                <rect key="frame" x="386" y="55" width="124" height="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading 0 / 8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXl-z6-hei">
+                                <rect key="frame" x="380.5" y="55" width="135.5" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3019,8 +3019,8 @@
                         <outlet property="topContributorName7" destination="1ms-nQ-47U" id="1EJ-uK-7ju"/>
                         <outlet property="topContributorName8" destination="q18-Yx-4Pd" id="3CG-Sj-zWg"/>
                         <outlet property="topContributorName9" destination="fpE-io-4Ob" id="Mtz-rj-3GV"/>
-                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="ShowInteractiveCanvas" animates="NO" modalPresentationStyle="fullScreen" id="28p-wv-bjn"/>
-                        <segue destination="sWc-a4-4hc" kind="unwind" identifier="UnwindToMenu" unwindAction="unwindToViewControllerWithSegue:" id="A7Q-bk-Y0o"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="ShowInteractiveCanvas" animates="NO" id="28p-wv-bjn"/>
+                        <segue destination="sWc-a4-4hc" kind="unwind" identifier="UnwindToMenu" animates="NO" unwindAction="unwind:" id="V3Z-2e-yf2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5ui-ju-aXZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -3983,9 +3983,9 @@
                         <outlet property="toolboxButton" destination="lXl-XV-J0j" id="k5e-iW-ZC3"/>
                         <outlet property="toolboxButtonLeading" destination="Dbr-Ep-mN9" id="hxP-bY-03N"/>
                         <outlet property="toolboxButtonTrailing" destination="5jU-g4-awv" id="2pR-vt-1cD"/>
-                        <segue destination="2LK-Zd-Ixk" kind="unwind" identifier="UnwindToMenu" animates="NO" unwindAction="unwindToViewControllerWithSegue:" id="7uF-FX-HEu"/>
                         <segue destination="PmP-As-lpW" kind="show" identifier="ShowOptions" animates="NO" id="XGn-H2-2Wq"/>
                         <segue destination="cM5-dv-LHE" kind="show" identifier="ShowHowto" animates="NO" id="N4G-oK-EKi"/>
+                        <segue destination="2LK-Zd-Ixk" kind="unwind" identifier="UnwindToLoading" animates="NO" unwindAction="unwind:" id="uuK-HH-lyZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -4042,7 +4042,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQc-ZZ-5IN" customClass="RadialPaletteControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="39" y="71" width="272" height="272"/>
+                                <rect key="frame" x="55" y="87" width="240" height="240"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="SPU-B7-fss"/>
@@ -4239,11 +4239,11 @@
             <objects>
                 <viewController id="4Eu-IR-h8h" customClass="RecentColorsViewController" customModule="LiquidOceanIOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m54-ZD-Z77">
-                        <rect key="frame" x="0.0" y="0.0" width="150" height="70"/>
+                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0tb-gh-gwe">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="70"/>
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Gov-3c-91k">
                                     <size key="itemSize" width="128" height="128"/>
@@ -4253,7 +4253,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RecentColorCell" id="D19-1N-fc8" customClass="RecentColorCollectionViewCell" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="11" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="-14" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="akD-rd-jML">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -4455,7 +4455,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnn-iB-Zo4" customClass="RadialPaletteControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="39" y="34" width="272" height="272"/>
+                                <rect key="frame" x="55" y="50" width="240" height="240"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="KDt-ja-w5Q"/>
@@ -5364,9 +5364,9 @@
                         <outlet property="singleButtonBottomLayer" destination="oWa-9L-bBr" id="Wgp-GH-yro"/>
                         <outlet property="worldButton" destination="QSm-v4-gzA" id="77j-uy-N2q"/>
                         <outlet property="worldButtonBottomLayer" destination="Lrd-76-YgO" id="LHb-7Y-AqU"/>
-                        <segue destination="PmP-As-lpW" kind="show" identifier="ShowOptions" animates="NO" id="DhC-cG-tnL"/>
-                        <segue destination="cM5-dv-LHE" kind="show" identifier="ShowHowto" animates="NO" id="cg6-8E-NGn"/>
-                        <segue destination="J7C-7P-Zxh" kind="show" identifier="ShowLoading" animates="NO" id="Vsq-h8-k99"/>
+                        <segue destination="PmP-As-lpW" kind="presentation" identifier="ShowOptions" animates="NO" id="DhC-cG-tnL"/>
+                        <segue destination="cM5-dv-LHE" kind="presentation" identifier="ShowHowto" animates="NO" id="cg6-8E-NGn"/>
+                        <segue destination="J7C-7P-Zxh" kind="presentation" identifier="ShowLoading" animates="NO" id="Vsq-h8-k99"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fn0-ff-rqq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -5383,7 +5383,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="xNZ-J9-gls"/>
+        <segue reference="Oc8-rR-yNG"/>
         <segue reference="DhC-cG-tnL"/>
         <segue reference="cg6-8E-NGn"/>
     </inferredMetricsTieBreakers>

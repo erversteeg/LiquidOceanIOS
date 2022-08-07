@@ -137,6 +137,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     var selectingFrameColor = false
     var selectingCloseDrawPanelColor = false
     
+    var fromCanvas = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -155,7 +157,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
                 }
                 SessionSettings.instance.replaceCanvas = false
                 
-                self.performSegue(withIdentifier: self.unwindToCanvas, sender: nil)
+                if self.fromCanvas {
+                    self.performSegue(withIdentifier: self.unwindToCanvas, sender: nil)
+                }
+                else {
+                    self.presentingViewController?.dismiss(animated: false, completion: nil)
+                }
             }
         }
         

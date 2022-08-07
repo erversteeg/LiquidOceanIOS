@@ -18,14 +18,10 @@ class InteractiveCanvasSocket: NSObject, URLSessionDelegate {
     
     static let instance = InteractiveCanvasSocket()
     
-    weak var socketStatusDelegate: InteractiveCanvasSocketStatusDelegate?
     weak var socketConnectionDelegate: InteractiveCanvasSocketConnectionDelegate?
     
     var manager: SocketManager!
     var socket: SocketIOClient!
-    
-    var checkStatusReceived = false
-    var checkEventTimeout = 20.0
     
     func startSocket(server: Server) {
         // socket init
@@ -53,21 +49,10 @@ class InteractiveCanvasSocket: NSObject, URLSessionDelegate {
                 self.socketConnectionDelegate?.notifySocketConnectionError()
             }
         }
-        
-        socket.on("check_success") { (data, ack) in
-            self.checkStatusReceived = true
-        }
     }
     
-    func sendSocketStatusCheck() {
-        socket.emit("check_event")
-        
-        self.checkStatusReceived = false
-        Timer.scheduledTimer(withTimeInterval: checkEventTimeout, repeats: false) { (tmr) in
-            if !self.checkStatusReceived {
-                self.socketStatusDelegate?.notifySocketError()
-            }
-        }
+    func disconnect() {
+        socket.disconnect()
     }
     
     /*func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {

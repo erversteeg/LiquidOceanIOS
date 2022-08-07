@@ -293,10 +293,6 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         stopPixels()
     }
     
-    @IBAction func unwindToViewController(segue: UIStoryboardSegue) {
-        
-    }
-    
     func highlightLabel(label: UILabel) {
         label.textColor = UIColor(argb: ActionButtonView.altGreenColor)
     }

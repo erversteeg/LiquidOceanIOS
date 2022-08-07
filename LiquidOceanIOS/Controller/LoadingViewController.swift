@@ -82,6 +82,8 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.connectingLabel.text = "Connecting to \(server.name)"
+        
         realmId = 1
         
         setBackground()
@@ -109,7 +111,10 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             QueueSocket.instance.startSocket(server: server!)
             QueueSocket.instance.queueSocketDelegate = self
             
+            self.connectingLabel.text = "Connecting to \(server!.name)"
+            
             self.server = server!
+            SessionSettings.instance.lastVisitedServer = server!
             
             let rIndex = Int(arc4random() % UInt32(self.gameTips.count))
             self.gameTipLabel.text = self.gameTips[rIndex]
@@ -129,19 +134,11 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     }
     
     func getCanvas() {
-        if realmId == 2 {
-            artView.jsonFile = "mc_tool_json"
-            
-            connectingLabel.text = "Connecting to dev server"
-            connectingLabelWidth.constant -= 30
-            
-            downloadCanvasPixels()
-        }
-        else {
-            artView.jsonFile = "globe_json"
-            
-            downloadCanvasChunkPixels()
-        }
+        artView.jsonFile = "globe_json"
+        
+        SessionSettings.instance.maxPaintAmt = server.maxPixels
+        
+        downloadCanvasChunkPixels()
 
         if SessionSettings.instance.sentUniqueId {
             getDeviceInfo()
@@ -383,7 +380,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             vc.server = server
         }
         
-        timer.invalidate()
+        timer?.invalidate()
     }
     
     func setBackground() {
@@ -418,7 +415,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
                 InteractiveCanvasSocket.instance.socketConnectionDelegate = nil
                 
-                self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
+                self.presentingViewController?.dismiss(animated: false, completion: nil)
             }))
             // show the alert
             self.present(alert, animated: true, completion: nil)
@@ -460,5 +457,9 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             
         InteractiveCanvasSocket.instance.socketConnectionDelegate = self
         InteractiveCanvasSocket.instance.startSocket(server: server)
+    }
+    
+    @IBAction func unwind( _ seg: UIStoryboardSegue) {
+        self.presentingViewController?.dismiss(animated: false, completion: nil)
     }
 }

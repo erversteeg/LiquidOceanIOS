@@ -740,6 +740,76 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
+    func getRecentPixels(server: Server, since: Double, completionHandler: @escaping ([String]?) -> Void) {
+        
+        var request = URLRequest(url: URL(string: server.serviceUrl() + "api/v1/recent/pixels/\(String(Int(since)))")!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "GET"
+
+        // var params = ["username":"username", "password":"password"] as Dictionary<String, String>
+
+        // request.HTTPBody = try? JSONSerialization.dataWithJSONObject(params, options: [])
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(nil)
+                    }
+                    return
+                }
+                
+                let jsonArray = try JSONSerialization.jsonObject(with: data!, options: []) as! [String]
+                
+                DispatchQueue.main.async {
+                    completionHandler(jsonArray)
+                }
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
+    func getPaintQty(server: Server, uuid: String, completionHandler: @escaping ([String: AnyObject]?) -> Void) {
+        
+        var request = URLRequest(url: URL(string: server.serviceUrl() + "api/v1/device/paintqty/\(uuid)")!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "GET"
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(nil)
+                    }
+                    return
+                }
+                
+                let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: AnyObject]
+                
+                DispatchQueue.main.async {
+                    completionHandler(jsonDict)
+                }
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
     /*func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
     }*/
