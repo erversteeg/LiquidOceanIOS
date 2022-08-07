@@ -3061,84 +3061,84 @@
                                     <constraint firstItem="2bj-lL-z2O" firstAttribute="top" secondItem="Dcg-RG-ceO" secondAttribute="top" constant="17" id="yw5-5q-pyz"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fyk-ME-JTp" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fyk-ME-JTp" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
                                 <rect key="frame" x="839" y="90" width="40" height="50"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NUc-5X-S7I" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="10" width="40" height="40"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="export" translatesAutoresizingMaskIntoConstraints="NO" id="Mkd-dO-Ogx">
+                                        <rect key="frame" x="16" y="0.0" width="24" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Paz-Gs-ah3"/>
-                                            <constraint firstAttribute="width" constant="40" id="QTw-bN-oR5"/>
+                                            <constraint firstAttribute="width" constant="24" id="O71-ji-nBI"/>
+                                            <constraint firstAttribute="height" constant="24" id="pnU-aD-bJr"/>
                                         </constraints>
-                                    </view>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="NUc-5X-S7I" secondAttribute="trailing" id="1eN-09-u2M"/>
+                                    <constraint firstItem="Mkd-dO-Ogx" firstAttribute="top" secondItem="Fyk-ME-JTp" secondAttribute="top" id="3Jd-hN-STW"/>
                                     <constraint firstAttribute="width" constant="40" id="5qx-C9-nDq"/>
+                                    <constraint firstItem="Mkd-dO-Ogx" firstAttribute="leading" secondItem="Fyk-ME-JTp" secondAttribute="leading" priority="999" id="JaX-hA-HwB"/>
                                     <constraint firstAttribute="height" constant="50" id="YiS-iA-eUE"/>
-                                    <constraint firstItem="NUc-5X-S7I" firstAttribute="top" secondItem="Fyk-ME-JTp" secondAttribute="top" constant="10" id="oAq-Wo-mxt"/>
+                                    <constraint firstAttribute="trailing" secondItem="Mkd-dO-Ogx" secondAttribute="trailing" id="ezT-j8-UIv"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hsl-8Q-RoJ" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                <rect key="frame" x="839" y="140" width="40" height="60"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hsl-8Q-RoJ" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                <rect key="frame" x="839" y="140" width="40" height="50"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGr-k4-4TI" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="20" width="40" height="53"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="s5h-uF-gR2">
+                                        <rect key="frame" x="16" y="0.0" width="24" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="53" id="Qod-Ic-TMu"/>
-                                            <constraint firstAttribute="width" constant="40" id="X6W-Q0-M6q"/>
+                                            <constraint firstAttribute="height" constant="24" id="5G3-5j-mQY"/>
+                                            <constraint firstAttribute="width" constant="24" id="HLE-ai-f7D"/>
                                         </constraints>
-                                    </view>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="H6h-8p-wss"/>
-                                    <constraint firstItem="EGr-k4-4TI" firstAttribute="top" secondItem="hsl-8Q-RoJ" secondAttribute="top" constant="20" id="YeN-a6-xfM"/>
+                                    <constraint firstAttribute="height" constant="50" id="H6h-8p-wss"/>
+                                    <constraint firstItem="s5h-uF-gR2" firstAttribute="leading" secondItem="hsl-8Q-RoJ" secondAttribute="leading" priority="999" id="awS-Sj-oJc"/>
+                                    <constraint firstItem="s5h-uF-gR2" firstAttribute="top" secondItem="hsl-8Q-RoJ" secondAttribute="top" id="bcd-RT-hMZ"/>
                                     <constraint firstAttribute="width" constant="40" id="f3G-uH-NUT"/>
-                                    <constraint firstAttribute="trailing" secondItem="EGr-k4-4TI" secondAttribute="trailing" id="kZA-Gl-tjA"/>
+                                    <constraint firstAttribute="trailing" secondItem="s5h-uF-gR2" secondAttribute="trailing" id="gue-g2-ifB"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ape-vj-wQL" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                <rect key="frame" x="839" y="220" width="40" height="38"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ape-vj-wQL" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                <rect key="frame" x="839" y="190" width="40" height="50"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jNJ-AC-2Ea" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="14" width="40" height="13"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="grid" translatesAutoresizingMaskIntoConstraints="NO" id="ie1-j3-fEM">
+                                        <rect key="frame" x="16" y="0.0" width="24" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="13" id="8EZ-HM-ynk"/>
-                                            <constraint firstAttribute="width" constant="40" id="Bkx-o8-8eI"/>
+                                            <constraint firstAttribute="width" constant="24" id="YmB-Ih-TuR"/>
+                                            <constraint firstAttribute="height" constant="24" id="cYw-Z3-3sd"/>
                                         </constraints>
-                                    </view>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="jNJ-AC-2Ea" secondAttribute="trailing" id="0Cn-3n-rD7"/>
+                                    <constraint firstItem="ie1-j3-fEM" firstAttribute="top" secondItem="ape-vj-wQL" secondAttribute="top" id="3i5-Ho-Xlc"/>
                                     <constraint firstAttribute="width" constant="40" id="B5V-bR-1Rg"/>
-                                    <constraint firstItem="jNJ-AC-2Ea" firstAttribute="top" secondItem="ape-vj-wQL" secondAttribute="top" constant="14" id="TRG-L7-IEC"/>
-                                    <constraint firstAttribute="height" constant="38" id="wyX-O8-qMB"/>
+                                    <constraint firstItem="ie1-j3-fEM" firstAttribute="leading" secondItem="ape-vj-wQL" secondAttribute="leading" priority="999" id="DPK-aP-7FM"/>
+                                    <constraint firstAttribute="height" constant="50" id="wyX-O8-qMB"/>
+                                    <constraint firstAttribute="trailing" secondItem="ie1-j3-fEM" secondAttribute="trailing" id="zyH-o1-0aN"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-9f-OkI" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                <rect key="frame" x="839" y="258" width="40" height="50"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-9f-OkI" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                <rect key="frame" x="839" y="240" width="40" height="50"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hYl-B6-tb2" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="10" width="40" height="40"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zoom_out" translatesAutoresizingMaskIntoConstraints="NO" id="Oc9-Ax-rYl">
+                                        <rect key="frame" x="16" y="0.0" width="24" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="vmg-Bp-wh7"/>
-                                            <constraint firstAttribute="height" constant="40" id="xY2-cy-gj9"/>
+                                            <constraint firstAttribute="width" constant="24" id="Pqa-r3-0qb"/>
+                                            <constraint firstAttribute="height" constant="24" id="bPG-OB-vy8"/>
                                         </constraints>
-                                    </view>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Oc9-Ax-rYl" secondAttribute="trailing" id="AQp-hk-UtJ"/>
                                     <constraint firstAttribute="width" constant="40" id="SO6-fB-sOr"/>
+                                    <constraint firstItem="Oc9-Ax-rYl" firstAttribute="leading" secondItem="ZmC-9f-OkI" secondAttribute="leading" priority="999" id="YPn-lk-IaJ"/>
                                     <constraint firstAttribute="height" constant="50" id="fvf-Hq-03g"/>
-                                    <constraint firstItem="hYl-B6-tb2" firstAttribute="top" secondItem="ZmC-9f-OkI" secondAttribute="top" constant="10" id="h7j-OX-Nrx"/>
-                                    <constraint firstAttribute="trailing" secondItem="hYl-B6-tb2" secondAttribute="trailing" id="sfG-nn-h3w"/>
+                                    <constraint firstItem="Oc9-Ax-rYl" firstAttribute="top" secondItem="ZmC-9f-OkI" secondAttribute="top" id="jBm-ha-8U3"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lXl-XV-J0j" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -3803,7 +3803,7 @@
                             <constraint firstAttribute="bottom" secondItem="xoZ-vF-uEO" secondAttribute="bottom" id="q0O-np-Qbx"/>
                             <constraint firstAttribute="bottom" secondItem="1T9-L7-JKj" secondAttribute="bottom" constant="21" id="q7R-mj-qqh"/>
                             <constraint firstItem="0bh-it-Xd2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="qV9-j0-AQ4"/>
-                            <constraint firstItem="ape-vj-wQL" firstAttribute="top" secondItem="hsl-8Q-RoJ" secondAttribute="bottom" constant="20" id="qYm-MB-gbS"/>
+                            <constraint firstItem="ape-vj-wQL" firstAttribute="top" secondItem="hsl-8Q-RoJ" secondAttribute="bottom" id="qYm-MB-gbS"/>
                             <constraint firstAttribute="bottom" secondItem="lXl-XV-J0j" secondAttribute="bottom" constant="17" id="r0U-rV-PhK"/>
                             <constraint firstAttribute="trailing" secondItem="BCY-AR-gsM" secondAttribute="trailing" priority="999" constant="64" id="rGS-2t-gvc"/>
                             <constraint firstItem="1T9-L7-JKj" firstAttribute="leading" secondItem="xoZ-vF-uEO" secondAttribute="trailing" constant="40" id="ra6-IO-UtK"/>
@@ -3834,7 +3834,8 @@
                         <outlet property="canvasLockTrailing" destination="SMr-fv-78B" id="cCE-dm-KRX"/>
                         <outlet property="canvasLockTrailingRight" destination="SoR-45-8CS" id="U1C-r5-EbL"/>
                         <outlet property="canvasLockView" destination="UYW-Te-7QB" id="VMS-EO-PCb"/>
-                        <outlet property="changeBackgroundAction" destination="EGr-k4-4TI" id="Rtn-C1-soa"/>
+                        <outlet property="changeBackgroundActionLeading" destination="awS-Sj-oJc" id="ME0-Kk-ofu"/>
+                        <outlet property="changeBackgroundActionTrailing" destination="gue-g2-ifB" id="Rzm-QM-CBf"/>
                         <outlet property="changeBackgroundButton" destination="hsl-8Q-RoJ" id="6xY-my-8JF"/>
                         <outlet property="changeBackgroundButtonLeading" destination="2wL-mw-dC3" id="e6i-xH-5MY"/>
                         <outlet property="changeBackgroundButtonTrailing" destination="ABH-ha-y6s" id="7Sf-vK-mct"/>
@@ -3850,12 +3851,14 @@
                         <outlet property="deviceViewportSummaryView" destination="BCY-AR-gsM" id="dXB-AV-xHV"/>
                         <outlet property="deviceViewportSummaryViewLeading" destination="9zf-cW-SSa" id="unI-r4-Skf"/>
                         <outlet property="deviceViewportSummaryViewTrailing" destination="rGS-2t-gvc" id="c0H-kR-4cL"/>
-                        <outlet property="exportAction" destination="NUc-5X-S7I" id="u6Y-f8-Uwu"/>
+                        <outlet property="exportActionLeading" destination="JaX-hA-HwB" id="cNV-HK-aEt"/>
+                        <outlet property="exportActionTrailing" destination="ezT-j8-UIv" id="lDs-8t-z8x"/>
                         <outlet property="exportButton" destination="Fyk-ME-JTp" id="vGL-4d-Q1J"/>
                         <outlet property="exportButtonLeading" destination="tpS-PP-Aks" id="tlK-mb-fuE"/>
                         <outlet property="exportButtonTrailing" destination="jR6-Zj-SSo" id="G8K-Vf-bxa"/>
                         <outlet property="exportContainer" destination="Xy2-vk-Qhk" id="5n9-8d-Ekf"/>
-                        <outlet property="gridLinesAction" destination="jNJ-AC-2Ea" id="MHv-1m-zg9"/>
+                        <outlet property="gridLinesActionLeading" destination="DPK-aP-7FM" id="Shc-gW-r7R"/>
+                        <outlet property="gridLinesActionTrailing" destination="zyH-o1-0aN" id="FvF-2Y-vx8"/>
                         <outlet property="gridLinesButton" destination="ape-vj-wQL" id="P8t-D7-I7N"/>
                         <outlet property="gridLinesButtonLeading" destination="agt-F0-cq6" id="g35-w7-hEn"/>
                         <outlet property="gridLinesButtonTrailing" destination="teo-YO-oaa" id="QUz-R8-f7Z"/>
@@ -3942,7 +3945,8 @@
                         <outlet property="selectedObjectYesNoContainer" destination="ji3-kJ-24b" id="Mt7-Ij-u2I"/>
                         <outlet property="selectedObjectYesNoContainerLeading" destination="yCI-en-OAj" id="yyE-ks-d22"/>
                         <outlet property="selectedObjectYesNoContainerTop" destination="muC-SQ-6KY" id="ure-zO-Wcf"/>
-                        <outlet property="summaryAction" destination="hYl-B6-tb2" id="NSx-Xi-hgb"/>
+                        <outlet property="summaryActionLeading" destination="YPn-lk-IaJ" id="WAO-pV-RDn"/>
+                        <outlet property="summaryActionTrailing" destination="AQp-hk-UtJ" id="Hwr-Ci-lYt"/>
                         <outlet property="summaryButton" destination="ZmC-9f-OkI" id="xx7-Am-apT"/>
                         <outlet property="summaryButtonLeading" destination="w8H-5M-679" id="uEv-xP-oUa"/>
                         <outlet property="summaryButtonTrailing" destination="SdG-YV-QTf" id="Q8F-qM-6RX"/>
@@ -5434,10 +5438,14 @@
     <resources>
         <image name="add" width="24" height="24"/>
         <image name="back" width="24" height="24"/>
+        <image name="background" width="24" height="24"/>
         <image name="brush" width="24" height="24"/>
+        <image name="export" width="24" height="24"/>
+        <image name="grid" width="24" height="24"/>
         <image name="menu" width="24" height="24"/>
         <image name="palette" width="24" height="24"/>
         <image name="widgets" width="24" height="24"/>
+        <image name="zoom_out" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

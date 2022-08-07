@@ -16,7 +16,7 @@ class ButtonFrame: UIView {
         case double
     }
     
-    var toggleState = ToggleState.double
+    var toggleState = ToggleState.none
     
     private var _isLight = false
     var isLight: Bool {

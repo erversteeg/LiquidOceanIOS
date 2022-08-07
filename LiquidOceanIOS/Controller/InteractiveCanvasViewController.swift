@@ -60,14 +60,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var menuButton: ButtonFrame!
     
-    @IBOutlet weak var exportButton: ActionButtonFrame!
-    @IBOutlet weak var exportAction: ActionButtonView!
-    
-    @IBOutlet weak var changeBackgroundButton: ActionButtonFrame!
-    @IBOutlet weak var changeBackgroundAction: ActionButtonView!
-    
-    @IBOutlet weak var gridLinesButton: ActionButtonFrame!
-    @IBOutlet weak var gridLinesAction: ActionButtonView!
+    @IBOutlet weak var exportButton: ButtonFrame!
+    @IBOutlet weak var changeBackgroundButton: ButtonFrame!
+    @IBOutlet weak var gridLinesButton: ButtonFrame!
+    @IBOutlet weak var summaryButton: ButtonFrame!
     
     @IBOutlet weak var toolboxButton: ButtonFrame!
     
@@ -111,15 +107,23 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet var exportButtonLeading: NSLayoutConstraint!
     @IBOutlet var exportButtonTrailing: NSLayoutConstraint!
+    @IBOutlet var exportActionLeading: NSLayoutConstraint!
+    @IBOutlet var exportActionTrailing: NSLayoutConstraint!
     
     @IBOutlet var changeBackgroundButtonLeading: NSLayoutConstraint!
     @IBOutlet var changeBackgroundButtonTrailing: NSLayoutConstraint!
+    @IBOutlet var changeBackgroundActionLeading: NSLayoutConstraint!
+    @IBOutlet var changeBackgroundActionTrailing: NSLayoutConstraint!
     
     @IBOutlet var gridLinesButtonLeading: NSLayoutConstraint!
     @IBOutlet var gridLinesButtonTrailing: NSLayoutConstraint!
+    @IBOutlet var gridLinesActionLeading: NSLayoutConstraint!
+    @IBOutlet var gridLinesActionTrailing: NSLayoutConstraint!
     
     @IBOutlet var summaryButtonLeading: NSLayoutConstraint!
     @IBOutlet var summaryButtonTrailing: NSLayoutConstraint!
+    @IBOutlet var summaryActionLeading: NSLayoutConstraint!
+    @IBOutlet var summaryActionTrailing: NSLayoutConstraint!
     
     @IBOutlet var toolboxButtonLeading: NSLayoutConstraint!
     @IBOutlet var toolboxButtonTrailing: NSLayoutConstraint!
@@ -178,9 +182,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var deviceViewportSummaryView: DeviceViewportSummaryView!
     
     @IBOutlet weak var canvasFrameView: UIView!
-    
-    @IBOutlet weak var summaryButton: ActionButtonFrame!
-    @IBOutlet weak var summaryAction: ActionButtonView!
     
     @IBOutlet weak var menuContainer: UIView!
     
@@ -292,23 +293,23 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.menuButton.setOnClickListener {
             
             if self.surfaceView.isExporting() {
-                self.exportAction.toggleState = .none
+                self.exportButton.toggleState = .none
                 self.surfaceView.endExporting()
                 
-                self.exportAction.layer.borderWidth = 0
+                self.exportButton.layer.borderWidth = 0
             }
-            else if self.surfaceView.isObjectMoveSelection() || self.surfaceView.isObjectMoving() {
-                if self.surfaceView.isObjectMoving() {
-                    self.surfaceView.interactiveCanvas.cancelMoveSelectedObject()
-                }
-                else {
-                    self.surfaceView.startExporting()
-                    
-                    self.exportAction.toggleState = .single
-                    self.exportAction.layer.borderWidth = 1
-                    self.exportAction.layer.borderColor = UIColor(argb: ActionButtonView.lightYellowColor).cgColor
-                }
-            }
+//            else if self.surfaceView.isObjectMoveSelection() || self.surfaceView.isObjectMoving() {
+//                if self.surfaceView.isObjectMoving() {
+//                    self.surfaceView.interactiveCanvas.cancelMoveSelectedObject()
+//                }
+//                else {
+//                    self.surfaceView.startExporting()
+//
+//                    self.exportButton.toggleState = .single
+//                    self.exportButton.layer.borderWidth = 1
+//                    self.exportButton.layer.borderColor = UIColor(argb: ActionButtonView.lightYellowColor).cgColor
+//                }
+//            }
             else {
                 /*if SessionSettings.instance.promptBack {
                     self.promptBack()
@@ -359,18 +360,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         closePaintPanelButtonAction.type = .closePaint
         closePaintPanelButton.actionButtonView = closePaintPanelButtonAction
         
-        exportButton.actionButtonView = exportAction
-        exportAction.type = .export
-        
-        changeBackgroundButton.actionButtonView = changeBackgroundAction
-        changeBackgroundAction.type = .changeBackground
-        
-        gridLinesButton.actionButtonView = gridLinesAction
-        gridLinesAction.type = .gridLines
-        
-        summaryButton.actionButtonView = summaryAction
-        summaryAction.type = .summary
-        
         // toolbox
         self.toolboxButton.setOnClickListener {
             self.toggleToolbox(open: self.exportButton.isHidden)
@@ -388,24 +377,26 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         // export
         self.exportButton.setOnClickListener {
-            if (self.exportAction.toggleState == .none) {
+            if (self.exportButton.toggleState == .none) {
                 self.surfaceView.startExporting()
-                self.exportAction.toggleState = .single
-                self.exportAction.layer.borderColor = UIColor(argb: ActionButtonView.lightYellowColor).cgColor
-                self.exportAction.layer.borderWidth = 1
+                self.exportButton.toggleState = .single
+                self.exportButton.layer.borderColor = UIColor(argb: ActionButtonView.lightYellowColor).cgColor
+                self.exportButton.layer.borderWidth = 1
             }
-            else if (self.exportAction.toggleState == .single) {
+            else if (self.exportButton.toggleState == .single) {
                 self.surfaceView.endExporting()
-                self.surfaceView.startObjectMoveSelection()
-                self.exportAction.toggleState = .double
-                self.exportAction.layer.borderColor = UIColor(argb: ActionButtonView.lightGreenColor).cgColor
+                self.exportButton.toggleState = .none
+                self.exportButton.layer.borderWidth = 0
+//                self.surfaceView.startObjectMoveSelection()
+//                self.exportAction.toggleState = .double
+//                self.exportAction.layer.borderColor = UIColor(argb: ActionButtonView.lightGreenColor).cgColor
             }
-            else if (self.exportAction.toggleState == .double) {
-                self.surfaceView.endObjectMove()
-                self.surfaceView.interactiveCanvas.cancelMoveSelectedObject()
-                self.exportAction.toggleState = .none
-                self.exportAction.layer.borderWidth = 0
-            }
+//            else if (self.exportAction.toggleState == .double) {
+//                self.surfaceView.endObjectMove()
+//                self.surfaceView.interactiveCanvas.cancelMoveSelectedObject()
+//                self.exportAction.toggleState = .none
+//                self.exportAction.layer.borderWidth = 0
+//            }
         }
         
         // change background
@@ -423,13 +414,29 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
             
-            self.exportAction.setNeedsDisplay()
-            self.changeBackgroundAction.setNeedsDisplay()
-            self.gridLinesAction.setNeedsDisplay()
-            self.summaryAction.setNeedsDisplay()
+            if !SessionSettings.instance.darkIcons {
+                self.menuButton.isLight = true
+                self.paintPanelButton.isLight = true
+                self.toolboxButton.isLight = true
+                self.recentColorsButton.isLight = true
+                self.exportButton.isLight = true
+                self.changeBackgroundButton.isLight = true
+                self.gridLinesButton.isLight = true
+                self.summaryButton.isLight = true
+            }
+            else {
+                self.menuButton.isLight = false
+                self.paintPanelButton.isLight = false
+                self.toolboxButton.isLight = false
+                self.recentColorsButton.isLight = false
+                self.exportButton.isLight = false
+                self.changeBackgroundButton.isLight = false
+                self.gridLinesButton.isLight = false
+                self.summaryButton.isLight = false
+            }
+            
             self.paletteAddColorAction.setNeedsDisplay()
             self.paletteRemoveColorAction.setNeedsDisplay()
-            
             self.objectMoveUpAction.setNeedsDisplay()
             self.objectMoveDownAction.setNeedsDisplay()
             self.objectMoveLeftAction.setNeedsDisplay()
@@ -727,8 +734,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             deviceViewportSummaryViewTrailing.isActive = true
             
             // toolbox buttons
-            let leadingConstraints = [exportButtonLeading, changeBackgroundButtonLeading, gridLinesButtonLeading, summaryButtonLeading]
-            let trailingConstraints = [exportButtonTrailing, changeBackgroundButtonTrailing, gridLinesButtonTrailing, summaryButtonTrailing]
+            let leadingConstraints = [exportButtonLeading, exportActionLeading, changeBackgroundButtonLeading,  changeBackgroundActionLeading, gridLinesButtonLeading, gridLinesActionLeading, summaryButtonLeading,
+                summaryActionLeading]
+            let trailingConstraints = [exportButtonTrailing, exportActionTrailing, changeBackgroundButtonTrailing, changeBackgroundActionTrailing, gridLinesButtonTrailing, gridLinesActionTrailing, summaryButtonTrailing,
+                summaryActionTrailing]
             
             for i in 0...trailingConstraints.count - 1 {
                 let leadingConstraint = leadingConstraints[i]!
@@ -848,14 +857,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
         
         panelThemeConfig = themeConfigFromBackground()
-        
-        // bold action buttons
-        let boldActionButtons = SessionSettings.instance.boldActionButtons
-        
-        exportAction.bold = boldActionButtons
-        changeBackgroundAction.bold = boldActionButtons
-        gridLinesAction.bold = boldActionButtons
-        summaryAction.bold = boldActionButtons
         
         // panel theme config
         if panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
@@ -1485,8 +1486,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     func notifyExportViewControllerBackPressed() {
         exportContainer.isHidden = true
         
-        self.exportAction.toggleState = .none
-        self.exportAction.layer.borderWidth = 0
+        self.exportButton.toggleState = .none
+        self.exportButton.layer.borderWidth = 0
         
         surfaceView.endExporting()
     }
@@ -1918,8 +1919,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     }
     
     func selectedObjectMoveEnded() {
-        self.exportAction.toggleState = .none
-        self.exportAction.layer.borderWidth = 0
+        self.exportButton.toggleState = .none
+        self.exportButton.layer.borderWidth = 0
     }
     
     // socket connection delegate
