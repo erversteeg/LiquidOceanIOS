@@ -19,8 +19,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var paintPanelButton: ButtonFrame!
     @IBOutlet weak var paintPanelImage: UIImageView!
     
-    @IBOutlet weak var closePaintPanelButton: ActionButtonFrame!
-    @IBOutlet weak var closePaintPanelButtonAction: ActionButtonView!
+    @IBOutlet weak var closePaintPanelButton: ButtonFrame!
     
     @IBOutlet weak var colorPickerFrame: UIView!
     
@@ -33,17 +32,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var colorPickerFrameWidth: NSLayoutConstraint!
     
-    @IBOutlet weak var paintColorAccept: ActionButtonFrame!
-    @IBOutlet weak var paintColorAcceptAction: ActionButtonView!
-    
-    @IBOutlet weak var paintColorCancel: ActionButtonFrame!
-    @IBOutlet weak var paintColorCancelAction: ActionButtonView!
-    
-    @IBOutlet weak var paintYes: ActionButtonFrame!
-    @IBOutlet weak var paintYesAction: ActionButtonView!
-    
-    @IBOutlet weak var paintNo: ActionButtonFrame!
-    @IBOutlet weak var paintNoAction: ActionButtonView!
+    @IBOutlet weak var paintColorAccept: ButtonFrame!
+    @IBOutlet weak var paintColorCancel: ButtonFrame!
+    @IBOutlet weak var paintYes: ButtonFrame!
+    @IBOutlet weak var paintNo: ButtonFrame!
     
     @IBOutlet weak var paintQuantityCircle: PaintQuantityCircle!
     @IBOutlet weak var paintQuantityBar: PaintQuantityBar!
@@ -356,10 +348,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         self.paintPanel.isHidden = true
         
-        // action buttons
-        closePaintPanelButtonAction.type = .closePaint
-        closePaintPanelButton.actionButtonView = closePaintPanelButtonAction
-        
         // toolbox
         self.toolboxButton.setOnClickListener {
             self.toggleToolbox(open: self.exportButton.isHidden)
@@ -483,12 +471,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         let paintIndicatorTap = UITapGestureRecognizer(target: self, action: #selector(didTapColorIndicator(sender:)))
         self.paintColorIndicator.addGestureRecognizer(paintIndicatorTap)
         
-        paintColorAcceptAction.type = .paintSelectYes
-        paintColorAccept.actionButtonView = paintColorAcceptAction
-        
-        paintColorCancelAction.type = .paintSelectCancel
-        paintColorCancel.actionButtonView = paintColorCancelAction
-        
         self.paintColorAccept.isHidden = true
         self.paintColorCancel.isHidden = true
         
@@ -583,12 +565,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.surfaceView.endPaintSelection()
         }
         
-        paintYesAction.type = .yes
-        paintYes.actionButtonView = paintYesAction
-        
-        paintNoAction.type = .no
-        paintNo.actionButtonView = paintNoAction
-        
         self.paintYes.isHidden = true
         self.paintNo.isHidden = true
         
@@ -614,7 +590,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.surfaceView.startPainting()
         }
         
-        self.paintColorAcceptAction.touchDelegate = self.paintColorIndicator
+        //self.paintColorAcceptAction.touchDelegate = self.paintColorIndicator
         
         var tgr = UITapGestureRecognizer(target: self, action: #selector(didTapColorPaletteTitle))
         colorPaletteTitleLabel.addGestureRecognizer(tgr)
@@ -815,22 +791,22 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
         
         // small action buttons
-        if SessionSettings.instance.smallActionButtons {
-            paintColorAcceptActionWidth.constant = paintColorAcceptActionWidth.constant * 0.833
-            paintColorAcceptActionHeight.constant = paintColorAcceptActionHeight.constant * 0.833
-            
-            paintYesActionWidth.constant = paintYesActionWidth.constant * 0.833
-            paintYesActionHeight.constant = paintYesActionHeight.constant * 0.833
-            
-            paintNoActionWidth.constant = paintNoActionWidth.constant * 0.833
-            paintNoActionHeight.constant = paintNoActionHeight.constant * 0.833
-            
-            paintColorCancelActionWidth.constant = paintColorCancelActionWidth.constant * 0.833
-            paintColorCancelActionHeight.constant = paintColorCancelActionHeight.constant * 0.833
-            
-            closePaintPanelActionWidth.constant = closePaintPanelActionWidth.constant * 0.833
-            closePaintPanelActionHeight.constant = closePaintPanelActionHeight.constant * 0.833
-        }
+//        if SessionSettings.instance.smallActionButtons {
+//            paintColorAcceptActionWidth.constant = paintColorAcceptActionWidth.constant * 0.833
+//            paintColorAcceptActionHeight.constant = paintColorAcceptActionHeight.constant * 0.833
+//
+//            paintYesActionWidth.constant = paintYesActionWidth.constant * 0.833
+//            paintYesActionHeight.constant = paintYesActionHeight.constant * 0.833
+//
+//            paintNoActionWidth.constant = paintNoActionWidth.constant * 0.833
+//            paintNoActionHeight.constant = paintNoActionHeight.constant * 0.833
+//
+//            paintColorCancelActionWidth.constant = paintColorCancelActionWidth.constant * 0.833
+//            paintColorCancelActionHeight.constant = paintColorCancelActionHeight.constant * 0.833
+//
+//            closePaintPanelActionWidth.constant = closePaintPanelActionWidth.constant * 0.833
+//            closePaintPanelActionHeight.constant = closePaintPanelActionHeight.constant * 0.833
+//        }
         
         setPaintPanelBackground(adjust: false)
         surfaceView.setInitalPositionAndScale()
@@ -860,26 +836,32 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         // panel theme config
         if panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
-            paintColorAcceptAction.colorMode = .black
-            paintColorCancelAction.colorMode = .black
+            paintColorAccept.isLight = false
+            paintColorCancel.isLight = false
+            closePaintPanelButton.isLight = false
+            paintYes.isLight = false
+            paintNo.isLight = false
             
             paletteAddColorAction.colorMode = .black
             paletteRemoveColorAction.colorMode = .black
             lockPaintPanelAction.colorMode = .black
             
-            closePaintPanelButtonAction.colorMode = .black
+            closePaintPanelButton.isLight = false
             
             colorPaletteTitleLabel.textColor = UIColor.black
         }
         else {
-            paintColorAcceptAction.colorMode = .white
-            paintColorCancelAction.colorMode = .white
+            paintColorAccept.isLight = true
+            paintColorCancel.isLight = true
+            closePaintPanelButton.isLight = true
+            paintYes.isLight = true
+            paintNo.isLight = true
             
             paletteAddColorAction.colorMode = .white
             paletteRemoveColorAction.colorMode = .white
             lockPaintPanelAction.colorMode = .white
             
-            closePaintPanelButtonAction.colorMode = .white
+            closePaintPanelButton.isLight = true
             
             colorPaletteTitleLabel.textColor = UIColor.white
         }
@@ -902,8 +884,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         // close button color
         if SessionSettings.instance.paintPanelCloseButtonColor != 0 {
-            closePaintPanelButtonAction.representingColor = SessionSettings.instance.paintPanelCloseButtonColor
-            closePaintPanelButtonAction.colorMode = .color
+            closePaintPanelButton.color = SessionSettings.instance.paintPanelCloseButtonColor
         }
         
         self.surfaceView.interactiveCanvas.updateRecentColors()
@@ -1403,16 +1384,16 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func updatePaintColorAcceptColorMode(color: Int32) {
         if PaintColorIndicator.isColorLight(color: color) && panelThemeConfig.actionButtonColor == ActionButtonView.whiteColor {
-            paintColorAcceptAction.colorMode = .black
+            paintColorAccept.isLight = false
         }
         else if panelThemeConfig.actionButtonColor == ActionButtonView.whiteColor {
-            paintColorAcceptAction.colorMode = .white
+            paintColorAccept.isLight = true
         }
         else if PaintColorIndicator.isColorDark(color: color) && panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
-            paintColorAcceptAction.colorMode = .white
+            paintColorAccept.isLight = true
         }
         else if panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
-            paintColorAcceptAction.colorMode = .black
+            paintColorAccept.isLight = false
         }
     }
     

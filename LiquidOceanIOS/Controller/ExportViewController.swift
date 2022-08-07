@@ -14,11 +14,9 @@ protocol ExportViewControllerDelegate: AnyObject {
 
 class ExportViewController: UIViewController {
 
-    @IBOutlet weak var saveButton: ActionButtonFrame!
-    @IBOutlet weak var saveActionView: ActionButtonView!
+    @IBOutlet weak var saveButton: ButtonFrame!
     
-    @IBOutlet weak var shareButton: ActionButtonFrame!
-    @IBOutlet weak var shareActionView: ActionButtonView!
+    @IBOutlet weak var shareButton: ButtonFrame!
     
     @IBOutlet weak var artViewWidth: NSLayoutConstraint!
     @IBOutlet weak var artViewHeight: NSLayoutConstraint!
@@ -50,8 +48,7 @@ class ExportViewController: UIViewController {
     
     var delegate: ExportViewControllerDelegate?
     
-    @IBOutlet weak var backButton: ActionButtonFrame!
-    @IBOutlet weak var backAction: ActionButtonView!
+    @IBOutlet weak var backButton: ButtonFrame!
     
     @IBOutlet weak var backButtonLeading: NSLayoutConstraint!
     
@@ -60,22 +57,13 @@ class ExportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        backButton.actionButtonView = backAction
-        backAction.type = .backSolid
-        
         backButton.setOnClickListener {
             self.delegate?.notifyExportViewControllerBackPressed()
         }
         
-        saveActionView.type = .save
-        saveButton.actionButtonView = saveActionView
-        
         saveButton.setOnClickListener {
             self.artView.saveArtToPhotos()
         }
-        
-        shareActionView.type = .share
-        shareButton.actionButtonView = shareActionView
         
         shareButton.setOnClickListener {
             // set up activity view controller
