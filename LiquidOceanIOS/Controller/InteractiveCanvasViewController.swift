@@ -16,8 +16,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet var paintPanel: UIView!
     
-    @IBOutlet weak var paintPanelButton: ActionButtonFrame!
-    @IBOutlet weak var paintPanelAction: ActionButtonView!
+    @IBOutlet weak var paintPanelButton: ButtonFrame!
+    @IBOutlet weak var paintPanelImage: UIImageView!
     
     @IBOutlet weak var closePaintPanelButton: ActionButtonFrame!
     @IBOutlet weak var closePaintPanelButtonAction: ActionButtonView!
@@ -360,9 +360,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.paintPanel.isHidden = true
         
         // action buttons
-        paintPanelAction.type = .paint
-        paintPanelButton.actionButtonView = paintPanelAction
-        
         closePaintPanelButtonAction.type = .closePaint
         closePaintPanelButton.actionButtonView = closePaintPanelButtonAction
         
@@ -440,7 +437,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.changeBackgroundAction.setNeedsDisplay()
             self.gridLinesAction.setNeedsDisplay()
             self.summaryAction.setNeedsDisplay()
-            self.paintPanelAction.setNeedsDisplay()
             self.menuAction.setNeedsDisplay()
             self.paletteAddColorAction.setNeedsDisplay()
             self.paletteRemoveColorAction.setNeedsDisplay()
@@ -871,7 +867,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         let boldActionButtons = SessionSettings.instance.boldActionButtons
         
         menuAction.bold = boldActionButtons
-        paintPanelAction.bold = boldActionButtons
         exportAction.bold = boldActionButtons
         changeBackgroundAction.bold = boldActionButtons
         gridLinesAction.bold = boldActionButtons

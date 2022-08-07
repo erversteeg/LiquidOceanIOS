@@ -28,9 +28,9 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     let showOptions = "ShowOptions"
     let showHowto = "ShowHowto"
     
-    @IBOutlet weak var connectLabel: UILabel?
-    @IBOutlet weak var optionsLabel: UILabel!
-    @IBOutlet weak var howtoLabel: UILabel!
+    @IBOutlet weak var connectButton: ButtonFrame?
+    @IBOutlet weak var optionsButton: ButtonFrame!
+    @IBOutlet weak var howtoButton: ButtonFrame!
     
     @IBOutlet weak var singleButtonBottomLayer: ActionButtonView!
     @IBOutlet weak var singleButton: ActionButtonView!
@@ -41,13 +41,12 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     @IBOutlet weak var devButtonBottomLayer: ActionButtonView!
     @IBOutlet weak var devButton: ActionButtonView!
     
-    @IBOutlet weak var leftyLabel: UILabel!
+    @IBOutlet weak var leftyButton: ButtonFrame!
+    @IBOutlet weak var rightyButton: ButtonFrame!
     
-    @IBOutlet weak var rightyLabel: UILabel!
-    
-    @IBOutlet weak var backAction: ActionButtonView!
+    @IBOutlet weak var backButton: ButtonFrame?
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
-    @IBOutlet weak var addAction: ActionButtonView?
+    @IBOutlet weak var addButton: ButtonFrame?
     
     @IBOutlet weak var achievementBanner: UIView!
     
@@ -113,7 +112,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         randomGradientBackground()
         
         //defaultLabelColor = drawLabel.textColor.argb()
-        defaultLabelColor = optionsLabel.textColor.argb()
+        //defaultLabelColor = optionsLabel.textColor.argb()
         
         /*menuContainer.layer.cornerRadius = 10
         menuContainer.layer.borderWidth = 1
@@ -137,33 +136,27 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         devButton.type = .dev
         devButton.topLayer = true
         
-        backAction.type = .backSolid
-        
-        if (addAction != nil) {
-            addAction!.type = .add
-        }
-        
-        self.backAction.setOnClickListener {
+        self.backButton?.setOnClickListener {
             if !self.addServerContainer.isHidden || !self.serversCollectionView.isHidden {
                 self.addServerContainer.isHidden = true
                 self.serversCollectionView.isHidden = true
                 
                 self.toggleMenuButtons(show: true, depth: 0)
-                self.backAction.isHidden = true
-                self.addAction!.isHidden = true
+                self.backButton!.isHidden = true
+                self.addButton!.isHidden = true
             }
             else if self.menuLayer == 1 {
                 self.toggleMenuButtons(show: true, depth: 0)
                 self.toggleMenuButtons(show: false, depth: 1)
                 
-                if self.connectLabel != nil {
-                    Animator.animateMenuButtons(views: [[self.connectLabel!], [self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
+                if self.connectButton != nil {
+                    Animator.animateMenuButtons(views: [[self.connectButton!], [self.optionsButton], [self.howtoButton]], cascade: true, moveOut: false, inverse: false)
                 }
                 else {
-                    Animator.animateMenuButtons(views: [[self.optionsLabel], [self.howtoLabel]], cascade: true, moveOut: false, inverse: false)
+                    Animator.animateMenuButtons(views: [[self.optionsButton], [self.howtoButton]], cascade: true, moveOut: false, inverse: false)
                 }
                 
-                self.backAction.isHidden = true
+                self.backButton!.isHidden = true
             }
             else if self.menuLayer == 2 {
                 self.toggleMenuButtons(show: true, depth: 1)
@@ -175,8 +168,8 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
             self.menuLayer -= 1
         }
         
-        if (addAction != nil) {
-            self.addAction!.setOnClickListener {
+        if (addButton != nil) {
+            self.addButton!.setOnClickListener {
                 self.showAddServerView()
             }
         }
@@ -184,22 +177,25 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         //var touchGr = UITouchGestureRecognizer(target: self, action: #selector(drawLabelTouched(sender:)))
         //drawLabel.addGestureRecognizer(touchGr)
         
-        var touchGr = UITouchGestureRecognizer(target: self, action: #selector(optionsLabelTouched(sender:)))
-        optionsLabel.addGestureRecognizer(touchGr)
-        
-        touchGr = UITouchGestureRecognizer(target: self, action: #selector(howtoLabelTouched(sender:)))
-        howtoLabel.addGestureRecognizer(touchGr)
-        
-        if connectLabel != nil {
-            touchGr = UITouchGestureRecognizer(target: self, action: #selector(connectLabelTouched(sender:)))
-            connectLabel!.addGestureRecognizer(touchGr)
+        connectButton?.setOnClickListener {
+            self.connectLabelTapped()
         }
         
-        touchGr = UITouchGestureRecognizer(target: self, action: #selector(leftyLabelTouched(sender:)))
-        leftyLabel.addGestureRecognizer(touchGr)
+        optionsButton?.setOnClickListener {
+            self.optionsLabelTapped()
+        }
         
-        touchGr = UITouchGestureRecognizer(target: self, action: #selector(rightyLabelTouched(sender:)))
-        rightyLabel.addGestureRecognizer(touchGr)
+        howtoButton?.setOnClickListener {
+            self.howtoLabelTapped()
+        }
+
+        leftyButton?.setOnClickListener {
+            self.leftyLabelTapped()
+        }
+        
+        rightyButton?.setOnClickListener {
+            self.rightyLabelTapped()
+        }
         
         self.singleButton.setOnClickListener {
             self.realmId = 0
@@ -237,9 +233,9 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     }
     
     override func viewDidLayoutSubviews() {
-        let backX = self.backAction.frame.origin.x
+        let backX = self.backButton?.frame.origin.x
         
-        if backX < 0 {
+        if backX != nil && backX! < 0 {
             backActionLeading.constant += 30
         }
         
@@ -326,29 +322,19 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         showConnectView()
     }
     
-    @objc func connectLabelTouched(sender: UITouchGestureRecognizer) {
-        if (sender.state == .began) {
-            highlightLabel(label: connectLabel!)
-        }
-        else if (sender.state == .ended) {
-            unhighlightLabel(label: connectLabel!)
-            connectLabelTapped()
-        }
-    }
-    
     func showConnectView() {
         toggleMenuButtons(show: false, depth: 0)
-        addAction!.isHidden = false
+        addButton!.isHidden = false
         serversCollectionView.isHidden = true
         addServerContainer.isHidden = true
         
-        backAction.isHidden = false
+        backButton!.isHidden = false
         
         if SessionSettings.instance.servers.count == 0 {
             addServerContainer.isHidden = false
         }
         else {
-            addAction!.isHidden = false
+            addButton!.isHidden = false
             
             serversCollectionView.isHidden = false
             serversCollectionView.reloadData()
@@ -359,8 +345,8 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         toggleMenuButtons(show: false, depth: 0)
         serversCollectionView.isHidden = true
         
-        addAction!.isHidden = true
-        backAction.isHidden = false
+        addButton!.isHidden = true
+        backButton!.isHidden = false
         
         addServerContainer.isHidden = false
     }
@@ -375,16 +361,6 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         }
     }
     
-    @objc func optionsLabelTouched(sender: UITouchGestureRecognizer) {
-        if (sender.state == .began) {
-            highlightLabel(label: optionsLabel)
-        }
-        else if (sender.state == .ended) {
-            unhighlightLabel(label: optionsLabel)
-            optionsLabelTapped()
-        }
-    }
-    
     func howtoLabelTapped() {
         //self.performSegue(withIdentifier: self.showHowto, sender: nil)
         if fromInteractiveCanvas {
@@ -392,16 +368,6 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         }
         else {
             self.performSegue(withIdentifier: showHowto, sender: nil)
-        }
-    }
-    
-    @objc func howtoLabelTouched(sender: UITouchGestureRecognizer) {
-        if (sender.state == .began) {
-            highlightLabel(label: howtoLabel)
-        }
-        else if (sender.state == .ended) {
-            unhighlightLabel(label: howtoLabel)
-            howtoLabelTapped()
         }
     }
     
@@ -422,16 +388,6 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         //menuButtonDelegate?.menuButtonPressed(menuButtonType: .lefty)
     }
     
-    @objc func leftyLabelTouched(sender: UITouchGestureRecognizer) {
-        if (sender.state == .began) {
-            highlightLabel(label: leftyLabel)
-        }
-        else if (sender.state == .ended) {
-            unhighlightLabel(label: leftyLabel)
-            leftyLabelTapped()
-        }
-    }
-    
     func rightyLabelTapped() {
         SessionSettings.instance.rightHanded = true
         SessionSettings.instance.selectedHand = true
@@ -447,16 +403,6 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
             self.performSegue(withIdentifier: self.showLoadingScreen, sender: nil)
         }*/
         //menuButtonDelegate?.menuButtonPressed(menuButtonType: .righty)
-    }
-    
-    @objc func rightyLabelTouched(sender: UITouchGestureRecognizer) {
-        if (sender.state == .began) {
-            highlightLabel(label: rightyLabel)
-        }
-        else if (sender.state == .ended) {
-            unhighlightLabel(label: rightyLabel)
-            rightyLabelTapped()
-        }
     }
     
     func randomGradientBackground() {
@@ -501,11 +447,11 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         if depth == 0 {
             //self.drawLabel.isHidden = !show
             
-            self.connectLabel?.isHidden = !show
+            self.connectButton?.isHidden = !show
             
-            self.optionsLabel.isHidden = !show
+            self.optionsButton.isHidden = !show
             
-            self.howtoLabel.isHidden = !show
+            self.howtoButton.isHidden = !show
         }
         else if depth == 1 {
             self.singleButtonBottomLayer.isHidden = !show
@@ -518,8 +464,8 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
             self.devButton.isHidden = true
         }
         else if depth == 2 {
-            leftyLabel.isHidden = !show
-            rightyLabel.isHidden = !show
+            leftyButton?.isHidden = !show
+            rightyButton?.isHidden = !show
         }
     }
     
@@ -527,7 +473,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         toggleMenuButtons(show: true, depth: 0)
         toggleMenuButtons(show: false, depth: 2)
         
-        Animator.animateMenuButtons(views: [[optionsLabel], [howtoLabel]], cascade: true, moveOut: false, inverse: false)
+        Animator.animateMenuButtons(views: [[optionsButton], [howtoButton]], cascade: true, moveOut: false, inverse: false)
         
         menuLayer += 2
     }
@@ -536,7 +482,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         toggleMenuButtons(show: false, depth: 0)
         toggleMenuButtons(show: true, depth: 2)
         
-        Animator.animateMenuButtons(views: [[leftyLabel], [rightyLabel]], cascade: true, moveOut: false, inverse: false)
+        Animator.animateMenuButtons(views: [[leftyButton], [rightyButton]], cascade: true, moveOut: false, inverse: false)
         
         menuLayer += 2
     }

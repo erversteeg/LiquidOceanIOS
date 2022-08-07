@@ -31,6 +31,7 @@
 		07270EE0272B92B300DB35CE /* PalettesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07270EDF272B92B300DB35CE /* PalettesViewController.swift */; };
 		07270EE2272C214300DB35CE /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07270EE1272C214300DB35CE /* Palette.swift */; };
 		07270EE4272C333A00DB35CE /* PaletteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07270EE3272C333A00DB35CE /* PaletteCollectionViewCell.swift */; };
+		0731602B28A0159B00466BC4 /* ButtonFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0731602A28A0159B00466BC4 /* ButtonFrame.swift */; };
 		073663782608F16600E5403F /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073663772608F16600E5403F /* PincodeViewController.swift */; };
 		0736637A260E148700E5403F /* AchievementIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07366379260E148700E5403F /* AchievementIcon.swift */; };
 		0788E47D25FBD1D8004FC782 /* iOSDeviceModelMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */; };
@@ -164,6 +165,7 @@
 		07270EDF272B92B300DB35CE /* PalettesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalettesViewController.swift; sourceTree = "<group>"; };
 		07270EE1272C214300DB35CE /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		07270EE3272C333A00DB35CE /* PaletteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCollectionViewCell.swift; sourceTree = "<group>"; };
+		0731602A28A0159B00466BC4 /* ButtonFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFrame.swift; sourceTree = "<group>"; };
 		073663772608F16600E5403F /* PincodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PincodeViewController.swift; sourceTree = "<group>"; };
 		07366379260E148700E5403F /* AchievementIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementIcon.swift; sourceTree = "<group>"; };
 		0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iOSDeviceModelMapping.plist; sourceTree = "<group>"; };
@@ -466,6 +468,7 @@
 				0704FB7327397D3B009799E1 /* PaletteHeaderCollectionReusableView.swift */,
 				0704FB9A2739A511009799E1 /* InsetLabel.swift */,
 				07AE665E289ED5BE00E2E9FC /* ServerCell.swift */,
+				0731602A28A0159B00466BC4 /* ButtonFrame.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -756,6 +759,7 @@
 				07006C3C25D607D500DF9A64 /* UIDrawGestureRecognizer.swift in Sources */,
 				0712053A25DF2F0700AE0F52 /* RecentColorCollectionViewCell.swift in Sources */,
 				0704FB9B2739A511009799E1 /* InsetLabel.swift in Sources */,
+				0731602B28A0159B00466BC4 /* ButtonFrame.swift in Sources */,
 				07BD25C725D43FB500CF812E /* AppDelegate.swift in Sources */,
 				0704FB7427397D3B009799E1 /* PaletteHeaderCollectionReusableView.swift in Sources */,
 				0736637A260E148700E5403F /* AchievementIcon.swift in Sources */,
