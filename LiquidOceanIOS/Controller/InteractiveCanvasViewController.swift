@@ -58,8 +58,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var lockPaintPanelAction: ActionButtonView!
     @IBOutlet weak var lockPaintPanelCenterX: NSLayoutConstraint!
     
-    @IBOutlet weak var menuButton: ActionButtonFrame!
-    @IBOutlet weak var menuAction: ActionButtonView!
+    @IBOutlet weak var menuButton: ButtonFrame!
     
     @IBOutlet weak var exportButton: ActionButtonFrame!
     @IBOutlet weak var exportAction: ActionButtonView!
@@ -70,19 +69,18 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var gridLinesButton: ActionButtonFrame!
     @IBOutlet weak var gridLinesAction: ActionButtonView!
     
-    @IBOutlet weak var toolboxButton: ActionButtonFrame!
-    @IBOutlet weak var toolboxActionView: ActionButtonView!
+    @IBOutlet weak var toolboxButton: ButtonFrame!
     
     @IBOutlet var toolboxActionLeading: NSLayoutConstraint!
     @IBOutlet var toolboxActionTrailing: NSLayoutConstraint!
     
-    @IBOutlet weak var recentColorsButton: ActionButtonFrame!
-    @IBOutlet weak var recentColorsActionView: ActionButtonView!
+    @IBOutlet weak var recentColorsButton: ButtonFrame!
     
     @IBOutlet var recentColorsActionLeading: NSLayoutConstraint!
     @IBOutlet var recentColorsActionTrailing: NSLayoutConstraint!
     
     @IBOutlet weak var recentColorsContainer: UIView!
+    @IBOutlet weak var recentColorsImage: UIImageView!
     
     @IBOutlet weak var pixelHistoryView: UIView!
     
@@ -290,9 +288,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         // surfaceView.setInitalScale()
         
-        // back button
-        menuButton.actionButtonView = menuAction
-        self.menuAction.type = .menu
+        // menu button
         self.menuButton.setOnClickListener {
             
             if self.surfaceView.isExporting() {
@@ -376,9 +372,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         summaryAction.type = .summary
         
         // toolbox
-        self.toolboxActionView.type = .dot
-        self.toolboxButton.actionButtonView = self.toolboxActionView
-        
         self.toolboxButton.setOnClickListener {
             self.toggleToolbox(open: self.exportButton.isHidden)
         }
@@ -389,9 +382,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         summaryButton.isHidden = true
         
         // recent colors
-        self.recentColorsActionView.type = .dot
-        self.recentColorsButton.actionButtonView = self.recentColorsActionView
-        
         self.recentColorsButton.setOnClickListener {
             self.toggleRecentColors(open: self.recentColorsContainer.isHidden)
         }
@@ -437,12 +427,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.changeBackgroundAction.setNeedsDisplay()
             self.gridLinesAction.setNeedsDisplay()
             self.summaryAction.setNeedsDisplay()
-            self.menuAction.setNeedsDisplay()
             self.paletteAddColorAction.setNeedsDisplay()
             self.paletteRemoveColorAction.setNeedsDisplay()
-            
-            self.toolboxActionView.setNeedsDisplay()
-            self.recentColorsActionView.setNeedsDisplay()
             
             self.objectMoveUpAction.setNeedsDisplay()
             self.objectMoveDownAction.setNeedsDisplay()
@@ -866,13 +852,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         // bold action buttons
         let boldActionButtons = SessionSettings.instance.boldActionButtons
         
-        menuAction.bold = boldActionButtons
         exportAction.bold = boldActionButtons
         changeBackgroundAction.bold = boldActionButtons
         gridLinesAction.bold = boldActionButtons
         summaryAction.bold = boldActionButtons
-        toolboxActionView.bold = boldActionButtons
-        recentColorsActionView.bold = boldActionButtons
         
         // panel theme config
         if panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
@@ -1320,7 +1303,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func toggleRecentColors(open: Bool) {
         if open {
-            self.recentColorsActionView.isHidden = true
+            self.recentColorsImage.isHidden = true
             self.recentColorsContainer.isHidden = false
             
             if (paintPanel.isHidden) {
@@ -1328,7 +1311,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             }
         }
         else {
-            self.recentColorsActionView.isHidden = false
+            self.recentColorsImage.isHidden = false
             self.recentColorsContainer.isHidden = true
         }
     }
