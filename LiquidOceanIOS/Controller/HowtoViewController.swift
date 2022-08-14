@@ -10,8 +10,7 @@ import UIKit
 
 class HowtoViewController: UIViewController {
 
-    @IBOutlet weak var backButton: ActionButtonFrame!
-    @IBOutlet weak var backAction: ActionButtonView!
+    @IBOutlet weak var backButton: ButtonFrame!
     
     @IBOutlet weak var howtoTitleLabel: UILabel!
     
@@ -53,9 +52,6 @@ class HowtoViewController: UIViewController {
         super.viewDidLoad()
         
         setBackground()
-        
-        backButton.actionButtonView = backAction
-        backAction.type = .backSolid
         
         backButton.setOnClickListener {
             if self.fromCanvas {
@@ -139,7 +135,7 @@ class HowtoViewController: UIViewController {
             step2Text.font = UIFont.systemFont(ofSize: step1Text.font.pointSize)
         }
         
-        let backX = self.backAction.frame.origin.x
+        let backX = self.backButton.frame.origin.x
         
         if backX < 0 {
             backActionLeading.constant += 30

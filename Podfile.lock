@@ -14,6 +14,7 @@ PODS:
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.0)
+  - Kingfisher (7.3.2)
   - ReachabilitySwift (5.0.0)
   - Socket.IO-Client-Swift (16.0.1):
     - Starscream (~> 4.0)
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - Alamofire (~> 5.4.1)
   - FlexColorPicker
   - GoogleSignIn
+  - Kingfisher (~> 7.0)
   - ReachabilitySwift
   - Socket.IO-Client-Swift (~> 16.0.0)
 
@@ -34,6 +36,7 @@ SPEC REPOS:
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
+    - Kingfisher
     - ReachabilitySwift
     - Socket.IO-Client-Swift
     - Starscream
@@ -45,10 +48,11 @@ SPEC CHECKSUMS:
   GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  Kingfisher: 0086ad83719761ba9b2cdaf6ef4d5b4878cbae23
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Socket.IO-Client-Swift: c116d6dc9fd6be9c259bacfe143f8725bce7d79e
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
-PODFILE CHECKSUM: 39dcd022719f80bf47713a70c48bb5a55879ab44
+PODFILE CHECKSUM: 6660acc9aeaa6fc265230942e1b1df72ebb9c93c
 
 COCOAPODS: 1.10.1

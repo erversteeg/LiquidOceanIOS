@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import Kingfisher
 
 class LoadingViewController: UIViewController, InteractiveCanvasSocketConnectionDelegate, QueueSocketDelegate {
 
@@ -24,6 +25,8 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     @IBOutlet weak var connectingLabelWidth: NSLayoutConstraint!
     
     @IBOutlet weak var artView: ArtView!
+    
+    @IBOutlet weak var canvasImage: UIImageView!
     
     @IBOutlet weak var topContributorName1: UILabel!
     @IBOutlet weak var topContributorName2: UILabel!
@@ -105,6 +108,8 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 self.showError(type: self.errorTypeAccessKey)
                 return
             }
+            
+            self.canvasImage.kf.setImage(with: URL(string: "\(server!.serviceAltUrl())/canvas"))
             
             SessionSettings.instance.addServer(server: server!)
             

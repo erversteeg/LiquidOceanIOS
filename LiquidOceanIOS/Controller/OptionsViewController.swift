@@ -20,8 +20,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     
     @IBOutlet weak var optionsTitleLabel: UILabel!
     
-    @IBOutlet weak var backButton: ActionButtonFrame!
-    @IBOutlet weak var backAction: ActionButtonView!
+    @IBOutlet weak var backButton: ButtonFrame!
     
     @IBOutlet weak var signInButton: UIButton!
     
@@ -143,9 +142,6 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         super.viewDidLoad()
         
         setBackground()
-        
-        backButton.actionButtonView = backAction
-        backAction.type = .backSolid
         
         backButton.setOnClickListener {
             if (!self.creditsScrollView.isHidden) {
@@ -384,7 +380,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     override func viewDidLayoutSubviews() {
-        let backX = self.backAction.frame.origin.x
+        let backX = self.backButton.frame.origin.x
         if backX < 0 {
             backActionLeading.constant += 30
         }

@@ -5,4 +5,5 @@ target 'LiquidOceanIOS' do
   pod 'FlexColorPicker'
   pod 'GoogleSignIn'
   pod 'ReachabilitySwift'
+  pod 'Kingfisher', '~> 7.0'
 end
