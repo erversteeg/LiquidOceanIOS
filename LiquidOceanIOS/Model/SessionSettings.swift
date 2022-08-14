@@ -123,7 +123,7 @@ class SessionSettings: NSObject {
     
     var shortTermPixels = [InteractiveCanvas.ShortTermPixel]()
     
-    var paintIndicatorColor: Int32 = 0
+    var paintIndicatorColor: Int32 = -1
     
     var rightHanded = false
     var selectedHand = false

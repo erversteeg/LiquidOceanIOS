@@ -141,7 +141,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackground()
+        setGradientBackground()
         
         backButton.setOnClickListener {
             if (!self.creditsScrollView.isHidden) {
@@ -370,12 +370,8 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         // before animation
         if view.frame.size.height <= 600 {
             optionsTitleLabel.isHidden = true
-            
             panelTextureTitle.isHidden = true
             panelsCollectionView.isHidden = true
-            rightHandedContainer.isHidden = true
-            canvasLockBorderContainer.isHidden = true
-            canvasLockColorContainer.isHidden = true
         }
     }
     
@@ -395,12 +391,14 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         if view.frame.size.height <= 600 {
             Animator.animateTitleFromTop(titleView: optionsTitleLabel)
+            Animator.animateTitleFromTop(titleView: backButton)
             
             Animator.animateHorizontalViewEnter(view: panelTextureTitle, left: false)
             Animator.animateHorizontalViewEnter(view: panelsCollectionView, left: true)
-            Animator.animateHorizontalViewEnter(view: rightHandedContainer, left: false)
-            Animator.animateHorizontalViewEnter(view: canvasLockBorderContainer, left: true)
-            Animator.animateHorizontalViewEnter(view: canvasLockColorContainer, left: false)
+            Animator.animateHorizontalViewEnter(view: gridLineColorContainer, left: true)
+            Animator.animateHorizontalViewEnter(view: paintMeterColorContainer, left: true)
+            Animator.animateHorizontalViewEnter(view: canvasBackgroundPrimaryColorContainer, left: true)
+            Animator.animateHorizontalViewEnter(view: canvasBackgroundSecondaryColorContainer, left: true)
         }
     }
     
@@ -1089,14 +1087,14 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
     }
     
-    func setBackground() {
+    func setGradientBackground() {
         let gradient = CAGradientLayer()
 
-        gradient.frame = view.bounds
-        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff000000")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff333333")).cgColor]
+        gradient.frame = self.view.frame
+        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff874d14")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff87072f")).cgColor]
         
         gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 0, y: 1)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
 
         view.layer.insertSublayer(gradient, at: 0)
     }

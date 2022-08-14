@@ -26,13 +26,13 @@ class HowtoViewController: UIViewController {
     @IBOutlet weak var step10Text: UILabel!
     @IBOutlet weak var step11Text: UILabel!
     
-    @IBOutlet weak var paintAction: ActionButtonView!
-    @IBOutlet weak var exportAction: ActionButtonView!
-    @IBOutlet weak var changeBackgroundAction: ActionButtonView!
-    @IBOutlet weak var gridLineAction: ActionButtonView!
-    @IBOutlet weak var summaryAction: ActionButtonView!
-    @IBOutlet weak var dotAction1: ActionButtonView!
-    @IBOutlet weak var dotAction2: ActionButtonView!
+    @IBOutlet weak var paintAction: UIImageView!
+    @IBOutlet weak var exportAction: UIImageView!
+    @IBOutlet weak var changeBackgroundAction: UIImageView!
+    @IBOutlet weak var gridLineAction: UIImageView!
+    @IBOutlet weak var summaryAction: UIImageView!
+    @IBOutlet weak var dotAction1: UIImageView!
+    @IBOutlet weak var dotAction2: UIImageView!
     @IBOutlet weak var frameAction: ActionButtonView!
     @IBOutlet weak var dotAction3: ActionButtonView!
     @IBOutlet weak var exportAction2: ActionButtonView!
@@ -51,7 +51,7 @@ class HowtoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackground()
+        setGradientBackground()
         
         backButton.setOnClickListener {
             if self.fromCanvas {
@@ -62,24 +62,52 @@ class HowtoViewController: UIViewController {
             }
         }
         
-        paintAction.isStatic = true
-        exportAction.isStatic = true
-        changeBackgroundAction.isStatic = true
-        gridLineAction.isStatic = true
-        summaryAction.isStatic = true
-        dotAction1.isStatic = true
-        dotAction2.isStatic = true
+        //paintAction.isStatic = true
+        //exportAction.isStatic = true
+        //changeBackgroundAction.isStatic = true
+        //gridLineAction.isStatic = true
+        //summaryAction.isStatic = true
+        //dotAction1.isStatic = true
+        //dotAction2.isStatic = true
         frameAction.isStatic = true
         dotAction3.isStatic = true
         exportAction2.isStatic = true
         
-        paintAction.type = .paint
-        exportAction.type = .export
-        changeBackgroundAction.type = .changeBackground
-        gridLineAction.type = .gridLines
-        summaryAction.type = .summary
-        dotAction1.type = .dot
-        dotAction2.type = .dot
+        paintAction.image = UIImage(named: "brush")
+        paintAction.backgroundColor = UIColor.clear
+        paintAction.tintColor = UIColor.white
+        
+        exportAction.image = UIImage(named: "export")
+        exportAction.backgroundColor = UIColor.clear
+        exportAction.tintColor = UIColor.white
+        
+        changeBackgroundAction.image = UIImage(named: "background")
+        changeBackgroundAction.backgroundColor = UIColor.clear
+        changeBackgroundAction.tintColor = UIColor.white
+        
+        gridLineAction.image = UIImage(named: "grid")
+        gridLineAction.backgroundColor = UIColor.clear
+        gridLineAction.tintColor = UIColor.white
+        
+        summaryAction.image = UIImage(named: "zoom_out")
+        summaryAction.backgroundColor = UIColor.clear
+        summaryAction.tintColor = UIColor.white
+        
+        dotAction1.image = UIImage(named: "widgets")
+        dotAction1.backgroundColor = UIColor.clear
+        dotAction1.tintColor = UIColor.white
+        
+        dotAction2.image = UIImage(named: "palette")
+        dotAction2.backgroundColor = UIColor.clear
+        dotAction2.tintColor = UIColor.white
+        
+        //paintAction.type = .paint
+        //exportAction.type = .export
+        //changeBackgroundAction.type = .changeBackground
+        //gridLineAction.type = .gridLines
+        //summaryAction.type = .summary
+        //dotAction1.type = .dot
+        //dotAction2.type = .dot
         frameAction.type = .frame
         dotAction3.type = .dot
         exportAction2.type = .export
@@ -110,14 +138,14 @@ class HowtoViewController: UIViewController {
         }
     }
 
-    func setBackground() {
+    func setGradientBackground() {
         let gradient = CAGradientLayer()
 
-        gradient.frame = view.bounds
-        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff5576d4")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff7755d4")).cgColor]
+        gradient.frame = self.view.frame
+        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff006787")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff07875f")).cgColor]
         
         gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 0, y: 1)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
 
         view.layer.insertSublayer(gradient, at: 0)
     }

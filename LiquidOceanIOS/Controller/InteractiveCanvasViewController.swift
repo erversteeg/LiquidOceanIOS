@@ -309,7 +309,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 else {
                     self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
                 }*/
-                self.toggleMenu(show: self.menuContainer.isHidden)
+                //self.toggleMenu(show: self.menuContainer.isHidden)
+                self.performSegue(withIdentifier: self.showOptions, sender: self)
             }
         }
         
@@ -602,10 +603,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         tgr = UITapGestureRecognizer(target: self, action: #selector(didTapPaintQuantityBar))
         
         if SessionSettings.instance.showPaintCircle {
-            self.paintQuantityCircle.addGestureRecognizer(tgr)
+            //self.paintQuantityCircle.addGestureRecognizer(tgr)
         }
         else if SessionSettings.instance.showPaintBar {
-            self.paintQuantityBar.addGestureRecognizer(tgr)
+            //self.paintQuantityBar.addGestureRecognizer(tgr)
         }
         
         StatTracker.instance.achievementListener = self
@@ -623,10 +624,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             })
             
             if SessionSettings.instance.showPaintCircle {
-                self.paintQuantityCircle.removeGestureRecognizer(tgr)
+                //self.paintQuantityCircle.removeGestureRecognizer(tgr)
             }
             else if SessionSettings.instance.showPaintBar {
-                self.paintQuantityBar.removeGestureRecognizer(tgr)
+                //self.paintQuantityBar.removeGestureRecognizer(tgr)
             }
         }
         
@@ -869,7 +870,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.updatePaintColorAcceptColorMode(color: SessionSettings.instance.paintColor)
         
         self.paintQuantityCircle.panelThemeConfig = panelThemeConfig
+        self.paintQuantityCircle.setNeedsDisplay()
+        
         self.paintQuantityBar.panelThemeConfig = panelThemeConfig
+        self.paintQuantityBar.setNeedsDisplay()
         
         self.paintColorIndicator.panelThemeConfig = panelThemeConfig
         
@@ -1208,7 +1212,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.hideCanvasFrameView()
             
-            toggleMenu(show: false)
+            //toggleMenu(show: false)
             
             self.surfaceView.startPainting()
             
@@ -1221,7 +1225,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             self.toolboxButton.isHidden = true
             
-            toggleToolbox(open: false)
+            //toggleToolbox(open: false)
         }
         else {
             self.surfaceView.endPainting(accept: false)

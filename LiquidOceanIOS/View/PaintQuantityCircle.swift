@@ -62,7 +62,7 @@ class PaintQuantityCircle: UIView, PaintQtyDelegate, PaintActionDelegate {
                 bgColor = Utils.int32FromColorHex(hex: "0xff2f2f2f")
             }
             else {
-                bgColor = UIColor.white.argb()
+                //bgColor = UIColor.black.cgColor()
             }
         }
         
@@ -70,11 +70,11 @@ class PaintQuantityCircle: UIView, PaintQtyDelegate, PaintActionDelegate {
         ctx.addPath(circleMask)
         ctx.clip()
         
-        ctx.setFillColor(UIColor(argb: bgColor).cgColor)
+        ctx.setFillColor(UIColor.black.cgColor)
         ctx.addRect(CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         ctx.drawPath(using: .fill)
         
-        ctx.setFillColor(UIColor(argb: primaryColor).cgColor)
+        ctx.setFillColor(UIColor(argb: SessionSettings.instance.paintIndicatorColor).cgColor)
         ctx.addRect(CGRect(x: 0, y: (1 - relQty) * frame.height, width: frame.width, height: relQty * frame.height))
         ctx.drawPath(using: .fill)
     }

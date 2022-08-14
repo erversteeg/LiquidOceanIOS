@@ -120,13 +120,19 @@ class PaintQuantityBar: UIView, PaintQtyDelegate, PaintActionDelegate {
     func drawQuantity(ctx: CGContext) {
         let relQty = CGFloat(SessionSettings.instance.dropsAmt) / CGFloat(SessionSettings.instance.maxPaintAmt)
         
-        ctx.setFillColor(UIColor.black.cgColor)
-        ctx.addRect(CGRect(x: 0, y: frame.size.height / 3, width: frame.size.width, height: frame.size.height / 3))
-        ctx.drawPath(using: .fill)
+        ctx.setLineCap(CGLineCap.round)
+        ctx.setStrokeColor(UIColor.black.cgColor)
+        ctx.setLineWidth(frame.size.height)
+        ctx.move(to: CGPoint(x: frame.size.height / 2, y: frame.size.height / 2))
+        ctx.addLine(to: CGPoint(x: frame.size.width - frame.size.height / 2, y: frame.size.height / 2))
+        ctx.drawPath(using: .stroke)
         
-        ctx.setFillColor(UIColor(argb: primaryColor).cgColor)
-        ctx.addRect(CGRect(x: (1 - relQty) * frame.size.width, y: frame.size.height / 3, width: relQty * frame.size.width, height: frame.size.height / 3))
-        ctx.drawPath(using: .fill)
+        if relQty == 0 { return }
+            
+        ctx.setStrokeColor(UIColor(argb: SessionSettings.instance.paintIndicatorColor).cgColor)
+        ctx.move(to: CGPoint(x: (1 - relQty) * frame.size.width + frame.size.height / 2, y: frame.size.height / 2))
+        ctx.addLine(to: CGPoint(x: frame.size.width - frame.size.height / 2, y: frame.size.height / 2))
+        ctx.drawPath(using: .stroke)
         
         /*let pxWidth = self.frame.size.width / CGFloat(cols)
         let pxHeight = self.frame.size.height / CGFloat(rows)

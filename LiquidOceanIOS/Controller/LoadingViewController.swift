@@ -392,7 +392,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         let gradient = CAGradientLayer()
 
         gradient.frame = view.bounds
-        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff000000")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff333333")).cgColor]
+        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff000000")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff0e0417")).cgColor]
         
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 0, y: 1)
