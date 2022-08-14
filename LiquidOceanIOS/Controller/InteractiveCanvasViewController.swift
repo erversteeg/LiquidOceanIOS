@@ -8,6 +8,7 @@
 
 import UIKit
 import FlexColorPicker
+import Kingfisher
 
 class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate, CanvasEdgeTouchDelegate, InteractiveCanvasSelectedObjectViewDelegate, InteractiveCanvasSelectedObjectMoveViewDelegate, MenuButtonDelegate,
     InteractiveCanvasSocketConnectionDelegate, SceneDelegateDeleage {
@@ -170,7 +171,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var palettesView: UIView!
     
-    @IBOutlet weak var summaryView: InteractiveCanvasSummaryView!
+    @IBOutlet weak var summaryView: UIImageView!
     @IBOutlet weak var deviceViewportSummaryView: DeviceViewportSummaryView!
     
     @IBOutlet weak var canvasFrameView: UIView!
@@ -240,6 +241,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     var lastPanTranslationX: CGFloat = 0
     var lastPanTranslationY: CGFloat = 0
+    
+    var lastCanvasSummaryUpdate = 0.0
     
     var pixelHistoryViewController: PixelHistoryViewController!
     weak var recentColorsViewController: RecentColorsViewController!
@@ -453,6 +456,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             else {
                 self.toggleSummary(show: false)
             }
+            let currentTime = NSDate().timeIntervalSince1970
+            if currentTime - self.lastCanvasSummaryUpdate > 60 * 10 {
+                self.summaryView.kf.setImage(with: URL(string: "\(self.server!.serviceAltUrl())/canvas"))
+                self.lastCanvasSummaryUpdate = currentTime
+            }
+            
         }
         
         // paint panel
@@ -516,7 +525,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
         
         // summary
-        summaryView.interactiveCanvas = surfaceView.interactiveCanvas
+        //summaryView.interactiveCanvas = surfaceView.interactiveCanvas
         deviceViewportSummaryView.interactiveCanvas = surfaceView.interactiveCanvas
         
         // paint selection accept
@@ -879,6 +888,28 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         self.colorPicker(self.colorPickerViewController.colorPicker, selectedColor: self.colorPickerViewController.selectedColor, usingControl: self.colorPickerViewController.colorPicker.radialHsbPalette!)
         
+        // paint quantity meter
+        SessionSettings.instance.paintQtyDelegates.removeAll()
+        
+        if SessionSettings.instance.showPaintBar {
+            SessionSettings.instance.paintQtyDelegates.append(paintQuantityBar)
+            
+            paintQuantityBar.isHidden = false
+            paintQuantityCircle.isHidden = true
+        }
+        else if SessionSettings.instance.showPaintCircle {
+            SessionSettings.instance.paintQtyDelegates.append(paintQuantityCircle)
+            
+            paintInfoContainerTop.constant -= 15
+            
+            paintQuantityBar.isHidden = true
+            paintQuantityCircle.isHidden = false
+        }
+        else {
+            paintQuantityCircle.isHidden = true
+            paintQuantityBar.isHidden = true
+        }
+        
         // bocker lock
         if SessionSettings.instance.canvasLockBorder {
             canvasLockView.layer.borderWidth = 4
@@ -1102,7 +1133,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             StatTracker.instance.achievementListener = nil
             
             if world {
-                InteractiveCanvasSocket.instance.socket.disconnect()
+                InteractiveCanvasSocket.instance.socket!.disconnect()
                 
                 statusCheckTimer?.invalidate()
             }
@@ -1911,7 +1942,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     // socket connection delegate
     func notifySocketConnect() {
         print("Socket reconnected from background!")
-        surfaceView.interactiveCanvas.registerForSocketEvents(socket: InteractiveCanvasSocket.instance.socket)
+        surfaceView.interactiveCanvas.registerForSocketEvents(socket: InteractiveCanvasSocket.instance.socket!)
         
         URLSessionHandler.instance.getRecentPixels(server: SessionSettings.instance.lastVisitedServer!, since: SessionSettings.instance.canvasPauseTime) { jsonArray in
             if jsonArray != nil {

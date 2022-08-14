@@ -21,7 +21,7 @@ class InteractiveCanvasSocket: NSObject, URLSessionDelegate {
     weak var socketConnectionDelegate: InteractiveCanvasSocketConnectionDelegate?
     
     var manager: SocketManager!
-    var socket: SocketIOClient!
+    var socket: SocketIOClient? = nil
     
     func startSocket(server: Server) {
         // socket init
@@ -31,18 +31,18 @@ class InteractiveCanvasSocket: NSObject, URLSessionDelegate {
         
         socket = manager.defaultSocket
         
-        socket.connect()
+        socket?.connect()
         
-        socket.on(clientEvent: .connect) { (data, ack) in
+        socket?.on(clientEvent: .connect) { (data, ack) in
             print(data)
             self.socketConnectionDelegate?.notifySocketConnect()
         }
         
-        socket.on(clientEvent: .disconnect) { (data, ack) in
+        socket?.on(clientEvent: .disconnect) { (data, ack) in
             print(data)
         }
         
-        socket.on(clientEvent: .error) { (data, ack) in
+        socket?.on(clientEvent: .error) { (data, ack) in
             print(data)
             
             DispatchQueue.main.async {
@@ -52,7 +52,7 @@ class InteractiveCanvasSocket: NSObject, URLSessionDelegate {
     }
     
     func disconnect() {
-        socket.disconnect()
+        socket?.disconnect()
     }
     
     /*func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {

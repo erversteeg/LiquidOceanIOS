@@ -893,7 +893,7 @@
                                                     <constraint firstAttribute="height" constant="43" id="6gm-Eq-bPh"/>
                                                     <constraint firstAttribute="width" constant="200" id="iTK-ie-XYF"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -2670,7 +2670,7 @@
                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting to world server" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h2i-AB-1jL">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting to world server" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="h2i-AB-1jL">
                                 <rect key="frame" x="268" y="0.0" width="360" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="JRN-It-LVp"/>
@@ -3738,9 +3738,9 @@
                                     <constraint firstItem="XKa-IF-eX5" firstAttribute="leading" secondItem="ji3-kJ-24b" secondAttribute="leading" id="wcJ-Hl-jbf"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hfq-Br-pXl" customClass="InteractiveCanvasSummaryView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hfq-Br-pXl" customClass="UIImageView">
                                 <rect key="frame" x="64" y="63" width="300" height="300"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="HIU-IG-Wh5"/>
                                     <constraint firstAttribute="width" constant="300" id="esi-4k-n42"/>
@@ -5001,13 +5001,13 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hl6-z6-OA1">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hl6-z6-OA1">
                                                             <rect key="frame" x="20" y="0.0" width="200" height="50"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="200" id="iAi-hA-JfJ"/>
                                                                 <constraint firstAttribute="height" constant="50" id="uUG-D6-uBf"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                            <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="24"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -5059,8 +5059,11 @@
                                                     <constraint firstAttribute="height" constant="40" id="j4n-4A-vFF"/>
                                                     <constraint firstAttribute="width" constant="230" id="jei-eR-2Cv"/>
                                                 </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="Add Server"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Add Server">
+                                                    <fontDescription key="titleFontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
+                                                </buttonConfiguration>
                                                 <connections>
                                                     <action selector="addServer" destination="1bL-Mf-d8a" eventType="touchUpInside" id="5ke-Nf-ejt"/>
                                                 </connections>
@@ -5436,8 +5439,8 @@
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="Oc8-rR-yNG"/>
-        <segue reference="XGn-H2-2Wq"/>
-        <segue reference="N4G-oK-EKi"/>
+        <segue reference="DhC-cG-tnL"/>
+        <segue reference="cg6-8E-NGn"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="add" width="24" height="24"/>

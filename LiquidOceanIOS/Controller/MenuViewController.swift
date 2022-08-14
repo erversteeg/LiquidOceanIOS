@@ -634,7 +634,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         let server = SessionSettings.instance.servers[indexPath.item]
         
         if server.isAdmin {
-            cell.nameLabel.text = "Admin"
+            cell.nameLabel.text = "\(server.name) Eraser"
         }
         else {
             cell.nameLabel.text = server.name

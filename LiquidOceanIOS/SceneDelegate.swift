@@ -60,7 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             if interactiveCanvas != nil {
                 if interactiveCanvas!.world {
-                    InteractiveCanvasSocket.instance.socket.disconnect()
+                    InteractiveCanvasSocket.instance.socket?.disconnect()
                 }
                 else {
                     interactiveCanvas!.save()

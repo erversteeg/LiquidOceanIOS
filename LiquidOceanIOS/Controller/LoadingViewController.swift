@@ -85,7 +85,12 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.connectingLabel.text = "Connecting to \(server.name)"
+        if server!.isAdmin {
+            self.connectingLabel.text = "Connecting to \(server!.name) Eraser"
+        }
+        else {
+            self.connectingLabel.text = "Connecting to \(server!.name)"
+        }
         
         realmId = 1
         
@@ -116,7 +121,12 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             QueueSocket.instance.startSocket(server: server!)
             QueueSocket.instance.queueSocketDelegate = self
             
-            self.connectingLabel.text = "Connecting to \(server!.name)"
+            if server!.isAdmin {
+                self.connectingLabel.text = "Connecting to \(server!.name) Eraser"
+            }
+            else {
+                self.connectingLabel.text = "Connecting to \(server!.name)"
+            }
             
             self.server = server!
             SessionSettings.instance.lastVisitedServer = server!

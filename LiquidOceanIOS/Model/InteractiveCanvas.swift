@@ -95,11 +95,11 @@ class InteractiveCanvas: NSObject {
     static let backgroundWhite = 1
     static let backgroundGrayThirds = 2
     static let backgroundPhotoshop = 3
-    static let backgroundClassic = 4
-    static let backgroundChess = 5
-    static let backgroundCustom = 6
+//    static let backgroundClassic = 4
+//    static let backgroundChess = 5
+    static let backgroundCustom = 4
     
-    let numBackgrounds = 7
+    let numBackgrounds = 5
     
     var restorePoints =  [RestorePoint]()
     var pixelsOut: [RestorePoint]!
@@ -236,7 +236,7 @@ class InteractiveCanvas: NSObject {
                 initPixels(arrJsonStr: dataJsonStr!)
             }
             
-            registerForSocketEvents(socket: InteractiveCanvasSocket.instance.socket)
+            registerForSocketEvents(socket: InteractiveCanvasSocket.instance.socket!)
         }
         // single play
         else {
@@ -547,7 +547,7 @@ class InteractiveCanvas: NSObject {
     func commitPixels() {
         if world {
             for restorePoint in self.restorePoints {
-                InteractiveCanvasSocket.instance.socket.emit("pixel_send", buildPixelString(x: restorePoint.x, y: restorePoint.y, deviceId: SessionSettings.instance.deviceId, color: restorePoint.newColor), completion: nil)
+                InteractiveCanvasSocket.instance.socket!.emit("pixel_send", buildPixelString(x: restorePoint.x, y: restorePoint.y, deviceId: SessionSettings.instance.deviceId, color: restorePoint.newColor), completion: nil)
             }
             
             StatTracker.instance.reportEvent(eventType: .pixelPaintedWorld, amt: restorePoints.count)
@@ -630,10 +630,10 @@ class InteractiveCanvas: NSObject {
                 return (Utils.int32FromColorHex(hex: "0xFFAAAAAA"), Utils.int32FromColorHex(hex: "0xFF555555"))
             case InteractiveCanvas.backgroundPhotoshop:
                 return (Utils.int32FromColorHex(hex: "0xFFFFFFFF"), Utils.int32FromColorHex(hex: "0xFFCCCCCC"))
-            case InteractiveCanvas.backgroundClassic:
-                return (Utils.int32FromColorHex(hex: "0xFF666666"), Utils.int32FromColorHex(hex: "0xFF333333"))
-            case InteractiveCanvas.backgroundChess:
-                return (Utils.int32FromColorHex(hex: "0xFFB59870"), Utils.int32FromColorHex(hex: "0xFF000000"))
+//            case InteractiveCanvas.backgroundClassic:
+//                return (Utils.int32FromColorHex(hex: "0xFF666666"), Utils.int32FromColorHex(hex: "0xFF333333"))
+//            case InteractiveCanvas.backgroundChess:
+//                return (Utils.int32FromColorHex(hex: "0xFFB59870"), Utils.int32FromColorHex(hex: "0xFF000000"))
             case InteractiveCanvas.backgroundCustom:
             return (SessionSettings.instance.canvasBackgroundPrimaryColor, SessionSettings.instance.canvasBackgroundSecondaryColor)
             default:
