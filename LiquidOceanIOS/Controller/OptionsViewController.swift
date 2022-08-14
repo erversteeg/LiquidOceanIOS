@@ -345,9 +345,6 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         self.recentColorsAmtLabel3.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel3(sender:))))
         self.recentColorsAmtLabel4.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel4(sender:))))
         self.recentColorsAmtLabel5.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel5(sender:))))
-        self.recentColorsAmtLabel6.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel6(sender:))))
-        self.recentColorsAmtLabel7.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel7(sender:))))
-        self.recentColorsAmtLabel8.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel8(sender:))))
         
         // right-handed
         rightHandedContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
@@ -830,7 +827,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     
     func selectRecentColorLabel(amt: Int) {
         let labels = [recentColorsAmtLabel1, recentColorsAmtLabel2, recentColorsAmtLabel3, recentColorsAmtLabel4,
-        recentColorsAmtLabel5, recentColorsAmtLabel6, recentColorsAmtLabel7, recentColorsAmtLabel8]
+        recentColorsAmtLabel5]
         
         for label in labels {
             let labelAmt = Int(label!.text!)
