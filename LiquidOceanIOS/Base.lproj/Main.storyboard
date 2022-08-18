@@ -3988,7 +3988,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQc-ZZ-5IN" customClass="RadialPaletteControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="39" y="71" width="272" height="272"/>
+                                <rect key="frame" x="55" y="87" width="240" height="240"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="SPU-B7-fss"/>
@@ -4396,7 +4396,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnn-iB-Zo4" customClass="RadialPaletteControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="39" y="34" width="272" height="272"/>
+                                <rect key="frame" x="55" y="50" width="240" height="240"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="KDt-ja-w5Q"/>
@@ -5280,6 +5280,25 @@
                                     <constraint firstAttribute="width" constant="40" id="jQI-xZ-wpz"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PIA-eD-3bn" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                <rect key="frame" x="839" y="17" width="40" height="40"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu" translatesAutoresizingMaskIntoConstraints="NO" id="v4R-IE-oVG">
+                                        <rect key="frame" x="16" y="0.0" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="l85-yn-RY3"/>
+                                            <constraint firstAttribute="height" constant="24" id="ohd-Y5-kk2"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="1Q2-sH-eVy"/>
+                                    <constraint firstItem="v4R-IE-oVG" firstAttribute="top" secondItem="PIA-eD-3bn" secondAttribute="top" id="uQP-I7-QyI"/>
+                                    <constraint firstAttribute="height" constant="40" id="vSd-43-gTH"/>
+                                    <constraint firstAttribute="trailing" secondItem="v4R-IE-oVG" secondAttribute="trailing" id="waT-UI-W1u"/>
+                                </constraints>
+                            </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1OW-V0-ecU">
                                 <rect key="frame" x="208" y="20" width="480" height="100"/>
                                 <subviews>
@@ -5344,6 +5363,8 @@
                             <constraint firstItem="6mT-dj-jUR" firstAttribute="centerY" secondItem="Xcf-WA-Qco" secondAttribute="centerY" id="9zi-DF-gMm"/>
                             <constraint firstItem="1OW-V0-ecU" firstAttribute="top" secondItem="Xcf-WA-Qco" secondAttribute="topMargin" constant="20" id="Byh-Wr-wet"/>
                             <constraint firstItem="1OW-V0-ecU" firstAttribute="centerX" secondItem="Xcf-WA-Qco" secondAttribute="centerX" id="DoZ-qi-v5h"/>
+                            <constraint firstAttribute="trailing" secondItem="PIA-eD-3bn" secondAttribute="trailing" constant="17" id="Lwd-oa-JLN"/>
+                            <constraint firstItem="PIA-eD-3bn" firstAttribute="top" secondItem="Xcf-WA-Qco" secondAttribute="topMargin" constant="17" id="N51-CW-UOS"/>
                             <constraint firstItem="6mT-dj-jUR" firstAttribute="leading" secondItem="Xcf-WA-Qco" secondAttribute="leading" constant="50" id="Nyz-Av-Re8"/>
                             <constraint firstItem="Hda-PN-1Gv" firstAttribute="top" secondItem="Xcf-WA-Qco" secondAttribute="topMargin" constant="17" id="S1q-nH-BTH"/>
                             <constraint firstAttribute="trailing" secondItem="Hda-PN-1Gv" secondAttribute="trailing" constant="17" id="TpI-fl-Q2M"/>
@@ -5370,6 +5391,7 @@
                         <outlet property="devButtonBottomLayer" destination="xC4-G4-fRV" id="cLw-2T-j8V"/>
                         <outlet property="howtoButton" destination="MXp-b9-2V2" id="4pl-oK-NGs"/>
                         <outlet property="leftyButton" destination="30w-vU-iFk" id="OKg-Cy-a43"/>
+                        <outlet property="menuButton" destination="PIA-eD-3bn" id="WC9-YN-ygT"/>
                         <outlet property="menuContainer" destination="xv7-mI-1F4" id="en4-Cm-WAm"/>
                         <outlet property="menuContainerHeight" destination="Ej1-fu-C3i" id="sBl-T2-lrh"/>
                         <outlet property="menuContainerWidth" destination="jVm-g0-zIR" id="aSB-0R-nkK"/>

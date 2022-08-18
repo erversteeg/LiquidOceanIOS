@@ -129,6 +129,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             
             self.server = server!
             SessionSettings.instance.lastVisitedServer = server!
+            SessionSettings.instance.setLastVisitedIndex()
             
             let rIndex = Int(arc4random() % UInt32(self.gameTips.count))
             self.gameTipLabel.text = self.gameTips[rIndex]

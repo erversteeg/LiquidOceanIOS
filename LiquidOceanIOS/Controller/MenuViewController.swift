@@ -47,6 +47,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     @IBOutlet weak var backButton: ButtonFrame?
     @IBOutlet weak var backActionLeading: NSLayoutConstraint!
     @IBOutlet weak var addButton: ButtonFrame?
+    @IBOutlet weak var menuButton: ButtonFrame?
     
     @IBOutlet weak var achievementBanner: UIView!
     
@@ -144,6 +145,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
                 self.toggleMenuButtons(show: true, depth: 0)
                 self.backButton!.isHidden = true
                 self.addButton!.isHidden = true
+                self.menuButton!.isHidden = false
             }
             else if self.menuLayer == 1 {
                 self.toggleMenuButtons(show: true, depth: 0)
@@ -168,9 +170,15 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
             self.menuLayer -= 1
         }
         
-        if (addButton != nil) {
+        if addButton != nil {
             self.addButton!.setOnClickListener {
                 self.showAddServerView()
+            }
+        }
+        
+        if menuButton != nil {
+            self.menuButton!.setOnClickListener {
+                self.showConnectView()
             }
         }
         
@@ -319,18 +327,26 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     }*/
     
     func connectLabelTapped() {
+        let lastVisitedServer = SessionSettings.instance.lastVisitedServer
+        if lastVisitedServer != nil {
+            self.selectedServer = lastVisitedServer
+            self.performSegue(withIdentifier: showLoadingScreen, sender: nil)
+            return
+        }
         showConnectView()
     }
     
     func showConnectView() {
         toggleMenuButtons(show: false, depth: 0)
         addButton!.isHidden = false
+        menuButton!.isHidden = true
         serversCollectionView.isHidden = true
         addServerContainer.isHidden = true
         
         backButton!.isHidden = false
         
         if SessionSettings.instance.servers.count == 0 {
+            addButton?.isHidden = true
             addServerContainer.isHidden = false
         }
         else {
@@ -479,6 +495,8 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     }
     
     func showHandButtons() {
+        menuButton?.isHidden = true
+        
         toggleMenuButtons(show: false, depth: 0)
         toggleMenuButtons(show: true, depth: 2)
         
@@ -640,6 +658,11 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
             cell.nameLabel.text = server.name
         }
         
+        let lgr = ServerLongPressGestureRecognizer(target: self, action: #selector(didLongPressCell))
+        lgr.server = server
+        
+        cell.addGestureRecognizer(lgr)
+        
         return cell
     }
 
@@ -676,5 +699,27 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    @objc func didLongPressCell(sender: ServerLongPressGestureRecognizer) {
+        if (sender.state == .began) {
+            let server = sender.server!
+            
+            let alertController = UIAlertController(title: "Delete", message: "Delete \(server.name)?", preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { action in
+                SessionSettings.instance.removeServer(server: server)
+                self.serversCollectionView.reloadData()
+            }))
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                alertController.dismiss(animated: true, completion: nil)
+            }))
+            
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    class ServerLongPressGestureRecognizer: UILongPressGestureRecognizer {
+        var server: Server!
     }
 }

@@ -169,6 +169,7 @@ class SessionSettings: NSObject {
     
     var servers: [Server] = []
     var lastVisitedServer: Server? = nil
+    var lastVisitedServerIndex = -1
     
     var canvasPaused = false
     var canvasPauseTime = 0.0
@@ -329,6 +330,11 @@ class SessionSettings: NSObject {
         colorPaletteSize = userDefaultsInt(forKey: "palette_size", defaultVal: 4)
         
         initServerList()
+        
+        lastVisitedServerIndex = userDefaultsInt(forKey: "last_visited_server_index", defaultVal: -1)
+        if lastVisitedServerIndex >= 0 {
+            lastVisitedServer = servers[lastVisitedServerIndex]
+        }
     }
     
     func userDefaults() -> UserDefaults {
@@ -570,6 +576,12 @@ class SessionSettings: NSObject {
     }
     
     func removeServer(server: Server) {
+        let index = servers.firstIndex(of: server)!
+        if lastVisitedServerIndex >= 0 && lastVisitedServerIndex == index {
+            lastVisitedServerIndex = -1
+            lastVisitedServer = nil
+            userDefaults().set(-1, forKey: "last_visited_server_index")
+        }
         servers.remove(at: servers.firstIndex(of: server)!)
         saveServers()
     }
@@ -593,5 +605,13 @@ class SessionSettings: NSObject {
         let jsonData = try! JSONSerialization.data(withJSONObject: jsonArray, options: [])
         
         userDefaults().set(String(data: jsonData, encoding: .utf8)!, forKey: "server_list_json")
+    }
+    
+    func setLastVisitedIndex() {
+        let index = servers.firstIndex(of: lastVisitedServer!)
+        if index != nil {
+            userDefaults().set(index!, forKey: "last_visited_server_index")
+            lastVisitedServerIndex = index!
+        }
     }
 }
