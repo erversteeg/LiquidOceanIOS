@@ -689,7 +689,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
         task.resume()
     }
     
-    func findServer(accessKey: String, completionHandler: @escaping (Bool, Server?) -> Void) {
+    func findServer(accessKey: String, completionHandler: @escaping (Bool, Int, Server?) -> Void) {
         
         var request = URLRequest(url: URL(string: serversUrl + "api/v1/find/server/" + accessKey)!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
@@ -707,9 +707,19 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
             do {
                 if error != nil {
                     DispatchQueue.main.async {
-                        completionHandler(false, nil)
+                        completionHandler(false, 0, nil)
                     }
                     return
+                }
+                
+                var code = 0
+                if let httpReponse = response as? HTTPURLResponse {
+                    code = httpReponse.statusCode
+                    if code != 200 {
+                        DispatchQueue.main.async {
+                            completionHandler(true, code, nil)
+                        }
+                    }
                 }
                 
                 let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: AnyObject]
@@ -730,7 +740,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                         server.accessKey = jsonDict["access_key"] as! String
                     }
                     
-                    completionHandler(true, server)
+                    completionHandler(true, code, server)
                 }
             }
             catch {

@@ -22,6 +22,8 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     @IBOutlet weak var dotsLabel: UILabel!
     @IBOutlet weak var gameTipLabel: UILabel!
     
+    @IBOutlet weak var queuePosLabel: UILabel!
+    
     @IBOutlet weak var connectingLabelWidth: NSLayoutConstraint!
     
     @IBOutlet weak var artView: ArtView!
@@ -81,6 +83,9 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     
     var showingError = false
     
+    var queuePos = 0
+    var queuePosTimer: Timer? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -105,15 +110,20 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             accessKey = server.accessKey
         }
         
-        URLSessionHandler.instance.findServer(accessKey: accessKey) { success, server in
+        URLSessionHandler.instance.findServer(accessKey: accessKey) { success, code, server in
             let storeduuid = self.server.uuid
             
-            SessionSettings.instance.removeServer(server: self.server)
-            
-            if (server == nil) {
+            if server == nil && code >= 400 && code < 500 {
+                SessionSettings.instance.removeServer(server: self.server)
                 self.showError(type: self.errorTypeAccessKey)
                 return
             }
+            else if server == nil {
+                self.showError(type: self.errorTypeServer)
+                return
+            }
+            
+            SessionSettings.instance.removeServer(server: self.server)
             
             self.canvasImage.kf.setImage(with: URL(string: "\(server!.serviceAltUrl())/canvas"))
             
@@ -403,6 +413,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         }
         
         timer?.invalidate()
+        queuePosTimer?.invalidate()
     }
     
     func setBackground() {
@@ -471,6 +482,21 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     
     func notifyAddedToQueue(pos: Int) {
         print("Queue pos = " + String(pos))
+        queuePos = pos
+        
+        if (queuePos > 1) {
+            updateQueuePos()
+            queuePosLabel.isHidden = false
+            queuePosTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(updateQueuePos), userInfo: nil, repeats: true)
+        }
+    }
+    
+    @objc func updateQueuePos() {
+        queuePos -= 1
+        queuePosLabel.text = "~\(queuePos) in queue"
+        if queuePos == 0 {
+            queuePosLabel.isHidden = true
+        }
     }
     
     func notifyServiceReady() {

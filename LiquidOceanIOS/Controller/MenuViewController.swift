@@ -138,36 +138,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         devButton.topLayer = true
         
         self.backButton?.setOnClickListener {
-            if !self.addServerContainer.isHidden || !self.serversCollectionView.isHidden {
-                self.addServerContainer.isHidden = true
-                self.serversCollectionView.isHidden = true
-                
-                self.toggleMenuButtons(show: true, depth: 0)
-                self.backButton!.isHidden = true
-                self.addButton!.isHidden = true
-                self.menuButton!.isHidden = false
-            }
-            else if self.menuLayer == 1 {
-                self.toggleMenuButtons(show: true, depth: 0)
-                self.toggleMenuButtons(show: false, depth: 1)
-                
-                if self.connectButton != nil {
-                    Animator.animateMenuButtons(views: [[self.connectButton!], [self.optionsButton], [self.howtoButton]], cascade: true, moveOut: false, inverse: false)
-                }
-                else {
-                    Animator.animateMenuButtons(views: [[self.optionsButton], [self.howtoButton]], cascade: true, moveOut: false, inverse: false)
-                }
-                
-                self.backButton!.isHidden = true
-            }
-            else if self.menuLayer == 2 {
-                self.toggleMenuButtons(show: true, depth: 1)
-                self.toggleMenuButtons(show: false, depth: 2)
-                
-                Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false, inverse: false)
-            }
-            
-            self.menuLayer -= 1
+            self.backButtonClicked()
         }
         
         if addButton != nil {
@@ -238,6 +209,39 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         StatTracker.instance.achievementListener = self
         
         startShowcase()
+    }
+    
+    func backButtonClicked() {
+        if !self.addServerContainer.isHidden || !self.serversCollectionView.isHidden {
+            self.addServerContainer.isHidden = true
+            self.serversCollectionView.isHidden = true
+            
+            self.toggleMenuButtons(show: true, depth: 0)
+            self.backButton!.isHidden = true
+            self.addButton!.isHidden = true
+            self.menuButton!.isHidden = false
+        }
+        else if self.menuLayer == 1 {
+            self.toggleMenuButtons(show: true, depth: 0)
+            self.toggleMenuButtons(show: false, depth: 1)
+            
+            if self.connectButton != nil {
+                Animator.animateMenuButtons(views: [[self.connectButton!], [self.optionsButton], [self.howtoButton]], cascade: true, moveOut: false, inverse: false)
+            }
+            else {
+                Animator.animateMenuButtons(views: [[self.optionsButton], [self.howtoButton]], cascade: true, moveOut: false, inverse: false)
+            }
+            
+            self.backButton!.isHidden = true
+        }
+        else if self.menuLayer == 2 {
+            self.toggleMenuButtons(show: true, depth: 1)
+            self.toggleMenuButtons(show: false, depth: 2)
+            
+            Animator.animateMenuButtons(views: [[self.singleButtonBottomLayer, self.singleButton], [self.worldButtonBottomLayer, self.worldButton], [self.devButtonBottomLayer, self.devButton]], cascade: true, moveOut: false, inverse: false)
+        }
+        
+        self.menuLayer -= 1
     }
     
     override func viewDidLayoutSubviews() {
@@ -677,6 +681,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedServer = SessionSettings.instance.servers[indexPath.item]
         self.performSegue(withIdentifier: showLoadingScreen, sender: nil)
+        self.backButtonClicked()
     }
     
     @IBAction func addServer() {
@@ -686,7 +691,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
             return
         }
     
-        URLSessionHandler.instance.findServer(accessKey: accessKey) { success, server in
+        URLSessionHandler.instance.findServer(accessKey: accessKey) { success, code, server in
             if server != nil {
                 print(server!.name)
                 SessionSettings.instance.addServer(server: server!)
