@@ -256,6 +256,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        InteractiveCanvasSocket.instance.socketConnectionDelegate = self
+        
         SessionSettings.instance.canvasOpen = true
         SessionSettings.instance.sceneDelegateDelegate = self
         
