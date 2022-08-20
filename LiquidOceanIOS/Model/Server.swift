@@ -17,6 +17,7 @@ class Server: NSObject {
     var accessKey = ""
     var adminKey = ""
     var isAdmin = false
+    var uuid = ""
     
     func serviceUrl() -> String {
         return "\(baseUrl):5000/"
@@ -44,6 +45,7 @@ class Server: NSObject {
         jsonObj["access_key"] = accessKey
         jsonObj["admin_key"] = adminKey
         jsonObj["is_admin"] = isAdmin
+        jsonObj["uuid"] = uuid
         
         return jsonObj
     }

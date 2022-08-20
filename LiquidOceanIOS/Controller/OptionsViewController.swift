@@ -36,6 +36,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet weak var paintMeterColorColorView: UIView!
     @IBOutlet weak var paintMeterColorResetButton: UIButton!
     
+    @IBOutlet weak var changeNameLabel: UILabel!
     @IBOutlet weak var changeNameButton: UIButton!
     @IBOutlet weak var changeNameTextField: UITextField!
     
@@ -362,6 +363,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
         else {
             pincodeButton.setTitle("Set Access Pincode", for: .normal)
+        }
+        
+        if SessionSettings.instance.uniqueId == "" {
+            changeNameLabel.isHidden = true
+            changeNameTextField.isHidden = true
+            changeNameButton.isHidden = true
         }
         
         // before animation

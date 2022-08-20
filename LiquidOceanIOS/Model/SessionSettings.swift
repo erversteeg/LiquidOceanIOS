@@ -22,7 +22,7 @@ class SessionSettings: NSObject {
     static var instance = SessionSettings()
     
     var interactiveCanvas: InteractiveCanvas?
-    var uniqueId: String!
+    var uniqueId: String = ""
     var deviceId: Int = 0
     
     var chunk1: [[Int32]]!
@@ -176,8 +176,7 @@ class SessionSettings: NSObject {
     
     var sceneDelegateDelegate: SceneDelegateDeleage? = nil
     
-    func save() {        
-        userDefaults().set(uniqueId, forKey: "installation_id")
+    func save() {
         userDefaults().set(dropsAmt, forKey: "drops_amt")
         userDefaults().set(sentUniqueId, forKey: "sent_unique_id")
         userDefaults().set(paintColor, forKey: "paint_color")
@@ -224,7 +223,6 @@ class SessionSettings: NSObject {
     }
     
     func quickSave() {
-        userDefaults().set(uniqueId, forKey: "installation_id")
         userDefaults().set(sentUniqueId, forKey: "sent_unique_id")
         userDefaults().set(googleAuth, forKey: "google_auth")
         userDefaults().set(dropsAmt, forKey: "drops_amt")
@@ -237,8 +235,6 @@ class SessionSettings: NSObject {
     }
     
     func load() {
-        uniqueId = userDefaultsString(forKey: "installation_id", defaultVal: UUID().uuidString)
-        
         sentUniqueId = userDefaultsBool(forKey: "sent_unique_id", defaultVal: false)
         
         paintColor = userDefaultsInt32(forKey: "paint_color", defaultVal: Utils.int32FromColorHex(hex: "0xFFFFFFFF"))
@@ -554,6 +550,7 @@ class SessionSettings: NSObject {
                 server.pixelInterval = jsonObj["pixel_interval"] as! Int
                 server.maxPixels = jsonObj["max_pixels"] as! Int
                 server.isAdmin = jsonObj["is_admin"] as! Bool
+                server.uuid = jsonObj["uuid"] as! String
                 
                 if server.isAdmin {
                     server.adminKey = jsonObj["admin_key"] as! String
@@ -595,7 +592,7 @@ class SessionSettings: NSObject {
         return false
     }
     
-    private func saveServers() {
+    func saveServers() {
         var jsonArray = [[String: Any]]()
         
         for server in servers {

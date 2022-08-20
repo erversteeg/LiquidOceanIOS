@@ -53,6 +53,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     @IBOutlet weak var menuButton: ButtonFrame!
     
+    @IBOutlet weak var exportImage: UIImageView!
     @IBOutlet weak var exportButton: ButtonFrame!
     @IBOutlet weak var changeBackgroundButton: ButtonFrame!
     @IBOutlet weak var gridLinesButton: ButtonFrame!
@@ -291,7 +292,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                 self.exportButton.toggleState = .none
                 self.surfaceView.endExporting()
                 
-                self.exportButton.layer.borderWidth = 0
+                self.exportButton.highlight = false
             }
 //            else if self.surfaceView.isObjectMoveSelection() || self.surfaceView.isObjectMoving() {
 //                if self.surfaceView.isObjectMoving() {
@@ -372,13 +373,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             if (self.exportButton.toggleState == .none) {
                 self.surfaceView.startExporting()
                 self.exportButton.toggleState = .single
-                self.exportButton.layer.borderColor = UIColor(argb: ActionButtonView.lightYellowColor).cgColor
-                self.exportButton.layer.borderWidth = 1
+                self.exportButton.highlight = true
             }
             else if (self.exportButton.toggleState == .single) {
                 self.surfaceView.endExporting()
                 self.exportButton.toggleState = .none
-                self.exportButton.layer.borderWidth = 0
+                self.exportButton.highlight = false
 //                self.surfaceView.startObjectMoveSelection()
 //                self.exportAction.toggleState = .double
 //                self.exportAction.layer.borderColor = UIColor(argb: ActionButtonView.lightGreenColor).cgColor
@@ -406,26 +406,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
             SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
             
-            if !SessionSettings.instance.darkIcons {
-                self.menuButton.isLight = true
-                self.paintPanelButton.isLight = true
-                self.toolboxButton.isLight = true
-                self.recentColorsButton.isLight = true
-                self.exportButton.isLight = true
-                self.changeBackgroundButton.isLight = true
-                self.gridLinesButton.isLight = true
-                self.summaryButton.isLight = true
-            }
-            else {
-                self.menuButton.isLight = false
-                self.paintPanelButton.isLight = false
-                self.toolboxButton.isLight = false
-                self.recentColorsButton.isLight = false
-                self.exportButton.isLight = false
-                self.changeBackgroundButton.isLight = false
-                self.gridLinesButton.isLight = false
-                self.summaryButton.isLight = false
-            }
+            self.updateIconColors()
             
             self.paletteAddColorAction.setNeedsDisplay()
             self.paletteRemoveColorAction.setNeedsDisplay()
@@ -841,6 +822,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func applyOptions(fromUnwind: Bool) {
         SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
+        
+        self.updateIconColors()
         
         panelThemeConfig = themeConfigFromBackground()
         
@@ -1510,6 +1493,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     // art export delegate
     func notifyArtExported(art: [InteractiveCanvas.RestorePoint]) {
+        exportButton.highlight = false
+        
         exportViewController.art = art
         exportContainer.isHidden = false
         
@@ -1820,6 +1805,29 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func onTouchCanvasEdge() {
         togglePaintPanel(open: true)
+    }
+    
+    func updateIconColors() {
+        if !SessionSettings.instance.darkIcons {
+            self.menuButton.isLight = true
+            self.paintPanelButton.isLight = true
+            self.toolboxButton.isLight = true
+            self.recentColorsButton.isLight = true
+            self.exportButton.isLight = true
+            self.changeBackgroundButton.isLight = true
+            self.gridLinesButton.isLight = true
+            self.summaryButton.isLight = true
+        }
+        else {
+            self.menuButton.isLight = false
+            self.paintPanelButton.isLight = false
+            self.toolboxButton.isLight = false
+            self.recentColorsButton.isLight = false
+            self.exportButton.isLight = false
+            self.changeBackgroundButton.isLight = false
+            self.gridLinesButton.isLight = false
+            self.summaryButton.isLight = false
+        }
     }
     
     // selected object view

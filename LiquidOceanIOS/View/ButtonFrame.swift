@@ -39,6 +39,18 @@ class ButtonFrame: UIView {
     private var baseColor = Utils.int32FromColorHex(hex: "0xDDFFFFFF")
     private var highlightColor = Utils.int32FromColorHex(hex: "0xFFFAD452")
     
+    private var _highlight = false
+    var highlight: Bool {
+        set {
+            _highlight = newValue
+            
+            select(selected: _highlight)
+        }
+        get {
+            return _highlight
+        }
+    }
+    
     private var _color: Int32? = nil
     var color: Int32? {
         set {

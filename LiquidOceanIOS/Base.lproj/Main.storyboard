@@ -50,7 +50,7 @@
                                             <constraint firstAttribute="height" constant="200" id="4Mq-C2-OyC"/>
                                             <constraint firstAttribute="width" constant="582" id="8vh-e2-z3F"/>
                                         </constraints>
-                                        <string key="text">It's easy to get started. Enter into the canvas then tap the three dot icon to bring up the color panel. From here you can choose a color and do many other things. Tap and drag anywhere on the canvas to draw the currently selected color. Tap and drag back over any pixels that you want to remove. Finalize by tapping the green checkmark, or to cancel, tap the red x.</string>
+                                        <string key="text">The paint brush brings up the color panel. From here you can add pixels to the canvas if you have any. Once you connect to a server, you will automatically start gaining pixels. This happens whether you are still connected to that server or not. You can use these pixels to paint on the canvas. There is an indicator that will show you how many you have.</string>
                                         <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -81,7 +81,7 @@
                                             <constraint firstAttribute="width" constant="582" id="2xf-Gn-4MB"/>
                                             <constraint firstAttribute="height" constant="200" id="7ca-ej-mlQ"/>
                                         </constraints>
-                                        <string key="text">The first tool is the export tool. Tap the icon then select or drag around your drawing. A preview will appear with two export options in the upper right. The left icon is to save your drawing locally to your device photos. The right icon is to share your drawing through text, email, social meida, and other apps.</string>
+                                        <string key="text">This is the export tool. Select a start pixel then drag to an end pixel, it will select all the pixels within a box you create. You can also select a pixel inside an object to select the entire object. Once selected you can save, share, and more!</string>
                                         <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -106,12 +106,13 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The second tool is the background tool. Tap the icon to switch between different canvas backgrounds." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="jSn-YP-tCE" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="jSn-YP-tCE" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="1037" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="GT1-Cd-LwN"/>
                                             <constraint firstAttribute="width" constant="582" id="ziH-pl-Sbw"/>
                                         </constraints>
+                                        <string key="text">The wallpaper tool cycles between different canvas background colors. Black, white, dark gray, and light gray. You can set custom background colors in settings and then cycle to it.</string>
                                         <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -142,7 +143,7 @@
                                             <constraint firstAttribute="width" constant="582" id="gbU-pO-PIx"/>
                                             <constraint firstAttribute="height" constant="200" id="nrt-UL-W8t"/>
                                         </constraints>
-                                        <string key="text">The third tool is the grid line toggle tool. Tap the icon to turn on and off grid lines. Grid lines appear when zoomed into the canvas.</string>
+                                        <string key="text">The grid tool turns on and off canvas grid lines. Grid lines only appear when you are zoomed in close to the canvas. You can change the grid line color in settings.</string>
                                         <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -167,12 +168,13 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The fourth and final tool is the Canvas Summary tool. This shows a summary of all the pixels drawn onto the canvas." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="BWO-FU-dZt" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="BWO-FU-dZt" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="1957" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="Z1g-Zf-tuB"/>
                                             <constraint firstAttribute="height" constant="200" id="mJc-bp-gF5"/>
                                         </constraints>
+                                        <string key="text">The zoom tool shows a high level view of the canvas. You can quickly navigate to different parts of the canvas and see where everything is at.</string>
                                         <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -197,7 +199,7 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The dot below all the tools is the toolbox toggle. Tap it to show and hide tools." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="AG8-0U-FwQ" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The widgets button shows and hides the export, wallpaper, grid and zoom tools." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="AG8-0U-FwQ" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="250" y="2352" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="LEd-6j-8tp"/>
@@ -227,7 +229,7 @@
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The dot on the opposite side of the toolbox toggle is the palette toggle. Tap it to show and hide the color palette." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-0s-MBD" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The palette button shows and hides recent colors. Recent colors show what colors you have painted with recently." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-0s-MBD" customClass="InsetLabel" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="2812" width="582" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="582" id="LaR-xI-XbB"/>
@@ -1425,7 +1427,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-if-o1z">
-                                        <rect key="frame" x="513" y="1262" width="200" height="40"/>
+                                        <rect key="frame" x="503" y="1262" width="200" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="NL1-o9-9UU"/>
                                             <constraint firstAttribute="height" constant="40" id="OgX-it-fa8"/>
@@ -1437,9 +1439,9 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXz-Gu-sve">
-                                        <rect key="frame" x="756" y="1262" width="70" height="40"/>
+                                        <rect key="frame" x="746" y="1262" width="80" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="70" id="9Cs-JK-Axr"/>
+                                            <constraint firstAttribute="width" constant="80" id="9Cs-JK-Axr"/>
                                             <constraint firstAttribute="height" constant="40" id="Rl4-qo-gjy"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
@@ -2086,6 +2088,7 @@
                         <outlet property="canvasLockColorContainer" destination="bCL-gC-y0h" id="dfs-xS-ZGF"/>
                         <outlet property="canvasLockColorResetButton" destination="axl-Kz-C8V" id="1kC-wm-ZtQ"/>
                         <outlet property="changeNameButton" destination="NXz-Gu-sve" id="ee1-lY-b58"/>
+                        <outlet property="changeNameLabel" destination="YlN-Qk-8Ro" id="lNj-Wg-71t"/>
                         <outlet property="changeNameTextField" destination="zNI-if-o1z" id="KDF-Mf-nyi"/>
                         <outlet property="circlePaletteContainer" destination="Cxa-sJ-owu" id="vVR-az-K05"/>
                         <outlet property="circlePaletteSwitch" destination="klJ-KG-ZMa" id="il8-xk-Vxc"/>
@@ -3839,6 +3842,7 @@
                         <outlet property="exportButtonLeading" destination="tpS-PP-Aks" id="tlK-mb-fuE"/>
                         <outlet property="exportButtonTrailing" destination="jR6-Zj-SSo" id="G8K-Vf-bxa"/>
                         <outlet property="exportContainer" destination="Xy2-vk-Qhk" id="5n9-8d-Ekf"/>
+                        <outlet property="exportImage" destination="Mkd-dO-Ogx" id="REs-y7-23x"/>
                         <outlet property="gridLinesActionLeading" destination="DPK-aP-7FM" id="Shc-gW-r7R"/>
                         <outlet property="gridLinesActionTrailing" destination="zyH-o1-0aN" id="FvF-2Y-vx8"/>
                         <outlet property="gridLinesButton" destination="ape-vj-wQL" id="P8t-D7-I7N"/>
@@ -3996,7 +4000,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q2Z-sl-HLi" customClass="BrightnessSliderControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="39" y="343" width="272" height="47"/>
+                                <rect key="frame" x="55" y="359" width="240" height="15"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="6dJ-mr-B18"/>
@@ -4300,7 +4304,7 @@
                                     <constraint firstAttribute="height" constant="40" id="NGM-gD-qgb"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ghr-rn-ObS" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ghr-rn-ObS" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
                                 <rect key="frame" x="799" y="17" width="40" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="save" translatesAutoresizingMaskIntoConstraints="NO" id="2Mk-BU-M5n">
@@ -4404,7 +4408,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6PM-av-mg5" customClass="BrightnessSliderControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="49" y="333" width="252" height="47"/>
+                                <rect key="frame" x="65" y="349" width="220" height="15"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="UZq-lk-JOc"/>
@@ -5412,14 +5416,6 @@
             <point key="canvasLocation" x="-1197" y="-512"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="6PM-av-mg5">
-            <size key="intrinsicContentSize" width="896" height="15"/>
-        </designable>
-        <designable name="q2Z-sl-HLi">
-            <size key="intrinsicContentSize" width="896" height="15"/>
-        </designable>
-    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="Oc8-rR-yNG"/>
         <segue reference="DhC-cG-tnL"/>

@@ -106,6 +106,8 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         }
         
         URLSessionHandler.instance.findServer(accessKey: accessKey) { success, server in
+            let storeduuid = self.server.uuid
+            
             SessionSettings.instance.removeServer(server: self.server)
             
             if (server == nil) {
@@ -115,11 +117,6 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             
             self.canvasImage.kf.setImage(with: URL(string: "\(server!.serviceAltUrl())/canvas"))
             
-            SessionSettings.instance.addServer(server: server!)
-            
-            QueueSocket.instance.startSocket(server: server!)
-            QueueSocket.instance.queueSocketDelegate = self
-            
             if server!.isAdmin {
                 self.connectingLabel.text = "Connecting to \(server!.name) Eraser"
             }
@@ -127,9 +124,19 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 self.connectingLabel.text = "Connecting to \(server!.name)"
             }
             
+            server!.uuid = storeduuid
             self.server = server!
+            
             SessionSettings.instance.lastVisitedServer = server!
             SessionSettings.instance.setLastVisitedIndex()
+            
+            SessionSettings.instance.uniqueId = self.server.uuid
+            SessionSettings.instance.maxPaintAmt = server!.maxPixels
+            
+            SessionSettings.instance.addServer(server: self.server)
+            
+            QueueSocket.instance.startSocket(server: server!)
+            QueueSocket.instance.queueSocketDelegate = self
             
             let rIndex = Int(arc4random() % UInt32(self.gameTips.count))
             self.gameTipLabel.text = self.gameTips[rIndex]
@@ -155,11 +162,11 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         
         downloadCanvasChunkPixels()
 
-        if SessionSettings.instance.sentUniqueId {
-            getDeviceInfo()
+        if server.uuid == "" {
+            sendDeviceId()
         }
         else {
-            sendDeviceId()
+            getDeviceInfo()
         }
         
         getTopContributors()

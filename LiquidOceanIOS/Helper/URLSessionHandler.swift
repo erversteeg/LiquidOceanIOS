@@ -255,7 +255,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     }
     
     func sendDeviceId(server: Server, completionHandler: @escaping (Bool) -> (Void)) {
-        let uniqueId = SessionSettings.instance.uniqueId!
+        let uniqueId = UUID().uuidString
         
         var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/register")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
@@ -277,6 +277,9 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                     }
                     return
                 }
+            
+                server.uuid = uniqueId
+                SessionSettings.instance.saveServers()
                 
                 let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
             
@@ -297,7 +300,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     }
     
     func sendDeviceStat(server: Server, eventType: StatTracker.EventType, amt: Int, completionHandler: @escaping (Bool) -> (Void)) {
-        let uniqueId = SessionSettings.instance.uniqueId!
+        let uniqueId = SessionSettings.instance.uniqueId
         
         var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/" + uniqueId)!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
@@ -356,7 +359,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     }
     
     func updateDisplayName(server: Server, name: String, completionHandler: @escaping (Bool) -> (Void)) {
-        let uniqueId = SessionSettings.instance.uniqueId!
+        let uniqueId = SessionSettings.instance.uniqueId
         
         var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/" + uniqueId)!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
@@ -394,7 +397,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     }
     
     func getDeviceInfo(server: Server, completionHandler: @escaping (Bool) -> (Void)) {
-        let uniqueId = SessionSettings.instance.uniqueId!
+        let uniqueId = server.uuid
         
         var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/" + uniqueId + "/info")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
@@ -418,8 +421,6 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                 }
                 
                 let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
-            
-                SessionSettings.instance.sentUniqueId = true
                 
                 SessionSettings.instance.deviceId = jsonDict["id"] as! Int
                 SessionSettings.instance.dropsAmt = jsonDict["paint_qty"] as? Int
@@ -589,7 +590,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     }
     
     func sendGoogleToken(server: Server, token: String, completionHandler: @escaping (Bool) -> (Void)) {
-        let uniqueId = SessionSettings.instance.uniqueId!
+        let uniqueId = SessionSettings.instance.uniqueId
         
         var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/devices/" + uniqueId + "/google/auth")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
