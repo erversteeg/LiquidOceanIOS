@@ -63,6 +63,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     var errorTypeServer = "server"
     var errorTypeSocket = "socket"
     var errorTypeAccessKey = "access-key"
+    var errorTypeBan = "ban"
     
     var doneLoadingPixels = false
     var doneSyncDevice = false
@@ -75,6 +76,8 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     
     var doneConnectingSocket = false
     var doneConnectingQueue = false
+    
+    var doneCheckingIp = false
     
     var timer: Timer!
     var lastDotsStr = ""
@@ -312,9 +315,32 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     func getDeviceInfo() {
         URLSessionHandler.instance.getDeviceInfo(server: server) { (success) -> (Void) in
             if success {
-                self.doneSyncDevice = true
+                if SessionSettings.instance.banned {
+                    self.showError(type: self.errorTypeBan)
+                    return
+                }
+                else {
+                    self.doneSyncDevice = true
+                    self.downloadFinished()
+                }
                 
-                self.downloadFinished()
+                if !self.server.isAdmin {
+                    URLSessionHandler.instance.logIp(server: self.server, uuid: SessionSettings.instance.uniqueId) { response in
+                        if response == nil {
+                            self.showError(type: self.errorTypeServer)
+                            return
+                        }
+                        else if !(response!["success"] as! Bool) {
+                            self.showError(type: self.errorTypeBan)
+                            return
+                        }
+                        
+                        self.doneCheckingIp = true
+                    }
+                }
+                else {
+                    self.doneCheckingIp = true
+                }
             }
             else {
                 self.showError(type: self.errorTypeServer)
@@ -328,6 +354,24 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                 self.doneSyncDevice = true
                 
                 self.downloadFinished()
+                
+                if !self.server.isAdmin {
+                    URLSessionHandler.instance.logIp(server: self.server, uuid: SessionSettings.instance.uniqueId) { response in
+                        if response == nil {
+                            self.showError(type: self.errorTypeServer)
+                            return
+                        }
+                        else if !(response!["success"] as! Bool) {
+                            self.showError(type: self.errorTypeBan)
+                            return
+                        }
+                        
+                        self.doneCheckingIp = true
+                    }
+                }
+                else {
+                    self.doneCheckingIp = true
+                }
             }
             else {
                 self.showError(type: self.errorTypeServer)
@@ -395,7 +439,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         if realmId == 1 {
             return doneSyncDevice && doneLoadingTopContributors && doneLoadingChunk1 &&
                 doneLoadingChunk2 && doneLoadingChunk3 && doneLoadingChunk4 &&
-                doneConnectingSocket && doneConnectingQueue
+                doneConnectingSocket && doneConnectingQueue && doneCheckingIp
         }
         else {
             return doneLoadingPixels && doneSyncDevice && doneLoadingTopContributors &&
@@ -406,6 +450,8 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == self.showInteractiveCanvas {
+            segue.destination.isModalInPresentation = true
+            
             let vc = segue.destination as! InteractiveCanvasViewController
             vc.world = true
             vc.realmId = realmId
@@ -433,13 +479,16 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             var msg = ""
             
             if type == errorTypeServer {
-                msg = "Oops, could not find world pixel data. Please try again"
+                msg = "Server error."
             }
             else if type == errorTypeSocket {
-                msg = "Socket connection error"
+                msg = "Socket error."
             }
             else if type == errorTypeAccessKey {
-                msg = "Access key has changed"
+                msg = "Access key has changed."
+            }
+            else if type == errorTypeBan {
+                msg = "You are banned."
             }
             
             // create the alert

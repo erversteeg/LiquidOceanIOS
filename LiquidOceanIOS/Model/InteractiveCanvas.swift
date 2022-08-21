@@ -46,6 +46,10 @@ protocol InteractiveCanvasSelectedObjectDelegate: AnyObject {
     func onSelectedObjectMoveEnd()
 }
 
+protocol InteractiveCanvasEraseDelegate: AnyObject {
+    func notifyErase(left: Int, top: Int, right: Int, bottom: Int)
+}
+
 class InteractiveCanvas: NSObject {
     var rows = 1024
     var cols = 1024
@@ -81,6 +85,7 @@ class InteractiveCanvas: NSObject {
     weak var artExportDelegate: InteractiveCanvasArtExportDelegate?
     weak var deviceViewportResetDelegate: InteractiveCanvasDeviceViewportResetDelegate?
     weak var selectedObjectDelegate: InteractiveCanvasSelectedObjectDelegate?
+    weak var eraseDelegate: InteractiveCanvasEraseDelegate?
     
     var startScaleFactor = CGFloat(0.2)
     
@@ -381,6 +386,15 @@ class InteractiveCanvas: NSObject {
         
         arr[y][x] = color
         drawCallback?.notifyCanvasRedraw()
+    }
+    
+    func erasePixels(startUnit: CGPoint, endUnit: CGPoint) {
+        let left = Int(startUnit.x)
+        let top = Int(startUnit.y)
+        let right = Int(endUnit.x)
+        let bottom = Int(endUnit.y)
+        
+        eraseDelegate?.notifyErase(left: left, top: top, right: right, bottom: bottom)
     }
     
     func initPixels(arrJsonStr: String) {

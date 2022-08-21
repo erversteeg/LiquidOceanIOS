@@ -11,7 +11,7 @@ import FlexColorPicker
 import Kingfisher
 
 class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate, CanvasEdgeTouchDelegate, InteractiveCanvasSelectedObjectViewDelegate, InteractiveCanvasSelectedObjectMoveViewDelegate, MenuButtonDelegate,
-    InteractiveCanvasSocketConnectionDelegate, SceneDelegateDeleage {
+    InteractiveCanvasSocketConnectionDelegate, SceneDelegateDeleage, InteractiveCanvasEraseDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -277,6 +277,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.interactiveCanvas.pixelHistoryDelegate = self
         self.surfaceView.interactiveCanvas.recentColorsDelegate = self
         self.surfaceView.interactiveCanvas.artExportDelegate = self
+        self.surfaceView.interactiveCanvas.eraseDelegate = self
         self.surfaceView.paintDelegate = self
         self.surfaceView.palettesDelegate = self
         self.surfaceView.gestureDelegate = self
@@ -1086,6 +1087,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         else if segue.identifier == "PixelHistoryEmbed" {
             segue.destination.modalPresentationStyle = .overCurrentContext
             self.pixelHistoryViewController = segue.destination as? PixelHistoryViewController
+            self.pixelHistoryViewController.server = server
         }
         else if segue.identifier == "RecentColorsEmbed" {
             self.recentColorsViewController = segue.destination as? RecentColorsViewController
@@ -1982,12 +1984,33 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     // scene delegate delegate
     func sceneWillEnterForeground() {
+        let timeSincePause = NSDate().timeIntervalSince1970 - SessionSettings.instance.canvasPauseTime
         if SessionSettings.instance.canvasPaused {
-            InteractiveCanvasSocket.instance.socketConnectionDelegate = self
-            InteractiveCanvasSocket.instance.startSocket(server: SessionSettings.instance.lastVisitedServer!)
-            
-            SessionSettings.instance.canvasPaused = false
+            if timeSincePause > 60 * 60 {
+                self.performSegue(withIdentifier: self.unwindToLoading, sender: nil)
+            }
+            else {
+                InteractiveCanvasSocket.instance.socketConnectionDelegate = self
+                InteractiveCanvasSocket.instance.startSocket(server: SessionSettings.instance.lastVisitedServer!)
+                
+                SessionSettings.instance.canvasPaused = false
+            }
         }
+    }
+    
+    // erase delegate
+    func notifyErase(left: Int, top: Int, right: Int, bottom: Int) {
+        let alertController = UIAlertController(title: nil, message: "Erase selected pixels?", preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { action in
+            let message = "\(self.server.adminKey)&\(left)&\(top)&\(right)&\(bottom)"
+            InteractiveCanvasSocket.instance.socket?.emit("5ypq8062qs", message, completion: nil)
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            alertController.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

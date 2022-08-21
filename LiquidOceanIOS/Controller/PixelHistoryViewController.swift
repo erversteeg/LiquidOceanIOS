@@ -10,6 +10,8 @@ import UIKit
 
 class PixelHistoryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
+    var server: Server!
+    
     var data: [AnyObject]?
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -144,6 +146,12 @@ class PixelHistoryViewController: UIViewController, UICollectionViewDataSource, 
             }
         }
         
+        if server.isAdmin {
+            let ltgr = JsonObjLongPressGestureRecognizer(target: self, action: #selector(longTappedName))
+            ltgr.jsonObj = dataObj
+            cell.addGestureRecognizer(ltgr)
+        }
+        
         return cell
     }
 
@@ -166,5 +174,57 @@ class PixelHistoryViewController: UIViewController, UICollectionViewDataSource, 
         }
         
         collectionView.reloadData()
+    }
+    
+    class JsonObjLongPressGestureRecognizer: UILongPressGestureRecognizer {
+        var jsonObj: [String: AnyObject]!
+    }
+    
+    @objc func longTappedName(sender: JsonObjLongPressGestureRecognizer) {
+        if (sender.state != .began) {
+            return
+        }
+        
+        let jsonObj = sender.jsonObj!
+        
+        let alertController = UIAlertController(title: nil, message: "Ban \(jsonObj["name"] as! String)?", preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { action in
+            let alertController2 = UIAlertController(title: nil, message: "Confirm ban on \(jsonObj["name"] as! String)?", preferredStyle: .alert)
+            
+            alertController2.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { action in
+                URLSessionHandler.instance.banDeviceIps(server: self.server, deviceId: jsonObj["device_id"] as! Int) { response in
+                    if response == nil {
+                        let alertController3 = UIAlertController(title: nil, message: "Ban failed (server error).", preferredStyle: .alert)
+                        
+                        alertController3.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            alertController3.dismiss(animated: true, completion: nil)
+                        }))
+                        
+                        self.present(alertController3, animated: true, completion: nil)
+                        
+                        return
+                    }
+                    
+                    let alertController3 = UIAlertController(title: nil, message: "Banned \(jsonObj["name"] as! String) (\(response!["ips"] as! Int) IPs).", preferredStyle: .alert)
+                    
+                    alertController3.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                        alertController3.dismiss(animated: true, completion: nil)
+                    }))
+                    
+                    self.present(alertController3, animated: true, completion: nil)
+                }
+            }))
+            alertController2.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                alertController2.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(alertController2, animated: true, completion: nil)
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            alertController.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 }

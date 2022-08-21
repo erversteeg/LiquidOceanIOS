@@ -681,6 +681,10 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedServer = SessionSettings.instance.servers[indexPath.item]
         self.performSegue(withIdentifier: showLoadingScreen, sender: nil)
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(onServerSelected), userInfo: nil, repeats: false)
+    }
+    
+    @objc func onServerSelected() {
         self.backButtonClicked()
     }
     

@@ -273,7 +273,12 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 if interactiveCanvas.isCanvas(unitPoint: unitPoint) {
                     if unitPoint.x == objectSelectionStartUnit.x && unitPoint.y == objectSelectionStartUnit.y {
                         if mode == .exporting {
-                            interactiveCanvas.exportSelection(unitPoint: unitPoint)
+                            if interactiveCanvas.server.isAdmin {
+                                interactiveCanvas.erasePixels(startUnit: unitPoint, endUnit: unitPoint)
+                            }
+                            else {
+                                interactiveCanvas.exportSelection(unitPoint: unitPoint)
+                            }
                         }
                         else if mode == .objectMoveSelection {
                             let valid = interactiveCanvas.startMoveSelection(unitPoint: unitPoint)
@@ -294,7 +299,12 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                         let endUnit = CGPoint(x: maxX, y: maxY)
                         
                         if mode == .exporting {
-                            interactiveCanvas.exportSelection(startUnit: startUnit, endUnit: endUnit)
+                            if interactiveCanvas.server.isAdmin {
+                                interactiveCanvas.erasePixels(startUnit: startUnit, endUnit: endUnit)
+                            }
+                            else {
+                                interactiveCanvas.exportSelection(startUnit: startUnit, endUnit: endUnit)
+                            }
                         }
                         else if mode == .objectMoveSelection {
                             let valid = interactiveCanvas.startMoveSelection(startUnit: startUnit, endUnit: endUnit)

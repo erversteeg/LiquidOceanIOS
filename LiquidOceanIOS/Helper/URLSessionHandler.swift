@@ -285,6 +285,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
             
                 SessionSettings.instance.deviceId = jsonDict["id"] as! Int
                 SessionSettings.instance.dropsAmt = jsonDict["paint_qty"] as? Int
+                SessionSettings.instance.uniqueId = uniqueId
                 SessionSettings.instance.sentUniqueId = true
                 
                 DispatchQueue.main.async {
@@ -426,6 +427,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                 SessionSettings.instance.dropsAmt = jsonDict["paint_qty"] as? Int
                 SessionSettings.instance.xp = jsonDict["xp"] as! Int
                 SessionSettings.instance.displayName = jsonDict["name"] as! String
+                SessionSettings.instance.banned = (jsonDict["banned"] as! Int) != 0
                 
                 let pixelsWorld = jsonDict["wt"] as! Int
                 let pixelsSingle = jsonDict["st"] as! Int
@@ -654,7 +656,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     
     func downloadPixelHistory(server: Server, pixelId: Int, completionHandler: @escaping (Bool, [AnyObject]) -> Void) {
         
-        var request = URLRequest(url: URL(string: "\(server.serviceUrl())api/v1/canvas/pixels/" + String(pixelId) + "/history")!)
+        var request = URLRequest(url: URL(string: "\(server.serviceAltUrl())api/v1/canvas/pixels/" + String(pixelId) + "/history")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 
@@ -791,6 +793,72 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
     func getPaintQty(server: Server, uuid: String, completionHandler: @escaping ([String: AnyObject]?) -> Void) {
         
         var request = URLRequest(url: URL(string: server.serviceUrl() + "api/v1/device/paintqty/\(uuid)")!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "GET"
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(nil)
+                    }
+                    return
+                }
+                
+                let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: AnyObject]
+                
+                DispatchQueue.main.async {
+                    completionHandler(jsonDict)
+                }
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
+    func logIp(server: Server, uuid: String, completionHandler: @escaping ([String: AnyObject]?) -> Void) {
+        
+        var request = URLRequest(url: URL(string: server.serviceAltUrl() + "api/v1/devices/\(uuid)/logip")!)
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        request.httpMethod = "GET"
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(key1, forHTTPHeaderField: "key1")
+
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            do {
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completionHandler(nil)
+                    }
+                    return
+                }
+                
+                let jsonDict = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: AnyObject]
+                
+                DispatchQueue.main.async {
+                    completionHandler(jsonDict)
+                }
+            }
+            catch {
+                
+            }
+        })
+
+        task.resume()
+    }
+    
+    func banDeviceIps(server: Server, deviceId: Int, completionHandler: @escaping ([String: AnyObject]?) -> Void) {
+        
+        var request = URLRequest(url: URL(string: server.serviceAltUrl() + "api/v1/devices/\(deviceId)/ban")!)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
         request.httpMethod = "GET"
 

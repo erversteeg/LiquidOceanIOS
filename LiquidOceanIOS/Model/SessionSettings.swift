@@ -174,6 +174,8 @@ class SessionSettings: NSObject {
     var canvasPaused = false
     var canvasPauseTime = 0.0
     
+    var banned = false
+    
     var sceneDelegateDelegate: SceneDelegateDeleage? = nil
     
     func save() {
