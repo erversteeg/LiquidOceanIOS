@@ -96,6 +96,7 @@
 		07C9CCE6272ECA2900C9D0A1 /* CanvasFrameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C9CCE5272ECA2900C9D0A1 /* CanvasFrameViewController.swift */; };
 		07D0ED24272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D0ED23272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift */; };
 		07D0ED26272DFC9000755C1D /* DeviceViewportSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D0ED25272DFC9000755C1D /* DeviceViewportSummaryView.swift */; };
+		07D6934328BA57A300F2EBE7 /* TermsOfUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D6934228BA57A300F2EBE7 /* TermsOfUseViewController.swift */; };
 		07F573C8289EA65D00D4C9EF /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F573C7289EA65D00D4C9EF /* Server.swift */; };
 		07FF5EFF25DF5833003E19AE /* ArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5EFE25DF5833003E19AE /* ArtView.swift */; };
 		07FF5F0125DF616A003E19AE /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0025DF616A003E19AE /* ExportViewController.swift */; };
@@ -235,6 +236,7 @@
 		07C9CCE5272ECA2900C9D0A1 /* CanvasFrameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasFrameViewController.swift; sourceTree = "<group>"; };
 		07D0ED23272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveCanvasSummaryView.swift; sourceTree = "<group>"; };
 		07D0ED25272DFC9000755C1D /* DeviceViewportSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewportSummaryView.swift; sourceTree = "<group>"; };
+		07D6934228BA57A300F2EBE7 /* TermsOfUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseViewController.swift; sourceTree = "<group>"; };
 		07F573C7289EA65D00D4C9EF /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		07FF5EFE25DF5833003E19AE /* ArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtView.swift; sourceTree = "<group>"; };
 		07FF5F0025DF616A003E19AE /* ExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				07C9CCE5272ECA2900C9D0A1 /* CanvasFrameViewController.swift */,
 				070DA9DC2732B97800D76775 /* CanvasImportViewController.swift */,
 				070DA9DE2732B98500D76775 /* CanvasExportViewController.swift */,
+				07D6934228BA57A300F2EBE7 /* TermsOfUseViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				07FF5F0125DF616A003E19AE /* ExportViewController.swift in Sources */,
 				07FF5F0925E4354B003E19AE /* StatTracker.swift in Sources */,
 				07BD25D125D43FB500CF812E /* LiquidOceanIOS.xcdatamodeld in Sources */,
+				07D6934328BA57A300F2EBE7 /* TermsOfUseViewController.swift in Sources */,
 				07FF5F0F25E54EE7003E19AE /* OptionsViewController.swift in Sources */,
 				078AF007260119DE00AB4CE4 /* InteractiveCanvasSocket.swift in Sources */,
 				07BD25F525D44F2A00CF812E /* Utils.swift in Sources */,

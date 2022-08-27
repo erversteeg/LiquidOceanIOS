@@ -15,6 +15,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     var server: Server!
     
     var showInteractiveCanvas = "ShowInteractiveCanvas"
+    let showTermsOfService = "ShowTermsOfService"
     
     @IBOutlet var connectingLabel: UILabel!
     @IBOutlet var statusLabel: UILabel!
@@ -389,7 +390,12 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         
         if loadingDone() {
             SessionSettings.instance.save()
-            self.performSegue(withIdentifier: self.showInteractiveCanvas, sender: nil)
+            if !SessionSettings.instance.agreedToTermsOfService {
+                self.performSegue(withIdentifier: self.showTermsOfService, sender: nil)
+            }
+            else {
+                self.performSegue(withIdentifier: self.showInteractiveCanvas, sender: nil)
+            }
         }
     }
     
@@ -558,5 +564,9 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     
     @IBAction func unwind( _ seg: UIStoryboardSegue) {
         self.presentingViewController?.dismiss(animated: false, completion: nil)
+    }
+    
+    func processAgreedToTermsOfService() {
+        self.performSegue(withIdentifier: self.showInteractiveCanvas, sender: nil)
     }
 }

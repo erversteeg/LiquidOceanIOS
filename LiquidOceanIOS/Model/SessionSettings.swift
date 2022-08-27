@@ -176,6 +176,8 @@ class SessionSettings: NSObject {
     
     var banned = false
     
+    var agreedToTermsOfService = false
+    
     var sceneDelegateDelegate: SceneDelegateDeleage? = nil
     
     func save() {
@@ -326,6 +328,8 @@ class SessionSettings: NSObject {
         canvasOpen = userDefaultsBool(forKey: "canvas_open", defaultVal: false)
         
         colorPaletteSize = userDefaultsInt(forKey: "palette_size", defaultVal: 4)
+        
+        agreedToTermsOfService = userDefaultsBool(forKey: "agreed_to_terms_of_service", defaultVal: false)
         
         initServerList()
         
@@ -612,5 +616,9 @@ class SessionSettings: NSObject {
             userDefaults().set(index!, forKey: "last_visited_server_index")
             lastVisitedServerIndex = index!
         }
+    }
+    
+    func saveAgreedToTermsOfService() {
+        userDefaults().set(agreedToTermsOfService, forKey: "agreed_to_terms_of_service")
     }
 }

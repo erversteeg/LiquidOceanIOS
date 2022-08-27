@@ -19,6 +19,9 @@
         <array key="Inter-Medium.ttf">
             <string>Inter-Medium</string>
         </array>
+        <array key="Inter-Regular.ttf">
+            <string>Inter-Regular</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Howto View Controller-->
@@ -3005,12 +3008,13 @@
                         <outlet property="topContributorName9" destination="fpE-io-4Ob" id="Mtz-rj-3GV"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="ShowInteractiveCanvas" animates="NO" modalPresentationStyle="fullScreen" id="28p-wv-bjn"/>
                         <segue destination="sWc-a4-4hc" kind="unwind" identifier="UnwindToMenu" animates="NO" unwindAction="unwind:" id="V3Z-2e-yf2"/>
+                        <segue destination="1Ov-Xk-doz" kind="presentation" identifier="ShowTermsOfService" id="5cq-Xg-Fg4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5ui-ju-aXZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="sWc-a4-4hc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-449" y="-655"/>
+            <point key="canvasLocation" x="-471" y="-513"/>
         </scene>
         <!--Interactive Canvas View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -4643,6 +4647,139 @@
                 <exit id="U2p-CV-59J" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-1083" y="-4325"/>
+        </scene>
+        <!--Terms Of Use View Controller-->
+        <scene sceneID="aRG-D2-hFF">
+            <objects>
+                <viewController id="1Ov-Xk-doz" customClass="TermsOfUseViewController" customModule="LiquidOceanIOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Fgz-Sn-jRq">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwv-qh-ydE">
+                                <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="my4-B9-CUh">
+                                        <rect key="frame" x="0.0" y="0.0" width="896" height="1000"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvk-dJ-XaX">
+                                                <rect key="frame" x="40" y="0.0" width="816" height="1000"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <mutableString key="text">Terms of Service
+
+This software, “service” or “app” is provided as is whereby any bug or issue with the app is not the responsibility of the developers or publishers of the service to withhold or upkeep. You must be at least 13 years of age to use this service.
+
+(1) User Generated Content
+
+Any pixel(s) written onto any canvas are the sole responsibility of the person who places the pixels. There is a chance on occasion that a person or number of persons may place pixels onto a canvas with this app that may be seen or flagged as copyrighted content. If you have a copyright complaint please send an email to erversteeg@gmail.com citing what content you would like removed (erased) from a canvas and which canvas you are referring to plus full proof of ownership and delegation over the content. Please allow up to (4) weeks from the date the notice is received for the content to be fully removed.
+
+(2) Hate Speech and Symbols
+
+On occasion a person may be harassed or assaulted by another person or any number of persons through the medium of pixels on a canvas. This may involve written or depicted hate speech (words) or symbols that a person may find offensive to them in one or many ways. Please understand that by using the service you agree to a certain risk of yourself becoming the victim of such hateful actions and that if reported or seen, the cultrips will be banned to the full extent that it is possible. The app developers or publishers are in no way responsible for any hate or harm that comes to another person while using the service. Any emotional or mental damage imposed upon any person by any number of persons using the service is their own responsibility. You may pursue these user(s) directly, however no name or other personal information with the exception of IP addresses are stored, so it will be challenging to figure out exactly who it was. The app developers and publishers are in no way condoning hateful acts by not keeping record of most personal data. If you are being harassed please leave the canvas immediately and report the case to erversteeg@gmail.com.
+
+(3) Copied Content
+
+Within the app any person may choose to select, export, and share any number of pixels that together make up an image that may or may not contain sensitive, offensive, or copyrighted content, or content depicting hateful acts or speech. Please note that once content (pixels) are exported from the app, as soon as those pixels in the form of an image leave the app via a file stored on a person's device or shared via text or another app or service, that it is no longer the responsibility of the developers or publishers of this app and that while we give our best effort to tend to copyright notices and other claims, sometimes we will not get to it in time before it is copied over and leaves the app.
+
+(4) Personal Information
+If any person on any canvas uses pixels to give out any personal information about themselves, they will be banned. Alternatively you are not allowed to solicit any person to give away any personal information about themselves. If in a rare case such interactions lead to anything happening as a result in real life (outside the app), it is not the responsibility of the developers or publishers of the service.
+
+
+
+
+
+
+
+
+
+
+</mutableString>
+                                                <color key="textColor" red="0.33725490200000002" green="0.83921568629999999" blue="0.46931997710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" name="Inter-Regular" family="Inter" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Gvk-dJ-XaX" secondAttribute="bottom" id="37e-jR-wk2"/>
+                                            <constraint firstItem="Gvk-dJ-XaX" firstAttribute="top" secondItem="my4-B9-CUh" secondAttribute="top" id="NOc-AV-6Lu"/>
+                                            <constraint firstAttribute="trailing" secondItem="Gvk-dJ-XaX" secondAttribute="trailing" constant="40" id="h5G-B4-rgf"/>
+                                            <constraint firstAttribute="height" constant="1000" id="o5w-8g-kys"/>
+                                            <constraint firstItem="Gvk-dJ-XaX" firstAttribute="leading" secondItem="my4-B9-CUh" secondAttribute="leading" constant="40" id="uio-s8-YPz"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="my4-B9-CUh" firstAttribute="bottom" secondItem="JTT-wr-6Tj" secondAttribute="bottom" id="NUj-R7-Dok"/>
+                                    <constraint firstItem="my4-B9-CUh" firstAttribute="leading" secondItem="JTT-wr-6Tj" secondAttribute="leading" id="OaT-ti-VLd"/>
+                                    <constraint firstItem="my4-B9-CUh" firstAttribute="width" secondItem="Ush-W3-em1" secondAttribute="width" id="aR5-Y3-Cq1"/>
+                                    <constraint firstItem="my4-B9-CUh" firstAttribute="trailing" secondItem="JTT-wr-6Tj" secondAttribute="trailing" id="e9l-X1-fj1"/>
+                                    <constraint firstItem="my4-B9-CUh" firstAttribute="top" secondItem="JTT-wr-6Tj" secondAttribute="top" id="eGD-To-rxs"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="JTT-wr-6Tj"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="Ush-W3-em1"/>
+                                <connections>
+                                    <outlet property="delegate" destination="1Ov-Xk-doz" id="bkh-SA-Kef"/>
+                                </connections>
+                            </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rnS-WF-alV">
+                                <rect key="frame" x="0.0" y="364" width="896" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I am at least 13 years old and accept the Terms of Service." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMH-Wu-g2b">
+                                        <rect key="frame" x="40" y="3" width="739" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Rsn-ib-QQA"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Inter-Regular" family="Inter" pointSize="16"/>
+                                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8tF-ss-V29">
+                                        <rect key="frame" x="809" y="3" width="49" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="47" id="Iyi-tE-qL8"/>
+                                            <constraint firstAttribute="height" constant="31" id="pNu-2q-mWP"/>
+                                        </constraints>
+                                        <color key="onTintColor" red="0.33725490200000002" green="0.83921568629999999" blue="0.46931997710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="agreeSwitchValueChangedWithSender:" destination="1Ov-Xk-doz" eventType="valueChanged" id="yzU-Ki-KnW"/>
+                                        </connections>
+                                    </switch>
+                                </subviews>
+                                <color key="backgroundColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="bMH-Wu-g2b" firstAttribute="leading" secondItem="rnS-WF-alV" secondAttribute="leading" constant="40" id="DqG-Qf-NpU"/>
+                                    <constraint firstAttribute="trailing" secondItem="8tF-ss-V29" secondAttribute="trailing" constant="40" id="HKR-rS-1Bb"/>
+                                    <constraint firstItem="8tF-ss-V29" firstAttribute="leading" secondItem="bMH-Wu-g2b" secondAttribute="trailing" constant="30" id="XuZ-iW-Bdb"/>
+                                    <constraint firstItem="bMH-Wu-g2b" firstAttribute="top" secondItem="rnS-WF-alV" secondAttribute="top" constant="3" id="aFq-qZ-WBY"/>
+                                    <constraint firstItem="8tF-ss-V29" firstAttribute="top" secondItem="rnS-WF-alV" secondAttribute="top" constant="3" id="ggT-Rr-eMQ"/>
+                                    <constraint firstAttribute="height" constant="50" id="y6D-HM-0uH"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="I3f-VV-UzJ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="nwv-qh-ydE" firstAttribute="top" secondItem="I3f-VV-UzJ" secondAttribute="top" id="1PC-3h-CSO"/>
+                            <constraint firstAttribute="trailing" secondItem="nwv-qh-ydE" secondAttribute="trailing" id="6HZ-LH-QX7"/>
+                            <constraint firstItem="nwv-qh-ydE" firstAttribute="leading" secondItem="Fgz-Sn-jRq" secondAttribute="leading" id="KSp-bb-axT"/>
+                            <constraint firstAttribute="trailing" secondItem="rnS-WF-alV" secondAttribute="trailing" id="gld-9I-NLK"/>
+                            <constraint firstAttribute="bottom" secondItem="nwv-qh-ydE" secondAttribute="bottom" id="p0T-kF-0G5"/>
+                            <constraint firstItem="rnS-WF-alV" firstAttribute="leading" secondItem="Fgz-Sn-jRq" secondAttribute="leading" id="sZc-JW-WzF"/>
+                            <constraint firstAttribute="bottom" secondItem="rnS-WF-alV" secondAttribute="bottom" id="tju-MD-xs2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="agreeLabel" destination="bMH-Wu-g2b" id="PdR-Pe-fok"/>
+                        <outlet property="agreeSwitch" destination="8tF-ss-V29" id="Je9-x3-lO2"/>
+                        <outlet property="termsOfServiceTextHeight" destination="o5w-8g-kys" id="iMh-UR-fgl"/>
+                        <outlet property="textView" destination="Gvk-dJ-XaX" id="uEC-LJ-SFq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D9C-1U-NNi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-922.09821428571422" y="1034.7826086956522"/>
         </scene>
         <!--Palettes View Controller-->
         <scene sceneID="ZaW-hr-cUT">
