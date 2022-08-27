@@ -12,5 +12,5 @@ class PanelBackgroundCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    @IBOutlet weak var selectAction: ActionButtonView!
+    @IBOutlet weak var selectedImage: UIImageView!
 }

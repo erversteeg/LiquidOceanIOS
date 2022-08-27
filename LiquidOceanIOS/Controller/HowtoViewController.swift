@@ -152,10 +152,10 @@ class HowtoViewController: UIViewController {
     
     func setStepBackground(label: UILabel) {
         label.layer.cornerRadius = 10
-        label.layer.borderWidth = 1
-        label.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
+        //label.layer.borderWidth = 1
+        //label.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
         
-        label.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x33000000"))
+        label.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x33999999"))
     }
     
     override func viewDidLayoutSubviews() {

@@ -957,17 +957,16 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PanelBackgroundCell", for: indexPath) as! PanelBackgroundCollectionViewCell
         
         let backgroundName = self.panels[indexPath.item]
+        let themeConfig = PanelThemeConfig.buildConfig(imageName: backgroundName)
         
         cell.imageView.contentMode = .scaleAspectFit
         
-        cell.selectAction.colorMode = .white
-        cell.selectAction.type = .yes
-        
         if SessionSettings.instance.panelBackgroundName != backgroundName {
-            cell.selectAction.isHidden = true
+            cell.selectedImage.image = nil
         }
         else {
-            cell.selectAction.isHidden = false
+            cell.selectedImage.image = UIImage(named: "done")
+            cell.selectedImage.tintColor = UIColor(argb: themeConfig.actionButtonColor)
         }
         
         cell.imageView.image = images[indexPath.item]

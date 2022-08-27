@@ -35,7 +35,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6E-cV-Ty3">
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePD-Wx-iiY">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Getting Started" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePD-Wx-iiY">
                                         <rect key="frame" x="364" y="0.0" width="168" height="55"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="168" id="5Yi-j7-T0y"/>
@@ -53,7 +53,7 @@
                                             <constraint firstAttribute="height" constant="200" id="4Mq-C2-OyC"/>
                                             <constraint firstAttribute="width" constant="582" id="8vh-e2-z3F"/>
                                         </constraints>
-                                        <string key="text">The paint brush brings up the color panel. From here you can add pixels to the canvas if you have any. Once you connect to a server, you will automatically start gaining pixels. This happens whether you are still connected to that server or not. You can use these pixels to paint on the canvas. There is an indicator that will show you how many you have.</string>
+                                        <string key="text">Welcome to Art Canvas, a place where you can contribute to pixel art canvases. To get started all you need to do is connect to a server. The test server is made for just that. Go ahead and enter "TEST1" and click add server to get started.</string>
                                         <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -66,7 +66,7 @@
                                             <constraint firstAttribute="width" constant="50" id="sFE-Uv-a7I"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export and Share" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNU-rt-djE">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join and Share" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNU-rt-djE">
                                         <rect key="frame" x="198" y="467" width="500" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="2zY-GM-GpN"/>
@@ -84,7 +84,7 @@
                                             <constraint firstAttribute="width" constant="582" id="2xf-Gn-4MB"/>
                                             <constraint firstAttribute="height" constant="200" id="7ca-ej-mlQ"/>
                                         </constraints>
-                                        <string key="text">This is the export tool. Select a start pixel then drag to an end pixel, it will select all the pixels within a box you create. You can also select a pixel inside an object to select the entire object. Once selected you can save, share, and more!</string>
+                                        <string key="text">After you initially join the server, you will start passively gaining pixels over time to paint on the canvas with. Click this icon on the canvas to select pixels that you want to export and share with others.</string>
                                         <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -822,27 +822,26 @@
                                                                 <constraint firstAttribute="height" constant="200" id="u52-4R-2gS"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YEB-0E-XMi" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                                            <rect key="frame" x="97" y="103" width="21" height="15"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uWD-K5-IDJ">
+                                                            <rect key="frame" x="80" y="102" width="24" height="24"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="21" id="aPd-BG-jTC"/>
-                                                                <constraint firstAttribute="height" constant="15" id="b5J-uC-Jmw"/>
+                                                                <constraint firstAttribute="width" constant="24" id="2Pe-u6-aeg"/>
+                                                                <constraint firstAttribute="height" constant="24" id="My6-yB-P0V"/>
                                                             </constraints>
-                                                        </view>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="YEB-0E-XMi" secondAttribute="bottom" constant="10" id="Beb-bB-3QL"/>
                                                         <constraint firstItem="Eha-Hh-Ael" firstAttribute="centerY" secondItem="GDU-9H-fkb" secondAttribute="centerY" id="EQ6-Sd-rs3"/>
+                                                        <constraint firstAttribute="trailing" secondItem="uWD-K5-IDJ" secondAttribute="trailing" constant="24" id="IG8-gI-XgR"/>
+                                                        <constraint firstAttribute="bottom" secondItem="uWD-K5-IDJ" secondAttribute="bottom" constant="2" id="Lez-Cf-aAJ"/>
                                                         <constraint firstItem="Eha-Hh-Ael" firstAttribute="centerX" secondItem="GDU-9H-fkb" secondAttribute="centerX" id="YB9-Rd-3OE"/>
-                                                        <constraint firstAttribute="trailing" secondItem="YEB-0E-XMi" secondAttribute="trailing" constant="10" id="sCr-la-TxI"/>
                                                     </constraints>
                                                 </collectionViewCellContentView>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
                                                     <outlet property="imageView" destination="Eha-Hh-Ael" id="7PP-PV-yEV"/>
-                                                    <outlet property="selectAction" destination="YEB-0E-XMi" id="hes-9q-6vl"/>
+                                                    <outlet property="selectedImage" destination="uWD-K5-IDJ" id="nfb-Zd-KCP"/>
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>
@@ -3975,7 +3974,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="350" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BU5-Yu-uP0" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BU5-Yu-uP0" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
                                 <rect key="frame" x="55" y="19" width="48" height="48"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uSB-Xo-tWk" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -3995,7 +3994,7 @@
                                     <constraint firstItem="uSB-Xo-tWk" firstAttribute="centerX" secondItem="BU5-Yu-uP0" secondAttribute="centerX" id="hOd-my-nAh"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YOo-Z8-O9P" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YOo-Z8-O9P" customClass="ActionButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
                                 <rect key="frame" x="118" y="19" width="48" height="48"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y8r-ur-ZyT" customClass="ActionButtonView" customModule="LiquidOceanIOS" customModuleProvider="target">
@@ -4024,7 +4023,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q2Z-sl-HLi" customClass="BrightnessSliderControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="39" y="343" width="272" height="47"/>
+                                <rect key="frame" x="55" y="359" width="240" height="15"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="6dJ-mr-B18"/>
@@ -4189,7 +4188,7 @@
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="lH9-Of-rUF"/>
-                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.5" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.80155399145669493" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="lxc-d5-pGb" firstAttribute="centerY" secondItem="E3m-Sf-qjd" secondAttribute="centerY" id="4gK-6W-AKR"/>
                             <constraint firstItem="jfR-oW-AFG" firstAttribute="leading" secondItem="E3m-Sf-qjd" secondAttribute="leading" id="UgQ-ae-YJF"/>
@@ -4213,11 +4212,11 @@
             <objects>
                 <viewController id="4Eu-IR-h8h" customClass="RecentColorsViewController" customModule="LiquidOceanIOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m54-ZD-Z77">
-                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="150" height="70"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0tb-gh-gwe">
-                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="70"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Gov-3c-91k">
                                     <size key="itemSize" width="128" height="128"/>
@@ -4227,7 +4226,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RecentColorCell" id="D19-1N-fc8" customClass="RecentColorCollectionViewCell" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="-14" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="11" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="akD-rd-jML">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -4353,7 +4352,7 @@
                                     <constraint firstAttribute="height" constant="29" id="jki-I8-bDG"/>
                                     <constraint firstAttribute="width" constant="155" id="rT7-Fa-Mcl"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="18"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -4373,7 +4372,7 @@
                                     <constraint firstAttribute="width" constant="167" id="L3n-Tm-Xfx"/>
                                     <constraint firstAttribute="height" constant="29" id="RQA-We-4oK"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="18"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -4432,7 +4431,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6PM-av-mg5" customClass="BrightnessSliderControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="49" y="333" width="252" height="47"/>
+                                <rect key="frame" x="65" y="349" width="220" height="15"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="UZq-lk-JOc"/>
@@ -5573,18 +5572,10 @@ If any person on any canvas uses pixels to give out any personal information abo
             <point key="canvasLocation" x="-1197" y="-512"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="6PM-av-mg5">
-            <size key="intrinsicContentSize" width="896" height="15"/>
-        </designable>
-        <designable name="q2Z-sl-HLi">
-            <size key="intrinsicContentSize" width="896" height="15"/>
-        </designable>
-    </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="Oc8-rR-yNG"/>
-        <segue reference="DhC-cG-tnL"/>
-        <segue reference="cg6-8E-NGn"/>
+        <segue reference="xNZ-J9-gls"/>
+        <segue reference="XGn-H2-2Wq"/>
+        <segue reference="N4G-oK-EKi"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="add" width="24" height="24"/>
