@@ -97,6 +97,8 @@
 		07D0ED24272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D0ED23272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift */; };
 		07D0ED26272DFC9000755C1D /* DeviceViewportSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D0ED25272DFC9000755C1D /* DeviceViewportSummaryView.swift */; };
 		07D6934328BA57A300F2EBE7 /* TermsOfUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D6934228BA57A300F2EBE7 /* TermsOfUseViewController.swift */; };
+		07D6934528BA993D00F2EBE7 /* OptionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D6934428BA993C00F2EBE7 /* OptionContainerView.swift */; };
+		07E5FAAB28BAA3C700C4717D /* Solid_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E5FAAA28BAA3C700C4717D /* Solid_black.png */; };
 		07F573C8289EA65D00D4C9EF /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F573C7289EA65D00D4C9EF /* Server.swift */; };
 		07FF5EFF25DF5833003E19AE /* ArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5EFE25DF5833003E19AE /* ArtView.swift */; };
 		07FF5F0125DF616A003E19AE /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FF5F0025DF616A003E19AE /* ExportViewController.swift */; };
@@ -237,6 +239,8 @@
 		07D0ED23272DCE5F00755C1D /* InteractiveCanvasSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveCanvasSummaryView.swift; sourceTree = "<group>"; };
 		07D0ED25272DFC9000755C1D /* DeviceViewportSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewportSummaryView.swift; sourceTree = "<group>"; };
 		07D6934228BA57A300F2EBE7 /* TermsOfUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseViewController.swift; sourceTree = "<group>"; };
+		07D6934428BA993C00F2EBE7 /* OptionContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionContainerView.swift; sourceTree = "<group>"; };
+		07E5FAAA28BAA3C700C4717D /* Solid_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Solid_black.png; sourceTree = "<group>"; };
 		07F573C7289EA65D00D4C9EF /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		07FF5EFE25DF5833003E19AE /* ArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtView.swift; sourceTree = "<group>"; };
 		07FF5F0025DF616A003E19AE /* ExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
@@ -336,6 +340,7 @@
 		07A305EF25D5B55B003A6CEA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				07E5FAAA28BAA3C700C4717D /* Solid_black.png */,
 				07A9B17B25ED6CCC009A47DF /* amb_2.jpg */,
 				07A9B18225ED6CCD009A47DF /* amb_3.jpg */,
 				07A9B17225ED6CCB009A47DF /* amb_4.jpg */,
@@ -472,6 +477,7 @@
 				0704FB9A2739A511009799E1 /* InsetLabel.swift */,
 				07AE665E289ED5BE00E2E9FC /* ServerCell.swift */,
 				0731602A28A0159B00466BC4 /* ButtonFrame.swift */,
+				07D6934428BA993C00F2EBE7 /* OptionContainerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -607,6 +613,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07FF5F3925E5BDF6003E19AE /* fall_leaves.png in Resources */,
+				07E5FAAB28BAA3C700C4717D /* Solid_black.png in Resources */,
 				07BD25D625D43FB700CF812E /* LaunchScreen.storyboard in Resources */,
 				07FF5F2D25E5BDF6003E19AE /* foil.jpg in Resources */,
 				0704FB99273984C9009799E1 /* Inter-ExtraBold.ttf in Resources */,
@@ -774,6 +781,7 @@
 				07A246D625D4A83500C73CA6 /* LoadingViewController.swift in Sources */,
 				0788E48125FC58BC004FC782 /* ColorPickerOutletsViewController.swift in Sources */,
 				07A246D825D4BF0800C73CA6 /* URLSessionHandler.swift in Sources */,
+				07D6934528BA993D00F2EBE7 /* OptionContainerView.swift in Sources */,
 				07A7C843272AEEC9003AD69C /* UITouchGestureRecognizer.swift in Sources */,
 				07FF5F1125E5BA4F003E19AE /* PanelBackgroundCollectionViewCell.swift in Sources */,
 				07BD25C925D43FB500CF812E /* SceneDelegate.swift in Sources */,

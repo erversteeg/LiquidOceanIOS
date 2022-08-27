@@ -213,7 +213,11 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
                 let y = Int(unitPoint.y)
                 
                 if x >= 0 && x < interactiveCanvas.cols && y >= 0 && y < interactiveCanvas.rows {
-                    SessionSettings.instance.paintColor = interactiveCanvas.arr[y][x]
+                    var color = interactiveCanvas.arr[y][x]
+                    if color == 0 {
+                        color = UIColor.black.argb()
+                    }
+                    SessionSettings.instance.paintColor = color
                     paintDelegate?.notifyPaintColorUpdate()
                 }
             }

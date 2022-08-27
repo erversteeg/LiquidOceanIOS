@@ -129,7 +129,14 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             
             SessionSettings.instance.removeServer(server: self.server)
             
-            self.canvasImage.kf.setImage(with: URL(string: "\(server!.serviceAltUrl())/canvas"))
+            self.canvasImage.alpha = 0
+            self.canvasImage.kf.setImage(
+                with: URL(string: "\(server!.serviceAltUrl())/canvas")) { result in
+                    UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn) {
+                        self.canvasImage.alpha = 1
+                    }
+                }
+            //self.canvasImage.image = UIImage(named: "amb_2.png")
             
             if server!.isAdmin {
                 self.connectingLabel.text = "Connecting to \(server!.name) Eraser"
@@ -141,13 +148,12 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             server!.uuid = storeduuid
             self.server = server!
             
-            SessionSettings.instance.lastVisitedServer = server!
-            SessionSettings.instance.setLastVisitedIndex()
-            
             SessionSettings.instance.uniqueId = self.server.uuid
             SessionSettings.instance.maxPaintAmt = server!.maxPixels
             
             SessionSettings.instance.addServer(server: self.server)
+            SessionSettings.instance.lastVisitedServer = server!
+            SessionSettings.instance.setLastVisitedIndex()
             
             QueueSocket.instance.startSocket(server: server!)
             QueueSocket.instance.queueSocketDelegate = self
@@ -170,7 +176,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     }
     
     func getCanvas() {
-        artView.jsonFile = "globe_json"
+        //artView.jsonFile = "globe_json"
         
         SessionSettings.instance.maxPaintAmt = server.maxPixels
         

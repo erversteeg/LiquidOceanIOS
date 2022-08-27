@@ -64,8 +64,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
                 else {
                     interactiveCanvas!.save()
-                    interactiveCanvas!.saveDeviceViewport()
+                    
                 }
+                interactiveCanvas!.saveDeviceViewport()
             }
             
             SessionSettings.instance.save()

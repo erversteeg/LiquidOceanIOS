@@ -621,4 +621,10 @@ class SessionSettings: NSObject {
     func saveAgreedToTermsOfService() {
         userDefaults().set(agreedToTermsOfService, forKey: "agreed_to_terms_of_service")
     }
+    
+    func saveDeviceViewport() {
+        userDefaults().set(restoreDeviceViewportCenterX, forKey: "restore_device_viewport_center_x")
+        userDefaults().set(restoreDeviceViewportCenterY, forKey: "restore_device_viewport_center_y")
+        userDefaults().set(restoreCanvasScaleFactor, forKey: "restore_canvas_scale_factor")
+    }
 }

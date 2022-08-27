@@ -179,17 +179,17 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // show paint bar
         showPaintBarContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        showPaintBarContainer.layer.borderWidth = 2
+        showPaintBarContainer.layer.borderWidth = 0
         showPaintBarSwitch.isOn = SessionSettings.instance.showPaintBar
         
         // show paint circle
         showPaintCircleContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        showPaintCircleContainer.layer.borderWidth = 2
+        showPaintCircleContainer.layer.borderWidth = 0
         showPaintCircleSwitch.isOn = SessionSettings.instance.showPaintCircle
         
         // paint meter color
         paintMeterColorContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        paintMeterColorContainer.layer.borderWidth = 2
+        paintMeterColorContainer.layer.borderWidth = 0
         
         paintMeterColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.paintIndicatorColor)
         
@@ -198,12 +198,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // canvas lock border
         canvasLockBorderContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        canvasLockBorderContainer.layer.borderWidth = 2
+        canvasLockBorderContainer.layer.borderWidth = 0
         canvasLockBorderSwitch.isOn = SessionSettings.instance.canvasLockBorder
         
         // canvas lock color
         canvasLockColorContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        canvasLockColorContainer.layer.borderWidth = 2
+        canvasLockColorContainer.layer.borderWidth = 0
         canvasLockColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.canvasLockColor)
         
         tgr = UITapGestureRecognizer(target: self, action: #selector(tappedCanvasLockColorView(sender:)))
@@ -211,7 +211,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // grid line color
         gridLineColorContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        gridLineColorContainer.layer.borderWidth = 2
+        gridLineColorContainer.layer.borderWidth = 0
         
         tgr = UITapGestureRecognizer(target: self, action: #selector(tappedGridLineColorView(sender:)))
         gridLineColorColorView.addGestureRecognizer(tgr)
@@ -222,7 +222,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // canvas background primary color
         canvasBackgroundPrimaryColorContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        canvasBackgroundPrimaryColorContainer.layer.borderWidth = 2
+        canvasBackgroundPrimaryColorContainer.layer.borderWidth = 0
         
         tgr = UITapGestureRecognizer(target: self, action: #selector(tappedCanvasBackgroundPrimaryColorView(sender:)))
         canvasBackgroundPrimaryColorColorView.addGestureRecognizer(tgr)
@@ -233,7 +233,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // canvas background secondary color
         canvasBackgroundSecondaryColorContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        canvasBackgroundSecondaryColorContainer.layer.borderWidth = 2
+        canvasBackgroundSecondaryColorContainer.layer.borderWidth = 0
         
         tgr = UITapGestureRecognizer(target: self, action: #selector(tappedCanvasBackgroundSecondaryColorView(sender:)))
         canvasBackgroundSecondaryColorColorView.addGestureRecognizer(tgr)
@@ -244,7 +244,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // frame color
         frameColorContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        frameColorContainer.layer.borderWidth = 2
+        frameColorContainer.layer.borderWidth = 0
         frameColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.frameColor)
         
         tgr = UITapGestureRecognizer(target: self, action: #selector(tappedFrameColorView(sender:)))
@@ -252,7 +252,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // close draw panel button color
         closeDrawPanelColorContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        closeDrawPanelColorContainer.layer.borderWidth = 2
+        closeDrawPanelColorContainer.layer.borderWidth = 0
         
         if SessionSettings.instance.paintPanelCloseButtonColor != 0 {
             closeDrawPanelColorColorView.backgroundColor = UIColor(argb: SessionSettings.instance.paintPanelCloseButtonColor)
@@ -263,22 +263,22 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // circle palette
         circlePaletteContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        circlePaletteContainer.layer.borderWidth = 2
+        circlePaletteContainer.layer.borderWidth = 0
         circlePaletteSwitch.isOn = SessionSettings.instance.paintIndicatorFill
         
         // square palette
         squarePaletteContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        squarePaletteContainer.layer.borderWidth = 2
+        squarePaletteContainer.layer.borderWidth = 0
         squarePaletteSwitch.isOn = SessionSettings.instance.paintIndicatorSquare
         
         // palette outline
         paletteOutlineContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        paletteOutlineContainer.layer.borderWidth = 2
+        paletteOutlineContainer.layer.borderWidth = 0
         paletteOutlineSwitch.isOn = SessionSettings.instance.paintIndicatorOutline
         
         // color indicator size
         colorIndicatorWidthContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        colorIndicatorWidthContainer.layer.borderWidth = 2
+        colorIndicatorWidthContainer.layer.borderWidth = 0
         colorIndicatorWidthLabel.text = String(SessionSettings.instance.paintIndicatorWidth)
         
         colorIndicatorWidthMinusFrame.actionButtonView = colorIndicatorWidthMinusAction
@@ -305,7 +305,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // color palette size
         paletteSizeContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        paletteSizeContainer.layer.borderWidth = 2
+        paletteSizeContainer.layer.borderWidth = 0
         paletteSizeLabel.text = String(SessionSettings.instance.colorPaletteSize)
         
         paletteSizeMinusFrame.actionButtonView = paletteSizeMinusAction
@@ -332,12 +332,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // bold action buttons
         boldActionButtonsContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        boldActionButtonsContainer.layer.borderWidth = 2
+        boldActionButtonsContainer.layer.borderWidth = 0
         boldActionButtonsSwitch.isOn = SessionSettings.instance.boldActionButtons
         
         // recent colors
         recentColorsContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        recentColorsContainer.layer.borderWidth = 2
+        recentColorsContainer.layer.borderWidth = 0
     
         selectRecentColorLabel(amt: SessionSettings.instance.numRecentColors)
         
@@ -349,12 +349,12 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // right-handed
         rightHandedContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        rightHandedContainer.layer.borderWidth = 2
+        rightHandedContainer.layer.borderWidth = 0
         rightHandedSwitch.isOn = SessionSettings.instance.rightHanded
         
         // small action buttons
         smallActionButtonsContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        smallActionButtonsContainer.layer.borderWidth = 2
+        smallActionButtonsContainer.layer.borderWidth = 0
         smallActionButtonsSwitch.isOn = SessionSettings.instance.smallActionButtons
         
         if SessionSettings.instance.pincodeSet {
@@ -1013,7 +1013,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
             if name!.count > 20 {
                 self.changeNameButton.isEnabled = false
                 
-                textField.layer.borderWidth = 2
+                textField.layer.borderWidth = 0
                 textField.layer.borderColor = UIColor(argb: ActionButtonView.redColor).cgColor
                 
                 return false
@@ -1030,13 +1030,13 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
                     self.changeNameButton.isEnabled = true
                     self.checkedName = name!.trimmingCharacters(in: .whitespacesAndNewlines)
                     
-                    textField.layer.borderWidth = 2
+                    textField.layer.borderWidth = 0
                     textField.layer.borderColor = UIColor(argb: ActionButtonView.greenColor).cgColor
                 }
                 else {
                     self.changeNameButton.isEnabled = false
                     
-                    textField.layer.borderWidth = 2
+                    textField.layer.borderWidth = 0
                     textField.layer.borderColor = UIColor(argb: ActionButtonView.redColor).cgColor
                 }
             }
@@ -1095,7 +1095,7 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         let gradient = CAGradientLayer()
 
         gradient.frame = self.view.frame
-        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff874d14")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff87072f")).cgColor]
+        gradient.colors = [UIColor(argb: Utils.int32FromColorHex(hex: "0xff681a8a")).cgColor, UIColor(argb: Utils.int32FromColorHex(hex: "0xff0e877b")).cgColor]
         
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 1, y: 1)
