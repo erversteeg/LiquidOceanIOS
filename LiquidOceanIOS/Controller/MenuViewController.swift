@@ -427,7 +427,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         var rIndex = Int(arc4random() % UInt32(backgrounds.count))
         
         if SessionSettings.instance.defaultBg {
-            rIndex = 8
+            rIndex = 5
             
             SessionSettings.instance.defaultBg = false
             //SessionSettings.instance.quickSave()

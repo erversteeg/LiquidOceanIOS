@@ -211,6 +211,11 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var menuContainerCenterX: NSLayoutConstraint!
     @IBOutlet weak var menuContainerCenterY: NSLayoutConstraint!
     
+    @IBOutlet weak var bannerView: UIView!
+    @IBOutlet weak var bannerIcon: UIImageView!
+    @IBOutlet weak var bannerText: UILabel!
+    @IBOutlet weak var bannerWidth: NSLayoutConstraint!
+    
     let showOptions = "ShowOptions"
     let showHowto = "ShowHowto"
     let unwindToLoading = "UnwindToLoading"
@@ -287,6 +292,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.selectedObjectMoveView = self
         
         // surfaceView.setInitalScale()
+        
+        setupBanner()
         
         // menu button
         self.menuButton.setOnClickListener {
@@ -1080,9 +1087,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             colorPickerViewController.delegate = self
             colorPickerViewController.layoutDelegate = self
             colorPickerViewController.selectedColor = UIColor(argb: SessionSettings.instance.paintColor)
-            colorPickerViewController.view.backgroundColor = UIColor.clear
+            colorPickerViewController.view.backgroundColor = UIColor.black
             
-            setDefaultColorsClickListeners()
+            //setDefaultColorsClickListeners()
         }
         else if segue.identifier == "PixelHistoryEmbed" {
             segue.destination.modalPresentationStyle = .overCurrentContext
@@ -2011,6 +2018,41 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }))
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    private func setupBanner() {
+        bannerView.alpha = 0
+        
+        bannerView.layer.cornerRadius = 15
+        bannerView.layer.borderColor = UIColor(argb: ActionButtonView.lightGreenColor).cgColor
+        bannerView.layer.borderWidth = 1
+        bannerView.backgroundColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xff1b1b1b"))
+        
+        bannerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clickedBannerView)))
+        
+        bannerIcon.kf.setImage(
+            with: URL(string: server!.iconUrl)) { result in
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear) {
+                    self.bannerView.alpha = 1
+                }
+            }
+        
+        bannerText.textColor = UIColor.white
+        bannerText.text = server.bannerText
+        bannerWidth.constant = bannerText.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: 20)).width + 10 + 16 + 16 + 20
+        
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { timer in
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear) {
+                self.bannerView.alpha = 0
+            } completion: { success in
+                self.bannerView.isHidden = true
+            }
+
+        }
+    }
+    
+    @objc func clickedBannerView() {
+        UIApplication.shared.openURL(URL(string: server.iconLink)!)
     }
 }
 

@@ -731,6 +731,9 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                     
                     server.name = jsonDict["name"] as! String
                     server.baseUrl = jsonDict["base_url"] as! String
+                    server.iconUrl = jsonDict["icon_url"] as! String
+                    server.iconLink = jsonDict["icon_link"] as! String
+                    server.bannerText = jsonDict["banner_text"] as! String
                     server.pixelInterval = jsonDict["pixel_interval"] as! Int
                     server.maxPixels = jsonDict["max_pixels"] as! Int
                     server.isAdmin = jsonDict["is_admin"] as! Bool

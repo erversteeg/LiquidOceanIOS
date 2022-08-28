@@ -12,6 +12,9 @@ class Server: NSObject {
     
     var name = ""
     var baseUrl = ""
+    var iconUrl = ""
+    var iconLink = ""
+    var bannerText = ""
     var pixelInterval = 0
     var maxPixels = 0
     var accessKey = ""

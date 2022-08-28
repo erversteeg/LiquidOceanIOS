@@ -137,7 +137,7 @@ class PixelHistoryViewController: UIViewController, UICollectionViewDataSource, 
                 cell.dateLabel.text = "Four weeks ago"
             }
             else if sameYaer {
-                dateFormatter.dateFormat = "M"
+                dateFormatter.dateFormat = "MMMM"
                 cell.dateLabel.text = dateFormatter.string(from: date)
             }
             else {

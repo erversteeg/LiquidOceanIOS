@@ -22,6 +22,9 @@
         <array key="Inter-Regular.ttf">
             <string>Inter-Regular</string>
         </array>
+        <array key="Inter-SemiBold.ttf">
+            <string>Inter-SemiBold</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Howto View Controller-->
@@ -2641,6 +2644,13 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ePI-JI-B43">
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2G2-T6-VzL">
+                                <rect key="frame" x="398" y="157" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="LcS-qW-kRO"/>
+                                    <constraint firstAttribute="height" constant="100" id="b9q-b6-pNH"/>
+                                </constraints>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading 0 / 8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXl-z6-hei">
                                 <rect key="frame" x="392" y="40" width="112" height="22"/>
                                 <fontDescription key="fontDescription" name="Inter-Regular" family="Inter" pointSize="18"/>
@@ -2677,7 +2687,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="~0 in queue" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vaK-z4-Ul6">
-                                <rect key="frame" x="746" y="20" width="120" height="20"/>
+                                <rect key="frame" x="746" y="12" width="120" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="rkN-yn-fnz"/>
                                     <constraint firstAttribute="height" constant="20" id="vcH-w5-f8x"/>
@@ -2958,13 +2968,14 @@
                         <viewLayoutGuide key="safeArea" id="IBZ-1L-lqc"/>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="2G2-T6-VzL" firstAttribute="centerY" secondItem="ox1-JT-C2l" secondAttribute="centerY" id="8Vg-pF-Glg"/>
                             <constraint firstAttribute="trailing" secondItem="vaK-z4-Ul6" secondAttribute="trailing" constant="30" id="9BN-AI-4F0"/>
                             <constraint firstItem="3bq-uc-vfw" firstAttribute="leading" secondItem="ox1-JT-C2l" secondAttribute="trailing" constant="-270" id="DFs-Kn-3wW"/>
                             <constraint firstItem="h2i-AB-1jL" firstAttribute="centerX" secondItem="ox1-JT-C2l" secondAttribute="centerX" id="EzZ-Rc-y0f"/>
                             <constraint firstItem="ePI-JI-B43" firstAttribute="centerY" secondItem="ox1-JT-C2l" secondAttribute="centerY" id="G9e-5Q-Kc6"/>
                             <constraint firstItem="HQe-ix-IAx" firstAttribute="leading" secondItem="IBZ-1L-lqc" secondAttribute="leading" constant="20" id="HEn-tt-lhg"/>
                             <constraint firstItem="U5e-vE-uKA" firstAttribute="leading" secondItem="h2i-AB-1jL" secondAttribute="trailing" id="Jea-P4-ZQt"/>
-                            <constraint firstItem="vaK-z4-Ul6" firstAttribute="top" secondItem="ox1-JT-C2l" secondAttribute="top" constant="20" id="Ljv-1g-jtj"/>
+                            <constraint firstItem="vaK-z4-Ul6" firstAttribute="top" secondItem="ox1-JT-C2l" secondAttribute="top" constant="12" id="Ljv-1g-jtj"/>
                             <constraint firstItem="3bq-uc-vfw" firstAttribute="centerY" secondItem="ox1-JT-C2l" secondAttribute="centerY" id="Pmb-4u-S0b"/>
                             <constraint firstAttribute="trailing" secondItem="3bq-uc-vfw" secondAttribute="trailing" constant="50" id="RRX-Uo-a3O"/>
                             <constraint firstItem="Hdm-Ql-wnR" firstAttribute="leading" secondItem="ox1-JT-C2l" secondAttribute="leading" constant="50" id="WTn-Ux-a78"/>
@@ -2973,6 +2984,7 @@
                             <constraint firstItem="eXl-z6-hei" firstAttribute="centerX" secondItem="ox1-JT-C2l" secondAttribute="centerX" id="aHu-d7-9Se"/>
                             <constraint firstItem="ePI-JI-B43" firstAttribute="centerX" secondItem="ox1-JT-C2l" secondAttribute="centerX" id="bAf-Dh-ZnX"/>
                             <constraint firstItem="eXl-z6-hei" firstAttribute="top" secondItem="h2i-AB-1jL" secondAttribute="bottom" id="bbS-Rd-tAs"/>
+                            <constraint firstItem="2G2-T6-VzL" firstAttribute="centerX" secondItem="ox1-JT-C2l" secondAttribute="centerX" id="g9T-My-1ZI"/>
                             <constraint firstAttribute="bottom" secondItem="HQe-ix-IAx" secondAttribute="bottom" constant="20" id="geQ-rT-CQ2"/>
                             <constraint firstItem="U5e-vE-uKA" firstAttribute="bottom" secondItem="h2i-AB-1jL" secondAttribute="bottom" id="jV5-0j-HZ7"/>
                             <constraint firstItem="Hdm-Ql-wnR" firstAttribute="centerY" secondItem="ox1-JT-C2l" secondAttribute="centerY" id="kd9-U1-Kij"/>
@@ -2990,6 +3002,7 @@
                         <outlet property="connectingLabelWidth" destination="k5D-g4-X9W" id="F9s-kB-AfL"/>
                         <outlet property="dotsLabel" destination="U5e-vE-uKA" id="yw6-Ys-oEA"/>
                         <outlet property="gameTipLabel" destination="HQe-ix-IAx" id="B4g-Sp-G3a"/>
+                        <outlet property="iconImage" destination="2G2-T6-VzL" id="FYa-pK-ymw"/>
                         <outlet property="queuePosLabel" destination="vaK-z4-Ul6" id="kVA-lS-2Kk"/>
                         <outlet property="statusLabel" destination="eXl-z6-hei" id="3Zx-Jd-gH8"/>
                         <outlet property="topContributorAmt1" destination="U2u-pi-wUp" id="SOv-JE-omd"/>
@@ -3751,6 +3764,37 @@
                                     <segue destination="MHS-hk-8CL" kind="embed" identifier="MenuEmbed" id="aVI-Vb-GxK"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HLu-eR-GQ6">
+                                <rect key="frame" x="328" y="10" width="240" height="30"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dao-J5-Ru8">
+                                        <rect key="frame" x="16" y="5" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="NPQ-ra-YSk"/>
+                                            <constraint firstAttribute="width" constant="20" id="j9j-n0-GrY"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hosted by summit1g on Twitch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Xj-Za-JZQ">
+                                        <rect key="frame" x="46" y="5" width="178" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="ul6-pe-oGA"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Inter-SemiBold" family="Inter" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="dao-J5-Ru8" firstAttribute="centerY" secondItem="HLu-eR-GQ6" secondAttribute="centerY" id="5xI-sP-3zr"/>
+                                    <constraint firstAttribute="height" constant="30" id="ByP-x6-K4s"/>
+                                    <constraint firstAttribute="width" constant="240" id="KXZ-AI-nn8"/>
+                                    <constraint firstItem="8Xj-Za-JZQ" firstAttribute="leading" secondItem="dao-J5-Ru8" secondAttribute="trailing" constant="10" id="PM7-Gq-4Rd"/>
+                                    <constraint firstItem="dao-J5-Ru8" firstAttribute="leading" secondItem="HLu-eR-GQ6" secondAttribute="leading" constant="16" id="d8W-xd-5B5"/>
+                                    <constraint firstItem="8Xj-Za-JZQ" firstAttribute="centerY" secondItem="HLu-eR-GQ6" secondAttribute="centerY" id="oo4-Ts-Pjw"/>
+                                    <constraint firstAttribute="trailing" secondItem="8Xj-Za-JZQ" secondAttribute="trailing" constant="16" id="xod-0L-XKc"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3781,6 +3825,7 @@
                             <constraint firstAttribute="trailing" secondItem="xoZ-vF-uEO" secondAttribute="trailing" priority="999" id="DY5-I4-pWG"/>
                             <constraint firstItem="lXl-XV-J0j" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" priority="999" constant="17" id="Dbr-Ep-mN9"/>
                             <constraint firstItem="3Wc-83-toh" firstAttribute="trailing" secondItem="xoZ-vF-uEO" secondAttribute="leading" priority="999" constant="-17" id="GnW-Xy-fqt"/>
+                            <constraint firstItem="HLu-eR-GQ6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Isy-cg-FSy"/>
                             <constraint firstItem="I8I-kz-GVV" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="JdQ-iN-jtc"/>
                             <constraint firstItem="xoZ-vF-uEO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Jh7-I7-tfX"/>
                             <constraint firstItem="hVZ-1b-A3N" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="87" id="KPc-XP-DtV"/>
@@ -3789,6 +3834,7 @@
                             <constraint firstItem="xoZ-vF-uEO" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Ow3-n7-mfO"/>
                             <constraint firstItem="tjQ-fj-IaW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" priority="999" id="QZU-0q-YRz"/>
                             <constraint firstItem="DcD-dU-48h" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QyE-k3-clE"/>
+                            <constraint firstItem="HLu-eR-GQ6" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="10" id="RJO-bM-7hv"/>
                             <constraint firstItem="Tzt-c9-dyw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="RtT-4c-xd6"/>
                             <constraint firstItem="tjQ-fj-IaW" firstAttribute="leading" secondItem="UYW-Te-7QB" secondAttribute="trailing" id="SMr-fv-78B"/>
                             <constraint firstAttribute="trailing" secondItem="ZmC-9f-OkI" secondAttribute="trailing" constant="17" id="SdG-YV-QTf"/>
@@ -3837,6 +3883,10 @@
                         <outlet property="achievementIcon" destination="BTJ-yk-HBe" id="emm-0r-Tot"/>
                         <outlet property="achievementName" destination="FOQ-9l-Zo0" id="slQ-kx-dMs"/>
                         <outlet property="backButtonLeading" destination="e1J-Uu-p3F" id="gth-aV-7FV"/>
+                        <outlet property="bannerIcon" destination="dao-J5-Ru8" id="AsM-1w-ZFO"/>
+                        <outlet property="bannerText" destination="8Xj-Za-JZQ" id="Cgm-Z9-gYb"/>
+                        <outlet property="bannerView" destination="HLu-eR-GQ6" id="oL6-cY-cOc"/>
+                        <outlet property="bannerWidth" destination="KXZ-AI-nn8" id="rNZ-OT-AVS"/>
                         <outlet property="canvasFrameView" destination="hVZ-1b-A3N" id="hgi-dE-wPf"/>
                         <outlet property="canvasFrameViewLeading" destination="BiG-YW-U0X" id="hMB-4L-KaD"/>
                         <outlet property="canvasFrameViewTop" destination="KPc-XP-DtV" id="uee-JC-NZT"/>
@@ -4015,7 +4065,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQc-ZZ-5IN" customClass="RadialPaletteControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="55" y="87" width="240" height="240"/>
+                                <rect key="frame" x="39" y="71" width="272" height="272"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="SPU-B7-fss"/>
@@ -4023,7 +4073,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q2Z-sl-HLi" customClass="BrightnessSliderControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="55" y="359" width="240" height="15"/>
+                                <rect key="frame" x="39" y="343" width="272" height="47"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="6dJ-mr-B18"/>
@@ -4031,7 +4081,7 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9uX-r8-HM3">
-                                <rect key="frame" x="185" y="27" width="110" height="40"/>
+                                <rect key="frame" x="185" y="17" width="110" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="110" id="2bc-vW-mbC"/>
@@ -4043,13 +4093,13 @@
                             </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="36R-El-x8r"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9uX-r8-HM3" firstAttribute="trailing" secondItem="UQc-ZZ-5IN" secondAttribute="trailing" id="20w-dT-0F3"/>
                             <constraint firstItem="UQc-ZZ-5IN" firstAttribute="centerY" secondItem="5r5-D9-GHB" secondAttribute="centerY" id="63x-7h-xiz"/>
-                            <constraint firstItem="9uX-r8-HM3" firstAttribute="bottom" secondItem="YOo-Z8-O9P" secondAttribute="bottom" id="Ale-Lc-a4h"/>
                             <constraint firstItem="BU5-Yu-uP0" firstAttribute="top" secondItem="5r5-D9-GHB" secondAttribute="top" constant="19" id="E3V-Eo-HHs"/>
                             <constraint firstItem="q2Z-sl-HLi" firstAttribute="top" secondItem="UQc-ZZ-5IN" secondAttribute="bottom" constant="32" id="FPD-5j-Zn7"/>
+                            <constraint firstItem="9uX-r8-HM3" firstAttribute="top" secondItem="5r5-D9-GHB" secondAttribute="top" constant="17" id="ID2-Ma-Wi2"/>
                             <constraint firstItem="UQc-ZZ-5IN" firstAttribute="centerX" secondItem="5r5-D9-GHB" secondAttribute="centerX" id="NNE-pj-7tC"/>
                             <constraint firstItem="q2Z-sl-HLi" firstAttribute="centerX" secondItem="5r5-D9-GHB" secondAttribute="centerX" id="PEr-do-HPe"/>
                             <constraint firstItem="YOo-Z8-O9P" firstAttribute="top" secondItem="BU5-Yu-uP0" secondAttribute="top" id="T83-Me-5Gl"/>
@@ -4423,7 +4473,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnn-iB-Zo4" customClass="RadialPaletteControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="55" y="50" width="240" height="240"/>
+                                <rect key="frame" x="39" y="34" width="272" height="272"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="KDt-ja-w5Q"/>
@@ -4431,7 +4481,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6PM-av-mg5" customClass="BrightnessSliderControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="65" y="349" width="220" height="15"/>
+                                <rect key="frame" x="49" y="333" width="252" height="47"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="UZq-lk-JOc"/>
@@ -5157,16 +5207,16 @@ If any person on any canvas uses pixels to give out any personal information abo
                                                     <constraint firstAttribute="height" constant="50" id="MAl-WY-Iqd"/>
                                                     <constraint firstAttribute="width" constant="230" id="qFX-RZ-mBX"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="42"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                                 <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <size key="shadowOffset" width="1" height="1"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ewf-Hl-1Yn">
-                                                <rect key="frame" x="30" y="95" width="230" height="34"/>
+                                                <rect key="frame" x="30" y="95" width="210" height="34"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="230" id="LdU-WJ-Mt8"/>
+                                                    <constraint firstAttribute="width" constant="210" id="LdU-WJ-Mt8"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" returnKeyType="done"/>
@@ -5175,10 +5225,10 @@ If any person on any canvas uses pixels to give out any personal information abo
                                                 </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fKi-5S-IWg">
-                                                <rect key="frame" x="30" y="139" width="230" height="40"/>
+                                                <rect key="frame" x="30" y="139" width="210" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="j4n-4A-vFF"/>
-                                                    <constraint firstAttribute="width" constant="230" id="jei-eR-2Cv"/>
+                                                    <constraint firstAttribute="width" constant="210" id="jei-eR-2Cv"/>
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
@@ -5319,7 +5369,7 @@ If any person on any canvas uses pixels to give out any personal information abo
                                         <subviews>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LEFTY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Di-0e-dUf">
                                                 <rect key="frame" x="0.0" y="0.0" width="230" height="50"/>
-                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="42"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                                 <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -5337,11 +5387,11 @@ If any person on any canvas uses pixels to give out any personal information abo
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iVb-p6-yVv" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="30" y="105" width="230" height="50"/>
+                                        <rect key="frame" x="30" y="100" width="230" height="50"/>
                                         <subviews>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RIGHTY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wvt-23-VV0">
                                                 <rect key="frame" x="0.0" y="0.0" width="230" height="50"/>
-                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
+                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="42"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                                 <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -5372,7 +5422,7 @@ If any person on any canvas uses pixels to give out any personal information abo
                                     <constraint firstItem="MXp-b9-2V2" firstAttribute="top" secondItem="YG3-8a-G7f" secondAttribute="bottom" id="Flv-b6-kng"/>
                                     <constraint firstItem="30w-vU-iFk" firstAttribute="leading" secondItem="xv7-mI-1F4" secondAttribute="leading" constant="30" id="J08-L6-IE1"/>
                                     <constraint firstItem="30w-vU-iFk" firstAttribute="top" secondItem="xv7-mI-1F4" secondAttribute="top" constant="50" id="JHT-pw-D7r"/>
-                                    <constraint firstItem="iVb-p6-yVv" firstAttribute="top" secondItem="30w-vU-iFk" secondAttribute="bottom" constant="5" id="JWZ-0v-gFG"/>
+                                    <constraint firstItem="iVb-p6-yVv" firstAttribute="top" secondItem="30w-vU-iFk" secondAttribute="bottom" id="JWZ-0v-gFG"/>
                                     <constraint firstItem="Udx-0l-rs5" firstAttribute="top" secondItem="xv7-mI-1F4" secondAttribute="top" id="L88-JV-mpI"/>
                                     <constraint firstItem="OKa-Xj-NoU" firstAttribute="leading" secondItem="xv7-mI-1F4" secondAttribute="leading" id="LPF-FC-B8b"/>
                                     <constraint firstItem="4hZ-np-g2U" firstAttribute="top" secondItem="QSm-v4-gzA" secondAttribute="bottom" constant="20" id="Nxe-RK-Fel"/>
@@ -5572,10 +5622,18 @@ If any person on any canvas uses pixels to give out any personal information abo
             <point key="canvasLocation" x="-1197" y="-512"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="6PM-av-mg5">
+            <size key="intrinsicContentSize" width="896" height="15"/>
+        </designable>
+        <designable name="q2Z-sl-HLi">
+            <size key="intrinsicContentSize" width="896" height="15"/>
+        </designable>
+    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="xNZ-J9-gls"/>
-        <segue reference="XGn-H2-2Wq"/>
-        <segue reference="N4G-oK-EKi"/>
+        <segue reference="DhC-cG-tnL"/>
+        <segue reference="cg6-8E-NGn"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="add" width="24" height="24"/>

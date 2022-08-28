@@ -30,6 +30,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
     @IBOutlet weak var artView: ArtView!
     
     @IBOutlet weak var canvasImage: UIImageView!
+    @IBOutlet weak var iconImage: UIImageView!
     
     @IBOutlet weak var topContributorName1: UILabel!
     @IBOutlet weak var topContributorName2: UILabel!
@@ -136,6 +137,16 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                         self.canvasImage.alpha = 1
                     }
                 }
+            
+            self.iconImage.alpha = 0
+            self.iconImage.layer.cornerRadius = 50
+            self.iconImage.kf.setImage(
+                with: URL(string: server!.iconUrl)) { result in
+                    UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn) {
+                        self.iconImage.alpha = 1
+                    }
+                }
+            
             //self.canvasImage.image = UIImage(named: "amb_2.png")
             
             if server!.isAdmin {
