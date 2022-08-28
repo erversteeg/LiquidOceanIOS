@@ -4829,6 +4829,7 @@ If any person on any canvas uses pixels to give out any personal information abo
                     <connections>
                         <outlet property="agreeLabel" destination="bMH-Wu-g2b" id="PdR-Pe-fok"/>
                         <outlet property="agreeSwitch" destination="8tF-ss-V29" id="Je9-x3-lO2"/>
+                        <outlet property="scrollView" destination="nwv-qh-ydE" id="aPb-G3-9VU"/>
                         <outlet property="termsOfServiceTextHeight" destination="o5w-8g-kys" id="iMh-UR-fgl"/>
                         <outlet property="textView" destination="Gvk-dJ-XaX" id="uEC-LJ-SFq"/>
                     </connections>

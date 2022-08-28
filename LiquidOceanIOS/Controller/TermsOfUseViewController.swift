@@ -16,12 +16,19 @@ class TermsOfUseViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var agreeLabel: UILabel!
     @IBOutlet weak var agreeSwitch: UISwitch!
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     @IBOutlet weak var termsOfServiceTextHeight: NSLayoutConstraint!
     
     override func viewDidLayoutSubviews() {
         let h = textView.sizeThatFits(CGSize(width: textView.frame.size.width, height: CGFloat.greatestFiniteMagnitude)).height
         
         termsOfServiceTextHeight.constant = h
+        
+        if scrollView.frame.size.height >= scrollView.contentSize.height {
+            agreeLabel.textColor = UIColor.black
+            agreeSwitch.isEnabled = true
+        }
     }
     
     // scroll view delegate
