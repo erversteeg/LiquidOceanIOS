@@ -1102,8 +1102,8 @@ class InteractiveCanvas: NSObject {
         
         screenSpaceRect.origin.x = round(max(offsetX, 0.0))
         screenSpaceRect.origin.y = round(max(offsetY, 0.0))
-        screenSpaceRect.size.width = round(CGFloat(ppu))
-        screenSpaceRect.size.height = round(CGFloat(ppu))
+        screenSpaceRect.size.width = round(CGFloat(ppu)) + 1
+        screenSpaceRect.size.height = round(CGFloat(ppu)) + 1
         
         return screenSpaceRect
     }

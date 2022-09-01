@@ -3050,7 +3050,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Noh-3c-qct" customClass="InteractiveCanvasView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UYW-Te-7QB">
                                 <rect key="frame" x="0.0" y="0.0" width="696" height="414"/>
@@ -4736,7 +4736,7 @@ Any pixel(s) written onto any canvas are the sole responsibility of the person w
 
 (2) Hate Speech and Symbols
 
-On occasion a person may be harassed or assaulted by another person or any number of persons through the medium of pixels on a canvas. This may involve written or depicted hate speech (words) or symbols that a person may find offensive to them in one or many ways. Please understand that by using the service you agree to a certain risk of yourself becoming the victim of such hateful actions and that if reported or seen, the cultrips will be banned to the full extent that it is possible. The app developers or publishers are in no way responsible for any hate or harm that comes to another person while using the service. Any emotional or mental damage imposed upon any person by any number of persons using the service is their own responsibility. You may pursue these user(s) directly, however no name or other personal information with the exception of IP addresses are stored, so it will be challenging to figure out exactly who it was. The app developers and publishers are in no way condoning hateful acts by not keeping record of most personal data. If you are being harassed please leave the canvas immediately and report the case to erversteeg@gmail.com.
+On occasion a person may be harassed or assaulted by another person or any number of persons through the medium of pixels on a canvas. This may involve written or depicted hate speech (words) or symbols that a person may find offensive to them in one or many ways. Please understand that by using the service you agree to a certain risk of yourself becoming the victim of such hateful actions and that if reported or seen, the cultrips will be banned to the full extent that it is possible. The app developers or publishers are in no way responsible for any hate or harm that comes to another person while using the service. Any emotional or mental damage imposed upon any person by any number of persons using the service is their own responsibility. No real name or other personal information with the exception of IP addresses are stored, so it will be challenging to figure out exactly who it was. The app developers and publishers are in no way condoning hateful acts by not keeping record of most personal data. If you are being harassed please leave the canvas immediately and report the case to erversteeg@gmail.com.
 
 (3) Copied Content
 
@@ -4744,16 +4744,7 @@ Within the app any person may choose to select, export, and share any number of 
 
 (4) Personal Information
 
-If any person on any canvas uses pixels to give out any personal information about themselves, they will be banned. Alternatively you are not allowed to solicit any person to give away any personal information about themselves. If in a rare case such interactions lead to anything happening as a result in real life (outside the app), it is not the responsibility of the developers or publishers of the service.
-
-
-
-
-
-
-
-
-</mutableString>
+If any person on any canvas uses pixels to give out any personal information about themselves, they will be banned. Alternatively you are not allowed to solicit any person to give away any personal information about themselves. If in a rare case such interactions lead to anything happening as a result in real life (outside the app), it is not the responsibility of the developers or publishers of the service.</mutableString>
                                                 <color key="textColor" red="0.33725490200000002" green="0.83921568629999999" blue="0.46931997710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Inter-Regular" family="Inter" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
