@@ -4744,7 +4744,11 @@ Within the app any person may choose to select, export, and share any number of 
 
 (4) Personal Information
 
-If any person on any canvas uses pixels to give out any personal information about themselves, they will be banned. Alternatively you are not allowed to solicit any person to give away any personal information about themselves. If in a rare case such interactions lead to anything happening as a result in real life (outside the app), it is not the responsibility of the developers or publishers of the service.</mutableString>
+If any person on any canvas uses pixels to give out any personal information about themselves, they will be banned. Alternatively you are not allowed to solicit any person to give away any personal information about themselves. If in a rare case such interactions lead to anything happening as a result in real life (outside the app), it is not the responsibility of the developers or publishers of the service.
+
+
+
+</mutableString>
                                                 <color key="textColor" red="0.33725490200000002" green="0.83921568629999999" blue="0.46931997710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Inter-Regular" family="Inter" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

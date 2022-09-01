@@ -24,6 +24,22 @@ class TermsOfUseViewController: UIViewController, UIScrollViewDelegate {
         let h = textView.sizeThatFits(CGSize(width: textView.frame.size.width, height: CGFloat.greatestFiniteMagnitude)).height
         
         termsOfServiceTextHeight.constant = h
+        
+        print("scrollview height is \(scrollView.frame.size.height)")
+        print("content height is \(scrollView.contentSize.height)")
+        
+        let scrollViewHeight = scrollView.frame.size.height
+        let contentHeight = scrollView.contentSize.height
+        let scrollOffset = scrollView.contentOffset.y
+        
+        if scrollOffset + scrollViewHeight >= contentHeight {
+            agreeLabel.textColor = UIColor.black
+            agreeSwitch.isEnabled = true
+        }
+        else {
+            agreeLabel.textColor = UIColor(argb: Utils.int32FromColorHex(hex: "0xff999999"))
+            agreeSwitch.isEnabled = false
+        }
     }
     
     // scroll view delegate
