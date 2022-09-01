@@ -125,8 +125,8 @@ class SessionSettings: NSObject {
     
     var paintIndicatorColor: Int32 = -1
     
-    var rightHanded = false
-    var selectedHand = false
+    var rightHanded = true
+    var selectedHand = true
     
     var smallActionButtons = false
     
@@ -293,9 +293,9 @@ class SessionSettings: NSObject {
         
         paintIndicatorColor = userDefaultsInt32(forKey: "paint_indicator_color", defaultVal: Utils.int32FromColorHex(hex: "0xffAAAAAA"))
         
-        rightHanded = userDefaultsBool(forKey: "right_handed", defaultVal: false)
+        rightHanded = userDefaultsBool(forKey: "right_handed", defaultVal: rightHanded)
         
-        selectedHand = userDefaultsBool(forKey: "selected_hand", defaultVal: false)
+        selectedHand = userDefaultsBool(forKey: "selected_hand", defaultVal: selectedHand)
         
         smallActionButtons = userDefaultsBool(forKey: "small_action_buttons", defaultVal: false)
         

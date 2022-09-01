@@ -26,6 +26,14 @@ class HowtoViewController: UIViewController {
     @IBOutlet weak var step10Text: UILabel!
     @IBOutlet weak var step11Text: UILabel!
     
+    @IBOutlet weak var step1Height: NSLayoutConstraint!
+    @IBOutlet weak var step2Height: NSLayoutConstraint!
+    @IBOutlet weak var step3Height: NSLayoutConstraint!
+    @IBOutlet weak var step4Height: NSLayoutConstraint!
+    @IBOutlet weak var step5Height: NSLayoutConstraint!
+    @IBOutlet weak var step6Height: NSLayoutConstraint!
+    @IBOutlet weak var step7Height: NSLayoutConstraint!
+    
     @IBOutlet weak var paintAction: UIImageView!
     @IBOutlet weak var exportAction: UIImageView!
     @IBOutlet weak var changeBackgroundAction: UIImageView!
@@ -118,13 +126,6 @@ class HowtoViewController: UIViewController {
             step1Text.isHidden = true
             paintAction.isHidden = true
         }
-        
-        let stepLabels = [step1Text, step2Text, step3Text, step4Text, step5Text,
-                          step6Text, step7Text, step8Text, step9Text, step10Text,
-                            step11Text]
-        for label in stepLabels {
-            setStepBackground(label: label!)
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -159,6 +160,21 @@ class HowtoViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        let stepLabels = [step1Text, step2Text, step3Text, step4Text, step5Text,
+                          step6Text, step7Text]
+        
+        let stepHeights = [step1Height, step2Height, step3Height, step4Height,
+                           step5Height, step6Height, step7Height]
+        
+        for i in 0...stepLabels.count - 1 {
+            let label = stepLabels[i]!
+            let height = stepHeights[i]!
+            
+            setStepBackground(label: label)
+            NSLog("width = \(label.frame.size.width)")
+            //height.constant = label.sizeThatFits(CGSize(width: label.frame.size.width, height: CGFloat.greatestFiniteMagnitude)).height + 20
+        }
+        
         if step1Text.font.pointSize < step2Text.font.pointSize {
             step2Text.font = UIFont.systemFont(ofSize: step1Text.font.pointSize)
         }
