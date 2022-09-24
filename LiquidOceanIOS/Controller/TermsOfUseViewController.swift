@@ -22,7 +22,7 @@ class TermsOfUseViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLayoutSubviews() {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            let h = textView.sizeThatFits(CGSize(width: textView.frame.size.width, height: CGFloat.greatestFiniteMagnitude)).height
+            let h = textView.sizeThatFits(CGSize(width: textView.frame.size.width, height: CGFloat.greatestFiniteMagnitude)).height + 100
 
             termsOfServiceTextHeight.constant = h
         }
@@ -31,10 +31,9 @@ class TermsOfUseViewController: UIViewController, UIScrollViewDelegate {
         print("content height is \(scrollView.contentSize.height)")
 
         let scrollViewHeight = scrollView.frame.size.height
-        let contentHeight = scrollView.contentSize.height
-        let scrollOffset = scrollView.contentOffset.y
+        let contentHeight = termsOfServiceTextHeight.constant
 
-        if scrollOffset + scrollViewHeight >= contentHeight {
+        if scrollViewHeight >= contentHeight {
             agreeLabel.textColor = UIColor.black
             agreeSwitch.isEnabled = true
         }
