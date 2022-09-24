@@ -449,7 +449,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             }
             let currentTime = NSDate().timeIntervalSince1970
             if currentTime - self.lastCanvasSummaryUpdate > 60 * 10 {
-                self.summaryView.kf.setImage(with: URL(string: "\(self.server!.serviceAltUrl())/canvas"))
+                self.summaryView.kf.setImage(with: URL(string: "\(self.server!.serviceAltUrl())/canvas"), options: [.forceRefresh])
                 self.lastCanvasSummaryUpdate = currentTime
             }
             

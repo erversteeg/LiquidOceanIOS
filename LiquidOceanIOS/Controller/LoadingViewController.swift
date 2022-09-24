@@ -136,7 +136,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             
             self.canvasImage.alpha = 0
             self.canvasImage.kf.setImage(
-                with: URL(string: "\(server!.serviceAltUrl())/canvas")) { result in
+                with: URL(string: "\(server!.serviceAltUrl())/canvas"), options: [.forceRefresh]) { result in
                     UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn) {
                         self.canvasImage.alpha = 1
                     }

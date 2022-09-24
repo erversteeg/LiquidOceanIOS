@@ -529,7 +529,7 @@ class InteractiveCanvas: NSObject {
         let restorePoint = unitInRestorePoints(x: x, y: y, restorePointsArr: self.restorePoints)
         
         if mode == 0 {
-            if restorePoint == nil && (SessionSettings.instance.dropsAmt > 0 || !world) {
+            if restorePoint == nil && (SessionSettings.instance.dropsAmt > 0 && restorePoints.count < 10 || !world) {
                 if x > -1 && x < cols && y > -1 && y < rows {
                     let unitColor = arr[y][x]
                     
@@ -565,10 +565,11 @@ class InteractiveCanvas: NSObject {
     func commitPixels() {
         if world {
             for restorePoint in self.restorePoints {
+                print("emit pixel")
                 InteractiveCanvasSocket.instance.socket!.emit("pixel_send", buildPixelString(x: restorePoint.x, y: restorePoint.y, deviceId: SessionSettings.instance.deviceId, color: restorePoint.newColor), completion: nil)
             }
             
-            StatTracker.instance.reportEvent(eventType: .pixelPaintedWorld, amt: restorePoints.count)
+            //StatTracker.instance.reportEvent(eventType: .pixelPaintedWorld, amt: restorePoints.count)
         }
         else {
             //StatTracker.instance.reportEvent(eventType: .pixelPaintedSingle, amt: restorePoints.count)
