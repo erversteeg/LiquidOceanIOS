@@ -620,7 +620,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AfH-JJ-IfH" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="15" y="70" width="230" height="50"/>
                                         <subviews>
-                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HELP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEj-dw-1LI">
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INFO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEj-dw-1LI">
                                                 <rect key="frame" x="0.0" y="0.0" width="230" height="50"/>
                                                 <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="45"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -4078,7 +4078,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q2Z-sl-HLi" customClass="BrightnessSliderControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="39" y="343" width="272" height="47"/>
+                                <rect key="frame" x="55" y="359" width="240" height="15"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="6dJ-mr-B18"/>
@@ -4486,7 +4486,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6PM-av-mg5" customClass="BrightnessSliderControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="49" y="333" width="252" height="47"/>
+                                <rect key="frame" x="65" y="349" width="220" height="15"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="UZq-lk-JOc"/>
@@ -4726,7 +4726,7 @@
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvk-dJ-XaX">
                                                 <rect key="frame" x="40" y="0.0" width="816" height="1000"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <mutableString key="text">Terms of Service
+                                                <string key="text">Terms of Service
 
 Radio Frost ("software", “service”, “app”) is provided by Matrix Warez Ltd. ("developer", "publisher") as is whereby any feature, bug or issue with the app is not the responsibility of the developers or publishers of the service to withhold or upkeep. You must be at least 13 years of age to use this service.
 
@@ -4748,7 +4748,7 @@ If any person on any canvas uses pixels to give out any personal information abo
 
 
 
-</mutableString>
+</string>
                                                 <color key="textColor" red="0.33725490200000002" green="0.83921568629999999" blue="0.46931997710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Inter-Regular" family="Inter" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -5345,7 +5345,7 @@ If any person on any canvas uses pixels to give out any personal information abo
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MXp-b9-2V2" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="30" y="115" width="230" height="50"/>
                                         <subviews>
-                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HELP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RIw-LO-Xnx">
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INFO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RIw-LO-Xnx">
                                                 <rect key="frame" x="0.0" y="0.0" width="230" height="50"/>
                                                 <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="42"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.88" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -5622,14 +5622,6 @@ If any person on any canvas uses pixels to give out any personal information abo
             <point key="canvasLocation" x="-1197" y="-512"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="6PM-av-mg5">
-            <size key="intrinsicContentSize" width="896" height="15"/>
-        </designable>
-        <designable name="q2Z-sl-HLi">
-            <size key="intrinsicContentSize" width="896" height="15"/>
-        </designable>
-    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="xNZ-J9-gls"/>
         <segue reference="DhC-cG-tnL"/>
