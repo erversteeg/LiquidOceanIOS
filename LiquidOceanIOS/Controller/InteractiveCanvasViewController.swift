@@ -2021,6 +2021,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     }
     
     private func setupBanner() {
+        if !server.showBanner {
+            return
+        }
+        
+        bannerView.isHidden = false
+        
         bannerView.alpha = 0
         
         bannerView.layer.cornerRadius = 15

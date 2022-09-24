@@ -11,9 +11,11 @@ import Foundation
 class Server: NSObject {
     
     var name = ""
+    var color: Int32 = 0
     var baseUrl = ""
     var iconUrl = ""
     var iconLink = ""
+    var showBanner = false
     var bannerText = ""
     var pixelInterval = 0
     var maxPixels = 0
@@ -42,6 +44,7 @@ class Server: NSObject {
         var jsonObj = [String: Any]()
         
         jsonObj["name"] = name
+        jsonObj["color"] = color
         jsonObj["base_url"] = baseUrl
         jsonObj["pixel_interval"] = pixelInterval
         jsonObj["max_pixels"] = maxPixels

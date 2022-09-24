@@ -552,6 +552,7 @@ class SessionSettings: NSObject {
                 let server = Server()
                 
                 server.name = jsonObj["name"] as! String
+                server.color = jsonObj["color"] as! Int32
                 server.baseUrl = jsonObj["base_url"] as! String
                 server.pixelInterval = jsonObj["pixel_interval"] as! Int
                 server.maxPixels = jsonObj["max_pixels"] as! Int

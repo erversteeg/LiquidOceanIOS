@@ -21,17 +21,19 @@ class TermsOfUseViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var termsOfServiceTextHeight: NSLayoutConstraint!
     
     override func viewDidLayoutSubviews() {
-        let h = textView.sizeThatFits(CGSize(width: textView.frame.size.width, height: CGFloat.greatestFiniteMagnitude)).height
-        
-        termsOfServiceTextHeight.constant = h
-        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            let h = textView.sizeThatFits(CGSize(width: textView.frame.size.width, height: CGFloat.greatestFiniteMagnitude)).height
+
+            termsOfServiceTextHeight.constant = h
+        }
+
         print("scrollview height is \(scrollView.frame.size.height)")
         print("content height is \(scrollView.contentSize.height)")
-        
+
         let scrollViewHeight = scrollView.frame.size.height
         let contentHeight = scrollView.contentSize.height
         let scrollOffset = scrollView.contentOffset.y
-        
+
         if scrollOffset + scrollViewHeight >= contentHeight {
             agreeLabel.textColor = UIColor.black
             agreeSwitch.isEnabled = true

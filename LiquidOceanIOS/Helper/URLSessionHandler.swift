@@ -730,9 +730,11 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                     let server = Server()
                     
                     server.name = jsonDict["name"] as! String
+                    server.color = jsonDict["color"] as! Int32
                     server.baseUrl = jsonDict["base_url"] as! String
                     server.iconUrl = jsonDict["icon_url"] as! String
                     server.iconLink = jsonDict["icon_link"] as! String
+                    server.showBanner = jsonDict["show_banner"] as! Bool
                     server.bannerText = jsonDict["banner_text"] as! String
                     server.pixelInterval = jsonDict["pixel_interval"] as! Int
                     server.maxPixels = jsonDict["max_pixels"] as! Int

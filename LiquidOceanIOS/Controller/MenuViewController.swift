@@ -95,8 +95,15 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     
     var selectedServer: Server!
     
+    var keyboardHeight = CGFloat(0)
+    var textFieldY: CGFloat?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
 //        URLSessionHandler.instance.findServer(accessKey: "TEST1") { success, server in
 //            if server != nil {
@@ -698,9 +705,14 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
                 print(server!.name)
                 SessionSettings.instance.addServer(server: server!)
                 
+                self.accessKeyTextField.text = nil
                 self.showConnectView()
             }
         }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        moveInputFieldUpIfNeeded()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -728,5 +740,49 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     
     class ServerLongPressGestureRecognizer: UILongPressGestureRecognizer {
         var server: Server!
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            keyboardHeight = keyboardRectangle.height
+            moveInputFieldUpIfNeeded()
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        resetInputFieldPosition()
+    }
+    
+    func moveInputFieldUpIfNeeded() {
+        if keyboardHeight == 0 {
+            return
+        }
+        
+        let topKeyboardY = UIScreen.main.bounds.size.height - keyboardHeight
+        
+        let absOrigin = accessKeyTextField.superview?.convert(accessKeyTextField.frame.origin, to: nil)
+        let bottomY = absOrigin!.y + accessKeyTextField.frame.size.height
+        
+        if textFieldY == nil {
+            textFieldY = accessKeyTextField.frame.origin.y
+        }
+        
+        print("keyboard top = \(topKeyboardY)")
+        print("access key input bottom = \(bottomY)")
+        
+        let yDiff = topKeyboardY - bottomY
+        
+        if yDiff < 0 {
+            accessKeyTextField.frame = CGRect(x: accessKeyTextField.frame.origin.x, y: accessKeyTextField.frame.origin.y + yDiff, width: accessKeyTextField.frame.size.width, height: accessKeyTextField.frame.size.height)
+        }
+    }
+    
+    func resetInputFieldPosition() {
+        if textFieldY == nil {
+            return
+        }
+        
+        accessKeyTextField.frame = CGRect(x: accessKeyTextField.frame.origin.x, y: textFieldY!, width: accessKeyTextField.frame.size.width, height: accessKeyTextField.frame.size.height)
     }
 }

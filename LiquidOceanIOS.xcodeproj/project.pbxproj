@@ -964,7 +964,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.07;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ericversteeg.liquidocean.LiquidOceanIOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericversteeg.liquidocean.LiquidOcean;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Let's Draw 2021 App Store";
 				SWIFT_VERSION = 5.0;
@@ -988,7 +988,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.07;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ericversteeg.liquidocean.LiquidOceanIOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericversteeg.liquidocean.LiquidOcean;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Let's Draw 2021 App Store";
 				SWIFT_VERSION = 5.0;

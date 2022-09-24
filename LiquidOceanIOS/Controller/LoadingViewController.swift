@@ -101,6 +101,10 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             self.connectingLabel.text = "Connecting to \(server!.name)"
         }
         
+        if server!.color != 0 {
+            self.connectingLabel.textColor = UIColor(argb: server!.color)
+        }
+        
         realmId = 1
         
         setBackground()
@@ -154,6 +158,10 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             }
             else {
                 self.connectingLabel.text = "Connecting to \(server!.name)"
+            }
+            
+            if server!.color != 0 {
+                self.connectingLabel.textColor = UIColor(argb: server!.color)
             }
             
             server!.uuid = storeduuid

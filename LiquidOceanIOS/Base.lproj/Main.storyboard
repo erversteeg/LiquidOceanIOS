@@ -56,7 +56,7 @@
                                             <constraint firstAttribute="height" constant="190" id="4Mq-C2-OyC"/>
                                             <constraint firstAttribute="width" constant="582" id="8vh-e2-z3F"/>
                                         </constraints>
-                                        <string key="text">Welcome to this quick guide. This guide will help you get all setup and tell you what you need to know about getting started. First, you can connect to the public canvas by going to Connect then entering 'PUB12'. Once connected you will start to gain pixels that you can use to draw pixel art.</string>
+                                        <string key="text">Welcome to this quick guide. This guide will help you get all setup and fill you in on what you need to know to get started. First, you can connect to the public canvas by going to Connect in the menu then entering 'PIXEL'. Once connected you will start to gain pixels that you can use to draw pixel art.</string>
                                         <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -805,7 +805,7 @@
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0HD-T3-ygg">
                                         <rect key="frame" x="0.0" y="117" width="896" height="200"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" red="0.10588235294117647" green="0.10588235294117647" blue="0.10588235294117647" alpha="0.070000000000000007" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="46O-1l-9iv"/>
                                         </constraints>
@@ -1434,7 +1434,7 @@
                                             <constraint firstItem="Oqh-eM-Qma" firstAttribute="centerY" secondItem="BPP-Jg-wWE" secondAttribute="centerY" constant="2" id="vi5-FT-Cxu"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change display name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlN-Qk-8Ro">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlN-Qk-8Ro">
                                         <rect key="frame" x="64" y="1137" width="300" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="3hq-vk-eME"/>
@@ -2669,7 +2669,7 @@
                                     <constraint firstAttribute="width" constant="320" id="k5D-g4-X9W"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="28"/>
-                                <color key="textColor" red="0.90196078431372551" green="0.74509803921568629" blue="0.30196078431372547" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5e-vE-uKA">
@@ -3769,7 +3769,7 @@
                                     <segue destination="MHS-hk-8CL" kind="embed" identifier="MenuEmbed" id="aVI-Vb-GxK"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HLu-eR-GQ6">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HLu-eR-GQ6">
                                 <rect key="frame" x="328" y="10" width="240" height="30"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dao-J5-Ru8">
@@ -4070,7 +4070,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQc-ZZ-5IN" customClass="RadialPaletteControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="55" y="87" width="240" height="240"/>
+                                <rect key="frame" x="39" y="71" width="272" height="272"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="SPU-B7-fss"/>
@@ -4478,7 +4478,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnn-iB-Zo4" customClass="RadialPaletteControl" customModule="FlexColorPicker">
-                                <rect key="frame" x="55" y="50" width="240" height="240"/>
+                                <rect key="frame" x="39" y="34" width="272" height="272"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="KDt-ja-w5Q"/>
@@ -4728,19 +4728,19 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <mutableString key="text">Terms of Service
 
-This software, “service” or “app” is provided as is whereby any feature, bug, issue or otherwise is not the responsibility of the developers or publishers of the service to withhold or upkeep. You must be at least 13 years of age to use this service.
+Radio Frost ("software", “service”, “app”) is provided by Matrix Warez Ltd. ("developer", "publisher") as is whereby any feature, bug or issue with the app is not the responsibility of the developers or publishers of the service to withhold or upkeep. You must be at least 13 years of age to use this service.
 
 (1) User Generated Content
 
-Any pixel(s) written onto any canvas are the sole responsibility of the person who places the pixels. There is a chance on occasion that a person or number of persons may place pixels onto a canvas with this app that may be seen or flagged as copyrighted content. If you have a copyright complaint please send an email to erversteeg@gmail.com citing what content you would like removed (erased) from a canvas and which canvas you are referring to plus full proof of ownership and delegation over the content. Please allow up to (4) weeks from the date the notice is received for the content to be fully removed.
+Any pixel(s) written onto any canvas are the sole responsibility of the person who places the pixels. There is a chance on occasion that a person or number of persons may place pixels onto a canvas with this app that may be seen or flagged as copyrighted content. If you have a copyright complaint please send an email to matrixwarez@gmail.com citing what content you would like removed (erased) from a canvas and which canvas you are referring to plus full proof of ownership and delegation over the content. Please allow up to (4) weeks from the date the notice is received for the content to be fully removed.
 
 (2) Hate Speech and Symbols
 
-On occasion a person may be harassed or assaulted by another person or any number of persons through the medium of pixels on a canvas. This may involve written or depicted hate speech (words) or symbols that a person may find offensive to them in one or many ways. Please understand that by using the service you agree to a certain risk of yourself becoming the victim of such hateful actions and that if reported or seen, the cultrips will be banned to the full extent that it is possible. The app developers or publishers are in no way responsible for any hate or harm that comes to another person while using the service. Any emotional or mental damage imposed upon any person by any number of persons using the service is their own responsibility. No real name or other personal information with the exception of IP addresses are stored, so it will be challenging to figure out exactly who it was. The app developers and publishers are in no way condoning hateful acts by not keeping record of most personal data. If you are being harassed please leave the canvas immediately and report the case to erversteeg@gmail.com.
+On occasion a person may be harassed or assaulted by another person or any number of persons through the medium of pixels on a canvas. This may involve written or depicted hate speech (words) or symbols that a person may find offensive to them in one or many ways. Please understand that by using the service you agree to a certain risk of yourself becoming the victim of such hateful actions and that if reported or seen, the cultrips will be banned to the full extent that it is possible. The app developers or publishers are in no way responsible for any hate or harm that comes to another person while using the service. Any emotional or mental damage imposed upon any person by any number of persons using the service is their own responsibility. No real name or other personal information with the exception of IP addresses are stored, so it will be challenging to figure out exactly who it was. The app developers and publishers are in no way condoning hateful acts by not keeping record of most personal data. If you are being harassed please leave the canvas immediately and report the case to matrixwarez@gmail.com.
 
 (3) Copied Content
 
-Within the app any person may choose to select, export, and share any number of pixels that together make up an image that may or may not contain sensitive, offensive, or copyrighted content, or content depicting hateful acts or speech. Please note that once content (pixels) are exported from the app, as soon as those pixels in the form of an image leave the app via a file stored on a person's device or shared via text or another app or service, that it is no longer the responsibility of the developers or publishers of this app and that while we give our best effort to tend to copyright notices and other claims, sometimes we will not get to it in time before it is copied over and leaves the app.
+Within the app any person may choose to select, export, and share any number of pixels that together make up an image that may or may not contain sensitive, offensive, or copyrighted content, or content depicting hateful acts or speech. Please note that once content (pixels) are exported from the app, as soon as those pixels in the form of an image leave the app via a file stored on a person's device or shared via text or another app or service, that it is no longer the responsibility of the developers or publishers of this app and that while they give their best effort to tend to copyright notices and other claims, sometimes they will not get to it in time before it is copied over and leaves the app.
 
 (4) Personal Information
 
