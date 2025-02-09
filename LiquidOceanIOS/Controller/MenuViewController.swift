@@ -336,12 +336,12 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     }*/
     
     func connectLabelTapped() {
-        let lastVisitedServer = SessionSettings.instance.lastVisitedServer
-        if lastVisitedServer != nil {
-            self.selectedServer = lastVisitedServer
-            self.performSegue(withIdentifier: showLoadingScreen, sender: nil)
-            return
-        }
+//        let lastVisitedServer = SessionSettings.instance.lastVisitedServer
+//        if lastVisitedServer != nil {
+//            self.selectedServer = lastVisitedServer
+//            self.performSegue(withIdentifier: showLoadingScreen, sender: nil)
+//            return
+//        }
         showConnectView()
     }
     
@@ -661,7 +661,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         let server = SessionSettings.instance.servers[indexPath.item]
         
         if server.isAdmin {
-            cell.nameLabel.text = "\(server.name) Eraser"
+            cell.nameLabel.text = "\(server.name) (Mod)"
         }
         else {
             cell.nameLabel.text = server.name
@@ -672,16 +672,40 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         
         cell.addGestureRecognizer(lgr)
         
+//        if indexPath.item == 1 {
+//            cell.backgroundColor = UIColor.blue
+//        }
+//        else {
+//            cell.backgroundColor = UIColor.red
+//        }
+        
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 260, height: 50)
+        
+        let width = 260.0
+        
+        let server = SessionSettings.instance.servers[indexPath.item]
+        var title = ""
+        if server.isAdmin {
+            title = "\(server.name) (Mod)"
+        }
+        else {
+            title = server.name
+        }
+        
+        let font = UIFont(name: "Inter-Medium", size: 24)!
+        
+        let attrTitle = NSAttributedString(string: title, attributes: [.font: font])
+        let height = attrTitle.boundingRect(with: CGSize(width: width, height: 100000), options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).height
+        
+        return CGSize(width: width, height: height + 20)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 0
+//    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedServer = SessionSettings.instance.servers[indexPath.item]
@@ -712,7 +736,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        //moveInputFieldUpIfNeeded()
+        moveInputFieldUpIfNeeded()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -746,7 +770,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             keyboardHeight = keyboardRectangle.height
-            //moveInputFieldUpIfNeeded()
+            moveInputFieldUpIfNeeded()
         }
     }
     

@@ -95,7 +95,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         super.viewDidLoad()
         
         if server!.isAdmin {
-            self.connectingLabel.text = "Connecting to \(server!.name) Eraser"
+            self.connectingLabel.text = "Connecting to \(server!.name) (Mod)"
         }
         else {
             self.connectingLabel.text = "Connecting to \(server!.name)"
@@ -154,7 +154,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             //self.canvasImage.image = UIImage(named: "amb_2.png")
             
             if server!.isAdmin {
-                self.connectingLabel.text = "Connecting to \(server!.name) Eraser"
+                self.connectingLabel.text = "Connecting to \(server!.name) (Mod)"
             }
             else {
                 self.connectingLabel.text = "Connecting to \(server!.name)"
