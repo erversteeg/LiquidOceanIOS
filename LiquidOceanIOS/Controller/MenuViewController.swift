@@ -785,7 +785,11 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         
         let topKeyboardY = UIScreen.main.bounds.size.height - keyboardHeight
         
-        let absOrigin = accessKeyTextField.superview?.convert(accessKeyTextField.frame.origin, to: nil)
+        let absOrigin = accessKeyTextField?.superview?.convert(accessKeyTextField.frame.origin, to: nil)
+        if absOrigin == nil {
+            return
+        }
+        
         let bottomY = absOrigin!.y + accessKeyTextField.frame.size.height
         
         if textFieldY == nil {

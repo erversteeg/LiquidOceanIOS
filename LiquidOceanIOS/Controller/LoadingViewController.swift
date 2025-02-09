@@ -144,12 +144,12 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             
             self.iconImage.alpha = 0
             self.iconImage.layer.cornerRadius = 50
-            self.iconImage.kf.setImage(
-                with: URL(string: server!.iconUrl)) { result in
-                    UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn) {
-                        self.iconImage.alpha = 1
-                    }
-                }
+//            self.iconImage.kf.setImage(
+//                with: URL(string: server!.iconUrl)) { result in
+//                    UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn) {
+//                        self.iconImage.alpha = 1
+//                    }
+//                }
             
             //self.canvasImage.image = UIImage(named: "amb_2.png")
             
