@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -130,7 +130,7 @@
 		07FF5F3725E5BDF6003E19AE /* crystal_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F2325E5BDF6003E19AE /* crystal_2.jpg */; };
 		07FF5F3825E5BDF6003E19AE /* water_texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F2425E5BDF6003E19AE /* water_texture.jpg */; };
 		07FF5F3925E5BDF6003E19AE /* fall_leaves.png in Resources */ = {isa = PBXBuildFile; fileRef = 07FF5F2525E5BDF6003E19AE /* fall_leaves.png */; };
-		E5CAC4447BA12EDA6329A1E2 /* Pods_LiquidOceanIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */; };
+		694BC21AFC56E5590CC0765E /* Pods_LiquidOceanIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05EDA8A7C0586568557ABE70 /* Pods_LiquidOceanIOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +144,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05EDA8A7C0586568557ABE70 /* Pods_LiquidOceanIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiquidOceanIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		07006C3B25D607D500DF9A64 /* UIDrawGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDrawGestureRecognizer.swift; sourceTree = "<group>"; };
 		07006C3D25D6C2D500DF9A64 /* PaintQuantityBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaintQuantityBar.swift; sourceTree = "<group>"; };
 		07006C3F25D6CEF200DF9A64 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -272,9 +273,8 @@
 		07FF5F2325E5BDF6003E19AE /* crystal_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crystal_2.jpg; sourceTree = "<group>"; };
 		07FF5F2425E5BDF6003E19AE /* water_texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = water_texture.jpg; sourceTree = "<group>"; };
 		07FF5F2525E5BDF6003E19AE /* fall_leaves.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fall_leaves.png; sourceTree = "<group>"; };
-		0C929D3F59AAC71054FD1E19 /* Pods-LiquidOceanIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.debug.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.debug.xcconfig"; sourceTree = "<group>"; };
-		42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiquidOceanIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B417FAAF99031F0F81E5A72B /* Pods-LiquidOceanIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.release.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.release.xcconfig"; sourceTree = "<group>"; };
+		7C69133797B75247512FDC6F /* Pods-LiquidOceanIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.debug.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.debug.xcconfig"; sourceTree = "<group>"; };
+		E99D39E07113D350CD95FFDB /* Pods-LiquidOceanIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiquidOceanIOS.release.xcconfig"; path = "Target Support Files/Pods-LiquidOceanIOS/Pods-LiquidOceanIOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,7 +282,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5CAC4447BA12EDA6329A1E2 /* Pods_LiquidOceanIOS.framework in Frameworks */,
+				694BC21AFC56E5590CC0765E /* Pods_LiquidOceanIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,7 +515,7 @@
 			isa = PBXGroup;
 			children = (
 				07A3060225D5FFBD003A6CEA /* ChromaColorPicker */,
-				42A3A0D212A93C4CDFFC0031 /* Pods_LiquidOceanIOS.framework */,
+				05EDA8A7C0586568557ABE70 /* Pods_LiquidOceanIOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -523,8 +523,8 @@
 		7940447D3B0BE8CAF95CF88D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0C929D3F59AAC71054FD1E19 /* Pods-LiquidOceanIOS.debug.xcconfig */,
-				B417FAAF99031F0F81E5A72B /* Pods-LiquidOceanIOS.release.xcconfig */,
+				7C69133797B75247512FDC6F /* Pods-LiquidOceanIOS.debug.xcconfig */,
+				E99D39E07113D350CD95FFDB /* Pods-LiquidOceanIOS.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -536,11 +536,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 07BD25E525D43FB700CF812E /* Build configuration list for PBXNativeTarget "LiquidOceanIOS" */;
 			buildPhases = (
-				0892D1BB2B904D9CC21AB602 /* [CP] Check Pods Manifest.lock */,
+				0970BE032BD68840EDD861CF /* [CP] Check Pods Manifest.lock */,
 				07BD25BF25D43FB500CF812E /* Sources */,
 				07BD25C025D43FB500CF812E /* Frameworks */,
 				07BD25C125D43FB500CF812E /* Resources */,
-				36D56385962055673D81B0DB /* [CP] Embed Pods Frameworks */,
+				274C1C8DD682F9234C5FF1BF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -575,8 +575,9 @@
 		07BD25BB25D43FB500CF812E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1170;
-				LastUpgradeCheck = 1170;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = "Eric Versteeg";
 				TargetAttributes = {
 					07BD25C225D43FB500CF812E = {
@@ -690,7 +691,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0892D1BB2B904D9CC21AB602 /* [CP] Check Pods Manifest.lock */ = {
+		0970BE032BD68840EDD861CF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -712,7 +713,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		36D56385962055673D81B0DB /* [CP] Embed Pods Frameworks */ = {
+		274C1C8DD682F9234C5FF1BF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -860,6 +861,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -868,8 +870,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -920,6 +924,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -928,8 +933,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -950,7 +957,7 @@
 		};
 		07BD25E625D43FB700CF812E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0C929D3F59AAC71054FD1E19 /* Pods-LiquidOceanIOS.debug.xcconfig */;
+			baseConfigurationReference = 7C69133797B75247512FDC6F /* Pods-LiquidOceanIOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = RadioFrost;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -958,7 +965,7 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Y56N4MVTFC;
 				INFOPLIST_FILE = LiquidOceanIOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -974,7 +981,7 @@
 		};
 		07BD25E725D43FB700CF812E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B417FAAF99031F0F81E5A72B /* Pods-LiquidOceanIOS.release.xcconfig */;
+			baseConfigurationReference = E99D39E07113D350CD95FFDB /* Pods-LiquidOceanIOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = RadioFrost;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -982,7 +989,7 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Y56N4MVTFC;
 				INFOPLIST_FILE = LiquidOceanIOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -999,7 +1006,6 @@
 		07BD25E925D43FB700CF812E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = LiquidOceanIOSTests/Info.plist;
@@ -1020,7 +1026,6 @@
 		07BD25EA25D43FB700CF812E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = LiquidOceanIOSTests/Info.plist;

@@ -325,38 +325,38 @@ class InteractiveCanvas: NSObject {
         var shortTermPixels = [ShortTermPixel]()
         
         socket.on("pixels_commit") { (data, ack) in
-            let pixelsJsonArr = data[0] as! [[String: Any]]
-            
-            for pixelObj in pixelsJsonArr {
-                var sameRealm = false
-                
-                var unit1DIndex = (pixelObj["id"] as! Int) - 1
-                
-                if unit1DIndex < (512 * 512) && self.realmId == 2 {
-                    sameRealm = true
-                }
-                else if (unit1DIndex >= (512 * 512) && self.realmId == 1) {
-                    sameRealm = true
-                }
-                
-                if self.realmId == 1 {
-                    unit1DIndex -= (512 * 512)
-                }
-                
-                if (sameRealm) {
-                    let y = unit1DIndex / self.cols
-                    let x = unit1DIndex % self.cols
-                    
-                    let color = pixelObj["color"] as! Int32
-                    self.arr[y][x] = color
-                    
-                    shortTermPixels.append(ShortTermPixel(restorePoint: RestorePoint(x: x, y: y, color: color, newColor: color)))
-                }
-            }
-            
-            SessionSettings.instance.addShortTermPixels(pixels: shortTermPixels)
-            
-            self.drawCallback?.notifyCanvasRedraw()
+//            let pixelsJsonArr = data[0] as! [[String: Any]]
+//            
+//            for pixelObj in pixelsJsonArr {
+//                var sameRealm = false
+//                
+//                var unit1DIndex = (pixelObj["id"] as! Int) - 1
+//                
+//                if unit1DIndex < (512 * 512) && self.realmId == 2 {
+//                    sameRealm = true
+//                }
+//                else if (unit1DIndex >= (512 * 512) && self.realmId == 1) {
+//                    sameRealm = true
+//                }
+//                
+//                if self.realmId == 1 {
+//                    unit1DIndex -= (512 * 512)
+//                }
+//                
+//                if (sameRealm) {
+//                    let y = unit1DIndex / self.cols
+//                    let x = unit1DIndex % self.cols
+//                    
+//                    let color = pixelObj["color"] as! Int32
+//                    self.arr[y][x] = color
+//                    
+//                    shortTermPixels.append(ShortTermPixel(restorePoint: RestorePoint(x: x, y: y, color: color, newColor: color)))
+//                }
+//            }
+//            
+//            SessionSettings.instance.addShortTermPixels(pixels: shortTermPixels)
+//            
+//            self.drawCallback?.notifyCanvasRedraw()
         }
         
         socket.on("canvas_error") { (data, ack) in
@@ -368,7 +368,8 @@ class InteractiveCanvas: NSObject {
         }
         
         socket.on("add_paint") { (data, ack) in
-            let amt = data[0] as! Int
+            let data = data[0] as! [String: Any]
+            let amt = data["value"] as! Int
             SessionSettings.instance.dropsAmt += amt
             if SessionSettings.instance.dropsAmt > SessionSettings.instance.maxPaintAmt {
                 SessionSettings.instance.dropsAmt = SessionSettings.instance.maxPaintAmt

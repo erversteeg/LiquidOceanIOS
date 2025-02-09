@@ -712,7 +712,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        moveInputFieldUpIfNeeded()
+        //moveInputFieldUpIfNeeded()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -746,7 +746,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             keyboardHeight = keyboardRectangle.height
-            moveInputFieldUpIfNeeded()
+            //moveInputFieldUpIfNeeded()
         }
     }
     

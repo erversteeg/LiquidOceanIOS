@@ -23,21 +23,25 @@ class Server: NSObject {
     var adminKey = ""
     var isAdmin = false
     var uuid = ""
+    var apiPort = 0
+    var altPort = 0
+    var socketPort = 0
+    var queuePort = 0
     
     func serviceUrl() -> String {
-        return "\(baseUrl):5000/"
+        return "\(baseUrl):\(apiPort)/"
     }
     
     func socketUrl() -> String {
-        return "\(baseUrl):5010/"
+        return "\(baseUrl):\(socketPort)/"
     }
     
     func queueSocketUrl() -> String {
-        return "\(baseUrl):5020/"
+        return "\(baseUrl):\(queuePort)/"
     }
     
     func serviceAltUrl() -> String {
-        return "\(baseUrl):5030/"
+        return "\(baseUrl):\(altPort)/"
     }
     
     func toDictionary() -> [String: Any] {
@@ -52,6 +56,10 @@ class Server: NSObject {
         jsonObj["admin_key"] = adminKey
         jsonObj["is_admin"] = isAdmin
         jsonObj["uuid"] = uuid
+        jsonObj["api_port"] = apiPort
+        jsonObj["alt_port"] = altPort
+        jsonObj["socket_port"] = socketPort
+        jsonObj["queue_port"] = queuePort
         
         return jsonObj
     }

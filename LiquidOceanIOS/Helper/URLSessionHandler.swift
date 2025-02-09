@@ -13,7 +13,7 @@ import CFNetwork
 class URLSessionHandler: NSObject, URLSessionTaskDelegate {
 
     //let baseUrl = "https://192.168.200.69:5000"
-    let serversUrl = "https://ericversteeg.com:5050/"
+    let serversUrl = "https://matrixwarez.com:5050/"
     let key0 = "MYCEJUCNZ6AVZAVDZBHKJJYM6OIWQVDOC1OU7RZP"
     let key1 = "8AHI!VR7299G7cq3YsP359HDkKz682oNT3QHh?yyehuvkyzdm674w45o"
     
@@ -746,6 +746,11 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                     else {
                         server.accessKey = jsonDict["access_key"] as! String
                     }
+                    
+                    server.apiPort = jsonDict["api_port"] as! Int
+                    server.altPort = jsonDict["alt_port"] as! Int
+                    server.socketPort = jsonDict["socket_port"] as! Int
+                    server.queuePort = jsonDict["queue_port"] as! Int
                     
                     completionHandler(true, code, server)
                 }

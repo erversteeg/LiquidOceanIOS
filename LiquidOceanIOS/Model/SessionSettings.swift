@@ -566,6 +566,11 @@ class SessionSettings: NSObject {
                     server.accessKey = jsonObj["access_key"] as! String
                 }
                 
+                server.apiPort = jsonObj["api_port"] as! Int
+                server.altPort = jsonObj["alt_port"] as! Int
+                server.socketPort = jsonObj["socket_port"] as! Int
+                server.queuePort = jsonObj["queue_port"] as! Int
+                
                 servers.append(server)
             }
         }
