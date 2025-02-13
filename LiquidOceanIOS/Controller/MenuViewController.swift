@@ -720,7 +720,7 @@ class MenuViewController: UIViewController, AchievementListener, UICollectionVie
     @IBAction func addServer() {
         let accessKey = accessKeyTextField.text!
         
-        if accessKey.count != 5 && accessKey.count != 8 || SessionSettings.instance.hasServer(accessKey: accessKey) {
+        if SessionSettings.instance.hasServer(accessKey: accessKey) {
             return
         }
     

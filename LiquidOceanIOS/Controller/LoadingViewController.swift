@@ -172,7 +172,7 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             
             SessionSettings.instance.addServer(server: self.server)
             SessionSettings.instance.lastVisitedServer = server!
-            SessionSettings.instance.setLastVisitedIndex()
+            SessionSettings.instance.lastVisitedServerId = server!.uid
             
             QueueSocket.instance.startSocket(server: server!)
             QueueSocket.instance.queueSocketDelegate = self
@@ -362,10 +362,12 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                         }
                         
                         self.doneCheckingIp = true
+                        self.downloadFinished()
                     }
                 }
                 else {
                     self.doneCheckingIp = true
+                    self.downloadFinished()
                 }
             }
             else {

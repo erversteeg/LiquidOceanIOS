@@ -169,7 +169,7 @@ class SessionSettings: NSObject {
     
     var servers: [Server] = []
     var lastVisitedServer: Server? = nil
-    var lastVisitedServerIndex = -1
+    var lastVisitedServerId = -1
     
     var canvasPaused = false
     var canvasPauseTime = 0.0
@@ -333,9 +333,12 @@ class SessionSettings: NSObject {
         
         initServerList()
         
-        lastVisitedServerIndex = userDefaultsInt(forKey: "last_visited_server_index", defaultVal: -1)
-        if lastVisitedServerIndex >= 0 {
-            lastVisitedServer = servers[lastVisitedServerIndex]
+        lastVisitedServerId = userDefaultsInt(forKey: "last_visited_server_id", defaultVal: -1)
+        for server in servers {
+            if server.uid == lastVisitedServerId {
+                lastVisitedServer = server
+                break
+            }
         }
     }
     
@@ -585,11 +588,11 @@ class SessionSettings: NSObject {
     }
     
     func removeServer(server: Server) {
-        let index = servers.firstIndex(of: server)!
-        if lastVisitedServerIndex >= 0 && lastVisitedServerIndex == index {
-            lastVisitedServerIndex = -1
+        //let index = servers.firstIndex(of: server)!
+        if lastVisitedServerId == server.uid {
+            lastVisitedServerId = -1
             lastVisitedServer = nil
-            userDefaults().set(-1, forKey: "last_visited_server_index")
+            userDefaults().set(-1, forKey: "last_visited_server_id")
         }
         servers.remove(at: servers.firstIndex(of: server)!)
         saveServers()
@@ -614,14 +617,6 @@ class SessionSettings: NSObject {
         let jsonData = try! JSONSerialization.data(withJSONObject: jsonArray, options: [])
         
         userDefaults().set(String(data: jsonData, encoding: .utf8)!, forKey: "server_list_json")
-    }
-    
-    func setLastVisitedIndex() {
-        let index = servers.firstIndex(of: lastVisitedServer!)
-        if index != nil {
-            userDefaults().set(index!, forKey: "last_visited_server_index")
-            lastVisitedServerIndex = index!
-        }
     }
     
     func saveAgreedToTermsOfService() {

@@ -10,6 +10,7 @@ import Foundation
 
 class Server: NSObject {
     
+    var uid = 0
     var name = ""
     var color: Int32 = 0
     var baseUrl = ""
@@ -47,6 +48,7 @@ class Server: NSObject {
     func toDictionary() -> [String: Any] {
         var jsonObj = [String: Any]()
         
+        jsonObj["id"] = uid
         jsonObj["name"] = name
         jsonObj["color"] = color
         jsonObj["base_url"] = baseUrl

@@ -960,20 +960,25 @@
 			baseConfigurationReference = 7C69133797B75247512FDC6F /* Pods-LiquidOceanIOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = RadioFrost;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = Y56N4MVTFC;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y56N4MVTFC;
 				INFOPLIST_FILE = LiquidOceanIOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Pixels: Together";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ericversteeg.liquidocean.LiquidOcean;
+				PRODUCT_BUNDLE_IDENTIFIER = com.matrixwarez.pt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "App Store Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "PT Distribution";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -984,20 +989,25 @@
 			baseConfigurationReference = E99D39E07113D350CD95FFDB /* Pods-LiquidOceanIOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = RadioFrost;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = Y56N4MVTFC;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y56N4MVTFC;
 				INFOPLIST_FILE = LiquidOceanIOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Pixels: Together";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ericversteeg.liquidocean.LiquidOcean;
+				PRODUCT_BUNDLE_IDENTIFIER = com.matrixwarez.pt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "App Store Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "PT Distribution";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

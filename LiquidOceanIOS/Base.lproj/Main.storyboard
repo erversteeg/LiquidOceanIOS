@@ -1876,13 +1876,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deviant Art" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXQ-Yc-iGu">
-                                        <rect key="frame" x="0.0" y="50" width="896" height="23.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="896" height="24.5"/>
                                         <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="20"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FrostBo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7W1-Ez-pEy">
-                                        <rect key="frame" x="348" y="98.5" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="99.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="H8P-go-pPM"/>
                                             <constraint firstAttribute="width" constant="200" id="L49-TH-Xuq"/>
@@ -1892,7 +1892,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dori-Stock" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YGH-zd-HE6">
-                                        <rect key="frame" x="348" y="132.5" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="133.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="5vj-EL-zZw"/>
                                             <constraint firstAttribute="height" constant="24" id="BkL-B3-1U1"/>
@@ -1902,7 +1902,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tmm-textures" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4i-Ol-Pcf">
-                                        <rect key="frame" x="348" y="166.5" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="167.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="Lvm-jb-c6O"/>
                                             <constraint firstAttribute="width" constant="200" id="ekD-TX-rd8"/>
@@ -1912,7 +1912,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FantasyStock" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31I-cD-WCu">
-                                        <rect key="frame" x="348" y="200.5" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="201.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="0ix-9w-c4k"/>
                                             <constraint firstAttribute="height" constant="24" id="63C-si-fAb"/>
@@ -1922,7 +1922,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="silver-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0C-9m-FL5">
-                                        <rect key="frame" x="348" y="234.5" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="235.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="Gi9-lG-xDm"/>
                                             <constraint firstAttribute="height" constant="24" id="T3k-I2-6vQ"/>
@@ -1932,7 +1932,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AStoKo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJi-ge-l74">
-                                        <rect key="frame" x="348" y="268.5" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="269.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="8jo-yN-CaN"/>
                                             <constraint firstAttribute="height" constant="24" id="EI1-HH-EqS"/>
@@ -1942,7 +1942,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="jaqx-textures" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HcD-2J-AT3">
-                                        <rect key="frame" x="348" y="302.5" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="303.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="eS1-yc-rVr"/>
                                             <constraint firstAttribute="width" constant="200" id="lwO-ZY-uP1"/>
@@ -1952,7 +1952,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project-GimpBC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="urR-3l-5VX">
-                                        <rect key="frame" x="348" y="336.5" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="337.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="BWt-Ov-6st"/>
                                             <constraint firstAttribute="width" constant="200" id="SC5-ME-1UF"/>
@@ -1962,7 +1962,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sirius-sdz" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Df-pj-e5l">
-                                        <rect key="frame" x="348" y="370.5" width="200" height="24"/>
+                                        <rect key="frame" x="348" y="371.5" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="Tdd-Bm-KVc"/>
                                             <constraint firstAttribute="height" constant="24" id="wjA-8z-adc"/>
@@ -1972,7 +1972,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZ8-2v-WGM">
-                                        <rect key="frame" x="398" y="419.5" width="100" height="24"/>
+                                        <rect key="frame" x="398" y="420.5" width="100" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="97n-pz-yKz"/>
                                             <constraint firstAttribute="width" constant="100" id="Gly-KU-4Xk"/>
@@ -2657,7 +2657,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading 0 / 8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXl-z6-hei">
-                                <rect key="frame" x="395" y="40" width="106.5" height="21"/>
+                                <rect key="frame" x="392" y="40" width="112" height="22"/>
                                 <fontDescription key="fontDescription" name="Inter-Regular" family="Inter" pointSize="18"/>
                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -4726,9 +4726,9 @@
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvk-dJ-XaX">
                                                 <rect key="frame" x="40" y="0.0" width="816" height="1000"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <string key="text">Terms of Service
+                                                <mutableString key="text">Terms of Service
 
-Radio Frost ("software", “service”, “app”) is provided by Matrix Warez Ltd. ("developer", "publisher") as is whereby any feature, bug or issue with the app is not the responsibility of the developers or publishers of the service to withhold or upkeep. You must be at least 13 years of age to use this service.
+Pixels: Together ("software", “service”, “app”) is provided by Matrix Warez Ltd. ("developer", "publisher") as is whereby any feature, bug or issue with the app is not the responsibility of the developers or publishers of the service to withhold or upkeep. You must be at least 13 years of age to use this service.
 
 (1) User Generated Content
 
@@ -4748,7 +4748,7 @@ If any person on any canvas uses pixels to give out any personal information abo
 
 
 
-</string>
+</mutableString>
                                                 <color key="textColor" red="0.33725490200000002" green="0.83921568629999999" blue="0.46931997710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Inter-Regular" family="Inter" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

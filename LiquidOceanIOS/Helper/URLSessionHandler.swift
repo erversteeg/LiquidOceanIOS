@@ -729,6 +729,7 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                 DispatchQueue.main.async {
                     let server = Server()
                     
+                    server.uid = jsonDict["id"] as! Int
                     server.name = jsonDict["name"] as! String
                     server.color = jsonDict["color"] as! Int32
                     server.baseUrl = jsonDict["base_url"] as! String
