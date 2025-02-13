@@ -51,8 +51,8 @@ protocol InteractiveCanvasEraseDelegate: AnyObject {
 }
 
 class InteractiveCanvas: NSObject {
-    var rows = 1024
-    var cols = 1024
+    var rows = 0
+    var cols = 0
     
     var arr = [[Int32]]()
     
@@ -69,6 +69,7 @@ class InteractiveCanvas: NSObject {
     var world: Bool {
         set {
             _world = newValue
+            
             initType()
         }
         get {
@@ -231,8 +232,8 @@ class InteractiveCanvas: NSObject {
         if world {
             // world
             if realmId == 1 {
-                rows = 1024
-                cols = 1024
+                rows = SessionSettings.instance.canvasSize
+                cols = rows
                 initChunkPixelsFromMemory()
             }
             // dev
@@ -382,8 +383,8 @@ class InteractiveCanvas: NSObject {
         let pixelId = Int(t[0])!
         let color = Int32(exactly: Int(t[2])!)!
         
-        let x = pixelId % 1024
-        let y = pixelId / 1024
+        let x = pixelId % cols
+        let y = pixelId / cols
         
         arr[y][x] = color
         drawCallback?.notifyCanvasRedraw()
@@ -455,6 +456,7 @@ class InteractiveCanvas: NSObject {
     
     func initChunkPixelsFromMemory() {
         var chunk = [[Int32]]()
+        let chunkSize = cols / 4
         for i in 0...cols - 1 {
             var innerArr = [Int32]()
             if i < rows / 4 {
@@ -471,7 +473,7 @@ class InteractiveCanvas: NSObject {
             }
             
             for j in 0...rows - 1 {
-                innerArr.append(chunk[i % 256][j])
+                innerArr.append(chunk[i % chunkSize][j])
             }
             
             arr.append(innerArr)
@@ -530,7 +532,7 @@ class InteractiveCanvas: NSObject {
         let restorePoint = unitInRestorePoints(x: x, y: y, restorePointsArr: self.restorePoints)
         
         if mode == 0 {
-            if restorePoint == nil && (SessionSettings.instance.dropsAmt > 0 && restorePoints.count < 10 || !world) {
+            if restorePoint == nil && (SessionSettings.instance.dropsAmt > 0 && restorePoints.count < SessionSettings.instance.maxSend || !world) {
                 if x > -1 && x < cols && y > -1 && y < rows {
                     let unitColor = arr[y][x]
                     

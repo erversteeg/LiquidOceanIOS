@@ -28,6 +28,8 @@ class Server: NSObject {
     var altPort = 0
     var socketPort = 0
     var queuePort = 0
+    var size = 0
+    var maxSend = 0
     
     func serviceUrl() -> String {
         return "\(baseUrl):\(apiPort)/"
@@ -62,6 +64,8 @@ class Server: NSObject {
         jsonObj["alt_port"] = altPort
         jsonObj["socket_port"] = socketPort
         jsonObj["queue_port"] = queuePort
+        jsonObj["size"] = size
+        jsonObj["max_send"] = maxSend
         
         return jsonObj
     }

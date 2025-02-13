@@ -753,6 +753,9 @@ class URLSessionHandler: NSObject, URLSessionTaskDelegate {
                     server.socketPort = jsonDict["socket_port"] as! Int
                     server.queuePort = jsonDict["queue_port"] as! Int
                     
+                    server.size = jsonDict["size"] as! Int
+                    server.maxSend = jsonDict["max_send"] as! Int
+                    
                     completionHandler(true, code, server)
                 }
             }

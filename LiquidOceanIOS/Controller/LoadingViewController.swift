@@ -169,6 +169,8 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
             
             SessionSettings.instance.uniqueId = self.server.uuid
             SessionSettings.instance.maxPaintAmt = server!.maxPixels
+            SessionSettings.instance.maxSend = server!.maxSend
+            SessionSettings.instance.canvasSize = server!.size
             
             SessionSettings.instance.addServer(server: self.server)
             SessionSettings.instance.lastVisitedServer = server!
@@ -395,10 +397,12 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
                         }
                         
                         self.doneCheckingIp = true
+                        self.downloadFinished()
                     }
                 }
                 else {
                     self.doneCheckingIp = true
+                    self.downloadFinished()
                 }
             }
             else {

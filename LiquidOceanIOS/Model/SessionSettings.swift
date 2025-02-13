@@ -30,6 +30,9 @@ class SessionSettings: NSObject {
     var chunk3: [[Int32]]!
     var chunk4: [[Int32]]!
     
+    var canvasSize: Int = 0
+    var maxSend: Int = 0
+    
     private var _dropsAmt: Int = 0
     var dropsAmt: Int! {
         get {
