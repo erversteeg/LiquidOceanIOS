@@ -364,8 +364,8 @@ class InteractiveCanvas: NSObject {
             
         }
         
-        socket.on("pixel_receive") { (data, ack) in
-            self.receivePixel(pixelInfo: data[0] as! String)
+        socket.on("pixels_receive") { (data, ack) in
+            self.receivePixels(pixelInfo: data[0] as! String)
         }
         
         socket.on("add_paint") { (data, ack) in
@@ -378,16 +378,50 @@ class InteractiveCanvas: NSObject {
         }
     }
     
-    func receivePixel(pixelInfo: String) {
+    func receivePixels(pixelInfo: String) {
         let t = pixelInfo.components(separatedBy: "&")
-        let pixelId = Int(t[0])!
-        let color = Int32(exactly: Int(t[2])!)!
         
-        let x = pixelId % cols
-        let y = pixelId / cols
+        var pixelIds = [Int]()
+        var colors = [Int32]()
+        var deviceId = -1
+        var key = ""
         
-        arr[y][x] = color
+        for i in 0...t.count - 1 {
+            if t.count % 2 == 0 && i == t.count - 1 {
+                key = t[i]
+                break
+            }
+            
+            if i == 0 {
+                deviceId = Int(t[i])!
+            }
+            else if i % 2 != 0 {
+                pixelIds.append(Int(t[i])!)
+            }
+            else {
+                colors.append(Int32(exactly: Int(t[i])!)!)
+            }
+        }
+        
+        if pixelIds.count != colors.count {
+            return
+        }
+        
+        for i in 0...pixelIds.count - 1 {
+            let pixelId = pixelIds[i]
+            let color = colors[i]
+            
+            let x = pixelId % cols
+            let y = pixelId / cols
+            
+            print("Receive pixel: pixelId(\(pixelId)) = (\(x), \(y)")
+            
+            arr[y][x] = color
+        }
+        
         drawCallback?.notifyCanvasRedraw()
+        
+        print("Receive pixels: \(pixelInfo)")
     }
     
     func erasePixels(startUnit: CGPoint, endUnit: CGPoint) {
@@ -567,10 +601,18 @@ class InteractiveCanvas: NSObject {
     
     func commitPixels() {
         if world {
+            var xs = [Int]()
+            var ys = [Int]()
+            var colors = [Int32]()
+            
             for restorePoint in self.restorePoints {
-                print("emit pixel")
-                InteractiveCanvasSocket.instance.socket!.emit("pixel_send", buildPixelString(x: restorePoint.x, y: restorePoint.y, deviceId: SessionSettings.instance.deviceId, color: restorePoint.newColor), completion: nil)
+                xs.append(restorePoint.x)
+                ys.append(restorePoint.y)
+                colors.append(restorePoint.newColor)
             }
+            
+            print("emit pixels")
+            InteractiveCanvasSocket.instance.socket!.emit("pixels_send", buildPixelsString(xs: xs, ys: ys, deviceId: SessionSettings.instance.deviceId, colors: colors), completion: nil)
             
             //StatTracker.instance.reportEvent(eventType: .pixelPaintedWorld, amt: restorePoints.count)
         }
@@ -586,9 +628,23 @@ class InteractiveCanvas: NSObject {
         self.recentColorsDelegate?.notifyNewRecentColors(recentColors: self.recentColors)
     }
     
-    func buildPixelString(x: Int, y: Int, deviceId: Int, color: Int32) -> String {
-        let pixelId = y * cols + x
-        return "\(pixelId)&\(deviceId)&\(color)"
+    func buildPixelsString(xs: [Int], ys: [Int], deviceId: Int, colors: [Int32]) -> String {
+        var str = "\(deviceId)"
+        
+        for i in 0...colors.count - 1 {
+            let x = xs[i]
+            let y = ys[i]
+            let color = colors[i]
+            
+            let pixelId = y * cols + x
+            str += "&\(pixelId)&\(color)"
+        }
+        
+        if server.isAdmin {
+            str += "&\(server.adminKey)"
+        }
+        
+        return str
     }
     
     func updateRecentColors() {

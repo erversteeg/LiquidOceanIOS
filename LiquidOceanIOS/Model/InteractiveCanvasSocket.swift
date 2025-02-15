@@ -35,6 +35,7 @@ class InteractiveCanvasSocket: NSObject, URLSessionDelegate {
         
         socket?.on(clientEvent: .connect) { (data, ack) in
             print(data)
+            self.socket?.emit("connect2")
             self.socketConnectionDelegate?.notifySocketConnect()
         }
         

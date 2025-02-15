@@ -1966,7 +1966,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         URLSessionHandler.instance.getRecentPixels(server: SessionSettings.instance.lastVisitedServer!, since: SessionSettings.instance.canvasPauseTime) { jsonArray in
             if jsonArray != nil {
                 for pixelInfo in jsonArray! {
-                    self.surfaceView.interactiveCanvas.receivePixel(pixelInfo: pixelInfo)
+                    self.surfaceView.interactiveCanvas.receivePixels(pixelInfo: pixelInfo)
                 }
             }
             else {
