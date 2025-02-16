@@ -861,7 +861,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb9-h5-Mah" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="327" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas grid line color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrY-eh-P8l">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grid line color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrY-eh-P8l">
                                                 <rect key="frame" x="0.0" y="8.5" width="400" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="400" id="HMt-4g-5OE"/>
@@ -907,7 +907,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1jo-Dv-ZE0" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="387" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paint meter color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAM-zQ-jBh">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pixel meter color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAM-zQ-jBh">
                                                 <rect key="frame" x="0.0" y="8.5" width="200" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="43" id="6gm-Eq-bPh"/>
@@ -953,7 +953,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2bo-3m-NSe" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="447" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas background primary color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwF-nB-Of8">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom background color 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwF-nB-Of8">
                                                 <rect key="frame" x="0.0" y="8.5" width="350" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="350" id="Ad7-96-cNY"/>
@@ -999,7 +999,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AME-LP-3MV" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="507" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas background secondary color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNk-d8-aRx">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom background color 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNk-d8-aRx">
                                                 <rect key="frame" x="0.0" y="8.5" width="350" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="43" id="oyj-4j-OAf"/>
@@ -1045,7 +1045,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bbf-jJ-jMM" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="567" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Close draw panel button color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meO-s4-8zR">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Close panel color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meO-s4-8zR">
                                                 <rect key="frame" x="0.0" y="8.5" width="300" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="43" id="5c1-6J-fnV"/>
@@ -1088,43 +1088,10 @@
                                             <constraint firstAttribute="bottom" secondItem="deM-r4-72e" secondAttribute="bottom" constant="10" id="yx6-uy-Q5g"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nPG-P6-BAO" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mjN-7G-HGz" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
                                         <rect key="frame" x="64" y="627" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right-handed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rf-cg-374">
-                                                <rect key="frame" x="0.0" y="8.5" width="200" height="43"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="43" id="DMc-dU-TmC"/>
-                                                    <constraint firstAttribute="width" constant="200" id="gtd-KS-ElB"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="Inter-Medium" family="Inter" pointSize="17"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pul-wo-k7C">
-                                                <rect key="frame" x="705" y="14.5" width="49" height="31"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="47" id="ViW-Qk-dSC"/>
-                                                    <constraint firstAttribute="height" constant="31" id="k9K-19-8X4"/>
-                                                </constraints>
-                                                <connections>
-                                                    <action selector="switchChanged:" destination="PmP-As-lpW" eventType="valueChanged" id="cB2-o3-zcw"/>
-                                                </connections>
-                                            </switch>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="9rf-cg-374" firstAttribute="centerY" secondItem="nPG-P6-BAO" secondAttribute="centerY" id="MJ7-wq-mgJ"/>
-                                            <constraint firstAttribute="trailing" secondItem="pul-wo-k7C" secondAttribute="trailing" constant="16" id="R3c-m4-cFO"/>
-                                            <constraint firstAttribute="height" constant="60" id="WCs-Dz-npi"/>
-                                            <constraint firstItem="pul-wo-k7C" firstAttribute="centerY" secondItem="nPG-P6-BAO" secondAttribute="centerY" id="XvZ-Ta-KJp"/>
-                                            <constraint firstItem="9rf-cg-374" firstAttribute="leading" secondItem="nPG-P6-BAO" secondAttribute="leading" id="sYk-Va-mrS"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mjN-7G-HGz" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="64" y="687" width="768" height="60"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show paint meter bar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tP5-2L-M4H">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pixel meter bar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tP5-2L-M4H">
                                                 <rect key="frame" x="0.0" y="8.5" width="200" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="43" id="ooU-by-OfV"/>
@@ -1155,9 +1122,9 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZo-Dm-5e2" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="64" y="747" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="687" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show paint meter circle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffp-HE-t5c">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pixel meter circle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffp-HE-t5c">
                                                 <rect key="frame" x="0.0" y="8.5" width="250" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="43" id="Ycy-DA-ToS"/>
@@ -1188,9 +1155,9 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cxa-sJ-owu" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="64" y="807" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="747" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Circle color indicator" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJc-pn-Lj5">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Circle current color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJc-pn-Lj5">
                                                 <rect key="frame" x="0.0" y="8.5" width="200" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="kHm-ep-oMU"/>
@@ -1221,9 +1188,9 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xYN-DJ-wVQ" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="64" y="867" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="807" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Square color indicator" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTl-D4-YSx">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Square current color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTl-D4-YSx">
                                                 <rect key="frame" x="0.0" y="8.5" width="400" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="400" id="pe9-L3-ejP"/>
@@ -1254,9 +1221,9 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N5g-mC-KdK" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="64" y="927" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="867" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color indicator outline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiU-y2-mbJ">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current color outline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiU-y2-mbJ">
                                                 <rect key="frame" x="0.0" y="8.5" width="400" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="43" id="74k-8r-vxm"/>
@@ -1287,9 +1254,9 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnN-jm-H46" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="64" y="987" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="927" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color indicator size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8g-vD-5PN">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current color size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8g-vD-5PN">
                                                 <rect key="frame" x="0.0" y="8.5" width="200" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="43" id="x84-LV-sjc"/>
@@ -1354,9 +1321,9 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BPP-Jg-wWE" customClass="OptionContainerView" customModule="LiquidOceanIOS" customModuleProvider="target">
-                                        <rect key="frame" x="64" y="1047" width="768" height="60"/>
+                                        <rect key="frame" x="64" y="987" width="768" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recent colors" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eh2-iq-msO">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recent colors count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eh2-iq-msO">
                                                 <rect key="frame" x="0.0" y="8.5" width="200" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="43" id="GGP-Pj-rs3"/>
@@ -1435,7 +1402,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlN-Qk-8Ro">
-                                        <rect key="frame" x="64" y="1137" width="300" height="40"/>
+                                        <rect key="frame" x="64" y="1077" width="300" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="3hq-vk-eME"/>
                                             <constraint firstAttribute="height" constant="40" id="yjJ-HJ-uQc"/>
@@ -1445,7 +1412,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zNI-if-o1z">
-                                        <rect key="frame" x="503" y="1137" width="200" height="40"/>
+                                        <rect key="frame" x="503" y="1077" width="200" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="NL1-o9-9UU"/>
                                             <constraint firstAttribute="height" constant="40" id="OgX-it-fa8"/>
@@ -1457,7 +1424,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXz-Gu-sve">
-                                        <rect key="frame" x="746" y="1137" width="80" height="40"/>
+                                        <rect key="frame" x="746" y="1077" width="80" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="9Cs-JK-Axr"/>
                                             <constraint firstAttribute="height" constant="40" id="Rl4-qo-gjy"/>
@@ -1468,7 +1435,7 @@
                                             <action selector="changeNamePressed:" destination="PmP-As-lpW" eventType="touchUpInside" id="9y1-Hz-Z4r"/>
                                         </connections>
                                     </button>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Jn-Nf-vr3">
+                                    <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Jn-Nf-vr3">
                                         <rect key="frame" x="64" y="1687" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas Lock Border" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vg-3I-eI5">
@@ -1501,7 +1468,7 @@
                                             <constraint firstAttribute="height" constant="60" id="mOf-1H-SRS"/>
                                         </constraints>
                                     </view>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bCL-gC-y0h">
+                                    <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bCL-gC-y0h">
                                         <rect key="frame" x="64" y="1757" width="768" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas Lock Color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIB-BY-JQZ">
@@ -1727,7 +1694,7 @@
                                         </constraints>
                                     </view>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9a2-Ln-eCh">
-                                        <rect key="frame" x="398" y="1137" width="100" height="50"/>
+                                        <rect key="frame" x="398" y="1077" width="100" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="FLk-Vf-r8q"/>
                                             <constraint firstAttribute="width" constant="100" id="fND-mY-5q1"/>
@@ -1738,7 +1705,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEB-rZ-HbD">
-                                        <rect key="frame" x="348" y="1202" width="200" height="50"/>
+                                        <rect key="frame" x="348" y="1142" width="200" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="3db-ma-ebz"/>
                                             <constraint firstAttribute="height" constant="50" id="nUb-gK-ehL"/>
@@ -1749,7 +1716,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlE-7t-BIb">
-                                        <rect key="frame" x="373" y="1127" width="150" height="50"/>
+                                        <rect key="frame" x="373" y="1067" width="150" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="1dp-XI-eDm"/>
                                             <constraint firstAttribute="width" constant="150" id="iwB-he-CgJ"/>
@@ -1761,7 +1728,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GuT-hT-zzn">
-                                        <rect key="frame" x="373" y="1187" width="150" height="50"/>
+                                        <rect key="frame" x="373" y="1127" width="150" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="k0y-ET-U1j"/>
                                             <constraint firstAttribute="width" constant="150" id="o1e-Iq-vv3"/>
@@ -1773,7 +1740,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cef-6d-S8O">
-                                        <rect key="frame" x="373" y="1247" width="150" height="50"/>
+                                        <rect key="frame" x="373" y="1187" width="150" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="6Kk-yA-xLF"/>
                                             <constraint firstAttribute="width" constant="150" id="wqW-df-qNW"/>
@@ -1829,7 +1796,6 @@
                                     <constraint firstItem="AME-LP-3MV" firstAttribute="leading" secondItem="PgH-F1-oec" secondAttribute="leading" constant="64" id="Yc9-TG-fI5"/>
                                     <constraint firstItem="Gc3-RK-j2z" firstAttribute="top" secondItem="hbc-eb-pMK" secondAttribute="bottom" constant="15" id="Yhe-hC-3dx"/>
                                     <constraint firstItem="2bo-3m-NSe" firstAttribute="leading" secondItem="PgH-F1-oec" secondAttribute="leading" constant="64" id="Z0Z-qa-USs"/>
-                                    <constraint firstItem="8Jn-Nf-vr3" firstAttribute="top" secondItem="nPG-P6-BAO" secondAttribute="bottom" constant="1000" id="Z8Q-Zu-cVA"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="hW7-Pb-60z" secondAttribute="trailing" constant="64" id="c5c-64-yT5"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="2bo-3m-NSe" secondAttribute="trailing" constant="64" id="cI3-vK-Rnw"/>
                                     <constraint firstItem="9a2-Ln-eCh" firstAttribute="centerX" secondItem="OLn-mO-5pb" secondAttribute="centerX" id="ciy-m4-e2z"/>
@@ -1846,26 +1812,23 @@
                                     <constraint firstItem="hW7-Pb-60z" firstAttribute="leading" secondItem="PgH-F1-oec" secondAttribute="leading" constant="64" id="gPa-EY-AUS"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="5gE-Cx-qwQ" secondAttribute="trailing" constant="64" id="gWH-6O-wIl"/>
                                     <constraint firstItem="cef-6d-S8O" firstAttribute="top" secondItem="GuT-hT-zzn" secondAttribute="bottom" constant="10" id="hEm-zC-tZd"/>
-                                    <constraint firstItem="nPG-P6-BAO" firstAttribute="leading" secondItem="wXC-tb-hwY" secondAttribute="leading" constant="64" id="hW8-ag-yDe"/>
                                     <constraint firstItem="aEB-rZ-HbD" firstAttribute="centerX" secondItem="OLn-mO-5pb" secondAttribute="centerX" id="hqF-Zd-jh0"/>
                                     <constraint firstItem="wXC-tb-hwY" firstAttribute="bottom" secondItem="YlN-Qk-8Ro" secondAttribute="bottom" constant="250" id="hwv-yD-y9h"/>
                                     <constraint firstItem="BPP-Jg-wWE" firstAttribute="top" secondItem="cnN-jm-H46" secondAttribute="bottom" id="i0l-jK-Txm"/>
-                                    <constraint firstItem="nPG-P6-BAO" firstAttribute="top" secondItem="Bbf-jJ-jMM" secondAttribute="bottom" id="jtj-ea-wP9"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="N5g-mC-KdK" secondAttribute="trailing" constant="64" id="kT7-AO-3Z9"/>
                                     <constraint firstItem="j5k-LU-HJw" firstAttribute="leading" secondItem="wXC-tb-hwY" secondAttribute="leading" constant="64" id="mI1-7q-uSk"/>
                                     <constraint firstItem="jBc-fL-ijQ" firstAttribute="top" secondItem="AME-LP-3MV" secondAttribute="bottom" constant="1000" id="mx6-aZ-G6e"/>
                                     <constraint firstItem="GuT-hT-zzn" firstAttribute="top" secondItem="nlE-7t-BIb" secondAttribute="bottom" constant="10" id="o4H-Ek-lor"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="Bbf-jJ-jMM" secondAttribute="trailing" constant="64" id="oFd-cE-vZ3"/>
-                                    <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="nPG-P6-BAO" secondAttribute="trailing" constant="64" id="oib-34-SP4"/>
                                     <constraint firstItem="Cxa-sJ-owu" firstAttribute="leading" secondItem="wXC-tb-hwY" secondAttribute="leading" constant="64" id="q3N-gJ-mwy"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="IZo-Dm-5e2" secondAttribute="trailing" constant="64" id="reH-2d-8ax"/>
-                                    <constraint firstItem="mjN-7G-HGz" firstAttribute="top" secondItem="nPG-P6-BAO" secondAttribute="bottom" id="s4r-wh-rre"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="bCL-gC-y0h" secondAttribute="trailing" constant="64" id="tMY-iJ-VIg"/>
                                     <constraint firstItem="5gE-Cx-qwQ" firstAttribute="top" secondItem="Bbf-jJ-jMM" secondAttribute="bottom" constant="1000" id="uYi-jy-v5N"/>
                                     <constraint firstItem="N5g-mC-KdK" firstAttribute="top" secondItem="xYN-DJ-wVQ" secondAttribute="bottom" id="vCH-Db-QWi"/>
                                     <constraint firstItem="PgH-F1-oec" firstAttribute="trailing" secondItem="8Jn-Nf-vr3" secondAttribute="trailing" constant="64" id="vQD-8b-U3H"/>
                                     <constraint firstItem="zNI-if-o1z" firstAttribute="top" secondItem="YlN-Qk-8Ro" secondAttribute="top" id="vcv-WT-bRH"/>
                                     <constraint firstItem="GuT-hT-zzn" firstAttribute="centerX" secondItem="OLn-mO-5pb" secondAttribute="centerX" id="vgy-qP-WeY"/>
+                                    <constraint firstItem="mjN-7G-HGz" firstAttribute="top" secondItem="Bbf-jJ-jMM" secondAttribute="bottom" id="xzh-g7-mQf"/>
                                     <constraint firstItem="IZo-Dm-5e2" firstAttribute="top" secondItem="mjN-7G-HGz" secondAttribute="bottom" id="ynQ-EC-k1o"/>
                                     <constraint firstItem="YlN-Qk-8Ro" firstAttribute="top" secondItem="BPP-Jg-wWE" secondAttribute="bottom" constant="30" id="z9N-pL-A8U"/>
                                 </constraints>
@@ -2150,8 +2113,6 @@
                         <outlet property="recentColorsAmtLabel4" destination="Oqh-eM-Qma" id="hXr-sS-JGw"/>
                         <outlet property="recentColorsAmtLabel5" destination="yAg-ep-FQi" id="I5l-3N-jnH"/>
                         <outlet property="recentColorsContainer" destination="BPP-Jg-wWE" id="Zd3-nO-7SV"/>
-                        <outlet property="rightHandedContainer" destination="nPG-P6-BAO" id="JAZ-I7-kEa"/>
-                        <outlet property="rightHandedSwitch" destination="pul-wo-k7C" id="dUo-U7-7hN"/>
                         <outlet property="showPaintBarContainer" destination="mjN-7G-HGz" id="7E4-bQ-I0l"/>
                         <outlet property="showPaintBarSwitch" destination="8TP-ca-QO1" id="zxj-Jn-KZH"/>
                         <outlet property="showPaintCircleContainer" destination="IZo-Dm-5e2" id="3yb-1E-TUp"/>

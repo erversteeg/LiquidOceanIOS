@@ -348,9 +348,9 @@ class OptionsViewController: UIViewController, UICollectionViewDataSource, UICol
         self.recentColorsAmtLabel5.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedRecentColorLabel5(sender:))))
         
         // right-handed
-        rightHandedContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
-        rightHandedContainer.layer.borderWidth = 0
-        rightHandedSwitch.isOn = SessionSettings.instance.rightHanded
+//        rightHandedContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
+//        rightHandedContainer.layer.borderWidth = 0
+//        rightHandedSwitch.isOn = SessionSettings.instance.rightHanded
         
         // small action buttons
         smallActionButtonsContainer.layer.borderColor = UIColor(argb: Utils.int32FromColorHex(hex: "0x99FFFFFF")).cgColor
