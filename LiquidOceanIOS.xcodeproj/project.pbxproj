@@ -34,6 +34,9 @@
 		0731602B28A0159B00466BC4 /* ButtonFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0731602A28A0159B00466BC4 /* ButtonFrame.swift */; };
 		073663782608F16600E5403F /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073663772608F16600E5403F /* PincodeViewController.swift */; };
 		0736637A260E148700E5403F /* AchievementIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07366379260E148700E5403F /* AchievementIcon.swift */; };
+		0744E8812D61918F00C9DD29 /* yellow_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0744E8802D61918E00C9DD29 /* yellow_circle.png */; };
+		0744E8822D61918F00C9DD29 /* green_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0744E87E2D61918E00C9DD29 /* green_circle.png */; };
+		0744E8832D61918F00C9DD29 /* red_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0744E87F2D61918E00C9DD29 /* red_circle.png */; };
 		0788E47D25FBD1D8004FC782 /* iOSDeviceModelMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */; };
 		0788E47F25FBD3F5004FC782 /* UIView+SafeAnchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0788E47E25FBD3F5004FC782 /* UIView+SafeAnchors.swift */; };
 		0788E48125FC58BC004FC782 /* ColorPickerOutletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0788E48025FC58BC004FC782 /* ColorPickerOutletsViewController.swift */; };
@@ -172,6 +175,9 @@
 		0731602A28A0159B00466BC4 /* ButtonFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFrame.swift; sourceTree = "<group>"; };
 		073663772608F16600E5403F /* PincodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PincodeViewController.swift; sourceTree = "<group>"; };
 		07366379260E148700E5403F /* AchievementIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementIcon.swift; sourceTree = "<group>"; };
+		0744E87E2D61918E00C9DD29 /* green_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_circle.png; sourceTree = "<group>"; };
+		0744E87F2D61918E00C9DD29 /* red_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_circle.png; sourceTree = "<group>"; };
+		0744E8802D61918E00C9DD29 /* yellow_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow_circle.png; sourceTree = "<group>"; };
 		0788E47C25FBD1D8004FC782 /* iOSDeviceModelMapping.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iOSDeviceModelMapping.plist; sourceTree = "<group>"; };
 		0788E47E25FBD3F5004FC782 /* UIView+SafeAnchors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SafeAnchors.swift"; sourceTree = "<group>"; };
 		0788E48025FC58BC004FC782 /* ColorPickerOutletsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerOutletsViewController.swift; sourceTree = "<group>"; };
@@ -379,6 +385,9 @@
 				07FF5F2425E5BDF6003E19AE /* water_texture.jpg */,
 				07FF5F2225E5BDF6003E19AE /* wood_texture_light.jpg */,
 				07FF5F1B25E5BDF4003E19AE /* wood_texture.png */,
+				0744E87E2D61918E00C9DD29 /* green_circle.png */,
+				0744E87F2D61918E00C9DD29 /* red_circle.png */,
+				0744E8802D61918E00C9DD29 /* yellow_circle.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -628,6 +637,9 @@
 				07A9B18C25ED6CCD009A47DF /* amb_15.jpg in Resources */,
 				07FF5F3825E5BDF6003E19AE /* water_texture.jpg in Resources */,
 				0704FB91273984C9009799E1 /* Inter-Bold.ttf in Resources */,
+				0744E8812D61918F00C9DD29 /* yellow_circle.png in Resources */,
+				0744E8822D61918F00C9DD29 /* green_circle.png in Resources */,
+				0744E8832D61918F00C9DD29 /* red_circle.png in Resources */,
 				07FF5F2C25E5BDF6003E19AE /* space_texture.jpg in Resources */,
 				07FF5F3725E5BDF6003E19AE /* crystal_2.jpg in Resources */,
 				0704FB94273984C9009799E1 /* Inter-SemiBold.ttf in Resources */,

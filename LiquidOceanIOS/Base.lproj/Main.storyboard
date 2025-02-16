@@ -3095,6 +3095,13 @@
                                     <constraint firstItem="2bj-lL-z2O" firstAttribute="top" secondItem="Dcg-RG-ceO" secondAttribute="top" constant="17" id="yw5-5q-pyz"/>
                                 </constraints>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_circle.png" translatesAutoresizingMaskIntoConstraints="NO" id="H6q-cy-JFe">
+                                <rect key="frame" x="818" y="0.0" width="18" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="G2l-JD-a9c"/>
+                                    <constraint firstAttribute="width" constant="18" id="QXf-pT-cCM"/>
+                                </constraints>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fyk-ME-JTp" customClass="ButtonFrame" customModule="LiquidOceanIOS" customModuleProvider="target">
                                 <rect key="frame" x="839" y="90" width="40" height="50"/>
                                 <subviews>
@@ -3851,6 +3858,7 @@
                             <constraint firstAttribute="bottom" secondItem="Noh-3c-qct" secondAttribute="bottom" id="YXr-5N-gI1"/>
                             <constraint firstItem="1T9-L7-JKj" firstAttribute="trailing" secondItem="xoZ-vF-uEO" secondAttribute="leading" priority="999" constant="-40" id="aPJ-QW-QTd"/>
                             <constraint firstItem="ape-vj-wQL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" priority="999" constant="17" id="agt-F0-cq6"/>
+                            <constraint firstItem="Dcg-RG-ceO" firstAttribute="leading" secondItem="H6q-cy-JFe" secondAttribute="trailing" id="bPP-YN-eDF"/>
                             <constraint firstItem="UYW-Te-7QB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="cgX-kE-orb"/>
                             <constraint firstItem="ydz-ew-c1z" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="dbF-Me-bp2"/>
                             <constraint firstItem="vhR-03-8Ib" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="17" id="e1J-Uu-p3F"/>
@@ -3864,6 +3872,7 @@
                             <constraint firstItem="vhR-03-8Ib" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="17" id="nUW-n3-1TI"/>
                             <constraint firstAttribute="bottom" secondItem="xoZ-vF-uEO" secondAttribute="bottom" id="q0O-np-Qbx"/>
                             <constraint firstAttribute="bottom" secondItem="1T9-L7-JKj" secondAttribute="bottom" constant="21" id="q7R-mj-qqh"/>
+                            <constraint firstItem="H6q-cy-JFe" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="qAb-Ru-U4l"/>
                             <constraint firstItem="0bh-it-Xd2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="qV9-j0-AQ4"/>
                             <constraint firstItem="ape-vj-wQL" firstAttribute="top" secondItem="hsl-8Q-RoJ" secondAttribute="bottom" id="qYm-MB-gbS"/>
                             <constraint firstAttribute="bottom" secondItem="lXl-XV-J0j" secondAttribute="bottom" constant="17" id="r0U-rV-PhK"/>
@@ -3997,6 +4006,7 @@
                         <outlet property="selectedObjectYesNoContainer" destination="ji3-kJ-24b" id="Mt7-Ij-u2I"/>
                         <outlet property="selectedObjectYesNoContainerLeading" destination="yCI-en-OAj" id="yyE-ks-d22"/>
                         <outlet property="selectedObjectYesNoContainerTop" destination="muC-SQ-6KY" id="ure-zO-Wcf"/>
+                        <outlet property="socketStatusImage" destination="H6q-cy-JFe" id="Wup-KD-Oec"/>
                         <outlet property="summaryActionLeading" destination="YPn-lk-IaJ" id="WAO-pV-RDn"/>
                         <outlet property="summaryActionTrailing" destination="AQp-hk-UtJ" id="Hwr-Ci-lYt"/>
                         <outlet property="summaryButton" destination="ZmC-9f-OkI" id="xx7-Am-apT"/>
@@ -4726,7 +4736,7 @@
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvk-dJ-XaX">
                                                 <rect key="frame" x="40" y="0.0" width="816" height="1000"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <mutableString key="text">Terms of Service
+                                                <string key="text">Terms of Service
 
 Pixels: Together ("software", “service”, “app”) is provided by Matrix Warez Ltd. ("developer", "publisher") as is whereby any feature, bug or issue with the app is not the responsibility of the developers or publishers of the service to withhold or upkeep. You must be at least 13 years of age to use this service.
 
@@ -4748,7 +4758,7 @@ If any person on any canvas uses pixels to give out any personal information abo
 
 
 
-</mutableString>
+</string>
                                                 <color key="textColor" red="0.33725490200000002" green="0.83921568629999999" blue="0.46931997710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Inter-Regular" family="Inter" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -5624,8 +5634,8 @@ If any person on any canvas uses pixels to give out any personal information abo
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="xNZ-J9-gls"/>
-        <segue reference="DhC-cG-tnL"/>
-        <segue reference="cg6-8E-NGn"/>
+        <segue reference="XGn-H2-2Wq"/>
+        <segue reference="N4G-oK-EKi"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="add" width="24" height="24"/>
@@ -5635,6 +5645,7 @@ If any person on any canvas uses pixels to give out any personal information abo
         <image name="close" width="24" height="24"/>
         <image name="done" width="24" height="24"/>
         <image name="export" width="24" height="24"/>
+        <image name="green_circle.png" width="122.87999725341797" height="122.87999725341797"/>
         <image name="grid" width="24" height="24"/>
         <image name="menu" width="24" height="24"/>
         <image name="palette" width="24" height="24"/>

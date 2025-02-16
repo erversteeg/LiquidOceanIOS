@@ -216,6 +216,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var bannerText: UILabel!
     @IBOutlet weak var bannerWidth: NSLayoutConstraint!
     
+    @IBOutlet weak var socketStatusImage: UIImageView!
+    
     let showOptions = "ShowOptions"
     let showHowto = "ShowHowto"
     let unwindToLoading = "UnwindToLoading"
@@ -1991,6 +1993,15 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func notifySocketConnectionError() {
         self.performSegue(withIdentifier: unwindToLoading, sender: nil)
+    }
+    
+    func updateSocketStatus(connected: Bool) {
+        if connected {
+            self.socketStatusImage.image = UIImage(named: "green_circle.png")
+        }
+        else {
+            self.socketStatusImage.image = UIImage(named: "red_circle.png")
+        }
     }
     
     // scene delegate delegate
