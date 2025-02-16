@@ -601,6 +601,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.surfaceView.startPainting()
         }
         
+        self.paintYes.color = UIColor.green.argb()
+        self.paintNo.color = UIColor.red.argb()
+        self.closePaintPanelButton.color = UIColor.yellow.argb()
+        self.paintColorAccept.color = UIColor.green.argb()
+        self.paintColorCancel.color = UIColor.red.argb()
+        
         //self.paintColorAcceptAction.touchDelegate = self.paintColorIndicator
         
         var tgr = UITapGestureRecognizer(target: self, action: #selector(didTapColorPaletteTitle))
@@ -849,32 +855,32 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         // panel theme config
         if panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
-            paintColorAccept.isLight = false
-            paintColorCancel.isLight = false
-            closePaintPanelButton.isLight = false
-            paintYes.isLight = false
-            paintNo.isLight = false
+            //paintColorAccept.isLight = false
+            //paintColorCancel.isLight = false
+            //closePaintPanelButton.isLight = false
+            //paintYes.isLight = false
+            //paintNo.isLight = false
             
             paletteAddColorAction.colorMode = .black
             paletteRemoveColorAction.colorMode = .black
             lockPaintPanelAction.colorMode = .black
             
-            closePaintPanelButton.isLight = false
+            //closePaintPanelButton.isLight = false
             
             colorPaletteTitleLabel.textColor = UIColor.black
         }
         else {
-            paintColorAccept.isLight = true
-            paintColorCancel.isLight = true
-            closePaintPanelButton.isLight = true
-            paintYes.isLight = true
-            paintNo.isLight = true
+            //paintColorAccept.isLight = true
+            //paintColorCancel.isLight = true
+            //closePaintPanelButton.isLight = true
+            //paintYes.isLight = true
+            //paintNo.isLight = true
             
             paletteAddColorAction.colorMode = .white
             paletteRemoveColorAction.colorMode = .white
             lockPaintPanelAction.colorMode = .white
             
-            closePaintPanelButton.isLight = true
+            //closePaintPanelButton.isLight = true
             
             colorPaletteTitleLabel.textColor = UIColor.white
         }
@@ -1429,16 +1435,16 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     
     func updatePaintColorAcceptColorMode(color: Int32) {
         if PaintColorIndicator.isColorLight(color: color) && panelThemeConfig.actionButtonColor == ActionButtonView.whiteColor {
-            paintColorAccept.isLight = false
+            //paintColorAccept.isLight = false
         }
         else if panelThemeConfig.actionButtonColor == ActionButtonView.whiteColor {
-            paintColorAccept.isLight = true
+            //paintColorAccept.isLight = true
         }
         else if PaintColorIndicator.isColorDark(color: color) && panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
-            paintColorAccept.isLight = true
+            //paintColorAccept.isLight = true
         }
         else if panelThemeConfig.actionButtonColor == ActionButtonView.blackColor {
-            paintColorAccept.isLight = false
+            //paintColorAccept.isLight = false
         }
     }
     
