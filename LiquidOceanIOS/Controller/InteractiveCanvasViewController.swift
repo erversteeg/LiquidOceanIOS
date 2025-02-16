@@ -11,7 +11,7 @@ import FlexColorPicker
 import Kingfisher
 
 class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate, CanvasEdgeTouchDelegate, InteractiveCanvasSelectedObjectViewDelegate, InteractiveCanvasSelectedObjectMoveViewDelegate, MenuButtonDelegate,
-    InteractiveCanvasSocketConnectionDelegate, SceneDelegateDeleage, InteractiveCanvasEraseDelegate, InteractiveCanvasLatencyDelegate {
+    InteractiveCanvasSocketConnectionDelegate, SceneDelegateDeleage, InteractiveCanvasEraseDelegate, InteractiveCanvasSocketLatencyDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -270,6 +270,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         SessionSettings.instance.sceneDelegateDelegate = self
         
         realmId = 1
+        self.updateLatencyText()
         
         surfaceView.interactiveCanvas.server = server
         surfaceView.interactiveCanvas.realmId = realmId
@@ -286,7 +287,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.interactiveCanvas.recentColorsDelegate = self
         self.surfaceView.interactiveCanvas.artExportDelegate = self
         self.surfaceView.interactiveCanvas.eraseDelegate = self
-        self.surfaceView.interactiveCanvas.latencyDelegate = self
         
         self.surfaceView.paintDelegate = self
         self.surfaceView.palettesDelegate = self
@@ -295,6 +295,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.canvasEdgeTouchDelegate = self
         self.surfaceView.selectedObjectView = self
         self.surfaceView.selectedObjectMoveView = self
+        
+        InteractiveCanvasSocket.instance.latencyDelegate = self
         
         // surfaceView.setInitalScale()
         
@@ -2007,29 +2009,24 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
     }
     
-    var latency = -1
-    var connectionCount = 0
-    
-    func notifyLatency(ms: Int) {
-        self.latency = ms
+    func notifyLatency() {
         updateLatencyText()
-        print("latency check: got latency \(ms)")
     }
     
-    func notifyConnectionCount(count: Int) {
-        self.connectionCount = count
+    func notifyConnectionCount() {
         updateLatencyText()
-        print("latency check: get connection count \(count)")
     }
     
     func updateLatencyText() {
+        let latency = InteractiveCanvasSocket.instance.latency
+        let connectionCount = InteractiveCanvasSocket.instance.connectionCount
         var text = ""
-        if self.connectionCount > 1 {
-            text += "(\(self.connectionCount)"
+        if connectionCount > 1 {
+            text += "(\(connectionCount))"
         }
         
-        if self.latency > -1 {
-            text += "\(self.latency) ms"
+        if latency > -1 {
+            text += " \(latency) ms"
         }
         
         self.latencyText.text = text

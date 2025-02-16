@@ -183,9 +183,6 @@ class SessionSettings: NSObject {
     
     var sceneDelegateDelegate: SceneDelegateDeleage? = nil
     
-    private var latencyTask: Task<(), any Error>? = nil
-    var lastPingTime = 0.0
-    
     func save() {
         userDefaults().set(dropsAmt, forKey: "drops_amt")
         userDefaults().set(sentUniqueId, forKey: "sent_unique_id")
@@ -633,26 +630,5 @@ class SessionSettings: NSObject {
         userDefaults().set(restoreDeviceViewportCenterX, forKey: "restore_device_viewport_center_x")
         userDefaults().set(restoreDeviceViewportCenterY, forKey: "restore_device_viewport_center_y")
         userDefaults().set(restoreCanvasScaleFactor, forKey: "restore_canvas_scale_factor")
-    }
-    
-    func startLatencyTask() {
-        if self.latencyTask != nil {
-            return
-        }
-        
-        self.latencyTask = Task {
-            while !Task.isCancelled {
-                print("Sending latency check")
-                InteractiveCanvasSocket.instance.socket?.emit("lat")
-                InteractiveCanvasSocket.instance.socket?.emit("con")
-                self.lastPingTime = NSDate().timeIntervalSince1970
-                try await Task.sleep(for: .seconds(15))
-            }
-        }
-    }
-    
-    func cancelLatencyTask() {
-        self.latencyTask?.cancel()
-        self.latencyTask = nil
     }
 }
