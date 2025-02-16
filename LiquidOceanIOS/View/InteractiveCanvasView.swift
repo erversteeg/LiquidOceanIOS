@@ -340,12 +340,7 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         self.interactiveCanvas.ppu = Int(CGFloat(interactiveCanvas.basePpu) * self.scaleFactor)
         
         // position
-        if SessionSettings.instance.restoreDeviceViewportCenterX == CGFloat(0) {
-            interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, canvasCenterX: CGFloat(interactiveCanvas.cols / 2), canvasCenterY: CGFloat(interactiveCanvas.rows / 2))
-        }
-        else {
-            interactiveCanvas.updateDeviceViewport(screenSize: frame.size, canvasCenterX: SessionSettings.instance.restoreDeviceViewportCenterX, canvasCenterY: SessionSettings.instance.restoreDeviceViewportCenterY)
-        }
+        interactiveCanvas.updateDeviceViewport(screenSize: self.frame.size, canvasCenterX: CGFloat(SessionSettings.instance.canvasSize / 2), canvasCenterY: CGFloat(SessionSettings.instance.canvasSize / 2))
     }
     
     func addPan() {
