@@ -424,6 +424,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             SessionSettings.instance.darkIcons = (SessionSettings.instance.backgroundColorIndex == 1 || SessionSettings.instance.backgroundColorIndex == 3)
             
             self.updateIconColors()
+            self.updateLatencyTextColors()
             
             self.paletteAddColorAction.setNeedsDisplay()
             self.paletteRemoveColorAction.setNeedsDisplay()
@@ -461,6 +462,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             }
             
         }
+        
+        self.updateLatencyTextColors()
         
         // paint panel
         self.paintPanel.isHidden = true
@@ -683,7 +686,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             paintPanelLeading.isActive = true
             
             // close paint panel
-            closePaintPanelButton.transform = CGAffineTransform.init(rotationAngle: CGFloat(180 * Double.pi / 180.0))
+            //closePaintPanelButton.transform = CGAffineTransform.init(rotationAngle: CGFloat(180 * Double.pi / 180.0))
             
             // color picker frame
             colorPIckerFrameLeading.isActive = false
@@ -748,7 +751,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             paintPanelTrailing.isActive = true
             
             // close paint panel
-            closePaintPanelButton.transform = CGAffineTransform.init(rotationAngle: CGFloat(0 * Double.pi / 180.0))
+            //closePaintPanelButton.transform = CGAffineTransform.init(rotationAngle: CGFloat(0 * Double.pi / 180.0))
             
             // color picker frame
             colorPIckerFrameLeading.isActive = true
@@ -1249,6 +1252,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.surfaceView.startPainting()
             
             SessionSettings.instance.paintPanelOpen = true
+            
+            self.latencyText.isHidden = true
+            self.socketStatusImage.isHidden = true
         }
         else if softHide {
             self.paintPanel.isHidden = true
@@ -1276,6 +1282,9 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             self.togglePalettesView(show: false)
             
             SessionSettings.instance.paintPanelOpen = false
+            
+            self.latencyText.isHidden = false
+            self.socketStatusImage.isHidden = false
         }
     }
     
@@ -1759,6 +1768,20 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             
         }))
         self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    func updateLatencyTextColors() {
+        let bgIndex = SessionSettings.instance.backgroundColorIndex
+        let isLight = bgIndex != 1 && bgIndex != 3
+        
+        if (isLight) {
+            self.latencyText.textColor = UIColor.white
+            self.latencyText.shadowColor = UIColor.black
+        }
+        else {
+            self.latencyText.textColor = UIColor.black
+            self.latencyText.shadowColor = UIColor.white
+        }
     }
     
     // scale delegate
