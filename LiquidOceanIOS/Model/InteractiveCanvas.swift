@@ -55,6 +55,7 @@ class InteractiveCanvas: NSObject {
     var cols = 0
     
     var arr = [[Int32]]()
+    var errorPixels = [ErrorPixel]()
     
     var basePpu = 100
     var ppu: Int!
@@ -579,6 +580,12 @@ class InteractiveCanvas: NSObject {
                         SessionSettings.instance.dropsAmt -= 1
                     }
                 }
+                else {
+                    self.addErrorPixel(x: x, y: y)
+                }
+            }
+            else if SessionSettings.instance.dropsAmt == 0 || restorePoints.count >= SessionSettings.instance.maxSend {
+                self.addErrorPixel(x: x, y: y)
             }
         }
         else if mode == 1 {
@@ -596,6 +603,14 @@ class InteractiveCanvas: NSObject {
         
         if redraw {
             drawCallback?.notifyCanvasRedraw()
+        }
+    }
+    
+    private func addErrorPixel(x: Int, y: Int) {
+        if self.errorPixels.first(where: { pixel in
+            pixel.x == x && pixel.y == y
+        }) == nil {
+            self.errorPixels.append(ErrorPixel(x: x, y: y, duration: 0.65))
         }
     }
     

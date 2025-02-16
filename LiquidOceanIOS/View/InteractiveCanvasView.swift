@@ -708,9 +708,23 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         selectedObjectView?.selectedObjectEnded()
     }
     
+    private var redrawLoopTask: Task<(), any Error>? = nil
+    
     // draw callback
     func notifyCanvasRedraw() {
-        self.setNeedsDisplay()
+        if self.interactiveCanvas.errorPixels.count > 0 && self.redrawLoopTask == nil {
+            self.redrawLoopTask = Task {
+                while self.interactiveCanvas.errorPixels.count > 0 && !Task.isCancelled {
+                    self.setNeedsDisplay()
+                    try await Task.sleep(for: .milliseconds(1000 / 30))
+                }
+                self.redrawLoopTask?.cancel()
+                self.redrawLoopTask = nil
+            }
+        }
+        else {
+            self.setNeedsDisplay()
+        }
     }
     
     // drawing
@@ -729,10 +743,12 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
         let ppu = interactiveCanvas.ppu!
         
         drawUnits(ctx: ctx, deviceViewport: deviceViewport, ppu: ppu)
+        drawErrorPixels(ctx: ctx)
         
         if interactiveCanvas.ppu >= interactiveCanvas.gridLineThreshold {
             drawGridLines(ctx: ctx, deviceViewport: deviceViewport, ppu: ppu)
         }
+        print("redraw interactive canvas")
         //print("draw time (1 / " + String(1 / (Date().timeIntervalSince1970 - startTime)) + " secs)")
     }
     
@@ -760,6 +776,28 @@ class InteractiveCanvasView: UIView, InteractiveCanvasDrawCallback, InteractiveC
             
             ctx.drawPath(using: .stroke)
         }
+    }
+    
+    func drawErrorPixels(ctx: CGContext) {
+        var interactiveCanvas = self.interactiveCanvas!
+        
+        for pixel in interactiveCanvas.errorPixels {
+            let rect = self.interactiveCanvas.getScreenSpaceForUnit(x: pixel.x, y: pixel.y)
+            ctx.setFillColor(pixel.getColor())
+            ctx.addRect(rect)
+            ctx.drawPath(using: .fill)
+        }
+        
+        var i = 0
+        while i < interactiveCanvas.errorPixels.count {
+            let pixel = interactiveCanvas.errorPixels[i]
+            if !pixel.isActive {
+                interactiveCanvas.errorPixels.remove(at: i)
+                i -= 1
+            }
+            i += 1
+        }
+        print("Error pixel count: ic var \(self.interactiveCanvas.errorPixels.count)")
     }
     
     func drawUnits(ctx: CGContext, deviceViewport: CGRect, ppu: Int) {
