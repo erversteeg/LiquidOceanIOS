@@ -50,6 +50,11 @@ protocol InteractiveCanvasEraseDelegate: AnyObject {
     func notifyErase(left: Int, top: Int, right: Int, bottom: Int)
 }
 
+protocol InteractiveCanvasLatencyDelegate: AnyObject {
+    func notifyLatency(ms: Int)
+    func notifyConnectionCount(count: Int)
+}
+
 class InteractiveCanvas: NSObject {
     var rows = 0
     var cols = 0
@@ -87,6 +92,7 @@ class InteractiveCanvas: NSObject {
     weak var deviceViewportResetDelegate: InteractiveCanvasDeviceViewportResetDelegate?
     weak var selectedObjectDelegate: InteractiveCanvasSelectedObjectDelegate?
     weak var eraseDelegate: InteractiveCanvasEraseDelegate?
+    weak var latencyDelegate: InteractiveCanvasLatencyDelegate?
     
     var startScaleFactor = CGFloat(0.2)
     
@@ -378,7 +384,13 @@ class InteractiveCanvas: NSObject {
         }
         
         socket.on("res") { (data, ack) in
-            
+            let latency = Int(1000 * (NSDate().timeIntervalSince1970 - SessionSettings.instance.lastPingTime))
+            self.latencyDelegate?.notifyLatency(ms: latency)
+        }
+        
+        socket.on("cnt") { (data, ack) in
+            let count = data[0] as! Int
+            self.latencyDelegate?.notifyConnectionCount(count: count)
         }
     }
     

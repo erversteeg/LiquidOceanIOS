@@ -56,6 +56,16 @@ class InteractiveCanvasSocket: NSObject, URLSessionDelegate {
                 self.socketConnectionDelegate?.notifySocketConnectionError()
             }
         }
+        
+        socket?.on("res") { (data, ack) in
+            let latency = Int(1000 * (NSDate().timeIntervalSince1970 - SessionSettings.instance.lastPingTime))
+            self.latencyDelegate?.notifyLatency(ms: latency)
+        }
+        
+        socket?.on("cnt") { (data, ack) in
+            let count = data[0] as! Int
+            self.latencyDelegate?.notifyConnectionCount(count: count)
+        }
     }
     
     func disconnect() {

@@ -11,7 +11,7 @@ import FlexColorPicker
 import Kingfisher
 
 class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintDelegate, ColorPickerDelegate, InteractiveCanvasPixelHistoryDelegate, InteractiveCanvasRecentColorsDelegate, RecentColorsDelegate, ExportViewControllerDelegate, InteractiveCanvasArtExportDelegate, AchievementListener, InteractiveCanvasSocketStatusDelegate, PaintActionDelegate, PaintQtyDelegate, ObjectSelectionDelegate, UITextFieldDelegate, ColorPickerLayoutDelegate, InteractiveCanvasPalettesDelegate, PalettesViewControllerDelegate, InteractiveCanvasGestureDelegate, CanvasFrameViewControllerDelegate, CanvasFrameDelegate, CanvasEdgeTouchDelegate, InteractiveCanvasSelectedObjectViewDelegate, InteractiveCanvasSelectedObjectMoveViewDelegate, MenuButtonDelegate,
-    InteractiveCanvasSocketConnectionDelegate, SceneDelegateDeleage, InteractiveCanvasEraseDelegate {
+    InteractiveCanvasSocketConnectionDelegate, SceneDelegateDeleage, InteractiveCanvasEraseDelegate, InteractiveCanvasLatencyDelegate {
     
     @IBOutlet var surfaceView: InteractiveCanvasView!
     
@@ -217,6 +217,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     @IBOutlet weak var bannerWidth: NSLayoutConstraint!
     
     @IBOutlet weak var socketStatusImage: UIImageView!
+    @IBOutlet weak var latencyText: UILabel!
     
     let showOptions = "ShowOptions"
     let showHowto = "ShowHowto"
@@ -285,6 +286,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.interactiveCanvas.recentColorsDelegate = self
         self.surfaceView.interactiveCanvas.artExportDelegate = self
         self.surfaceView.interactiveCanvas.eraseDelegate = self
+        self.surfaceView.interactiveCanvas.latencyDelegate = self
+        
         self.surfaceView.paintDelegate = self
         self.surfaceView.palettesDelegate = self
         self.surfaceView.gestureDelegate = self
@@ -2002,6 +2005,34 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         else {
             self.socketStatusImage.image = UIImage(named: "red_circle.png")
         }
+    }
+    
+    var latency = -1
+    var connectionCount = 0
+    
+    func notifyLatency(ms: Int) {
+        self.latency = ms
+        updateLatencyText()
+        print("latency check: got latency \(ms)")
+    }
+    
+    func notifyConnectionCount(count: Int) {
+        self.connectionCount = count
+        updateLatencyText()
+        print("latency check: get connection count \(count)")
+    }
+    
+    func updateLatencyText() {
+        var text = ""
+        if self.connectionCount > 1 {
+            text += "(\(self.connectionCount)"
+        }
+        
+        if self.latency > -1 {
+            text += "\(self.latency) ms"
+        }
+        
+        self.latencyText.text = text
     }
     
     // scene delegate delegate
