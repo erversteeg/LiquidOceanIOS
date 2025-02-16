@@ -528,22 +528,22 @@ class InteractiveCanvas: NSObject {
     }
     
     func save() {
-        if world {
-            do {
-                SessionSettings.instance.userDefaults().set(try JSONSerialization.data(withJSONObject: arr, options: .fragmentsAllowed), forKey: "arr")
-            }
-            catch {
-                
-            }
-        }
-        else {
-            do {
-                SessionSettings.instance.userDefaults().set(InteractiveCanvas.exportCanvasToJson(arr: arr), forKey: "arr_canvas")
-            }
-            catch {
-                
-            }
-        }
+//        if world {
+//            do {
+//                SessionSettings.instance.userDefaults().set(try JSONSerialization.data(withJSONObject: arr, options: .fragmentsAllowed), forKey: "arr")
+//            }
+//            catch {
+//                
+//            }
+//        }
+//        else {
+//            do {
+//                SessionSettings.instance.userDefaults().set(InteractiveCanvas.exportCanvasToJson(arr: arr), forKey: "arr_canvas")
+//            }
+//            catch {
+//                
+//            }
+//        }
     }
     
     func saveDeviceViewport() {
