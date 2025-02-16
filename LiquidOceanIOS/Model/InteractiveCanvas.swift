@@ -376,6 +376,10 @@ class InteractiveCanvas: NSObject {
                 SessionSettings.instance.dropsAmt = SessionSettings.instance.maxPaintAmt
             }
         }
+        
+        socket.on("res") { (data, ack) in
+            
+        }
     }
     
     func receivePixels(pixelInfo: String) {

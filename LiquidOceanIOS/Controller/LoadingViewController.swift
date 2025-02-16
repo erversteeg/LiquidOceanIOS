@@ -551,6 +551,10 @@ class LoadingViewController: UIViewController, InteractiveCanvasSocketConnection
         getCanvas()
     }
     
+    func notifySocketDisconnect() {
+        
+    }
+    
     func notifySocketConnectionError() {
         showError(type: errorTypeSocket)
     }

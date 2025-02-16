@@ -1985,6 +1985,10 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
     }
     
+    func notifySocketDisconnect() {
+        
+    }
+    
     func notifySocketConnectionError() {
         self.performSegue(withIdentifier: unwindToLoading, sender: nil)
     }
@@ -1993,13 +1997,12 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
     func sceneWillEnterForeground() {
         let timeSincePause = NSDate().timeIntervalSince1970 - SessionSettings.instance.canvasPauseTime
         if SessionSettings.instance.canvasPaused {
-            if timeSincePause > 60 * 60 {
+            if timeSincePause > 5 * 60 {
                 self.performSegue(withIdentifier: self.unwindToLoading, sender: nil)
             }
             else {
                 InteractiveCanvasSocket.instance.socketConnectionDelegate = self
                 InteractiveCanvasSocket.instance.startSocket(server: SessionSettings.instance.lastVisitedServer!)
-                
                 SessionSettings.instance.canvasPaused = false
             }
         }

@@ -11,6 +11,7 @@ import SocketIO
 
 protocol InteractiveCanvasSocketConnectionDelegate: AnyObject {
     func notifySocketConnect()
+    func notifySocketDisconnect()
     func notifySocketConnectionError()
 }
 
@@ -36,11 +37,16 @@ class InteractiveCanvasSocket: NSObject, URLSessionDelegate {
         socket?.on(clientEvent: .connect) { (data, ack) in
             print(data)
             self.socket?.emit("connect2")
+            SessionSettings.instance.startLatencyTask()
             self.socketConnectionDelegate?.notifySocketConnect()
         }
         
         socket?.on(clientEvent: .disconnect) { (data, ack) in
             print(data)
+            
+            DispatchQueue.main.async {
+                self.socketConnectionDelegate?.notifySocketDisconnect()
+            }
         }
         
         socket?.on(clientEvent: .error) { (data, ack) in
@@ -53,6 +59,7 @@ class InteractiveCanvasSocket: NSObject, URLSessionDelegate {
     }
     
     func disconnect() {
+        self.socketConnectionDelegate = nil
         socket?.disconnect()
     }
     

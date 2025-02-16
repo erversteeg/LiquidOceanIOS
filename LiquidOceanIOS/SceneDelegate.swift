@@ -45,6 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         save()
         
         InteractiveCanvasSocket.instance.disconnect()
+        SessionSettings.instance.cancelLatencyTask()
         SessionSettings.instance.canvasPauseTime = NSDate().timeIntervalSince1970
         SessionSettings.instance.canvasPaused = true
 
@@ -60,7 +61,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             if interactiveCanvas != nil {
                 if interactiveCanvas!.world {
-                    InteractiveCanvasSocket.instance.socket?.disconnect()
+                    InteractiveCanvasSocket.instance.disconnect()
                 }
                 else {
                     interactiveCanvas!.save()
