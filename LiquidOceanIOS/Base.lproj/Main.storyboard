@@ -56,7 +56,7 @@
                                             <constraint firstAttribute="height" constant="190" id="4Mq-C2-OyC"/>
                                             <constraint firstAttribute="width" constant="582" id="8vh-e2-z3F"/>
                                         </constraints>
-                                        <string key="text">Welcome to this quick guide. This guide will help you get all setup and fill you in on what you need to know to get started. First, you can connect to the public canvas by going to Connect in the menu then entering 'PIXEL'. Once connected you will start to gain pixels that you can use to draw pixel art.</string>
+                                        <string key="text">Welcome to this quick guide. This will help you get all set up and fill you in on what you need to know to get started. First, you can connect to one of the public canvases by going to Connect then entering 'SMALL', 'MEDIUM', or 'LARGE', each server is a different size. Once connected you will start to gain pixels that you can use to draw onto the canvas.</string>
                                         <fontDescription key="fontDescription" name="Inter-Light" family="Inter" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
