@@ -1240,11 +1240,11 @@ class InteractiveCanvas: NSObject {
         if top < topBound {
             cY = topBound - top
         }
-        if right > cw  {
-            cX = -(rightBound - cw)
+        if right > rightBound  {
+            cX = rightBound - right
         }
-        if bottom > ch {
-            cY = -(bottomBound - ch)
+        if bottom > bottomBound {
+            cY = bottomBound - bottom
         }
         
         deviceViewport = CGRect(x: left, y: top, width: right - left, height: bottom - top)
