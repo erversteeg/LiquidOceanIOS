@@ -220,9 +220,6 @@ class SessionSettings: NSObject {
         userDefaults().set(defaultBg, forKey: "default_bg")
         userDefaults().set(palettesJsonStr(), forKey: "palettes")
         userDefaults().set(selectedPaletteIndex, forKey: "selected_palette_index")
-        userDefaults().set(restoreDeviceViewportCenterX, forKey: "restore_device_viewport_center_x")
-        userDefaults().set(restoreDeviceViewportCenterY, forKey: "restore_device_viewport_center_y")
-        userDefaults().set(restoreCanvasScaleFactor, forKey: "restore_canvas_scale_factor")
         userDefaults().set(toolboxOpen, forKey: "toolbox_open")
         userDefaults().set(paintPanelOpen, forKey: "paint_panel_open")
         userDefaults().set(canvasOpen, forKey: "canvas_open")
@@ -319,11 +316,6 @@ class SessionSettings: NSObject {
         palette.addColor(color: UIColor(hexString: "6385EA").argb())
         
         palettes.append(palette)*/
-        
-        restoreDeviceViewportCenterX = userDefaultsCGFloat(forKey: "restore_device_viewport_center_x", defaultVal: CGFloat(0))
-        restoreDeviceViewportCenterY = userDefaultsCGFloat(forKey: "restore_device_viewport_center_y", defaultVal: CGFloat(0))
-        
-        restoreCanvasScaleFactor = userDefaultsCGFloat(forKey: "restore_canvas_scale_factor", defaultVal: CGFloat(0))
         
         toolboxOpen = userDefaultsBool(forKey: "toolbox_open", defaultVal: true)
         paintPanelOpen = userDefaultsBool(forKey: "paint_panel_open", defaultVal: false)
@@ -626,9 +618,9 @@ class SessionSettings: NSObject {
         userDefaults().set(agreedToTermsOfService, forKey: "agreed_to_terms_of_service")
     }
     
-    func saveDeviceViewport() {
-        userDefaults().set(restoreDeviceViewportCenterX, forKey: "restore_device_viewport_center_x")
-        userDefaults().set(restoreDeviceViewportCenterY, forKey: "restore_device_viewport_center_y")
-        userDefaults().set(restoreCanvasScaleFactor, forKey: "restore_canvas_scale_factor")
-    }
+//    func saveDeviceViewport() {
+//        userDefaults().set(restoreDeviceViewportCenterX, forKey: "restore_device_viewport_center_x")
+//        userDefaults().set(restoreDeviceViewportCenterY, forKey: "restore_device_viewport_center_y")
+//        userDefaults().set(restoreCanvasScaleFactor, forKey: "restore_canvas_scale_factor")
+//    }
 }

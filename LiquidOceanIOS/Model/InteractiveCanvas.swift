@@ -551,8 +551,6 @@ class InteractiveCanvas: NSObject {
         SessionSettings.instance.restoreDeviceViewportCenterY = deviceViewport.origin.y + deviceViewport.height / 2
         
         SessionSettings.instance.restoreCanvasScaleFactor = scaleFactor
-        
-        SessionSettings.instance.saveDeviceViewport()
     }
     
     func isCanvas(unitPoint: CGPoint) -> Bool {

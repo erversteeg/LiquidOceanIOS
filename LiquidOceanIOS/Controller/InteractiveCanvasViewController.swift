@@ -331,6 +331,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
                     self.performSegue(withIdentifier: "UnwindToMenu", sender: nil)
                 }*/
                 //self.toggleMenu(show: self.menuContainer.isHidden)
+                self.surfaceView.interactiveCanvas.saveDeviceViewport()
                 self.performSegue(withIdentifier: self.showOptions, sender: self)
             }
         }
@@ -1136,7 +1137,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
             menuViewController.fromInteractiveCanvas = true
         }
         else if segue.identifier == "UnwindToMenu" {
-            surfaceView.interactiveCanvas.saveDeviceViewport()
+            //surfaceView.interactiveCanvas.saveDeviceViewport()
             
             SessionSettings.instance.save()
             
