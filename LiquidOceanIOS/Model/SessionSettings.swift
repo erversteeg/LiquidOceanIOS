@@ -184,6 +184,8 @@ class SessionSettings: NSObject {
     var sceneDelegateDelegate: SceneDelegateDeleage? = nil
     
     func save() {
+        print("Save session settings")
+        
         userDefaults().set(dropsAmt, forKey: "drops_amt")
         userDefaults().set(sentUniqueId, forKey: "sent_unique_id")
         userDefaults().set(paintColor, forKey: "paint_color")

@@ -828,6 +828,8 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         
         setPaintPanelBackground(adjust: false)
         surfaceView.setInitalPositionAndScale()
+        
+        SessionSettings.instance.save()
     }
     
     @IBAction func unwind( _ seg: UIStoryboardSegue) {
