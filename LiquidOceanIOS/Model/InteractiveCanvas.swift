@@ -111,6 +111,8 @@ class InteractiveCanvas: NSObject {
     var restorePoints =  [RestorePoint]()
     var pixelsOut: [RestorePoint]!
     
+    var pendingUndos = [PendingUndo]()
+    
     var receivedPaintRecently = false
     
     var summary = [RestorePoint]()
@@ -146,6 +148,16 @@ class InteractiveCanvas: NSObject {
         case right
     }
     
+    class ShortTermPixel {
+        var restorePoint: RestorePoint
+        var time: Double
+        
+        init(restorePoint: RestorePoint) {
+            self.restorePoint = restorePoint
+            self.time = Date().timeIntervalSince1970
+        }
+    }
+    
     class RestorePoint {
         var x: Int
         var y: Int
@@ -157,16 +169,6 @@ class InteractiveCanvas: NSObject {
             self.y = y
             self.color = color
             self.newColor = newColor
-        }
-    }
-    
-    class ShortTermPixel {
-        var restorePoint: RestorePoint
-        var time: Double
-        
-        init(restorePoint: RestorePoint) {
-            self.restorePoint = restorePoint
-            self.time = Date().timeIntervalSince1970
         }
     }
     
@@ -380,6 +382,19 @@ class InteractiveCanvas: NSObject {
     }
     
     func receivePixels(pixelInfo: String) {
+        var index = -1
+        for i in 0...self.pendingUndos.count - 1 {
+            let pendingUndo = self.pendingUndos[i]
+            if pendingUndo.message == pixelInfo {
+                index = i
+                break
+            }
+        }
+        if index >= 0 {
+            self.pendingUndos[index].cancel()
+            self.pendingUndos.remove(at: index)
+        }
+        
         let t = pixelInfo.components(separatedBy: "&")
         
         var pixelIds = [Int]()
@@ -625,7 +640,20 @@ class InteractiveCanvas: NSObject {
             }
             
             print("emit pixels")
-            InteractiveCanvasSocket.instance.socket!.emit("pixels_send", buildPixelsString(xs: xs, ys: ys, deviceId: SessionSettings.instance.deviceId, colors: colors), completion: nil)
+            let sendStr = buildPixelsString(xs: xs, ys: ys, deviceId: SessionSettings.instance.deviceId, colors: colors)
+            InteractiveCanvasSocket.instance.socket!.emit("pixels_send", sendStr, completion: nil)
+            
+            var rpCopy = [RestorePoint]()
+            for restorePoint in self.restorePoints {
+                rpCopy.append(restorePoint)
+            }
+            
+            self.pendingUndos.append(PendingUndo(restorePoints: rpCopy, message: sendStr, onUndo: { rps in
+                for rp in rps {
+                    self.arr[rp.y][rp.x] = rp.color
+                }
+                self.drawCallback?.notifyCanvasRedraw()
+            }))
             
             //StatTracker.instance.reportEvent(eventType: .pixelPaintedWorld, amt: restorePoints.count)
         }
