@@ -287,6 +287,7 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.interactiveCanvas.recentColorsDelegate = self
         self.surfaceView.interactiveCanvas.artExportDelegate = self
         self.surfaceView.interactiveCanvas.eraseDelegate = self
+        self.surfaceView.interactiveCanvas.latencyDelegate = self
         
         self.surfaceView.paintDelegate = self
         self.surfaceView.palettesDelegate = self
@@ -296,7 +297,6 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         self.surfaceView.selectedObjectView = self
         self.surfaceView.selectedObjectMoveView = self
         
-        InteractiveCanvasSocket.instance.latencyDelegate = self
         
         // surfaceView.setInitalScale()
         
@@ -2041,17 +2041,20 @@ class InteractiveCanvasViewController: UIViewController, InteractiveCanvasPaintD
         }
     }
     
-    func notifyLatency() {
+    private var latency = -2
+    private var connectionCount = 0
+    
+    func notifyLatency(latency: Int) {
+        self.latency = latency
         updateLatencyText()
     }
     
-    func notifyConnectionCount() {
+    func notifyConnectionCount(count: Int) {
+        self.connectionCount = count
         updateLatencyText()
     }
     
     func updateLatencyText() {
-        let latency = InteractiveCanvasSocket.instance.latency
-        let connectionCount = InteractiveCanvasSocket.instance.connectionCount
         var text = ""
         if connectionCount > 1 {
             text += "(\(connectionCount))"

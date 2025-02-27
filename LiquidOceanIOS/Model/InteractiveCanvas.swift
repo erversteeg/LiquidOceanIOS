@@ -50,6 +50,11 @@ protocol InteractiveCanvasEraseDelegate: AnyObject {
     func notifyErase(left: Int, top: Int, right: Int, bottom: Int)
 }
 
+protocol InteractiveCanvasSocketLatencyDelegate: AnyObject {
+    func notifyLatency(latency: Int)
+    func notifyConnectionCount(count: Int)
+}
+
 class InteractiveCanvas: NSObject {
     var rows = 0
     var cols = 0
@@ -88,6 +93,7 @@ class InteractiveCanvas: NSObject {
     weak var deviceViewportResetDelegate: InteractiveCanvasDeviceViewportResetDelegate?
     weak var selectedObjectDelegate: InteractiveCanvasSelectedObjectDelegate?
     weak var eraseDelegate: InteractiveCanvasEraseDelegate?
+    weak var latencyDelegate: InteractiveCanvasSocketLatencyDelegate?
     
     var startScaleFactor = CGFloat(0.2)
     
@@ -118,6 +124,12 @@ class InteractiveCanvas: NSObject {
     var summary = [RestorePoint]()
     
     var screenSpaceRect = CGRect()
+    
+    private var latencyTask: Task<(), any Error>? = nil
+    var lastPingTime = 0.0
+    
+    var latency = -1
+    var connectionCount = 0
     
     private var _selectedPixels: [RestorePoint]?
     var selectedPixels: [RestorePoint]? {
@@ -379,20 +391,35 @@ class InteractiveCanvas: NSObject {
                 SessionSettings.instance.dropsAmt = SessionSettings.instance.maxPaintAmt
             }
         }
+        
+        socket.on("res") { (data, ack) in
+            let data = data[0] as! String
+            let t = data.components(separatedBy: "&")
+            
+            let latency = Int(1000 * (NSDate().timeIntervalSince1970 - self.lastPingTime))
+            self.latency = latency
+            self.latencyDelegate?.notifyLatency(latency: latency)
+            self.latencyDelegate?.notifyConnectionCount(count: Int(t[0])!)
+            
+            print("latency check: got latency \(latency)")
+        }
     }
     
     func receivePixels(pixelInfo: String) {
         var index = -1
-        for i in 0...self.pendingUndos.count - 1 {
-            let pendingUndo = self.pendingUndos[i]
-            if pendingUndo.message == pixelInfo {
-                index = i
-                break
+        
+        if self.pendingUndos.count >= 1 {
+            for i in 0...self.pendingUndos.count - 1 {
+                let pendingUndo = self.pendingUndos[i]
+                if pendingUndo.message == pixelInfo {
+                    index = i
+                    break
+                }
             }
-        }
-        if index >= 0 {
-            self.pendingUndos[index].cancel()
-            self.pendingUndos.remove(at: index)
+            if index >= 0 {
+                self.pendingUndos[index].cancel()
+                self.pendingUndos.remove(at: index)
+            }
         }
         
         let t = pixelInfo.components(separatedBy: "&")
@@ -1297,5 +1324,35 @@ class InteractiveCanvas: NSObject {
         }
         
         drawCallback?.notifyCanvasRedraw()
+    }
+    
+    func startLatencyTask() {
+        if self.latencyTask != nil {
+            return
+        }
+        
+        self.latencyTask = Task {
+            while !Task.isCancelled {
+                print("Sending latency check")
+                
+                var name = SessionSettings.instance.displayName
+                if name == "" {
+                    name = String(SessionSettings.instance.uniqueId.prefix(4))
+                }
+                
+                InteractiveCanvasSocket.instance.socket?.emit("lat", "\(name)&\(pixelId(x: self.deviceViewport.midX, y: deviceViewport.midY))")
+                self.lastPingTime = NSDate().timeIntervalSince1970
+                try await Task.sleep(for: .milliseconds(4200))
+            }
+        }
+    }
+    
+    func cancelLatencyTask() {
+        self.latencyTask?.cancel()
+        self.latencyTask = nil
+    }
+    
+    func pixelId(x: CGFloat, y: CGFloat) -> Int {
+        return Int(y) * cols + Int(x)
     }
 }

@@ -31,7 +31,7 @@ class QueueSocket: NSObject, URLSessionDelegate {
         // socket init
         //manager = SocketManager(socketURL: URL(string: "https://192.168.200.69:5010")!, config: [.log(true), .compress, .selfSigned(true), .sessionDelegate(self)])
         
-        manager = SocketManager(socketURL: URL(string: server.queueSocketUrl())!, config: [.log(true), .reconnectAttempts(0)])
+        manager = SocketManager(socketURL: URL(string: server.queueSocketUrl())!, config: [.log(true), .reconnectAttempts(0), .forceWebsockets(true)])
         
         socket = manager.defaultSocket
         
